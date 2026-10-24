@@ -580,7 +580,8 @@ function rendreFiche(a, f) {
     !(a.fin && !f.marge_ebitda) && ligne("Marge d'EBITDA", pct(f.marge_ebitda)),
     !(a.fin && !f.marge_op) && ligne("Marge opérationnelle", pct(f.marge_op)),
     ligne("Marge nette sur 12 mois", pct(f.marge_nette)),
-    ligne("Rentabilité des fonds propres", pct(f.roe)),
+    ligne("Rentabilité des fonds propres (ROE)", pct(f.roe)),
+    ligne("Rentabilité des actifs (ROA)", pct(f.roa)),
   ])}
 
   <h3>Prévisions des analystes</h3>
