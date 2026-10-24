@@ -542,9 +542,9 @@ function rendreFiche(a, f) {
     ligne("Croissance du CA (dernier trimestre sur un an)", signe(f.croiss_ca)),
     ligne("Croissance prévue cet exercice", signe(f.croiss_ca_a0)),
     ligne("Croissance prévue l'exercice suivant", signe(f.croiss_ca_a1)),
-    ligne("Marge brute", pct(f.marge_brute)),
-    ligne("Marge d'EBITDA", pct(f.marge_ebitda)),
-    ligne("Marge opérationnelle", pct(f.marge_op)),
+    !(a.fin && !f.marge_brute) && ligne("Marge brute", pct(f.marge_brute)),
+    !(a.fin && !f.marge_ebitda) && ligne("Marge d'EBITDA", pct(f.marge_ebitda)),
+    !(a.fin && !f.marge_op) && ligne("Marge opérationnelle", pct(f.marge_op)),
     ligne("Marge nette sur 12 mois", pct(f.marge_nette)),
     ligne("Rentabilité des fonds propres", pct(f.roe)),
   ])}

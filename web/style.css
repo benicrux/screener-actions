@@ -220,7 +220,7 @@ main { padding: 6px 0 40px; }
 
 .chiffres { width: 100%; border-collapse: collapse; font-size: 14px; }
 .chiffres th { text-align: left; font-weight: 400; color: var(--encre-2); padding: 5px 8px 5px 0; }
-.chiffres td { text-align: right; padding: 5px 0; }
+.chiffres td { text-align: right; padding: 5px 0; white-space: nowrap; }
 .chiffres tr + tr th, .chiffres tr + tr td { border-top: 1px solid var(--filet); }
 .chiffres.large td, .chiffres.large th { text-align: right; padding: 5px 4px; }
 .chiffres.large th:first-child, .chiffres.large td:first-child { text-align: left; }

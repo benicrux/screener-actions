@@ -141,9 +141,17 @@ def indicateurs(base: pd.DataFrame, fx: dict[str, float]) -> pd.DataFrame:
     # Valorisation : VE / CA (passé et prévu) ; PER et cours / actif net pour la finance
     d["ve_ca"] = _ratio(d["ve_usd"], ca_ref)
     d["ve_ebitda"] = _ratio(d["ve_usd"], ebitda.where(ebitda > 0))
-    bpa_12m = _num(d, "bpa_12m") * t_comptes
     bpa_a0 = _num(d, "bpa_a0_moy") * t_bpa
     bpa_a1 = _num(d, "bpa_a1_moy") * t_bpa
+    # Le BPA des 12 derniers mois est en général exprimé dans la devise du cours
+    # (livres pour Lion Finance, dont les comptes sont en lari) ; sinon dans celle des
+    # comptes. On retient la lecture la plus cohérente avec le BPA prévu.
+    bpa_brut = _num(d, "bpa_12m")
+    bpa_cours, bpa_comptes = bpa_brut * t_principale, bpa_brut * t_comptes
+    reference = _moyenne(bpa_a0, bpa_a1)
+    ecart_cours = np.abs(np.log(_ratio(bpa_cours, reference).where(lambda x: x > 0)))
+    ecart_comptes = np.abs(np.log(_ratio(bpa_comptes, reference).where(lambda x: x > 0)))
+    bpa_12m = bpa_cours.where(~(ecart_comptes < ecart_cours), bpa_comptes)
     bpa_ref = _moyenne(bpa_12m, bpa_a0, bpa_a1)
     d["per"] = _ratio(d["prix_usd"], bpa_ref)
     d["per_12m"] = _ratio(d["prix_usd"], bpa_12m.where(bpa_12m > 0))
