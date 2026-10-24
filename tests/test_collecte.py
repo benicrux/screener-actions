@@ -9,7 +9,7 @@ from collecte import _extraire  # noqa: E402
 REPONSE = {"quoteSummary": {"result": [{
     "price": {"regularMarketPrice": 45.0, "currency": "GBp", "marketCap": 101_000_000,
               "longName": "Afentra plc"},
-    "summaryDetail": {"trailingAnnualDividendYield": 0, "dividendYield": None,
+    "summaryDetail": {"trailingAnnualDividendYield": 0.00031, "dividendYield": 0.031,
                       "fiftyTwoWeekHigh": 55.0, "fiftyTwoWeekLow": 35.0, "beta": 0.9},
     "defaultKeyStatistics": {"sharesOutstanding": 226_000_000, "trailingEps": 0.02,
                              "bookValue": 0.6, "52WeekChange": 0.05,
@@ -47,7 +47,7 @@ def test_extraction():
     assert ligne["cours"] == 45.0 and ligne["devise_cours"] == "GBp"
     assert ligne["devise_comptes"] == "USD"
     assert ligne["ca"] == 150e6 and ligne["dette"] == 31.5e6
-    assert ligne["rendement"] == 0
+    assert ligne["rendement"] == 0.031 and ligne["rendement_12m"] == 0.00031
     assert ligne["ex_a0"] == "2025-12-31" and ligne["ex_a1"] == "2026-12-31"
     assert ligne["bpa_a1_moy"] == 0.12 and ligne["bpa_a1_j90"] == 0.10
     assert ligne["croiss_ca_a1"] == 0.66

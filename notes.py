@@ -239,7 +239,9 @@ def indicateurs(base: pd.DataFrame, fx: dict[str, float]) -> pd.DataFrame:
     centiemes = d["devise_cours"].isin(SOUS_UNITES.keys())
     rdt_12m = rdt_12m.where(~centiemes, rdt_12m * 100)
     rdt = _num(d, "rendement")
-    ancien = _num(d, "version").isna()  # premières lectures : « rendement » = sur 12 mois
+    version = _num(d, "version")
+    rdt = rdt.where(version != 2, rdt * 100)  # lectures du 24/10 : divisé à tort par 100
+    ancien = version.isna()  # premières lectures : « rendement » = sur 12 mois
     rdt = rdt.where(~(ancien & centiemes), rdt * 100)
     rdt = rdt.fillna(rdt_12m)
     d["rendement_ref"] = rdt.where(rdt < 0.3).fillna(0).where(d["prix_usd"].notna())

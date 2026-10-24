@@ -152,16 +152,15 @@ def _extraire(symbole: str, js: dict) -> tuple[dict, list[dict]]:
     ks = resultat.get("defaultKeyStatistics") or {}
     fd = resultat.get("financialData") or {}
 
-    # Yahoo donne dividendYield en % (dividende prévu) ; trailingAnnualDividendYield en
-    # fraction mais faux pour les cours en pence. On garde les deux.
+    # dividendYield : dividende prévu / cours (0,05 = 5 %), fiable.
+    # trailingAnnualDividendYield : 12 derniers mois, faux pour les cours en pence.
     rendement_prevu = _v(sd.get("dividendYield"))
-    rendement_prevu = rendement_prevu / 100 if rendement_prevu is not None else None
     rendement_12m = _v(sd.get("trailingAnnualDividendYield"))
     l = {
         "symbole": symbole,
         "maj": dt.date.today().isoformat(),
         "statut": "ok",
-        "version": 2,
+        "version": 3,
         "nom_yahoo": pr.get("longName") or pr.get("shortName"),
         "devise_cours": pr.get("currency") or sd.get("currency"),
         "devise_comptes": fd.get("financialCurrency"),
