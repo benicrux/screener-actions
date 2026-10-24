@@ -152,6 +152,25 @@ def indicateurs(base: pd.DataFrame, fx: dict[str, float]) -> pd.DataFrame:
     ecart_cours = np.abs(np.log(_ratio(bpa_cours, reference).where(lambda x: x > 0)))
     ecart_comptes = np.abs(np.log(_ratio(bpa_comptes, reference).where(lambda x: x > 0)))
     bpa_12m = bpa_cours.where(~(ecart_comptes < ecart_cours), bpa_comptes)
+
+    # Résultats exceptionnels : une marge nette très supérieure à la marge opérationnelle
+    # vient d'une plus-value ou d'une participation, pas de l'activité (ex. holdings).
+    # On ramène alors la marge nette, et le BPA des 12 mois, au niveau de l'activité.
+    marge_nette = _num(d, "marge_nette")
+    plafond = (_num(d, "marge_op") + 0.15).fillna(_num(d, "marge_ebitda") + 0.05).fillna(0.6)
+    exceptionnel = ~d["financiere"] & (marge_nette > plafond + 0.001)
+    d["resultat_exceptionnel"] = exceptionnel
+    d["marge_nette_ajustee"] = marge_nette.where(~exceptionnel, plafond)
+    reduction = (plafond.clip(lower=0) / marge_nette.where(marge_nette > 0)).clip(upper=1)
+    bpa_12m = bpa_12m.where(~exceptionnel, bpa_12m * reduction)
+
+    # Véhicules d'investissement (fonds fermés, sociétés « split », holdings de
+    # portefeuille) : leur « chiffre d'affaires » est un revenu de placement. Écartés.
+    nom = d["nom"].fillna("")
+    d["vehicule"] = (
+        (d["industrie_en"].eq("Capital Markets") & (marge_nette >= 0.6))
+        | nom.str.contains(r"Split (?:Corp|Banc|Share)|\bBanc Corp|Premium Income Corp|"
+                           r"\bIncome Fund\b|\bInvestment Fund\b", regex=True))
     bpa_ref = _moyenne(bpa_12m, bpa_a0, bpa_a1)
     d["per"] = _ratio(d["prix_usd"], bpa_ref)
     d["per_12m"] = _ratio(d["prix_usd"], bpa_12m.where(bpa_12m > 0))
@@ -168,7 +187,7 @@ def indicateurs(base: pd.DataFrame, fx: dict[str, float]) -> pd.DataFrame:
     marge_a0 = _ratio(bpa_a0 * actions, ca_a0)
     marge_a1 = _ratio(bpa_a1 * actions, ca_a1)
     d["marge_nette_ref"] = _moyenne_ponderee([
-        (_num(d, "marge_nette"), 1), (marge_a0, 1), (marge_a1, 2)]).clip(-2, 1)
+        (d["marge_nette_ajustee"], 1), (marge_a0, 1), (marge_a1, 2)]).clip(-2, 1)
     d["roe"] = _num(d, "roe").clip(-2, 2)
 
     # Situation financière : trésorerie nette / CA et dette nette / EBITDA

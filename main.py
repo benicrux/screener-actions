@@ -73,6 +73,8 @@ def main() -> None:
     print("4. Notes")
     table = assembler(univ, donnees, cours)
     table = notes.indicateurs(table, fx)
+    vehicules = int((table["vehicule"] & table["statut"].eq("ok")).sum())
+    table = table[~table["vehicule"]].copy()
     n = notes.noter(table)
     table = table.join(n.add_prefix("n_"))
 
@@ -86,6 +88,7 @@ def main() -> None:
         "notees": int(table["n_investisseur"].notna().sum()),
         "jamais_lues": int(jamais),
         "introuvables": int((table["statut"] == "introuvable").sum()),
+        "vehicules_ecartes": vehicules,
         "jours_restants": (int(-(-jamais // rythme)) if rythme and jamais else 0),
         "cours_du_jour": int(len(cours)),
         "collecte": bilan,
