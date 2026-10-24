@@ -2,3 +2,5 @@ site/
 __pycache__/
 *.pyc
 .venv/
+# Données détaillées : gardées sur la branche « donnees », sans historique
+data/donnees.csv

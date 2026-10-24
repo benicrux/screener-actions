@@ -206,8 +206,16 @@ def indicateurs(base: pd.DataFrame, fx: dict[str, float]) -> pd.DataFrame:
     obj = obj.mask(obj.between(40, 250), obj / 100).mask(obj.between(0.004, 0.025), obj * 100)
     d["potentiel"] = (obj - 1).where((obj > 0.05) & (obj < 20) & (_num(d, "nb_analystes") >= 1))
 
+    # Rendement : dividende prévu (fiable) ; à défaut, dividende des 12 derniers mois,
+    # corrigé pour les cours exprimés en centièmes (pence…)
+    rdt_12m = _num(d, "rendement_12m")
+    centiemes = d["devise_cours"].isin(SOUS_UNITES.keys())
+    rdt_12m = rdt_12m.where(~centiemes, rdt_12m * 100)
     rdt = _num(d, "rendement")
-    d["rendement_ref"] = rdt.where(rdt < 0.5).fillna(0).where(d["prix_usd"].notna())
+    ancien = _num(d, "version").isna()  # premières lectures : « rendement » = sur 12 mois
+    rdt = rdt.where(~(ancien & centiemes), rdt * 100)
+    rdt = rdt.fillna(rdt_12m)
+    d["rendement_ref"] = rdt.where(rdt < 0.3).fillna(0).where(d["prix_usd"].notna())
     d["reco"] = _num(d, "reco").where(_num(d, "nb_analystes") >= 1)
     d["perf_52s"] = _num(d, "perf_52s")
     return d

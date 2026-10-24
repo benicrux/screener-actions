@@ -6,12 +6,17 @@ import os
 TAILLES_RETENUES = ["Mega Cap", "Large Cap", "Mid Cap", "Small Cap", "Micro Cap"]
 # Reconstruire la liste des actions tous les N jours
 UNIVERS_MAJ_JOURS = 30
+# Pays écartés (actions impossibles à acheter depuis la France)
+PAYS_EXCLUS = ["Russia"]
+# Écarter les fonds cotés (fonds fermés, « investment trusts ») et les certificats
+# étrangers (ADR de gré à gré, BDR brésiliens), qui doublonnent les vraies sociétés
+EXCLURE_FONDS = True
 
 # --- Collecte Yahoo Finance --------------------------------------------------
 # Durée maximale de collecte par lancement (le robot GitHub est limité à 6 h)
 BUDGET_MINUTES = int(os.environ.get("BUDGET_MINUTES") or 300)
 # Nombre maximal de sociétés interrogées par lancement
-LOT_MAX = 6000
+LOT_MAX = 12000
 # Requêtes simultanées (plus = plus rapide, mais Yahoo bloque si on abuse)
 PARALLELE = 3
 # Une société introuvable chez Yahoo est retentée au bout de N jours
@@ -41,3 +46,5 @@ TAILLE_MIN_SECTEUR = 30
 
 # --- Archives des prévisions (révisions sur 4 mois et 1 an) --------------------
 ARCHIVE_MOIS_CONSERVES = 15
+# Une société n'est archivée qu'une fois tous les N jours (suffisant pour les révisions)
+ARCHIVE_INTERVALLE_JOURS = 7

@@ -152,13 +152,16 @@ def _extraire(symbole: str, js: dict) -> tuple[dict, list[dict]]:
     ks = resultat.get("defaultKeyStatistics") or {}
     fd = resultat.get("financialData") or {}
 
-    rendement = _v(sd.get("trailingAnnualDividendYield"))
-    if rendement is None and _v(sd.get("dividendYield")) is not None:
-        rendement = _v(sd.get("dividendYield")) / 100  # Yahoo l'exprime en %
+    # Yahoo donne dividendYield en % (dividende prévu) ; trailingAnnualDividendYield en
+    # fraction mais faux pour les cours en pence. On garde les deux.
+    rendement_prevu = _v(sd.get("dividendYield"))
+    rendement_prevu = rendement_prevu / 100 if rendement_prevu is not None else None
+    rendement_12m = _v(sd.get("trailingAnnualDividendYield"))
     l = {
         "symbole": symbole,
         "maj": dt.date.today().isoformat(),
         "statut": "ok",
+        "version": 2,
         "nom_yahoo": pr.get("longName") or pr.get("shortName"),
         "devise_cours": pr.get("currency") or sd.get("currency"),
         "devise_comptes": fd.get("financialCurrency"),
@@ -184,7 +187,8 @@ def _extraire(symbole: str, js: dict) -> tuple[dict, list[dict]]:
         "bpa_12m": _v(ks.get("trailingEps")),
         "actif_net_action": _v(ks.get("bookValue")),
         "pb": _v(ks.get("priceToBook")),
-        "rendement": rendement,
+        "rendement": rendement_prevu,
+        "rendement_12m": rendement_12m,
         "taux_distribution": _v(sd.get("payoutRatio")),
         "objectif": _v(fd.get("targetMeanPrice")),
         "objectif_haut": _v(fd.get("targetHighPrice")),
@@ -286,9 +290,30 @@ def _sauver(donnees: pd.DataFrame, nouvelles: list[dict], archive: list[dict]) -
     if archive:
         ESTIMATIONS.mkdir(parents=True, exist_ok=True)
         fichier = ESTIMATIONS / f"{dt.date.today():%Y-%m}.csv"
-        pd.DataFrame(archive).to_csv(fichier, mode="a", header=not fichier.exists(),
-                                     index=False, float_format="%.6g")
+        neuf = pd.DataFrame(archive)
+        recents = _archives_recentes()
+        neuf = neuf[~neuf["symbole"].isin(recents)]
+        if not neuf.empty:
+            neuf.to_csv(fichier, mode="a", header=not fichier.exists(),
+                        index=False, float_format="%.5g")
+            _ARCHIVEES.update(neuf["symbole"])
     return donnees
+
+
+_ARCHIVEES: set[str] = set()
+_ARCHIVEES_CHARGEES = False
+
+
+def _archives_recentes() -> set[str]:
+    """Sociétés déjà archivées ces derniers jours (on n'archive qu'une fois par semaine)."""
+    global _ARCHIVEES_CHARGEES
+    if not _ARCHIVEES_CHARGEES:
+        limite = dt.date.today() - dt.timedelta(days=config.ARCHIVE_INTERVALLE_JOURS - 1)
+        for f in sorted(ESTIMATIONS.glob("*.csv"))[-2:]:
+            a = pd.read_csv(f, usecols=["date", "symbole"], dtype=str)
+            _ARCHIVEES.update(a.loc[a["date"] >= limite.isoformat(), "symbole"])
+        _ARCHIVEES_CHARGEES = True
+    return _ARCHIVEES
 
 
 def nettoyer_archives() -> None:

@@ -47,6 +47,16 @@ def construire() -> pd.DataFrame:
     if "delisted" in brut:
         brut = brut[brut["delisted"] != True]  # noqa: E712
     brut = brut[brut["country"].notna() & brut["sector"].notna()]
+    brut = brut[~brut["country"].isin(config.PAYS_EXCLUS)]
+    if config.EXCLURE_FONDS:
+        fonds = brut["sector"].eq("Financials") & brut["name"].fillna("").str.contains(
+            r"\bFunds?\b|Investment Trust|Trust (?:PLC|plc|Limited|Ltd)\b|Capital and Income|"
+            r"Income Trust|Closed[- ]End|Municipal|Opportunit(?:y|ies) Trust", regex=True)
+        adr_gre_a_gre = brut["market"].eq("OTC Markets") & brut["country"].ne("United States")
+        bdr = brut["symbol"].str.match(r"^[A-Z0-9]{4}3[1-9]\.SA$")
+        certificats = brut["name"].fillna("").str.contains(
+            r"\b(?:GDR|ADR|ADS)\b|Depositary", regex=True)
+        brut = brut[~(fonds | adr_gre_a_gre | bdr | certificats)]
 
     brut["suffixe"] = brut["symbol"].map(_suffixe)
     brut["score"] = brut.apply(_score_cotation, axis=1)

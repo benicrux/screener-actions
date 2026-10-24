@@ -32,6 +32,7 @@ Tout est dans `config.py` : pondérations de la note investisseur, durée de col
 
 - Les données viennent de **Yahoo Finance** (source non officielle) et de **FinanceDatabase** (liste des sociétés). Elles peuvent comporter des erreurs, surtout pour les petites sociétés et les cotations en devises différentes des comptes. Vérifiez toujours avant d'investir.
 - Si Yahoo bloque temporairement les requêtes, le robot s'arrête proprement et reprend la nuit suivante.
+- Sont écartés : les sociétés russes (impossibles à acheter depuis la France), les fonds cotés et les certificats étrangers (ADR, GDR, BDR), qui doublonnent les vraies sociétés. Réglable dans `config.py`.
 - Ce screener est un outil de repérage, pas un conseil en investissement.
 
 ## Organisation du code
@@ -44,7 +45,8 @@ Tout est dans `config.py` : pondérations de la note investisseur, durée de col
 | `collecte.py` | Lecture des données Yahoo Finance et archive des prévisions |
 | `notes.py` | Calcul des indicateurs et des notes sur 100 |
 | `rendu.py`, `web/` | Le site (tableau, filtres, fiches, favoris) |
-| `data/` | Données mises à jour par le robot |
+| `data/` | Liste des sociétés, taux de change, archive des prévisions, statut |
+| branche `donnees` | Les données détaillées de chaque société, remplacées à chaque passage |
 | `.github/workflows/screener.yml` | Le planning de nuit et la publication |
 
 Pour tester sur un ordinateur : `pip install -r requirements.txt`, `python main.py`, puis ouvrez `site/` avec un petit serveur (`python -m http.server -d site`).

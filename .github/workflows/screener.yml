@@ -39,6 +39,15 @@ jobs:
       - name: Installer les dépendances
         run: pip install -r requirements.txt
 
+      - name: Récupérer les données détaillées (branche « donnees »)
+        run: |
+          if git fetch -q --depth 1 origin donnees; then
+            git show FETCH_HEAD:donnees.csv > data/donnees.csv
+            echo "$(wc -l < data/donnees.csv) lignes récupérées."
+          else
+            echo "Pas encore de données détaillées."
+          fi
+
       - name: Collecter les données et calculer les notes
         env:
           # Lancement automatique après une modification du planning : court (40 min)
@@ -47,9 +56,24 @@ jobs:
 
       - name: Sauvegarder les données
         if: always()
+        env:
+          JETON: ${{ github.token }}
         run: |
           git config user.name "screener-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Données détaillées : la branche « donnees » est remplacée à chaque fois,
+          # pour ne pas alourdir le dépôt d'un historique inutile
+          if [ -s data/donnees.csv ]; then
+            tmp=$(mktemp -d)
+            cp data/donnees.csv "$tmp/"
+            git -C "$tmp" init -q -b donnees
+            git -C "$tmp" add donnees.csv
+            git -C "$tmp" -c user.name="screener-bot" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -q -m "Données détaillées du $(date +%F)"
+            git -C "$tmp" push -q --force \
+              "https://x-access-token:${JETON}@github.com/${GITHUB_REPOSITORY}.git" donnees
+          fi
           git add data
           if git diff --cached --quiet; then
             echo "Aucune donnée nouvelle."
