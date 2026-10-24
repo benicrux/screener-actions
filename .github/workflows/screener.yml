@@ -50,8 +50,8 @@ jobs:
 
       - name: Collecter les données et calculer les notes
         env:
-          # Lancement automatique après une modification du planning : court (40 min)
-          BUDGET_MINUTES: ${{ github.event_name == 'push' && '40' || inputs.minutes || '300' }}
+          # Lancement automatique après une modification du planning : court (15 min)
+          BUDGET_MINUTES: ${{ github.event_name == 'push' && '15' || inputs.minutes || '300' }}
         run: python main.py
 
       - name: Sauvegarder les données
