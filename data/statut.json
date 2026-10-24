@@ -1,19 +1,19 @@
 {
- "date": "2026-10-24 21:37 UTC",
+ "date": "2026-10-24 21:40 UTC",
  "univers": 26722,
- "avec_donnees": 26493,
- "notees": 24634,
- "jamais_lues": 5,
- "introuvables": 224,
+ "avec_donnees": 26496,
+ "notees": 24651,
+ "jamais_lues": 1,
+ "introuvables": 225,
  "jours_restants": 1,
- "cours_du_jour": 26551,
+ "cours_du_jour": 26553,
  "collecte": {
-  "lues": 3547,
-  "introuvables": 53,
+  "lues": 3,
+  "introuvables": 1,
   "erreurs": 1,
-  "blocages": 4,
+  "blocages": 0,
   "arret": null,
-  "minutes": 6.3
+  "minutes": 0.0
  },
  "poids": {
   "valorisation": 25,
