@@ -33,11 +33,24 @@ const PAR_PAGE = 100;
 /* ------------------------------------------------------------------ */
 /* État                                                                */
 /* ------------------------------------------------------------------ */
+const ECHELLES = [
+  { k: "inv", nom: "Note investisseur" },
+  { k: "val", nom: "Valorisation" },
+];
 const ETAT_DEFAUT = {
-  continent: "", pays: "", secteur: "", industrie: "", taille: "", note: 0,
-  favoris: false, q: "", tri: "inv", sens: -1,
+  continent: "", pays: "", secteur: "", industrie: "", taille: "",
+  favoris: false, q: "", tri: "inv", sens: -1, etoiles: {},
 };
 let etat = Object.assign({}, ETAT_DEFAUT, lire("pepites.filtres", {}));
+etat.etoiles = Object.assign({}, etat.etoiles || {});
+delete etat.note;
+
+/* Échelle d'étoiles : 1 = toutes les sociétés notées, puis 20, 40, 60, 80 et plus */
+function seuilEtoiles(n) { return n ? Math.max(1, (n - 1) * 20) : 0; }
+function texteEtoiles(n) {
+  if (!n) return "Toutes";
+  return n === 1 ? "Toutes les notées" : `${(n - 1) * 20} et plus`;
+}
 let affichees = PAR_PAGE;
 let actions = [];
 let parSymbole = new Map();
@@ -197,7 +210,21 @@ function construireFiltres() {
   document.getElementById("f-secteur").onchange = (e) => { etat.secteur = e.target.value; etat.industrie = ""; majFiltres(); };
   document.getElementById("f-industrie").onchange = (e) => { etat.industrie = e.target.value; majFiltres(); };
   document.getElementById("f-taille").onchange = (e) => { etat.taille = e.target.value; majFiltres(); };
-  document.getElementById("f-note").onchange = (e) => { etat.note = +e.target.value; majFiltres(); };
+  const echelles = document.getElementById("echelles");
+  echelles.innerHTML = ECHELLES.map(({ k, nom }) => `
+    <div class="echelle-filtre" role="group" aria-label="${nom} minimale">
+      <span class="echelle-nom">${nom}</span>
+      <span class="etoiles">${[1, 2, 3, 4, 5].map((n) =>
+        `<button type="button" data-k="${k}" data-n="${n}" aria-label="${n} étoile${n > 1 ? "s" : ""} et plus : ${texteEtoiles(n).toLowerCase()}">★</button>`).join("")}</span>
+      <span class="echelle-seuil" data-seuil="${k}"></span>
+    </div>`).join("");
+  echelles.onclick = (e) => {
+    const b = e.target.closest("button[data-n]");
+    if (!b) return;
+    const k = b.dataset.k, n = +b.dataset.n;
+    etat.etoiles[k] = etat.etoiles[k] === n ? 0 : n;
+    majFiltres();
+  };
   document.getElementById("f-favoris").onchange = (e) => { etat.favoris = e.target.checked; majFiltres(); };
   let minuterie;
   document.getElementById("recherche").oninput = (e) => {
@@ -205,7 +232,7 @@ function construireFiltres() {
     minuterie = setTimeout(() => { etat.q = e.target.value; majFiltres(false); }, 150);
   };
   document.getElementById("btn-reinit").onclick = () => {
-    etat = Object.assign({}, ETAT_DEFAUT, { tri: etat.tri, sens: etat.sens });
+    etat = Object.assign({}, ETAT_DEFAUT, { tri: etat.tri, sens: etat.sens, etoiles: {} });
     document.getElementById("recherche").value = "";
     majFiltres();
   };
@@ -229,7 +256,14 @@ function majFiltres(remettre = true) {
   options(document.getElementById("f-industrie"), uniques(dansSecteur, "i"), "Toutes", etat.industrie);
   const tailles = ORDRE_TAILLES.filter((t) => actions.some((a) => a.t === t));
   options(document.getElementById("f-taille"), tailles, "Toutes", etat.taille);
-  document.getElementById("f-note").value = String(etat.note);
+  document.querySelectorAll("#echelles button[data-n]").forEach((b) => {
+    const choisi = etat.etoiles[b.dataset.k] || 0;
+    b.classList.toggle("pleine", +b.dataset.n <= choisi);
+    b.setAttribute("aria-pressed", String(+b.dataset.n === choisi));
+  });
+  document.querySelectorAll("#echelles [data-seuil]").forEach((el) => {
+    el.textContent = texteEtoiles(etat.etoiles[el.dataset.seuil] || 0);
+  });
   document.getElementById("f-favoris").checked = etat.favoris;
   if (document.getElementById("recherche").value !== etat.q) document.getElementById("recherche").value = etat.q;
   ecrire("pepites.filtres", Object.assign({}, etat, { q: "" }));
@@ -239,7 +273,7 @@ function majFiltres(remettre = true) {
 }
 
 function libelleFiltres() {
-  const actifs = ["pays", "secteur", "industrie", "taille", "note", "favoris"].filter((k) => etat[k]).length;
+  const actifs = ["pays", "secteur", "industrie", "taille", "favoris"].filter((k) => etat[k]).length;
   const ouvert = document.getElementById("selecteurs").classList.contains("ouvert");
   document.getElementById("btn-filtres").textContent =
     (ouvert ? "Masquer les filtres" : "Plus de filtres") + (actifs ? ` (${actifs} actif${actifs > 1 ? "s" : ""})` : "");
@@ -257,7 +291,7 @@ function filtrer() {
     (!etat.secteur || a.se === etat.secteur) &&
     (!etat.industrie || a.i === etat.industrie) &&
     (!etat.taille || a.t === etat.taille) &&
-    (!etat.note || (a.inv != null && a.inv >= etat.note)) &&
+    ECHELLES.every(({ k }) => !etat.etoiles[k] || (a[k] != null && a[k] >= seuilEtoiles(etat.etoiles[k]))) &&
     (!etat.favoris || favoris[a.s]) &&
     (!q || normaliser(a.n).includes(q) || normaliser(a.s).startsWith(q)));
 }

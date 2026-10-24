@@ -91,6 +91,17 @@ button, input, select { font: inherit; color: inherit; }
 .continents button[aria-pressed="true"] {
   background: var(--encre); color: var(--fond); border-color: var(--encre);
 }
+.echelles { display: grid; grid-template-columns: 1fr; gap: 2px; padding-top: 8px; }
+@media (min-width: 760px) { .echelles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 24px; } }
+.echelle-filtre { display: grid; grid-template-columns: 136px auto 1fr; align-items: center; gap: 8px; }
+.echelle-nom { font-size: 14px; }
+.etoiles { display: flex; }
+.etoiles button {
+  background: none; border: 0; padding: 4px 3px; min-width: 34px; min-height: 36px;
+  font-size: 26px; line-height: 1; color: var(--filet); cursor: pointer;
+}
+.etoiles button.pleine { color: var(--or-bord); }
+.echelle-seuil { font-size: 13px; color: var(--encre-2); white-space: nowrap; }
 .filtres-bascule { display: none; }
 @media (max-width: 759px) {
   .filtres-bascule { display: inline-block; margin-top: 8px; }

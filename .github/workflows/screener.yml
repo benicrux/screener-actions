@@ -11,7 +11,8 @@ on:
         default: "300"
   push:
     branches: [main]
-    paths: [".github/workflows/screener.yml"] # premier lancement court après l'installation
+    # Lancement court quand le planning ou le site changent, pour publier tout de suite
+    paths: [".github/workflows/screener.yml", "web/**"]
 
 permissions:
   contents: write   # pour sauvegarder les données dans le dépôt
@@ -50,7 +51,7 @@ jobs:
 
       - name: Collecter les données et calculer les notes
         env:
-          # Lancement automatique après une modification du planning : court (15 min)
+          # Lancement automatique après une modification du planning ou du site : court (15 min)
           BUDGET_MINUTES: ${{ github.event_name == 'push' && '15' || inputs.minutes || '300' }}
         run: python main.py
 
