@@ -4,3 +4,5 @@ __pycache__/
 .venv/
 # Données détaillées : gardées sur la branche « donnees », sans historique
 data/donnees.csv
+# Historique du test sur le passé : gardé sur la branche « retro »
+data/retro/

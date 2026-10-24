@@ -1,0 +1,71 @@
+name: Test sur le passé
+
+on:
+  workflow_dispatch: # bouton « Run workflow » pour lancer à la main
+  push:
+    branches: [main]
+    paths: ["retro.py", ".github/workflows/retro.yml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: screener   # jamais en même temps que le calcul de nuit (Yahoo bloquerait)
+  cancel-in-progress: false
+
+jobs:
+  tester:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Installer les dépendances
+        run: pip install -r requirements.txt
+
+      - name: Reprendre les données déjà collectées (branche « retro »)
+        run: |
+          mkdir -p data/retro
+          if git fetch -q --depth 1 origin retro; then
+            git archive FETCH_HEAD | tar -x -C data/retro
+            echo "$(wc -l < data/retro/traites.txt) sociétés déjà lues."
+          fi
+
+      - name: Collecter l'historique et analyser
+        env:
+          BUDGET_MINUTES: "240"
+        run: python retro.py
+
+      - name: Sauvegarder
+        if: always()
+        env:
+          JETON: ${{ github.token }}
+        run: |
+          git config user.name "screener-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -s data/retro/traites.txt ]; then
+            tmp=$(mktemp -d)
+            cp data/retro/* "$tmp/"
+            git -C "$tmp" init -q -b retro
+            git -C "$tmp" add .
+            git -C "$tmp" -c user.name="screener-bot" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -q -m "Historique pour le test sur le passé ($(date +%F))"
+            git -C "$tmp" push -q --force \
+              "https://x-access-token:${JETON}@github.com/${GITHUB_REPOSITORY}.git" retro
+          fi
+          if [ -f data/retro_resultats.json ]; then
+            git add data/retro_resultats.json
+            if ! git diff --cached --quiet; then
+              git commit -q -m "Résultats du test sur le passé"
+              git pull -q --rebase --autostash
+              git push -q
+            fi
+          fi
