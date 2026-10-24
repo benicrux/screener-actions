@@ -1,5 +1,5 @@
 {
- "date": "2026-10-24 21:45 UTC",
+ "date": "2026-10-24 22:16 UTC",
  "univers": 26722,
  "avec_donnees": 26496,
  "notees": 24651,
@@ -24,5 +24,6 @@
   "publication": 10,
   "visibilite": 5
  },
+ "usd_par_eur": 1.1204481792717087,
  "depot": "benicrux/screener-actions"
 }
