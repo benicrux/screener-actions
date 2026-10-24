@@ -99,7 +99,7 @@ def generer(table: pd.DataFrame, statut: dict) -> None:
             dicos[cle] = valeurs
             for l in lignes:
                 l[j] = index.get(l[j]) if l[j] is not None else None
-    tableau = {"maj": dt.date.today().isoformat(),
+    tableau = {"maj": dt.date.today().isoformat(), "usd_par_eur": statut.get("usd_par_eur"),
                "champs": [c for c, _, _ in COLONNES], "dicos": dicos, "lignes": lignes}
     (SITE / "data" / "screener.json").write_text(
         json.dumps(tableau, ensure_ascii=False, separators=(",", ":")))

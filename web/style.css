@@ -103,6 +103,32 @@ button, input, select { font: inherit; color: inherit; }
 }
 .etoiles button.pleine { color: var(--or-bord); }
 .echelle-seuil { font-size: 13px; color: var(--encre-2); white-space: nowrap; }
+.capi-filtre { grid-template-columns: 136px minmax(0, 1fr); grid-template-areas: "nom texte" "curseur curseur"; row-gap: 0; padding-top: 4px; }
+.capi-filtre .echelle-nom { grid-area: nom; }
+.capi-filtre .echelle-seuil { grid-area: texte; justify-self: end; }
+.double-curseur {
+  grid-area: curseur; position: relative; display: block; height: 36px;
+  --debut: 0%; --fin: 100%;
+}
+.double-curseur::before {
+  content: ""; position: absolute; left: 11px; right: 11px; top: 16px; height: 4px; border-radius: 2px;
+  background: linear-gradient(to right, var(--filet) var(--debut), var(--or-bord) var(--debut),
+    var(--or-bord) var(--fin), var(--filet) var(--fin));
+}
+.double-curseur input {
+  position: absolute; inset: 0; width: 100%; margin: 0; background: none;
+  -webkit-appearance: none; appearance: none; pointer-events: none;
+}
+.double-curseur input::-webkit-slider-runnable-track { background: none; height: 36px; }
+.double-curseur input::-moz-range-track { background: none; }
+.double-curseur input::-webkit-slider-thumb {
+  -webkit-appearance: none; pointer-events: auto; width: 22px; height: 22px; margin-top: 7px;
+  border-radius: 50%; background: var(--surface); border: 2px solid var(--or-bord); cursor: pointer;
+}
+.double-curseur input::-moz-range-thumb {
+  pointer-events: auto; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--surface); border: 2px solid var(--or-bord); cursor: pointer;
+}
 .filtres-bascule { display: none; }
 @media (max-width: 759px) {
   .filtres-bascule { display: inline-block; margin-top: 8px; }

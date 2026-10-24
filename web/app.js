@@ -26,7 +26,6 @@ const NOTES_FICHE = [
   ["rct", "Révisions BNA court terme"], ["pub", "Publication"], ["vis", "Visibilité"],
   ["nper", "PER"], ["npot", "Potentiel"], ["nrdt", "Rendement"], ["con", "Consensus"],
 ];
-const ORDRE_TAILLES = ["Géante", "Grande", "Moyenne", "Petite", "Très petite"];
 const CONTINENTS = ["Europe", "Amérique du Nord", "Amérique latine", "Asie", "Moyen-Orient", "Afrique", "Océanie"];
 const PAR_PAGE = 100;
 // Remplacé à chaque publication : évite qu'un téléphone mélange une ancienne et une nouvelle version
@@ -37,15 +36,20 @@ const VERSION = "__VERSION__";
 /* ------------------------------------------------------------------ */
 const ECHELLES = [
   { k: "inv", nom: "Note investisseur" },
-  { k: "val", nom: "Valorisation" },
 ];
+// Paliers du curseur de capitalisation, en euros
+const PALIERS_CAPI = [0, 25e6, 50e6, 100e6, 250e6, 500e6, 1e9, 2e9, 5e9, 10e9, 50e9, 100e9, 500e9, Infinity];
+const DERNIER_PALIER = PALIERS_CAPI.length - 1;
 const ETAT_DEFAUT = {
-  continent: "", pays: "", secteur: "", industrie: "", taille: "",
-  favoris: false, q: "", tri: "inv", sens: -1, etoiles: {},
+  continent: "", pays: "", secteur: "", industrie: "",
+  favoris: false, q: "", tri: "inv", sens: -1, etoiles: {}, capi: [0, DERNIER_PALIER],
 };
 let etat = Object.assign({}, ETAT_DEFAUT, lire("pepites.filtres", {}));
-etat.etoiles = Object.assign({}, etat.etoiles || {});
+etat.etoiles = { inv: (etat.etoiles || {}).inv || 0 };
+if (!Array.isArray(etat.capi) || etat.capi.length !== 2) etat.capi = [0, DERNIER_PALIER];
 delete etat.note;
+delete etat.taille;
+let USD_PAR_EUR = 1.08;
 
 /* Échelle d'étoiles : 1 = toutes les sociétés notées, puis 20, 40, 60, 80 et plus */
 function seuilEtoiles(n) { return n ? Math.max(1, (n - 1) * 20) : 0; }
@@ -83,10 +87,22 @@ function per(v) {
   if (v <= 0 || v > 999) return "n.s.";
   return nombre(v, 1);
 }
-function capi(v) {
+function euros(e) {
+  if (e >= 1e9) {
+    const md = e / 1e9;
+    return nombre(md, md >= 100 || Number.isInteger(md) ? 0 : 1) + " Md€";
+  }
+  return nombre(e / 1e6, 0) + " M€";
+}
+function capi(v) {  // v en dollars, affiché en euros
   if (v == null || !isFinite(v)) return "—";
-  if (v >= 1e9) return nombre(v / 1e9, v >= 1e11 ? 0 : 1) + " Md$";
-  return nombre(v / 1e6, 0) + " M$";
+  return euros(v / USD_PAR_EUR);
+}
+function texteCapi([min, max]) {
+  if (min === 0 && max === DERNIER_PALIER) return "Toutes";
+  if (max === DERNIER_PALIER) return `Plus de ${euros(PALIERS_CAPI[min])}`;
+  if (min === 0) return `Moins de ${euros(PALIERS_CAPI[max])}`;
+  return `De ${euros(PALIERS_CAPI[min])} à ${euros(PALIERS_CAPI[max])}`;
 }
 function montant(v, devise) {
   if (v == null || !isFinite(v)) return "—";
@@ -144,6 +160,7 @@ async function charger() {
       fetch(`data/statut.json?v=${VERSION}`).then((r) => r.json()).catch(() => ({})),
     ]);
     statut = s;
+    if (t.usd_par_eur) USD_PAR_EUR = t.usd_par_eur;
     const champs = t.champs;
     actions = t.lignes.map((l) => {
       const o = {};
@@ -218,7 +235,6 @@ function construireFiltres() {
   document.getElementById("f-pays").onchange = (e) => { etat.pays = e.target.value; majFiltres(); };
   document.getElementById("f-secteur").onchange = (e) => { etat.secteur = e.target.value; etat.industrie = ""; majFiltres(); };
   document.getElementById("f-industrie").onchange = (e) => { etat.industrie = e.target.value; majFiltres(); };
-  document.getElementById("f-taille").onchange = (e) => { etat.taille = e.target.value; majFiltres(); };
   const echelles = document.getElementById("echelles");
   echelles.innerHTML = ECHELLES.map(({ k, nom }) => `
     <div class="echelle-filtre" role="group" aria-label="${nom} minimale">
@@ -226,7 +242,27 @@ function construireFiltres() {
       <span class="etoiles">${[1, 2, 3, 4, 5].map((n) =>
         `<button type="button" data-k="${k}" data-n="${n}" aria-label="${n} étoile${n > 1 ? "s" : ""} et plus : ${texteEtoiles(n).toLowerCase()}">★</button>`).join("")}</span>
       <span class="echelle-seuil" data-seuil="${k}"></span>
-    </div>`).join("");
+    </div>`).join("") + `
+    <div class="echelle-filtre capi-filtre" role="group" aria-label="Capitalisation boursière">
+      <span class="echelle-nom">Capitalisation</span>
+      <span class="double-curseur">
+        <input type="range" id="capi-min" min="0" max="${DERNIER_PALIER}" step="1" aria-label="Capitalisation minimale">
+        <input type="range" id="capi-max" min="0" max="${DERNIER_PALIER}" step="1" aria-label="Capitalisation maximale">
+      </span>
+      <span class="echelle-seuil" id="capi-texte"></span>
+    </div>`;
+  const curseurMin = document.getElementById("capi-min");
+  const curseurMax = document.getElementById("capi-max");
+  const bougerCapi = (e) => {
+    let min = +curseurMin.value, max = +curseurMax.value;
+    if (min >= max) {
+      if (e.target === curseurMin) min = max - 1; else max = min + 1;
+    }
+    etat.capi = [min, max];
+    majFiltres();
+  };
+  curseurMin.oninput = bougerCapi;
+  curseurMax.oninput = bougerCapi;
   echelles.onclick = (e) => {
     const b = e.target.closest("button[data-n]");
     if (!b) return;
@@ -241,7 +277,7 @@ function construireFiltres() {
     minuterie = setTimeout(() => { etat.q = e.target.value; majFiltres(false); }, 150);
   };
   document.getElementById("btn-reinit").onclick = () => {
-    etat = Object.assign({}, ETAT_DEFAUT, { tri: etat.tri, sens: etat.sens, etoiles: {} });
+    etat = Object.assign({}, ETAT_DEFAUT, { tri: etat.tri, sens: etat.sens, etoiles: {}, capi: [0, DERNIER_PALIER] });
     document.getElementById("recherche").value = "";
     majFiltres();
   };
@@ -263,8 +299,12 @@ function majFiltres(remettre = true) {
   options(document.getElementById("f-secteur"), uniques(actions, "se"), "Tous", etat.secteur);
   const dansSecteur = etat.secteur ? actions.filter((a) => a.se === etat.secteur) : actions;
   options(document.getElementById("f-industrie"), uniques(dansSecteur, "i"), "Toutes", etat.industrie);
-  const tailles = ORDRE_TAILLES.filter((t) => actions.some((a) => a.t === t));
-  options(document.getElementById("f-taille"), tailles, "Toutes", etat.taille);
+  const [cmin, cmax] = etat.capi;
+  document.getElementById("capi-min").value = String(cmin);
+  document.getElementById("capi-max").value = String(cmax);
+  document.querySelector(".double-curseur").style.setProperty("--debut", `${(cmin / DERNIER_PALIER) * 100}%`);
+  document.querySelector(".double-curseur").style.setProperty("--fin", `${(cmax / DERNIER_PALIER) * 100}%`);
+  document.getElementById("capi-texte").textContent = texteCapi(etat.capi);
   document.querySelectorAll("#echelles button[data-n]").forEach((b) => {
     const choisi = etat.etoiles[b.dataset.k] || 0;
     b.classList.toggle("pleine", +b.dataset.n <= choisi);
@@ -282,7 +322,7 @@ function majFiltres(remettre = true) {
 }
 
 function libelleFiltres() {
-  const actifs = ["pays", "secteur", "industrie", "taille", "favoris"].filter((k) => etat[k]).length;
+  const actifs = ["pays", "secteur", "industrie", "favoris"].filter((k) => etat[k]).length;
   const ouvert = document.getElementById("selecteurs").classList.contains("ouvert");
   document.getElementById("btn-filtres").textContent =
     (ouvert ? "Masquer les filtres" : "Plus de filtres") + (actifs ? ` (${actifs} actif${actifs > 1 ? "s" : ""})` : "");
@@ -299,7 +339,8 @@ function filtrer() {
     (!etat.pays || a.p === etat.pays) &&
     (!etat.secteur || a.se === etat.secteur) &&
     (!etat.industrie || a.i === etat.industrie) &&
-    (!etat.taille || a.t === etat.taille) &&
+    (a.cap != null && a.cap / USD_PAR_EUR >= PALIERS_CAPI[etat.capi[0]] &&
+      a.cap / USD_PAR_EUR < PALIERS_CAPI[etat.capi[1]]) &&
     ECHELLES.every(({ k }) => !etat.etoiles[k] || (a[k] != null && a[k] >= seuilEtoiles(etat.etoiles[k]))) &&
     (!etat.favoris || favoris[a.s]) &&
     (!q || normaliser(a.n).includes(q) || normaliser(a.s).startsWith(q)));

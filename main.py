@@ -90,6 +90,7 @@ def main() -> None:
         "cours_du_jour": int(len(cours)),
         "collecte": bilan,
         "poids": config.POIDS_INVESTISSEUR,
+        "usd_par_eur": fx.get("EUR"),
         "depot": os.environ.get("GITHUB_REPOSITORY"),
     }
     Path("data").mkdir(exist_ok=True)
