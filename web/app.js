@@ -29,6 +29,8 @@ const NOTES_FICHE = [
 const ORDRE_TAILLES = ["Géante", "Grande", "Moyenne", "Petite", "Très petite"];
 const CONTINENTS = ["Europe", "Amérique du Nord", "Amérique latine", "Asie", "Moyen-Orient", "Afrique", "Océanie"];
 const PAR_PAGE = 100;
+// Remplacé à chaque publication : évite qu'un téléphone mélange une ancienne et une nouvelle version
+const VERSION = "__VERSION__";
 
 /* ------------------------------------------------------------------ */
 /* État                                                                */
@@ -135,8 +137,11 @@ function consensusTexte(r) {
 async function charger() {
   try {
     const [t, s] = await Promise.all([
-      fetch("data/screener.json").then((r) => r.json()),
-      fetch("data/statut.json").then((r) => r.json()).catch(() => ({})),
+      fetch(`data/screener.json?v=${VERSION}`).then((r) => {
+        if (!r.ok) throw new Error("donnees-absentes");
+        return r.json();
+      }),
+      fetch(`data/statut.json?v=${VERSION}`).then((r) => r.json()).catch(() => ({})),
     ]);
     statut = s;
     const champs = t.champs;
@@ -154,8 +159,10 @@ async function charger() {
     afficher();
     ouvrirDepuisAdresse();
   } catch (e) {
-    document.getElementById("couverture").textContent =
-      "Les données ne sont pas encore prêtes. Le premier calcul est peut-être en cours : revenez dans quelques minutes.";
+    document.getElementById("couverture").textContent = e && e.message === "donnees-absentes"
+      ? "Les données ne sont pas encore prêtes. Le premier calcul est peut-être en cours : revenez dans quelques minutes."
+      : "La page n'a pas pu s'afficher. Rechargez-la ; si le problème continue, une mise à jour est peut-être en cours.";
+    console.error(e);
   }
 }
 
@@ -168,7 +175,9 @@ function afficherCouverture(maj) {
   }
   let texte = `${nombre(notees, 0)} actions notées dans le monde, mise à jour du ${date(maj)}.`;
   if (statut.jamais_lues > 0) {
-    texte += ` ${nombre(statut.jamais_lues, 0)} sociétés restent à lire`;
+    texte += statut.jamais_lues > 1
+      ? ` ${nombre(statut.jamais_lues, 0)} sociétés restent à lire`
+      : " 1 société reste à lire";
     texte += statut.jours_restants ? ` (environ ${statut.jours_restants} jours).` : ".";
   }
   el.textContent = texte;
@@ -372,7 +381,7 @@ const paquets = new Map();
 async function chargerFiche(s) {
   const cle = (crc32(s) % 256).toString(16).padStart(2, "0");
   if (!paquets.has(cle)) {
-    paquets.set(cle, fetch(`data/fiches/${cle}.json`).then((r) => r.json()));
+    paquets.set(cle, fetch(`data/fiches/${cle}.json?v=${VERSION}`).then((r) => r.json()));
   }
   const p = await paquets.get(cle);
   return p[s];

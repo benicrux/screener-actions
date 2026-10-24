@@ -76,6 +76,12 @@ def generer(table: pd.DataFrame, statut: dict) -> None:
     if SITE.exists():
         shutil.rmtree(SITE)
     shutil.copytree(WEB, SITE)
+    # Numéro de version dans les adresses des fichiers : le navigateur ne mélange pas
+    # une ancienne page gardée en mémoire avec les nouvelles données
+    version = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%d%H%M")
+    for nom in ("index.html", "app.js"):
+        f = SITE / nom
+        f.write_text(f.read_text().replace("__VERSION__", version))
     (SITE / "data" / "fiches").mkdir(parents=True, exist_ok=True)
 
     t = table.copy()
