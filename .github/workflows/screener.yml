@@ -1,0 +1,76 @@
+name: Screener
+
+on:
+  schedule:
+    # Chaque jour à 3 h 13 UTC (4 h 13 à Paris en hiver, 5 h 13 en été)
+    - cron: "13 3 * * *"
+  workflow_dispatch: # bouton « Run workflow » pour lancer à la main
+    inputs:
+      minutes:
+        description: "Durée maximale de collecte (minutes)"
+        default: "300"
+  push:
+    branches: [main]
+    paths: [".github/workflows/screener.yml"] # premier lancement court après l'installation
+
+permissions:
+  contents: write   # pour sauvegarder les données dans le dépôt
+  pages: write      # pour publier le site
+  id-token: write
+
+concurrency:
+  group: screener
+  cancel-in-progress: false
+
+jobs:
+  calculer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Installer les dépendances
+        run: pip install -r requirements.txt
+
+      - name: Collecter les données et calculer les notes
+        env:
+          # Lancement automatique après une modification du planning : court (40 min)
+          BUDGET_MINUTES: ${{ github.event_name == 'push' && '40' || inputs.minutes || '300' }}
+        run: python main.py
+
+      - name: Sauvegarder les données
+        if: always()
+        run: |
+          git config user.name "screener-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then
+            echo "Aucune donnée nouvelle."
+          else
+            git commit -q -m "Données du $(date +%F)"
+            git pull -q --rebase --autostash
+            git push -q
+          fi
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+  publier:
+    needs: calculer
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploiement.outputs.page_url }}
+    steps:
+      - id: deploiement
+        uses: actions/deploy-pages@v4

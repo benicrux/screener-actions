@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pépites — screener d'actions</title>
+<meta name="description" content="Screener d'actions mondial, notes sur 100 inspirées de Zone Bourse.">
+<meta name="theme-color" content="#12263a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M9 4h14l7 9-14 16L2 13z' fill='%23c9962b'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="entete">
+  <div class="marque">
+    <h1>Pépites</h1>
+    <p class="couverture" id="couverture">Chargement des données…</p>
+  </div>
+  <button class="aide" id="btn-aide" type="button" aria-haspopup="dialog">Comment lire les notes</button>
+</header>
+
+<section class="filtres" aria-label="Filtres">
+  <label class="recherche">
+    <span class="sr">Rechercher une action</span>
+    <input id="recherche" type="search" placeholder="Rechercher une société ou un symbole" autocomplete="off">
+  </label>
+
+  <div class="continents" id="continents" role="group" aria-label="Continent"></div>
+
+  <button type="button" class="lien filtres-bascule" id="btn-filtres" aria-expanded="false" aria-controls="selecteurs">Plus de filtres</button>
+  <div class="selecteurs" id="selecteurs">
+    <label><span>Pays</span><select id="f-pays"></select></label>
+    <label><span>Secteur</span><select id="f-secteur"></select></label>
+    <label><span>Industrie</span><select id="f-industrie"></select></label>
+    <label><span>Taille</span><select id="f-taille"></select></label>
+    <label><span>Note investisseur</span>
+      <select id="f-note">
+        <option value="0">Toutes</option>
+        <option value="50">50 et plus</option>
+        <option value="60">60 et plus</option>
+        <option value="70">70 et plus</option>
+        <option value="80">80 et plus : pépites</option>
+      </select>
+    </label>
+    <label class="bascule"><input type="checkbox" id="f-favoris"><span>Mes favoris</span></label>
+  </div>
+
+  <div class="resume-filtres">
+    <p id="compte" aria-live="polite"></p>
+    <button type="button" id="btn-reinit" class="lien">Effacer les filtres</button>
+  </div>
+</section>
+
+<main>
+  <div class="tableau-cadre">
+    <table class="tableau" id="tableau">
+      <thead><tr id="entetes"></tr></thead>
+      <tbody id="lignes"></tbody>
+    </table>
+  </div>
+  <button type="button" id="btn-plus" class="plus" hidden>Afficher 100 actions de plus</button>
+  <p class="vide" id="vide" hidden>Aucune action ne correspond. Élargissez les filtres ou effacez-les.</p>
+</main>
+
+<div class="voile" id="voile" hidden></div>
+<aside class="fiche" id="fiche" role="dialog" aria-modal="true" aria-labelledby="fiche-nom" hidden>
+  <div class="fiche-barre">
+    <button type="button" class="fermer" id="btn-fermer">Fermer</button>
+  </div>
+  <div class="fiche-corps" id="fiche-corps"></div>
+</aside>
+
+<aside class="fiche" id="aide" role="dialog" aria-modal="true" aria-labelledby="aide-titre" hidden>
+  <div class="fiche-barre">
+    <button type="button" class="fermer" id="btn-fermer-aide">Fermer</button>
+  </div>
+  <div class="fiche-corps texte">
+    <h2 id="aide-titre">Comment lire les notes</h2>
+    <p>Chaque note va de 1 à 100. Une note de 80 signifie que la société fait mieux que 80 % des sociétés de son secteur sur ce critère. Les banques et assureurs sont comparés entre eux.</p>
+    <p class="echelle"><span class="n n-bas">25</span> faible <span class="n n-moy">55</span> moyen <span class="n n-haut">75</span> bon <span class="n n-or">88</span> pépite (notes investisseur et trading)</p>
+    <dl class="glossaire">
+      <dt>Note investisseur</dt><dd>La synthèse pour un placement de moyen-long terme : valorisation 25 %, croissance 15 %, rentabilité 15 %, situation financière 15 %, révisions des analystes 15 %, publications 10 %, visibilité 5 %.</dd>
+      <dt>Note trading</dt><dd>La synthèse de court terme : valorisation, révisions de la semaine, visibilité.</dd>
+      <dt>Valorisation</dt><dd>Valeur d'entreprise rapportée au chiffre d'affaires passé et prévu. Plus c'est bas, meilleure est la note. Banques : PER et cours / actif net.</dd>
+      <dt>Croissance</dt><dd>Progression du chiffre d'affaires sur un an et prévue par les analystes, les prévisions comptant davantage.</dd>
+      <dt>Rentabilité</dt><dd>Marge nette passée et prévue. Banques : marge et rentabilité des fonds propres.</dd>
+      <dt>Situation financière</dt><dd>Trésorerie nette rapportée au chiffre d'affaires, et dette nette rapportée à l'EBITDA. Non calculée pour les banques.</dd>
+      <dt>Révisions</dt><dd>Les analystes relèvent-ils leurs prévisions de bénéfice par action ? Sur 3 mois, 4 mois et un an (long terme) ou sur la semaine (court terme).</dd>
+      <dt>Publication</dt><dd>Les derniers résultats ont-ils dépassé les attentes des analystes ?</dd>
+      <dt>Visibilité</dt><dd>Les analystes sont-ils d'accord entre eux ? Des prévisions resserrées donnent une bonne note.</dd>
+      <dt>PER, potentiel, rendement</dt><dd>Cours / bénéfice par action, écart entre l'objectif de cours moyen des analystes et le cours, dividende / cours.</dd>
+    </dl>
+    <p>Les données viennent de Yahoo Finance et de FinanceDatabase. Elles peuvent comporter des erreurs, surtout pour les petites sociétés : vérifiez toujours avant d'investir. Ce screener est un outil de repérage, pas un conseil en investissement.</p>
+    <p id="aide-maj"></p>
+  </div>
+</aside>
+
+<script src="app.js"></script>
+</body>
+</html>
