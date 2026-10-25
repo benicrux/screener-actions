@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Test sur le passé — Pépites</title>
+<meta name="theme-color" content="#12263a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=__VERSION__">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M9 4h14l7 9-14 16L2 13z' fill='%23c9962b'/%3E%3C/svg%3E">
+<style>
+  .page { padding: 20px 16px 48px; max-width: 760px; }
+  .page h1 { margin: 0; font-size: 30px; line-height: 1.05; font-weight: 800; font-variation-settings: "wdth" 118; }
+  .page h2 { margin: 30px 0 8px; font-size: 18px; font-weight: 700; padding-bottom: 4px; border-bottom: 1px solid var(--filet); }
+  .page p { margin: 10px 0; max-width: 66ch; }
+  .retour { display: inline-block; margin-bottom: 14px; color: var(--accent); text-underline-offset: 3px; }
+  .verdict { font-size: 17px; }
+  .graphe { display: grid; gap: 8px; margin: 14px 0 6px; }
+  .rangee { display: grid; grid-template-columns: 118px minmax(0, 1fr) 62px; align-items: center; gap: 10px; font-size: 14px; }
+  .axe { position: relative; height: 22px; background: var(--moy-fond); border-radius: 4px; }
+  .axe .zero { position: absolute; top: -3px; bottom: -3px; width: 1px; background: var(--encre-2); }
+  .axe .barre-perf { position: absolute; top: 3px; bottom: 3px; border-radius: 3px; }
+  .rangee .chiffre { text-align: right; font-weight: 600; }
+  .legende { font-size: 13px; color: var(--encre-2); }
+  table.tab { width: 100%; border-collapse: collapse; font-size: 14px; }
+  table.tab th, table.tab td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--filet); white-space: nowrap; }
+  table.tab th:first-child, table.tab td:first-child { text-align: left; white-space: normal; }
+  table.tab th { font-weight: 600; color: var(--encre-2); font-size: 13px; white-space: normal; }
+  ul.limites li { margin: 6px 0; }
+</style>
+</head>
+<body>
+<main class="page">
+  <a class="retour" href="./">← Retour au screener</a>
+  <h1>Test sur le passé</h1>
+  <p id="intro">Chargement des résultats…</p>
+
+  <h2>Les mieux notées ont-elles fait mieux ?</h2>
+  <p class="verdict" id="verdict"></p>
+  <div class="graphe" id="graphe-notes"></div>
+  <p class="legende">Performance médiane sur les 12 mois suivants, en euros, dividendes compris, selon le niveau de note au départ. Chaque groupe contient un cinquième des sociétés.</p>
+
+  <h2>Quel critère annonce le mieux la suite ?</h2>
+  <div class="tableau-cadre"><table class="tab" id="tab-criteres"></table></div>
+  <p class="legende">Performance médiane du cinquième le moins bien noté et du cinquième le mieux noté sur chaque critère.</p>
+
+  <h2>Selon les régions</h2>
+  <div class="tableau-cadre"><table class="tab" id="tab-regions"></table></div>
+
+  <h2>Date par date</h2>
+  <div class="tableau-cadre"><table class="tab" id="tab-dates"></table></div>
+  <p class="legende">Les 100 sociétés les mieux notées à chaque date, comparées à l'ensemble.</p>
+
+  <h2>Lion Finance et Afentra</h2>
+  <div id="cas"></div>
+
+  <h2>Les limites du test</h2>
+  <ul class="limites">
+    <li>Yahoo ne fournit gratuitement que quatre exercices de comptes et pas les anciennes prévisions des analystes. Le test porte donc sur la partie « comptes » de la note : valorisation, croissance, rentabilité et situation financière, soit 70 % des pondérations. Les révisions, les publications et la visibilité ne sont pas testées.</li>
+    <li>Les sociétés disparues depuis (faillites, rachats) ne figurent plus dans la liste : les performances des moins bien notées sont sans doute un peu flattées, ce qui joue plutôt contre le screener.</li>
+    <li>Deux ans de marché seulement : de bons résultats sur cette période ne garantissent pas les suivants.</li>
+    <li>Un avantage de quelques points par an en moyenne n'empêche pas qu'une action bien notée chute fortement. La note sert à trier, pas à se passer d'analyser.</li>
+  </ul>
+</main>
+<script>
+"use strict";
+const VERSION = "__VERSION__";
+const F0 = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 0 });
+const F1 = new Intl.NumberFormat("fr-FR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const pct = (v, signe = true) => v == null ? "—" : (signe && v > 0 ? "+" : "") + F1.format(v * 100) + "\u00a0%";
+const date = (iso) => new Date(iso + "T12:00:00").toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
+const NOMS_TRANCHES = ["Les 20\u00a0% les moins bien notées", "Suivantes", "Milieu", "Suivantes", "Les 20\u00a0% les mieux notées"];
+const CRITERES = { valorisation: "Valorisation", croissance: "Croissance", rentabilite: "Rentabilité", situation_fi: "Situation financière" };
+
+function barres(el, tranches) {
+  const vals = tranches.map((t) => t.perf_mediane);
+  const max = Math.max(0.01, ...vals.map(Math.abs));
+  const zero = vals.some((v) => v < 0) ? 50 : 0;
+  const echelle = zero ? 50 / max : 100 / max;
+  el.innerHTML = tranches.map((t, i) => {
+    const v = t.perf_mediane;
+    const largeur = Math.abs(v) * echelle;
+    const gauche = v >= 0 ? zero : zero - largeur;
+    const couleur = i === 4 ? "var(--or-bord)" : v >= 0 ? "var(--haut)" : "var(--bas)";
+    return `<div class="rangee"><span>${NOMS_TRANCHES[i]}</span>
+      <span class="axe"><span class="zero" style="left:${zero}%"></span>
+      <span class="barre-perf" style="left:${gauche}%;width:${largeur}%;background:${couleur}"></span></span>
+      <span class="chiffre">${pct(v)}</span></div>`;
+  }).join("");
+}
+
+fetch(`data/retro_resultats.json?v=${VERSION}`).then((r) => r.json()).then((r) => {
+  const dates = r.dates.map(date);
+  document.getElementById("intro").textContent =
+    `On s'est replacé à ${r.dates.length} dates, de ${dates[0]} à ${dates[dates.length - 1]}. À chaque date, les notes ont été recalculées avec les seuls comptes publiés à l'époque, puis on a mesuré ce qu'a rapporté chaque action dans les 12 mois suivants, en euros, dividendes compris. En tout : ${F0.format(r.societes)} sociétés et ${F0.format(r.observations)} mesures.`;
+  const t = r.par_note;
+  const ecart = t[4].perf_mediane - t[0].perf_mediane;
+  const debut = ecart >= 0.02 ? "Oui, nettement mais modestement." : ecart > 0 ? "Un peu seulement." : "Non, pas sur cette période.";
+  document.getElementById("verdict").textContent =
+    `${debut} Les 20\u00a0% les mieux notées ont gagné ${pct(t[4].perf_mediane)} en médiane, contre ${pct(t[0].perf_mediane)} pour les 20\u00a0% les moins bien notées, soit ${F1.format(ecart * 100)} points d'écart par an. ${F0.format(t[4].part_bat_mediane * 100)}\u00a0% des mieux notées ont fait mieux que l'action médiane du marché, contre ${F0.format(t[0].part_bat_mediane * 100)}\u00a0% des moins bien notées.`;
+  barres(document.getElementById("graphe-notes"), t);
+
+  document.getElementById("tab-criteres").innerHTML =
+    `<tr><th>Critère</th><th>Moins bien notées</th><th>Mieux notées</th></tr>` +
+    Object.entries(r.par_critere).map(([k, v]) =>
+      `<tr><td>${CRITERES[k] || k}</td><td>${pct(v[0].perf_mediane)}</td><td>${pct(v[4].perf_mediane)}</td></tr>`).join("") +
+    `<tr><td><strong>Note combinée</strong></td><td>${pct(t[0].perf_mediane)}</td><td><strong>${pct(t[4].perf_mediane)}</strong></td></tr>`;
+
+  document.getElementById("tab-regions").innerHTML =
+    `<tr><th>Région</th><th>Moins bien notées</th><th>Mieux notées</th><th>Mieux notées battant la médiane</th></tr>` +
+    Object.entries(r.par_continent).map(([k, v]) =>
+      `<tr><td>${k}</td><td>${pct(v[0].perf_mediane)}</td><td>${pct(v[4].perf_mediane)}</td><td>${F0.format(v[4].part_bat_mediane * 100)}\u00a0%</td></tr>`).join("");
+
+  document.getElementById("tab-dates").innerHTML =
+    `<tr><th>Départ</th><th>Toutes</th><th>100 mieux notées</th></tr>` +
+    Object.entries(r.par_date).map(([d, v]) =>
+      `<tr><td>${date(d)}</td><td>${pct(v.perf_mediane_toutes)}</td><td>${pct(v.perf_mediane_top_100)}</td></tr>`).join("");
+
+  const noms = { "BGEO.L": "Lion Finance", "AET.L": "Afentra" };
+  document.getElementById("cas").innerHTML = Object.entries(r.cas).map(([s, l]) =>
+    `<p><strong>${noms[s] || s}</strong></p><div class="tableau-cadre"><table class="tab"><tr><th>Départ</th><th>Note</th><th>12 mois après</th></tr>` +
+    l.map((x) => `<tr><td>${date(x.date)}</td><td>${x.note ?? "—"}</td><td>${pct(x.perf)}</td></tr>`).join("") + `</table></div>`).join("") ||
+    "<p>Pas de données pour ces deux sociétés.</p>";
+}).catch(() => {
+  document.getElementById("intro").textContent = "Les résultats du test ne sont pas encore disponibles.";
+});
+</script>
+</body>
+</html>

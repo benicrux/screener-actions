@@ -7,226 +7,234 @@
   "2025-05-01",
   "2025-10-01"
  ],
- "societes": 22629,
- "observations": 85329,
+ "societes": 23079,
+ "observations": 107377,
  "par_date": {
   "2023-11-01": {
-   "nombre": 20823,
-   "correlation_rang": 0.0307,
-   "perf_mediane_toutes": 0.0703,
+   "nombre": 20825,
+   "correlation_rang": 0.0308,
+   "perf_mediane_toutes": 0.0704,
    "perf_mediane_top_100": 0.1119,
-   "perf_mediane_note_80": 0.1078,
-   "nombre_note_80": 560
+   "perf_mediane_note_80": 0.111,
+   "nombre_note_80": 561
   },
   "2024-05-01": {
-   "nombre": 21237,
-   "correlation_rang": 0.0762,
-   "perf_mediane_toutes": -0.009,
+   "nombre": 21240,
+   "correlation_rang": 0.0763,
+   "perf_mediane_toutes": -0.0089,
    "perf_mediane_top_100": 0.0525,
    "perf_mediane_note_80": 0.0291,
    "nombre_note_80": 337
   },
   "2024-11-01": {
-   "nombre": 21514,
-   "correlation_rang": 0.1062,
+   "nombre": 21517,
+   "correlation_rang": 0.1063,
    "perf_mediane_toutes": 0.0003,
    "perf_mediane_top_100": 0.0727,
-   "perf_mediane_note_80": 0.0983,
-   "nombre_note_80": 291
+   "perf_mediane_note_80": 0.0948,
+   "nombre_note_80": 290
   },
   "2025-05-01": {
-   "nombre": 21755,
-   "correlation_rang": 0.0231,
-   "perf_mediane_toutes": 0.1002,
-   "perf_mediane_top_100": 0.0801,
+   "nombre": 21758,
+   "correlation_rang": 0.023,
+   "perf_mediane_toutes": 0.1003,
+   "perf_mediane_top_100": 0.0813,
    "perf_mediane_note_80": 0.0936,
    "nombre_note_80": 280
+  },
+  "2025-10-01": {
+   "nombre": 22037,
+   "correlation_rang": 0.1302,
+   "perf_mediane_toutes": -0.0022,
+   "perf_mediane_top_100": 0.0405,
+   "perf_mediane_note_80": 0.0267,
+   "nombre_note_80": 269
   }
  },
  "par_note": [
   {
    "tranche": 1,
-   "nombre": 17067,
-   "perf_mediane": 0.0106,
-   "perf_moyenne": 0.1467,
-   "part_bat_mediane": 0.4703
+   "nombre": 21477,
+   "perf_mediane": -0.0094,
+   "perf_moyenne": 0.1157,
+   "part_bat_mediane": 0.4541
   },
   {
    "tranche": 2,
-   "nombre": 17065,
-   "perf_mediane": 0.0279,
-   "perf_moyenne": 0.137,
-   "part_bat_mediane": 0.4908
+   "nombre": 21474,
+   "perf_mediane": 0.0187,
+   "perf_moyenne": 0.1214,
+   "part_bat_mediane": 0.4884
   },
   {
    "tranche": 3,
-   "nombre": 17065,
-   "perf_mediane": 0.0264,
-   "perf_moyenne": 0.1314,
-   "part_bat_mediane": 0.4871
+   "nombre": 21475,
+   "perf_mediane": 0.0244,
+   "perf_moyenne": 0.1246,
+   "part_bat_mediane": 0.4945
   },
   {
    "tranche": 4,
-   "nombre": 17065,
-   "perf_mediane": 0.0434,
-   "perf_moyenne": 0.154,
-   "part_bat_mediane": 0.5115
+   "nombre": 21474,
+   "perf_mediane": 0.0391,
+   "perf_moyenne": 0.1439,
+   "part_bat_mediane": 0.5156
   },
   {
    "tranche": 5,
-   "nombre": 17067,
-   "perf_mediane": 0.0638,
-   "perf_moyenne": 0.1653,
-   "part_bat_mediane": 0.5403
+   "nombre": 21477,
+   "perf_mediane": 0.0591,
+   "perf_moyenne": 0.1524,
+   "part_bat_mediane": 0.5474
   }
  ],
  "par_critere": {
   "valorisation": [
    {
     "tranche": 1,
-    "nombre": 17067,
-    "perf_mediane": -0.0083,
-    "perf_moyenne": 0.122,
-    "part_bat_mediane": 0.4466
+    "nombre": 21477,
+    "perf_mediane": -0.0273,
+    "perf_moyenne": 0.0926,
+    "part_bat_mediane": 0.4331
    },
    {
     "tranche": 2,
-    "nombre": 17065,
-    "perf_mediane": 0.0282,
-    "perf_moyenne": 0.1342,
-    "part_bat_mediane": 0.4911
+    "nombre": 21474,
+    "perf_mediane": 0.017,
+    "perf_moyenne": 0.1166,
+    "part_bat_mediane": 0.4863
    },
    {
     "tranche": 3,
-    "nombre": 17065,
-    "perf_mediane": 0.0552,
-    "perf_moyenne": 0.1624,
-    "part_bat_mediane": 0.5245
+    "nombre": 21475,
+    "perf_mediane": 0.0473,
+    "perf_moyenne": 0.148,
+    "part_bat_mediane": 0.5238
    },
    {
     "tranche": 4,
-    "nombre": 17065,
-    "perf_mediane": 0.0405,
-    "perf_moyenne": 0.1522,
-    "part_bat_mediane": 0.5047
+    "nombre": 21474,
+    "perf_mediane": 0.0387,
+    "perf_moyenne": 0.1452,
+    "part_bat_mediane": 0.5129
    },
    {
     "tranche": 5,
-    "nombre": 17067,
-    "perf_mediane": 0.0585,
-    "perf_moyenne": 0.1636,
-    "part_bat_mediane": 0.533
+    "nombre": 21477,
+    "perf_mediane": 0.0569,
+    "perf_moyenne": 0.1556,
+    "part_bat_mediane": 0.5438
    }
   ],
   "croissance": [
    {
     "tranche": 1,
-    "nombre": 11994,
-    "perf_mediane": 0.0139,
-    "perf_moyenne": 0.1476,
-    "part_bat_mediane": 0.485
+    "nombre": 16360,
+    "perf_mediane": -0.008,
+    "perf_moyenne": 0.1157,
+    "part_bat_mediane": 0.467
    },
    {
     "tranche": 2,
-    "nombre": 11991,
-    "perf_mediane": 0.0256,
-    "perf_moyenne": 0.1295,
-    "part_bat_mediane": 0.4954
+    "nombre": 16356,
+    "perf_mediane": 0.0276,
+    "perf_moyenne": 0.1215,
+    "part_bat_mediane": 0.5095
    },
    {
     "tranche": 3,
-    "nombre": 11991,
-    "perf_mediane": 0.0352,
-    "perf_moyenne": 0.1372,
-    "part_bat_mediane": 0.5127
+    "nombre": 16357,
+    "perf_mediane": 0.0371,
+    "perf_moyenne": 0.1294,
+    "part_bat_mediane": 0.5262
    },
    {
     "tranche": 4,
-    "nombre": 11991,
-    "perf_mediane": 0.0409,
-    "perf_moyenne": 0.1582,
-    "part_bat_mediane": 0.5169
+    "nombre": 16356,
+    "perf_mediane": 0.0345,
+    "perf_moyenne": 0.1412,
+    "part_bat_mediane": 0.5201
    },
    {
     "tranche": 5,
-    "nombre": 11992,
-    "perf_mediane": 0.0168,
-    "perf_moyenne": 0.177,
-    "part_bat_mediane": 0.4899
+    "nombre": 16357,
+    "perf_mediane": -0.0018,
+    "perf_moyenne": 0.1394,
+    "part_bat_mediane": 0.4772
    }
   ],
   "rentabilite": [
    {
     "tranche": 1,
-    "nombre": 17065,
-    "perf_mediane": 0.023,
-    "perf_moyenne": 0.185,
-    "part_bat_mediane": 0.4853
+    "nombre": 21474,
+    "perf_mediane": -0.0018,
+    "perf_moyenne": 0.1495,
+    "part_bat_mediane": 0.4659
    },
    {
     "tranche": 2,
-    "nombre": 17063,
-    "perf_mediane": 0.0422,
-    "perf_moyenne": 0.1552,
-    "part_bat_mediane": 0.5097
+    "nombre": 21472,
+    "perf_mediane": 0.0337,
+    "perf_moyenne": 0.1424,
+    "part_bat_mediane": 0.5092
    },
    {
     "tranche": 3,
-    "nombre": 17064,
-    "perf_mediane": 0.0428,
-    "perf_moyenne": 0.1393,
-    "part_bat_mediane": 0.5113
+    "nombre": 21472,
+    "perf_mediane": 0.0407,
+    "perf_moyenne": 0.131,
+    "part_bat_mediane": 0.5189
    },
    {
     "tranche": 4,
-    "nombre": 17063,
-    "perf_mediane": 0.0405,
-    "perf_moyenne": 0.1323,
-    "part_bat_mediane": 0.5044
+    "nombre": 21472,
+    "perf_mediane": 0.0384,
+    "perf_moyenne": 0.1232,
+    "part_bat_mediane": 0.5127
    },
    {
     "tranche": 5,
-    "nombre": 17064,
-    "perf_mediane": 0.0281,
-    "perf_moyenne": 0.1226,
-    "part_bat_mediane": 0.4893
+    "nombre": 21474,
+    "perf_mediane": 0.0224,
+    "perf_moyenne": 0.1118,
+    "part_bat_mediane": 0.4932
    }
   ],
   "situation_fi": [
    {
     "tranche": 1,
-    "nombre": 14849,
-    "perf_mediane": 0.011,
-    "perf_moyenne": 0.1483,
-    "part_bat_mediane": 0.4851
+    "nombre": 18689,
+    "perf_mediane": -0.0009,
+    "perf_moyenne": 0.1296,
+    "part_bat_mediane": 0.4797
    },
    {
     "tranche": 2,
-    "nombre": 14847,
-    "perf_mediane": 0.0278,
-    "perf_moyenne": 0.1314,
-    "part_bat_mediane": 0.5068
+    "nombre": 18686,
+    "perf_mediane": 0.025,
+    "perf_moyenne": 0.1231,
+    "part_bat_mediane": 0.5138
    },
    {
     "tranche": 3,
-    "nombre": 14848,
-    "perf_mediane": 0.0261,
-    "perf_moyenne": 0.1409,
-    "part_bat_mediane": 0.505
+    "nombre": 18687,
+    "perf_mediane": 0.0233,
+    "perf_moyenne": 0.1317,
+    "part_bat_mediane": 0.5124
    },
    {
     "tranche": 4,
-    "nombre": 14847,
-    "perf_mediane": 0.0261,
-    "perf_moyenne": 0.1429,
-    "part_bat_mediane": 0.5033
+    "nombre": 18686,
+    "perf_mediane": 0.0183,
+    "perf_moyenne": 0.1261,
+    "part_bat_mediane": 0.5042
    },
    {
     "tranche": 5,
-    "nombre": 14849,
-    "perf_mediane": 0.0239,
-    "perf_moyenne": 0.1467,
-    "part_bat_mediane": 0.4997
+    "nombre": 18688,
+    "perf_mediane": 0.0088,
+    "perf_moyenne": 0.1196,
+    "part_bat_mediane": 0.4898
    }
   ]
  },
@@ -234,265 +242,433 @@
   "Afrique": [
    {
     "tranche": 1,
-    "nombre": 105,
-    "perf_mediane": 0.229,
-    "perf_moyenne": 0.323,
-    "part_bat_mediane": 0.5524
+    "nombre": 131,
+    "perf_mediane": 0.1808,
+    "perf_moyenne": 0.2975,
+    "part_bat_mediane": 0.5344
    },
    {
     "tranche": 2,
-    "nombre": 103,
-    "perf_mediane": 0.1533,
-    "perf_moyenne": 0.2003,
-    "part_bat_mediane": 0.4951
+    "nombre": 129,
+    "perf_mediane": 0.1606,
+    "perf_moyenne": 0.1926,
+    "part_bat_mediane": 0.5116
    },
    {
     "tranche": 3,
-    "nombre": 105,
-    "perf_mediane": 0.1564,
-    "perf_moyenne": 0.223,
-    "part_bat_mediane": 0.4952
+    "nombre": 131,
+    "perf_mediane": 0.1495,
+    "perf_moyenne": 0.1928,
+    "part_bat_mediane": 0.4962
    },
    {
     "tranche": 4,
-    "nombre": 103,
-    "perf_mediane": 0.2285,
-    "perf_moyenne": 0.3387,
-    "part_bat_mediane": 0.5631
+    "nombre": 129,
+    "perf_mediane": 0.1917,
+    "perf_moyenne": 0.2901,
+    "part_bat_mediane": 0.5349
    },
    {
     "tranche": 5,
-    "nombre": 105,
-    "perf_mediane": 0.0672,
-    "perf_moyenne": 0.1435,
-    "part_bat_mediane": 0.381
+    "nombre": 131,
+    "perf_mediane": 0.1078,
+    "perf_moyenne": 0.161,
+    "part_bat_mediane": 0.4122
    }
   ],
   "Amérique du Nord": [
    {
     "tranche": 1,
-    "nombre": 2752,
-    "perf_mediane": 0.0709,
-    "perf_moyenne": 0.2323,
-    "part_bat_mediane": 0.4953
+    "nombre": 3483,
+    "perf_mediane": 0.0649,
+    "perf_moyenne": 0.194,
+    "part_bat_mediane": 0.4697
    },
    {
     "tranche": 2,
-    "nombre": 2749,
-    "perf_mediane": 0.0613,
-    "perf_moyenne": 0.1584,
-    "part_bat_mediane": 0.4824
+    "nombre": 3479,
+    "perf_mediane": 0.0739,
+    "perf_moyenne": 0.1598,
+    "part_bat_mediane": 0.4809
    },
    {
     "tranche": 3,
-    "nombre": 2751,
-    "perf_mediane": 0.0667,
-    "perf_moyenne": 0.1626,
-    "part_bat_mediane": 0.4791
+    "nombre": 3481,
+    "perf_mediane": 0.0827,
+    "perf_moyenne": 0.1659,
+    "part_bat_mediane": 0.4884
    },
    {
     "tranche": 4,
-    "nombre": 2749,
-    "perf_mediane": 0.0792,
-    "perf_moyenne": 0.1838,
-    "part_bat_mediane": 0.506
+    "nombre": 3479,
+    "perf_mediane": 0.1086,
+    "perf_moyenne": 0.1957,
+    "part_bat_mediane": 0.5185
    },
    {
     "tranche": 5,
-    "nombre": 2751,
-    "perf_mediane": 0.1076,
-    "perf_moyenne": 0.2316,
-    "part_bat_mediane": 0.5373
+    "nombre": 3481,
+    "perf_mediane": 0.1263,
+    "perf_moyenne": 0.2359,
+    "part_bat_mediane": 0.5424
    }
   ],
   "Amérique latine": [
    {
     "tranche": 1,
-    "nombre": 409,
-    "perf_mediane": -0.0331,
-    "perf_moyenne": 0.0635,
-    "part_bat_mediane": 0.4328
+    "nombre": 514,
+    "perf_mediane": -0.0273,
+    "perf_moyenne": 0.0758,
+    "part_bat_mediane": 0.4222
    },
    {
     "tranche": 2,
-    "nombre": 406,
-    "perf_mediane": 0.004,
-    "perf_moyenne": 0.0966,
-    "part_bat_mediane": 0.4557
+    "nombre": 510,
+    "perf_mediane": 0.0437,
+    "perf_moyenne": 0.1232,
+    "part_bat_mediane": 0.4667
    },
    {
     "tranche": 3,
-    "nombre": 408,
-    "perf_mediane": 0.0357,
-    "perf_moyenne": 0.109,
-    "part_bat_mediane": 0.4828
+    "nombre": 512,
+    "perf_mediane": 0.0724,
+    "perf_moyenne": 0.1361,
+    "part_bat_mediane": 0.4805
    },
    {
     "tranche": 4,
-    "nombre": 406,
-    "perf_mediane": 0.0773,
-    "perf_moyenne": 0.1413,
-    "part_bat_mediane": 0.5493
+    "nombre": 510,
+    "perf_mediane": 0.1135,
+    "perf_moyenne": 0.1733,
+    "part_bat_mediane": 0.5647
    },
    {
     "tranche": 5,
-    "nombre": 408,
-    "perf_mediane": 0.0963,
-    "perf_moyenne": 0.1775,
-    "part_bat_mediane": 0.576
+    "nombre": 512,
+    "perf_mediane": 0.1064,
+    "perf_moyenne": 0.1808,
+    "part_bat_mediane": 0.5625
    }
   ],
   "Asie": [
    {
     "tranche": 1,
-    "nombre": 10478,
-    "perf_mediane": -0.0006,
-    "perf_moyenne": 0.1408,
-    "part_bat_mediane": 0.4724
+    "nombre": 13197,
+    "perf_mediane": -0.0292,
+    "perf_moyenne": 0.1083,
+    "part_bat_mediane": 0.4487
    },
    {
     "tranche": 2,
-    "nombre": 10476,
-    "perf_mediane": 0.0159,
-    "perf_moyenne": 0.1401,
-    "part_bat_mediane": 0.4924
+    "nombre": 13194,
+    "perf_mediane": -0.0016,
+    "perf_moyenne": 0.1174,
+    "part_bat_mediane": 0.4849
    },
    {
     "tranche": 3,
-    "nombre": 10476,
-    "perf_mediane": 0.0073,
-    "perf_moyenne": 0.1327,
-    "part_bat_mediane": 0.4786
+    "nombre": 13195,
+    "perf_mediane": 0.0001,
+    "perf_moyenne": 0.1201,
+    "part_bat_mediane": 0.4855
    },
    {
     "tranche": 4,
-    "nombre": 10476,
-    "perf_mediane": 0.0215,
-    "perf_moyenne": 0.1334,
-    "part_bat_mediane": 0.5032
+    "nombre": 13194,
+    "perf_mediane": 0.0181,
+    "perf_moyenne": 0.1221,
+    "part_bat_mediane": 0.515
    },
    {
     "tranche": 5,
-    "nombre": 10477,
-    "perf_mediane": 0.0559,
-    "perf_moyenne": 0.1527,
-    "part_bat_mediane": 0.5534
+    "nombre": 13196,
+    "perf_mediane": 0.0518,
+    "perf_moyenne": 0.1404,
+    "part_bat_mediane": 0.5658
    }
   ],
   "Europe": [
    {
     "tranche": 1,
-    "nombre": 2284,
-    "perf_mediane": 0.0055,
-    "perf_moyenne": 0.0676,
-    "part_bat_mediane": 0.4317
+    "nombre": 2873,
+    "perf_mediane": 0.0,
+    "perf_moyenne": 0.0574,
+    "part_bat_mediane": 0.4288
    },
    {
     "tranche": 2,
-    "nombre": 2281,
-    "perf_mediane": 0.0394,
-    "perf_moyenne": 0.0917,
-    "part_bat_mediane": 0.4691
+    "nombre": 2871,
+    "perf_mediane": 0.0339,
+    "perf_moyenne": 0.0846,
+    "part_bat_mediane": 0.4681
    },
    {
     "tranche": 3,
-    "nombre": 2282,
-    "perf_mediane": 0.0473,
-    "perf_moyenne": 0.1011,
-    "part_bat_mediane": 0.4873
+    "nombre": 2869,
+    "perf_mediane": 0.0525,
+    "perf_moyenne": 0.103,
+    "part_bat_mediane": 0.4991
    },
    {
     "tranche": 4,
-    "nombre": 2281,
-    "perf_mediane": 0.0887,
-    "perf_moyenne": 0.1483,
-    "part_bat_mediane": 0.5335
+    "nombre": 2871,
+    "perf_mediane": 0.0765,
+    "perf_moyenne": 0.143,
+    "part_bat_mediane": 0.5319
    },
    {
     "tranche": 5,
-    "nombre": 2283,
-    "perf_mediane": 0.1153,
-    "perf_moyenne": 0.19,
-    "part_bat_mediane": 0.5777
+    "nombre": 2872,
+    "perf_mediane": 0.1051,
+    "perf_moyenne": 0.1749,
+    "part_bat_mediane": 0.5717
    }
   ],
   "Moyen-Orient": [
    {
     "tranche": 1,
-    "nombre": 660,
-    "perf_mediane": -0.0601,
-    "perf_moyenne": 0.086,
-    "part_bat_mediane": 0.4167
+    "nombre": 800,
+    "perf_mediane": -0.1054,
+    "perf_moyenne": 0.0202,
+    "part_bat_mediane": 0.4012
    },
    {
     "tranche": 2,
-    "nombre": 658,
-    "perf_mediane": -0.0203,
-    "perf_moyenne": 0.1197,
-    "part_bat_mediane": 0.4559
+    "nombre": 797,
+    "perf_mediane": -0.0645,
+    "perf_moyenne": 0.0613,
+    "part_bat_mediane": 0.4668
    },
    {
     "tranche": 3,
-    "nombre": 658,
-    "perf_mediane": 0.07,
-    "perf_moyenne": 0.1665,
-    "part_bat_mediane": 0.541
+    "nombre": 797,
+    "perf_mediane": 0.0116,
+    "perf_moyenne": 0.1149,
+    "part_bat_mediane": 0.5508
    },
    {
     "tranche": 4,
-    "nombre": 658,
-    "perf_mediane": 0.0207,
-    "perf_moyenne": 0.1611,
-    "part_bat_mediane": 0.5167
+    "nombre": 797,
+    "perf_mediane": -0.02,
+    "perf_moyenne": 0.1103,
+    "part_bat_mediane": 0.522
    },
    {
     "tranche": 5,
-    "nombre": 660,
-    "perf_mediane": 0.0853,
-    "perf_moyenne": 0.1863,
-    "part_bat_mediane": 0.5682
+    "nombre": 800,
+    "perf_mediane": 0.0162,
+    "perf_moyenne": 0.1224,
+    "part_bat_mediane": 0.5575
    }
   ],
   "Océanie": [
    {
     "tranche": 1,
-    "nombre": 387,
-    "perf_mediane": 0.0189,
-    "perf_moyenne": 0.1547,
-    "part_bat_mediane": 0.4289
+    "nombre": 490,
+    "perf_mediane": 0.0005,
+    "perf_moyenne": 0.1084,
+    "part_bat_mediane": 0.4306
    },
    {
     "tranche": 2,
-    "nombre": 386,
-    "perf_mediane": 0.0571,
-    "perf_moyenne": 0.1195,
-    "part_bat_mediane": 0.4689
+    "nombre": 488,
+    "perf_mediane": 0.0385,
+    "perf_moyenne": 0.0946,
+    "part_bat_mediane": 0.4713
    },
    {
     "tranche": 3,
-    "nombre": 385,
-    "perf_mediane": 0.0462,
-    "perf_moyenne": 0.1371,
-    "part_bat_mediane": 0.4779
+    "nombre": 487,
+    "perf_mediane": 0.0202,
+    "perf_moyenne": 0.1079,
+    "part_bat_mediane": 0.4805
    },
    {
     "tranche": 4,
-    "nombre": 386,
-    "perf_mediane": 0.096,
-    "perf_moyenne": 0.1791,
-    "part_bat_mediane": 0.5466
+    "nombre": 488,
+    "perf_mediane": 0.0788,
+    "perf_moyenne": 0.1498,
+    "part_bat_mediane": 0.541
    },
    {
     "tranche": 5,
-    "nombre": 387,
-    "perf_mediane": 0.1477,
-    "perf_moyenne": 0.2642,
-    "part_bat_mediane": 0.5762
+    "nombre": 489,
+    "perf_mediane": 0.1196,
+    "perf_moyenne": 0.2255,
+    "part_bat_mediane": 0.5746
    }
   ]
  },
- "meilleures": [],
+ "meilleures": [
+  {
+   "symbole": "2609.TW",
+   "nom": "Yang Ming Marine Transport Corporation",
+   "note": 95,
+   "perf": 0.093
+  },
+  {
+   "symbole": "MLHL.L",
+   "nom": "Malibu Life Holdings Limited",
+   "note": 95,
+   "perf": -0.332
+  },
+  {
+   "symbole": "NAVARINO.SN",
+   "nom": "Navarino S.A.",
+   "note": 95,
+   "perf": 0.03
+  },
+  {
+   "symbole": "UTGN",
+   "nom": "UTG, Inc.",
+   "note": 94,
+   "perf": 0.241
+  },
+  {
+   "symbole": "141000.KQ",
+   "nom": "Viatron Technologies, Inc.",
+   "note": 93,
+   "perf": 0.579
+  },
+  {
+   "symbole": "2718.TWO",
+   "nom": "Allmind Holdings Corporation",
+   "note": 92,
+   "perf": -0.266
+  },
+  {
+   "symbole": "SSL.MI",
+   "nom": "S.S. Lazio S.p.A.",
+   "note": 92,
+   "perf": 0.585
+  },
+  {
+   "symbole": "0032.HK",
+   "nom": "The Cross-Harbour (Holdings) Limited",
+   "note": 91,
+   "perf": -0.143
+  },
+  {
+   "symbole": "1935.HK",
+   "nom": "JH Educational Technology INC.",
+   "note": 91,
+   "perf": -0.198
+  },
+  {
+   "symbole": "LNC",
+   "nom": "Lincoln National Corp",
+   "note": 91,
+   "perf": 0.026
+  },
+  {
+   "symbole": "TRDA",
+   "nom": "Entrada Therapeutics Inc.",
+   "note": 91,
+   "perf": -0.345
+  },
+  {
+   "symbole": "009680.KS",
+   "nom": "Motonic Corporation",
+   "note": 90,
+   "perf": 0.125
+  },
+  {
+   "symbole": "011200.KS",
+   "nom": "HMM Co.,Ltd",
+   "note": 90,
+   "perf": 0.261
+  },
+  {
+   "symbole": "014440.KS",
+   "nom": "Youngbo Chemical Co., Ltd.",
+   "note": 90,
+   "perf": 0.257
+  },
+  {
+   "symbole": "1446.TW",
+   "nom": "Hong Ho Precision Textile Co.,Ltd.",
+   "note": 90,
+   "perf": -0.222
+  },
+  {
+   "symbole": "N1V2.F",
+   "nom": "Nova Ljubljanska Banka d.d.",
+   "note": 90,
+   "perf": 0.344
+  },
+  {
+   "symbole": "RWAY",
+   "nom": "Runway Growth Finance Corp.",
+   "note": 90,
+   "perf": -0.195
+  },
+  {
+   "symbole": "SKUE.OL",
+   "nom": "Skue Sparebank",
+   "note": 90,
+   "perf": 0.3
+  },
+  {
+   "symbole": "0071.HK",
+   "nom": "Miramar Hotel and Investment Company, Limited",
+   "note": 89,
+   "perf": 0.072
+  },
+  {
+   "symbole": "0316.HK",
+   "nom": "Orient Overseas (International) Limited",
+   "note": 89,
+   "perf": 0.204
+  }
+ ],
  "cas": {
+  "BGEO.L": [
+   {
+    "valorisation": 60.0,
+    "croissance": null,
+    "rentabilite": 100.0,
+    "situation_fi": null,
+    "note": 75.0,
+    "perf": 0.413,
+    "date": "2023-11-01"
+   },
+   {
+    "valorisation": 66.0,
+    "croissance": 85.0,
+    "rentabilite": 98.0,
+    "situation_fi": null,
+    "note": 80.0,
+    "perf": 0.786,
+    "date": "2024-05-01"
+   },
+   {
+    "valorisation": 60.0,
+    "croissance": 87.0,
+    "rentabilite": 98.0,
+    "situation_fi": null,
+    "note": 78.0,
+    "perf": 0.817,
+    "date": "2024-11-01"
+   },
+   {
+    "valorisation": 56.0,
+    "croissance": 97.0,
+    "rentabilite": 100.0,
+    "situation_fi": null,
+    "note": 79.0,
+    "perf": 0.651,
+    "date": "2025-05-01"
+   },
+   {
+    "valorisation": 54.0,
+    "croissance": 97.0,
+    "rentabilite": 100.0,
+    "situation_fi": null,
+    "note": 78.0,
+    "perf": 0.582,
+    "date": "2025-10-01"
+   }
+  ],
   "AET.L": [
    {
     "valorisation": 9.0,
@@ -520,6 +696,15 @@
     "note": 82.0,
     "perf": 0.624,
     "date": "2025-05-01"
+   },
+   {
+    "valorisation": 75.0,
+    "croissance": 100.0,
+    "rentabilite": 84.0,
+    "situation_fi": 82.0,
+    "note": 84.0,
+    "perf": 0.649,
+    "date": "2025-10-01"
    }
   ]
  }

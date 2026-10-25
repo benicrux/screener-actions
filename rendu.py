@@ -79,10 +79,13 @@ def generer(table: pd.DataFrame, statut: dict) -> None:
     # Numéro de version dans les adresses des fichiers : le navigateur ne mélange pas
     # une ancienne page gardée en mémoire avec les nouvelles données
     version = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%d%H%M")
-    for nom in ("index.html", "app.js"):
+    for nom in ("index.html", "app.js", "retro.html"):
         f = SITE / nom
         f.write_text(f.read_text().replace("__VERSION__", version))
     (SITE / "data" / "fiches").mkdir(parents=True, exist_ok=True)
+    retro = Path("data/retro_resultats.json")
+    if retro.exists():
+        shutil.copy(retro, SITE / "data" / "retro_resultats.json")
 
     t = table.copy()
     t["taille_fr"] = t["taille"].map(TAILLES_FR)

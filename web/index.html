@@ -18,7 +18,10 @@
     <h1>Pépites</h1>
     <p class="couverture" id="couverture">Chargement des données…</p>
   </div>
-  <button class="aide" id="btn-aide" type="button" aria-haspopup="dialog">Comment lire les notes</button>
+  <div class="liens-entete">
+    <button class="aide" id="btn-aide" type="button" aria-haspopup="dialog">Comment lire les notes</button>
+    <a class="aide" href="retro.html">Test sur le passé</a>
+  </div>
 </header>
 
 <section class="filtres" aria-label="Filtres">
@@ -74,7 +77,7 @@
     <p>Le curseur de capitalisation garde les sociétés dont la valeur en Bourse, en euros, est comprise entre les deux bornes choisies. Les étoiles fixent une note investisseur minimale : une étoile garde toutes les sociétés notées, deux étoiles 20 et plus, trois 40 et plus, quatre 60 et plus, cinq 80 et plus. Touchez de nouveau l'étoile choisie pour retirer le filtre.</p>
     <p class="echelle"><span class="n n-bas">25</span> faible <span class="n n-moy">55</span> moyen <span class="n n-haut">75</span> bon <span class="n n-or">88</span> pépite (notes investisseur et trading)</p>
     <dl class="glossaire">
-      <dt>Note investisseur</dt><dd>La synthèse pour un placement de moyen-long terme : valorisation 25 %, croissance 15 %, rentabilité 15 %, situation financière 15 %, révisions des analystes 15 %, publications 10 %, visibilité 5 %.</dd>
+      <dt>Note investisseur</dt><dd>La synthèse pour un placement de moyen-long terme : valorisation 30 %, croissance 15 %, rentabilité 15 %, situation financière 10 %, révisions des analystes 15 %, publications 10 %, visibilité 5 %.</dd>
       <dt>Note trading</dt><dd>La synthèse de court terme : valorisation, révisions de la semaine, visibilité.</dd>
       <dt>Valorisation</dt><dd>Valeur d'entreprise rapportée au chiffre d'affaires passé et prévu. Plus c'est bas, meilleure est la note. Banques : PER et cours / actif net.</dd>
       <dt>Croissance</dt><dd>Progression du chiffre d'affaires sur un an et prévue par les analystes, les prévisions comptant davantage.</dd>
@@ -86,6 +89,7 @@
       <dt>PER, potentiel, rendement</dt><dd>Cours / bénéfice par action, écart entre l'objectif de cours moyen des analystes et le cours, dividende / cours.</dd>
     </dl>
     <p>Les données viennent de Yahoo Finance et de FinanceDatabase. Elles peuvent comporter des erreurs, surtout pour les petites sociétés : vérifiez toujours avant d'investir. Ce screener est un outil de repérage, pas un conseil en investissement.</p>
+    <p>Les notes ont été testées sur le passé : <a href="retro.html">voir les résultats</a>.</p>
     <p id="aide-maj"></p>
   </div>
 </aside>

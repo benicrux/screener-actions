@@ -26,12 +26,13 @@ BLOCAGES_MAX = 6
 
 # --- Notes -------------------------------------------------------------------
 # Pondérations de la note investisseur (en %). Inspirées de Zone Bourse, ajustées
-# après le test sur Lion Finance et Afentra (valorisation renforcée).
+# par le test sur le passé (octobre 2026) : la valorisation est le critère qui
+# annonce le mieux la performance ; la situation financière, le moins.
 POIDS_INVESTISSEUR = {
-    "valorisation": 25,
+    "valorisation": 30,
     "croissance": 15,
     "rentabilite": 15,
-    "situation_fi": 15,
+    "situation_fi": 10,
     "revisions_lt": 15,
     "publication": 10,
     "visibilite": 5,

@@ -96,14 +96,17 @@ def _cours(symbole: str) -> list[dict]:
     if not r or not r.get("timestamp"):
         return []
     devise = (r.get("meta") or {}).get("currency")
-    decalage = (r.get("meta") or {}).get("gmtoffset") or 0  # heure locale de la Bourse
+
     fermeture = ((r.get("indicators") or {}).get("quote") or [{}])[0].get("close") or []
     ajuste = ((r.get("indicators") or {}).get("adjclose") or [{}])[0].get("adjclose") or fermeture
     lignes = []
     for t, c, a in zip(r["timestamp"], fermeture, ajuste):
         if c is None or a is None:
             continue
-        mois = dt.datetime.fromtimestamp(t + decalage, dt.timezone.utc).strftime("%Y-%m")
+        # Une barre mensuelle est datée du début du mois, parfois la veille au soir en
+        # heure universelle (changes, Bourses d'Asie) : on décale de 3 jours pour ne
+        # jamais la ranger dans le mois précédent.
+        mois = dt.datetime.fromtimestamp(t + 3 * 86400, dt.timezone.utc).strftime("%Y-%m")
         lignes.append({"symbole": symbole, "mois": mois, "cours": c, "ajuste": a, "devise": devise})
     return lignes
 
@@ -199,7 +202,9 @@ def collecter(budget_minutes: float) -> None:
 def _taux(changes: pd.DataFrame):
     """Fonction (devise, mois) -> unités de devise pour 1 euro."""
     table = changes.pivot_table(index="mois", columns="devise", values="par_usd", aggfunc="last")
-    table = table.sort_index().ffill()
+    tous_mois = pd.period_range(min(table.index), max(table.index), freq="M").astype(str)
+    # Mois manquants (historique incomplet chez Yahoo, ex. lari géorgien) : taux le plus proche
+    table = table.reindex(tous_mois).ffill().bfill()
     table["USD"] = 1.0
 
     def par_euro(devise: str, mois: str) -> float:

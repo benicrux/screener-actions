@@ -68,6 +68,7 @@ button, input, select { font: inherit; color: inherit; }
   font-variation-settings: "wdth" 125;
   letter-spacing: -0.01em;
 }
+.liens-entete { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
 .couverture { margin: 6px 0 0; color: var(--encre-2); font-size: 13px; max-width: 62ch; }
 .aide, .lien {
   background: none; border: 0; padding: 4px 0; color: var(--accent);

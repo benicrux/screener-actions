@@ -20,7 +20,7 @@ Ensuite tout est automatique : le calcul tourne **chaque nuit**.
 
 - **Chaque nuit**, le robot récupère les cours du jour de toutes les sociétés, puis les données détaillées (comptes, prévisions des analystes, publications) d'un lot de quelques milliers de sociétés. Le monde entier est relu en une à deux semaines. Les premiers jours, les grandes sociétés arrivent d'abord, les petites ensuite.
 - **Les notes** sont des classements : 80 veut dire que la société fait mieux que 80 % des sociétés de son secteur. Les banques et assureurs sont comparés entre eux, sur le PER, le cours / actif net et la rentabilité des fonds propres.
-- **La note investisseur** pondère : valorisation 25 %, croissance 15 %, rentabilité 15 %, situation financière 15 %, révisions 15 %, publications 10 %, visibilité 5 %. Les prévisions des analystes comptent plus que le passé pour la croissance et la rentabilité.
+- **La note investisseur** pondère : valorisation 30 %, croissance 15 %, rentabilité 15 %, situation financière 10 %, révisions 15 %, publications 10 %, visibilité 5 %. Les prévisions des analystes comptent plus que le passé pour la croissance et la rentabilité.
 - **Les révisions sur 4 mois et 1 an** se remplissent avec le temps : le screener archive les prévisions des analystes à chaque lecture (`data/estimations/`).
 - **Les favoris** sont gardés dans le navigateur (téléphone ou ordinateur). La fiche montre l'évolution du cours et de la note depuis l'ajout.
 
