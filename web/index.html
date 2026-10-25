@@ -30,13 +30,16 @@
     <input id="recherche" type="search" placeholder="Rechercher une société ou un symbole" autocomplete="off">
   </label>
 
-  <div class="continents" id="continents" role="group" aria-label="Continent"></div>
+  <div class="continents" id="continents" role="group" aria-label="Continents (plusieurs choix possibles)"></div>
+  <div class="pays-filtre">
+    <button type="button" class="lien" id="btn-pays" aria-expanded="false" aria-controls="liste-pays">Pays : tous</button>
+    <div class="liste-pays" id="liste-pays" hidden></div>
+  </div>
 
   <div class="echelles" id="echelles"></div>
 
   <button type="button" class="lien filtres-bascule" id="btn-filtres" aria-expanded="false" aria-controls="selecteurs">Plus de filtres</button>
   <div class="selecteurs" id="selecteurs">
-    <label><span>Pays</span><select id="f-pays"></select></label>
     <label><span>Secteur</span><select id="f-secteur"></select></label>
     <label><span>Industrie</span><select id="f-industrie"></select></label>
     <label class="bascule"><input type="checkbox" id="f-favoris"><span>Mes favoris</span></label>

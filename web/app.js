@@ -41,10 +41,16 @@ const ECHELLES = [
 const PALIERS_CAPI = [0, 25e6, 50e6, 100e6, 250e6, 500e6, 1e9, 2e9, 5e9, 10e9, 50e9, 100e9, 500e9, Infinity];
 const DERNIER_PALIER = PALIERS_CAPI.length - 1;
 const ETAT_DEFAUT = {
-  continent: "", pays: "", secteur: "", industrie: "",
+  continents: [], paysExclus: [], secteur: "", industrie: "",
   favoris: false, q: "", tri: "inv", sens: -1, etoiles: {}, capi: [0, DERNIER_PALIER],
 };
-let etat = Object.assign({}, ETAT_DEFAUT, lire("pepites.filtres", {}));
+const SAUVE = lire("pepites.filtres", {}) || {};
+let etat = Object.assign({}, ETAT_DEFAUT, SAUVE);
+// Anciennes préférences : un seul continent et un seul pays
+if (!Array.isArray(SAUVE.continents)) etat.continents = SAUVE.continent ? [SAUVE.continent] : [];
+if (!Array.isArray(SAUVE.paysExclus)) etat.paysExclus = [];
+delete etat.continent;
+delete etat.pays;
 etat.etoiles = { inv: (etat.etoiles || {}).inv || 0 };
 if (!Array.isArray(etat.capi) || etat.capi.length !== 2) etat.capi = [0, DERNIER_PALIER];
 delete etat.note;
@@ -224,15 +230,38 @@ function uniques(liste, cle) {
 function construireFiltres() {
   const zone = document.getElementById("continents");
   zone.innerHTML = ["", ...CONTINENTS].map((c) =>
-    `<button type="button" data-c="${c}" aria-pressed="${etat.continent === c}">${c || "Monde"}</button>`).join("");
+    `<button type="button" data-c="${c}">${c || "Monde"}</button>`).join("");
   zone.onclick = (e) => {
     const b = e.target.closest("button");
     if (!b) return;
-    etat.continent = b.dataset.c;
-    etat.pays = "";
+    const c = b.dataset.c;
+    if (!c) etat.continents = [];
+    else if (etat.continents.includes(c)) etat.continents = etat.continents.filter((x) => x !== c);
+    else etat.continents = [...etat.continents, c];
     majFiltres();
   };
-  document.getElementById("f-pays").onchange = (e) => { etat.pays = e.target.value; majFiltres(); };
+  const liste = document.getElementById("liste-pays");
+  document.getElementById("btn-pays").onclick = (e) => {
+    liste.hidden = !liste.hidden;
+    e.currentTarget.setAttribute("aria-expanded", String(!liste.hidden));
+    if (!liste.hidden) rendreListePays();
+  };
+  liste.onchange = (e) => {
+    const caseP = e.target.closest("input[data-p]");
+    if (!caseP) return;
+    const p = caseP.dataset.p;
+    etat.paysExclus = caseP.checked ? etat.paysExclus.filter((x) => x !== p) : [...etat.paysExclus, p];
+    majFiltres();
+  };
+  liste.onclick = (e) => {
+    const b = e.target.closest("button[data-tous]");
+    if (!b) return;
+    const duContinent = paysParContinent().get(b.dataset.c).map(([p]) => p);
+    const exclus = new Set(etat.paysExclus);
+    duContinent.forEach((p) => (b.dataset.tous === "1" ? exclus.delete(p) : exclus.add(p)));
+    etat.paysExclus = [...exclus];
+    majFiltres();
+  };
   document.getElementById("f-secteur").onchange = (e) => { etat.secteur = e.target.value; etat.industrie = ""; majFiltres(); };
   document.getElementById("f-industrie").onchange = (e) => { etat.industrie = e.target.value; majFiltres(); };
   const echelles = document.getElementById("echelles");
@@ -277,7 +306,8 @@ function construireFiltres() {
     minuterie = setTimeout(() => { etat.q = e.target.value; majFiltres(false); }, 150);
   };
   document.getElementById("btn-reinit").onclick = () => {
-    etat = Object.assign({}, ETAT_DEFAUT, { tri: etat.tri, sens: etat.sens, etoiles: {}, capi: [0, DERNIER_PALIER] });
+    etat = Object.assign({}, ETAT_DEFAUT, { tri: etat.tri, sens: etat.sens, etoiles: {},
+      capi: [0, DERNIER_PALIER], continents: [], paysExclus: [] });
     document.getElementById("recherche").value = "";
     majFiltres();
   };
@@ -291,11 +321,53 @@ function construireFiltres() {
   majFiltres();
 }
 
+/* Pays des continents choisis (tous si aucun), avec le nombre d'actions de chacun */
+function paysParContinent() {
+  const groupes = new Map();
+  const comptes = new Map();
+  actions.forEach((a) => {
+    if (!a.p || (etat.continents.length && !etat.continents.includes(a.c))) return;
+    comptes.set(a.p, (comptes.get(a.p) || 0) + 1);
+    if (!groupes.has(a.c)) groupes.set(a.c, new Set());
+    groupes.get(a.c).add(a.p);
+  });
+  const ordre = [...CONTINENTS, ...[...groupes.keys()].filter((c) => !CONTINENTS.includes(c))];
+  const resultat = new Map();
+  ordre.forEach((c) => {
+    if (!groupes.has(c)) return;
+    resultat.set(c, [...groupes.get(c)].sort((x, y) => x.localeCompare(y, "fr")).map((p) => [p, comptes.get(p)]));
+  });
+  return resultat;
+}
+
+function libellePays() {
+  const tous = [...paysParContinent().values()].flat().map(([p]) => p);
+  const exclus = tous.filter((p) => etat.paysExclus.includes(p));
+  if (!exclus.length) return "Pays : tous";
+  if (exclus.length === tous.length) return "Pays : aucun";
+  if (exclus.length <= 3) return `Pays : tous sauf ${exclus.join(", ")}`;
+  return `Pays : ${tous.length - exclus.length} sur ${tous.length}`;
+}
+
+function rendreListePays() {
+  const liste = document.getElementById("liste-pays");
+  const exclus = new Set(etat.paysExclus);
+  liste.innerHTML = [...paysParContinent()].map(([c, pays]) => `
+    <div class="groupe-pays">
+      <div class="groupe-tete"><strong>${echapper(c)}</strong>
+        <span><button type="button" class="lien" data-c="${echapper(c)}" data-tous="1">Tout cocher</button>
+        <button type="button" class="lien" data-c="${echapper(c)}" data-tous="0">Tout décocher</button></span></div>
+      <div class="cases">${pays.map(([p, n]) => `
+        <label class="case"><input type="checkbox" data-p="${echapper(p)}"${exclus.has(p) ? "" : " checked"}>
+          <span>${echapper(p)}</span><span class="nb">${nombre(n, 0)}</span></label>`).join("")}</div>
+    </div>`).join("");
+}
+
 function majFiltres(remettre = true) {
-  document.querySelectorAll("#continents button").forEach((b) =>
-    b.setAttribute("aria-pressed", String(b.dataset.c === etat.continent)));
-  const dansContinent = etat.continent ? actions.filter((a) => a.c === etat.continent) : actions;
-  options(document.getElementById("f-pays"), uniques(dansContinent, "p"), "Tous", etat.pays);
+  document.querySelectorAll("#continents button").forEach((b) => b.setAttribute("aria-pressed",
+    String(b.dataset.c ? etat.continents.includes(b.dataset.c) : !etat.continents.length)));
+  document.getElementById("btn-pays").textContent = libellePays();
+  if (!document.getElementById("liste-pays").hidden) rendreListePays();
   options(document.getElementById("f-secteur"), uniques(actions, "se"), "Tous", etat.secteur);
   const dansSecteur = etat.secteur ? actions.filter((a) => a.se === etat.secteur) : actions;
   options(document.getElementById("f-industrie"), uniques(dansSecteur, "i"), "Toutes", etat.industrie);
@@ -322,7 +394,7 @@ function majFiltres(remettre = true) {
 }
 
 function libelleFiltres() {
-  const actifs = ["pays", "secteur", "industrie", "favoris"].filter((k) => etat[k]).length;
+  const actifs = ["secteur", "industrie", "favoris"].filter((k) => etat[k]).length;
   const ouvert = document.getElementById("selecteurs").classList.contains("ouvert");
   document.getElementById("btn-filtres").textContent =
     (ouvert ? "Masquer les filtres" : "Plus de filtres") + (actifs ? ` (${actifs} actif${actifs > 1 ? "s" : ""})` : "");
@@ -334,9 +406,10 @@ function normaliser(s) {
 
 function filtrer() {
   const q = normaliser(etat.q.trim());
+  const exclus = new Set(etat.paysExclus);
   return actions.filter((a) =>
-    (!etat.continent || a.c === etat.continent) &&
-    (!etat.pays || a.p === etat.pays) &&
+    (!etat.continents.length || etat.continents.includes(a.c)) &&
+    !exclus.has(a.p) &&
     (!etat.secteur || a.se === etat.secteur) &&
     (!etat.industrie || a.i === etat.industrie) &&
     (a.cap != null && a.cap / USD_PAR_EUR >= PALIERS_CAPI[etat.capi[0]] &&
