@@ -1,23 +1,26 @@
 {
- "date": "2026-10-25 13:41 UTC",
+ "date": "2026-10-25 14:00 UTC",
  "univers": 26465,
  "avec_donnees": 26054,
- "notees": 24078,
+ "notees": 24174,
  "jamais_lues": 1,
  "introuvables": 224,
  "vehicules_ecartes": 186,
  "anomalies": {
-  "graves": 314,
+  "graves": 317,
   "legeres": 47
  },
  "jours_restants": 0,
- "cours_du_jour": 26295,
+ "cours_du_jour": 26297,
  "collecte": {
   "lues": 0,
   "introuvables": 0,
   "erreurs": 1,
   "blocages": 0,
   "arret": null,
+  "detail_erreurs": {
+   "PAMPA.SN": "RuntimeError: HTTP 500"
+  },
   "minutes": 0.0
  },
  "poids": {
