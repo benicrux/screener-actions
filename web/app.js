@@ -563,6 +563,14 @@ function basculerFavori(a, f, bouton) {
 function ligne(libelle, valeur, aide) {
   return `<tr><th scope="row"${aide ? ` title="${echapper(aide)}"` : ""}>${libelle}</th><td>${valeur}</td></tr>`;
 }
+/* Dettes moins trésorerie ; si la trésorerie l'emporte, on affiche la trésorerie nette */
+function ligneDetteNette(f, devise) {
+  if (f.dette == null && f.tresorerie == null) return "";
+  const nette = (f.dette || 0) - (f.tresorerie || 0);
+  return nette > 0
+    ? ligne("Dette nette", montant(nette, devise), "Dettes financières moins trésorerie")
+    : ligne("Trésorerie nette", montant(-nette, devise), "Trésorerie moins dettes financières : la société a plus d'argent que de dettes");
+}
 function tableau(lignes) {
   const l = lignes.filter(Boolean);
   return l.length ? `<table class="chiffres">${l.join("")}</table>` : `<p class="note-bas">Pas de données.</p>`;
@@ -716,7 +724,9 @@ function rendreFiche(a, f) {
   ${tableau([
     ligne("Trésorerie", montant(f.tresorerie, dc)),
     ligne("Dettes financières", montant(f.dette, dc)),
-    !a.fin && ligne("Dette nette / EBITDA", f.dette_nette_ebitda === -1 ? "Trésorerie nette" : f.dette_nette_ebitda === 99 ? "Dettes sans EBITDA positif" : nombre(f.dette_nette_ebitda, 1)),
+    !a.fin && ligneDetteNette(f, dc),
+    !a.fin && ligne("Dette nette / EBITDA", f.dette_nette_ebitda === -1 ? "Aucune dette nette" : f.dette_nette_ebitda === 99 ? "Dettes, mais EBITDA négatif" : nombre(f.dette_nette_ebitda, 1),
+      "Nombre d'années d'EBITDA qu'il faudrait pour rembourser la dette nette"),
     !a.fin && ligne("Trésorerie nette / CA", pct(f.treso_nette_ca, 0)),
     ligne("Liquidité générale", nombre(f.ratio_liquidite, 2), "Actif circulant / passif circulant"),
     ligne("Dettes / fonds propres", f.dette_fp != null ? pct(f.dette_fp / 100, 0) : "—"),
