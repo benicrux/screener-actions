@@ -17,8 +17,10 @@ import datetime as dt
 import gzip
 import json
 import os
+import re
 import sys
 import threading
+import unicodedata
 import time
 import urllib.error
 import urllib.request
@@ -44,8 +46,25 @@ RESULTATS = Path("data/retro_us_resultats.json")
 # La SEC exige dans chaque requête un nom et une adresse e-mail de contact. On la lit dans
 # le secret GitHub « SEC_CONTACT » (Settings → Secrets and variables → Actions), pour
 # qu'elle n'apparaisse pas dans le code public.
-CONTACT = os.environ.get("SEC_CONTACT", "").strip()
+def _nettoyer_contact(brut: str) -> str:
+    """Une seule ligne, sans accents : un en-tête de requête n'accepte rien d'autre."""
+    ascii_ = unicodedata.normalize("NFKD", brut).encode("ascii", "ignore").decode()
+    return " ".join(ascii_.split())
+
+
+CONTACT_BRUT = os.environ.get("SEC_CONTACT", "")
+CONTACT = _nettoyer_contact(CONTACT_BRUT)
 AGENT = f"screener-actions {CONTACT}"
+
+
+def _masquer(texte: str) -> str:
+    """Retire le contact (nom et adresse) de tout texte enregistré ou affiché."""
+    texte = re.sub(r"[\w.+-]+@[\w-]+(\.[\w-]+)+", "[adresse masquée]", texte)
+    for morceau in set((CONTACT_BRUT + " " + CONTACT).replace("\n", " ").split()):
+        if len(morceau) > 2:
+            texte = texte.replace(morceau, "[masqué]")
+            texte = texte.replace(morceau.encode("unicode_escape").decode(), "[masqué]")
+    return texte
 STATUT = Path("data/retro_us_statut.json")
 URL_TICKERS = "https://www.sec.gov/files/company_tickers.json"
 URL_FAITS = "https://data.sec.gov/api/xbrl/companyfacts/CIK{cik:010d}.json"
@@ -371,6 +390,7 @@ if __name__ == "__main__":
                                                 "variantes")}, ensure_ascii=False, indent=1))
     except Exception as e:
         import traceback
-        _statut(etat="erreur", message=f"{type(e).__name__}: {e}",
-                detail=traceback.format_exc()[-2000:])
-        raise
+        message = _masquer(f"{type(e).__name__}: {e}")
+        _statut(etat="erreur", message=message, detail=_masquer(traceback.format_exc()[-2000:]))
+        print(f"Erreur : {message}")  # jamais la trace brute : elle pourrait contenir le contact
+        sys.exit(1)

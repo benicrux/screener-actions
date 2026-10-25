@@ -70,3 +70,20 @@ if __name__ == "__main__":
     test_comptes()
     test_divisions()
     print("OK")
+
+
+def test_contact_masque():
+    import importlib
+    import os
+    os.environ["SEC_CONTACT"] = "Jeanne Dupré \njeanne.dupre@exemple.fr"
+    import retro_us
+    importlib.reload(retro_us)
+    assert retro_us.AGENT == "screener-actions Jeanne Dupre jeanne.dupre@exemple.fr"
+    texte = retro_us._masquer("Invalid header value b'screener-actions Jeanne Dupr\\xe9 \\njeanne.dupre@exemple.fr'")
+    assert "jeanne" not in texte.lower() and "exemple" not in texte.lower(), texte
+    del os.environ["SEC_CONTACT"]
+
+
+if __name__ == "__main__":
+    test_contact_masque()
+    print("OK masquage")
