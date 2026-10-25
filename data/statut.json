@@ -1,5 +1,5 @@
 {
- "date": "2026-10-25 14:04 UTC",
+ "date": "2026-10-25 19:54 UTC",
  "univers": 26465,
  "avec_donnees": 26054,
  "notees": 24078,
@@ -16,12 +16,10 @@
  "collecte": {
   "lues": 0,
   "introuvables": 0,
-  "erreurs": 1,
+  "erreurs": 0,
   "blocages": 0,
   "arret": null,
-  "detail_erreurs": {
-   "PAMPA.SN": "RuntimeError: HTTP 500"
-  },
+  "detail_erreurs": {},
   "minutes": 0.0
  },
  "poids": {
@@ -33,6 +31,6 @@
   "publication": 10,
   "visibilite": 5
  },
- "usd_par_eur": 1.1204481792717087,
+ "usd_par_eur": 1.121830827911151,
  "depot": "benicrux/screener-actions"
 }
