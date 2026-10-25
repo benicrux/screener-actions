@@ -45,6 +45,7 @@ jobs:
         env:
           BUDGET_MINUTES: "280"
           RAFRAICHIR: ${{ github.event_name == 'schedule' && '1' || '' }}
+          SEC_CONTACT: ${{ secrets.SEC_CONTACT }}
         run: python retro_us.py
 
       - name: Sauvegarder
@@ -65,11 +66,12 @@ jobs:
             git -C "$tmp" push -q --force \
               "https://x-access-token:${JETON}@github.com/${GITHUB_REPOSITORY}.git" retro-us
           fi
+          git add data/retro_us_statut.json 2>/dev/null || true
           if [ -f data/retro_us_resultats.json ]; then
             git add data/retro_us_resultats.json data/retro_historique.csv
-            if ! git diff --cached --quiet; then
-              git commit -q -m "Résultats du test américain sur le passé"
-              git pull -q --rebase --autostash
-              git push -q
-            fi
+          fi
+          if ! git diff --cached --quiet; then
+            git commit -q -m "Résultats du test américain sur le passé"
+            git pull -q --rebase --autostash
+            git push -q
           fi

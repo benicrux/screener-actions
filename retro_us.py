@@ -41,7 +41,12 @@ CHANGES = DOSSIER / "changes.csv"
 TRAITES = DOSSIER / "traites.txt"
 RESULTATS = Path("data/retro_us_resultats.json")
 
-AGENT = "screener-actions (github.com/benicrux/screener-actions)"
+# La SEC exige dans chaque requête un nom et une adresse e-mail de contact. On la lit dans
+# le secret GitHub « SEC_CONTACT » (Settings → Secrets and variables → Actions), pour
+# qu'elle n'apparaisse pas dans le code public.
+CONTACT = os.environ.get("SEC_CONTACT", "").strip()
+AGENT = f"screener-actions {CONTACT}"
+STATUT = Path("data/retro_us_statut.json")
 URL_TICKERS = "https://www.sec.gov/files/company_tickers.json"
 URL_FAITS = "https://data.sec.gov/api/xbrl/companyfacts/CIK{cik:010d}.json"
 
@@ -342,13 +347,30 @@ def analyser() -> dict:
     return res
 
 
+def _statut(**infos) -> None:
+    STATUT.write_text(json.dumps({"date": dt.datetime.now(dt.timezone.utc).isoformat(timespec="minutes"),
+                                  **infos}, ensure_ascii=False, indent=1))
+
+
 if __name__ == "__main__":
     etape = sys.argv[1] if len(sys.argv) > 1 else "tout"
-    if etape in ("collecte", "tout"):
-        print("Collecte des comptes américains (SEC) et des cours sur 20 ans")
-        collecter(float(config.BUDGET_MINUTES))
-    if etape in ("analyse", "tout"):
-        print("Analyse")
-        r = analyser()
-        print(json.dumps({k: r[k] for k in ("societes", "observations", "ensemble", "periodes",
-                                            "variantes")}, ensure_ascii=False, indent=1))
+    try:
+        if etape in ("collecte", "tout"):
+            if "@" not in CONTACT:
+                _statut(etat="en attente", message="Secret SEC_CONTACT absent : la SEC exige une "
+                        "adresse e-mail de contact. Test américain non lancé.")
+                print("Secret SEC_CONTACT absent : test américain non lancé.")
+                sys.exit(0)
+            print("Collecte des comptes américains (SEC) et des cours sur 20 ans")
+            collecter(float(config.BUDGET_MINUTES))
+        if etape in ("analyse", "tout"):
+            print("Analyse")
+            r = analyser()
+            _statut(etat="terminé", societes=r["societes"], observations=r["observations"])
+            print(json.dumps({k: r[k] for k in ("societes", "observations", "ensemble", "periodes",
+                                                "variantes")}, ensure_ascii=False, indent=1))
+    except Exception as e:
+        import traceback
+        _statut(etat="erreur", message=f"{type(e).__name__}: {e}",
+                detail=traceback.format_exc()[-2000:])
+        raise
