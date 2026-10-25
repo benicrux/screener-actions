@@ -1,20 +1,20 @@
 {
- "date": "2026-10-25 02:08 UTC",
+ "date": "2026-10-25 08:48 UTC",
  "univers": 26465,
  "avec_donnees": 26054,
- "notees": 24279,
+ "notees": 24366,
  "jamais_lues": 1,
  "introuvables": 224,
  "vehicules_ecartes": 186,
  "jours_restants": 1,
- "cours_du_jour": 26295,
+ "cours_du_jour": 26297,
  "collecte": {
-  "lues": 7426,
+  "lues": 11984,
   "introuvables": 0,
   "erreurs": 1,
-  "blocages": 8,
-  "arret": "temps imparti écoulé",
-  "minutes": 15.1
+  "blocages": 15,
+  "arret": null,
+  "minutes": 25.7
  },
  "poids": {
   "valorisation": 30,
