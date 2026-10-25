@@ -35,7 +35,6 @@ symbole,nom,pays,anomalie_grave,anomalies
 1231.HK,Newton Resources Ltd,Hong Kong,True,pas de cotation depuis le 08/10/2026
 1252.HK,China Tianrui Group Cement Company Limited,Chine,True,pas de cotation depuis le 20/03/2026
 1377.HK,"Guangdong Dtech Technology Co., Ltd.",Chine,True,capitalisation incohérente avec le cours et le nombre d'actions
-1448.HK,Fu Shou Yuan International Group Limited,Chine,True,pas de cotation depuis le 19/03/2026
 1553.HK,Maike Tube Industry Holdings Limited,Chine,True,pas de cotation depuis le 09/10/2026
 1668.HK,China South City Holdings Limited,Hong Kong,True,pas de cotation depuis le 11/08/2025
 1748.HK,Xin Yuan Enterprises Group Limited,Chine,True,pas de cotation depuis le 20/02/2025
@@ -56,7 +55,7 @@ symbole,nom,pays,anomalie_grave,anomalies
 256.F,Azure Power Global Limited,Inde,True,cours manquant
 258830.KQ,"Sejong Medical Co., Ltd.",Corée du Sud,True,cours manquant ; pas de cotation depuis le 29/10/2025
 2592.HK,Cloudbreak Pharma Inc.,États-Unis,True,pas de cotation depuis le 09/09/2026
-2627.HK,Ab&B Bio-Tech Co. Ltd. JS,Chine,True,cours manquant
+2627.HK,Ab&B Bio-Tech Co. Ltd. JS,Chine,True,pas de cotation depuis le 31/03/2026
 2629.HK,Mirxes Holding Company Limited,Singapour,True,pas de cotation depuis le 31/03/2026
 263050.KQ,"Eutilex.Co.,Ltd.",Corée du Sud,True,pas de cotation depuis le 06/02/2026
 2898.HK,"Sunho Biologics, Inc.",Chine,True,pas de cotation depuis le 06/03/2026
@@ -216,14 +215,13 @@ LPPF.JK,PT MDS Retailing Tbk,Indonésie,True,capitalisation incohérente avec le
 MAYA.JK,PT Bank Mayapada Internasional Tbk,Indonésie,True,capitalisation incohérente avec le cours et le nombre d'actions
 MCDIF,Mcdermott International Ltd.,États-Unis,True,pas de cotation depuis le 05/02/2026
 MDMG.ME,MD Medical Group Investments Plc,Chypre,True,pas de cotation depuis le 08/07/2022
-MEGACPO.MX,"Megacable Holdings, S. A. B. de C. V.",Mexique,True,capitalisation incohérente avec le cours et le nombre d'actions
 MF6.F,MagForce AG,Allemagne,True,cours manquant
 MHC-UN.TO,Flagship Communities,États-Unis,True,capitalisation incohérente avec le cours et le nombre d'actions
 MINSAB.MX,"Grupo Minsa, S.A.B. de C.V.",Mexique,True,pas de cotation depuis le 21/09/2026
 MIPAZ.IS,Milpa Ticari ve Sinai Urunler Pazarlama Sanayi ve Ticaret A.S.,Turquie,True,cours manquant
 MIRI.L,Mirriad Advertising plc,Royaume-Uni,True,pas de cotation depuis le 20/05/2026
 ML.PA,Compagnie Generale des Etablissements Michelin Societe en commandite par actions,France,True,capitalisation incohérente avec le cours et le nombre d'actions
-MLCNT.PA,Consort NT SA,France,True,pas de cotation depuis le 28/04/2026
+MLCNT.PA,Consort NT SA,France,True,cours manquant
 MLHYD.PA,Hydraulique P.B Societe anonyme,France,True,pas de cotation depuis le 08/10/2026
 MLPL.JK,PT Multipolar Tbk Class A,Indonésie,True,capitalisation incohérente avec le cours et le nombre d'actions
 MLPLC.PA,Placoplatre SA,France,True,pas de cotation depuis le 11/08/2026
@@ -246,7 +244,6 @@ PEAB3.SA,Companhia de Participacoes Alianca da Bahia,Brésil,True,pas de cotatio
 PENN.MX,"Penn National Gaming, Inc.",États-Unis,True,pas de cotation depuis le 01/07/2026
 PF.BK,Property Perfect Public Company Limited,Thaïlande,True,pas de cotation depuis le 14/08/2026
 PLAIS.AT,Plaisio Computers S.A.,Grèce,True,cours manquant
-PLATIND.NS,Platinum Industries Limited,Inde,True,capitalisation incohérente avec le cours et le nombre d'actions
 PLWN,Pinelawn Cemetery,États-Unis,True,pas de cotation depuis le 05/02/2026
 POLL.JK,PT Pollux Properties Indonesia Tbk,Indonésie,True,pas de cotation depuis le 01/07/2024
 PPWLM,PacifiCorp,États-Unis,True,cours manquant
