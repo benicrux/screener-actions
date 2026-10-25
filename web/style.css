@@ -107,6 +107,13 @@ button, input, select { font: inherit; color: inherit; }
 .capi-filtre { grid-template-columns: 136px minmax(0, 1fr); grid-template-areas: "nom texte" "curseur curseur"; row-gap: 0; padding-top: 4px; }
 .capi-filtre .echelle-nom { grid-area: nom; }
 .capi-filtre .echelle-seuil { grid-area: texte; justify-self: end; }
+.info-filtre { grid-template-columns: minmax(0, 1fr); row-gap: 6px; padding: 6px 0 4px; }
+.paliers { display: flex; gap: 6px; flex-wrap: wrap; }
+.paliers button {
+  border: 1px solid var(--filet); background: var(--surface); border-radius: 999px;
+  padding: 5px 11px; min-height: 32px; cursor: pointer; font-size: 13px; color: var(--encre);
+}
+.paliers button[aria-pressed="true"] { background: var(--encre); color: var(--fond); border-color: var(--encre); }
 .double-curseur {
   grid-area: curseur; position: relative; display: block; height: 36px;
   --debut: 0%; --fin: 100%;

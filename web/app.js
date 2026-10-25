@@ -40,9 +40,15 @@ const ECHELLES = [
 // Paliers du curseur de capitalisation, en euros
 const PALIERS_CAPI = [0, 25e6, 50e6, 100e6, 250e6, 500e6, 1e9, 2e9, 5e9, 10e9, 50e9, 100e9, 500e9, Infinity];
 const DERNIER_PALIER = PALIERS_CAPI.length - 1;
+// Part de la note investisseur qui repose sur des chiffres disponibles (en % de ses pondérations)
+const PALIERS_INFO = [0, 70, 85, 100];
+const CRITERES_INV = [["valorisation", "val", "valorisation"], ["croissance", "cro", "croissance"],
+  ["rentabilite", "ren", "rentabilité"], ["situation_fi", "sit", "situation financière"],
+  ["revisions_lt", "rlt", "révisions des analystes sur 1 an"], ["publication", "pub", "publications"],
+  ["visibilite", "vis", "visibilité"]];
 const ETAT_DEFAUT = {
   continents: [], paysExclus: [], secteur: "", industrie: "",
-  favoris: false, q: "", tri: "inv", sens: -1, etoiles: {}, capi: [0, DERNIER_PALIER],
+  favoris: false, q: "", tri: "inv", sens: -1, etoiles: {}, capi: [0, DERNIER_PALIER], info: 0,
 };
 const SAUVE = lire("pepites.filtres", {}) || {};
 let etat = Object.assign({}, ETAT_DEFAUT, SAUVE);
@@ -53,6 +59,7 @@ delete etat.continent;
 delete etat.pays;
 etat.etoiles = { inv: (etat.etoiles || {}).inv || 0 };
 if (!Array.isArray(etat.capi) || etat.capi.length !== 2) etat.capi = [0, DERNIER_PALIER];
+if (!PALIERS_INFO.includes(etat.info)) etat.info = 0;
 delete etat.note;
 delete etat.taille;
 let USD_PAR_EUR = 1.08;
@@ -279,6 +286,11 @@ function construireFiltres() {
         <input type="range" id="capi-max" min="0" max="${DERNIER_PALIER}" step="1" aria-label="Capitalisation maximale">
       </span>
       <span class="echelle-seuil" id="capi-texte"></span>
+    </div>
+    <div class="echelle-filtre info-filtre" role="group" aria-label="Informations disponibles">
+      <span class="echelle-nom">Informations</span>
+      <span class="paliers">${PALIERS_INFO.map((p) =>
+        `<button type="button" data-info="${p}" aria-label="${p ? `Au moins ${p} % des informations` : "Toutes les sociétés"}">${p ? `${p} %${p < 100 ? " +" : ""}` : "Toutes"}</button>`).join("")}</span>
     </div>`;
   const curseurMin = document.getElementById("capi-min");
   const curseurMax = document.getElementById("capi-max");
@@ -293,6 +305,8 @@ function construireFiltres() {
   curseurMin.oninput = bougerCapi;
   curseurMax.oninput = bougerCapi;
   echelles.onclick = (e) => {
+    const bi = e.target.closest("button[data-info]");
+    if (bi) { etat.info = +bi.dataset.info; majFiltres(); return; }
     const b = e.target.closest("button[data-n]");
     if (!b) return;
     const k = b.dataset.k, n = +b.dataset.n;
@@ -382,6 +396,8 @@ function majFiltres(remettre = true) {
     b.classList.toggle("pleine", +b.dataset.n <= choisi);
     b.setAttribute("aria-pressed", String(+b.dataset.n === choisi));
   });
+  document.querySelectorAll("#echelles button[data-info]").forEach((b) =>
+    b.setAttribute("aria-pressed", String(+b.dataset.info === etat.info)));
   document.querySelectorAll("#echelles [data-seuil]").forEach((el) => {
     el.textContent = texteEtoiles(etat.etoiles[el.dataset.seuil] || 0);
   });
@@ -415,6 +431,7 @@ function filtrer() {
     (a.cap != null && a.cap / USD_PAR_EUR >= PALIERS_CAPI[etat.capi[0]] &&
       a.cap / USD_PAR_EUR < PALIERS_CAPI[etat.capi[1]]) &&
     ECHELLES.every(({ k }) => !etat.etoiles[k] || (a[k] != null && a[k] >= seuilEtoiles(etat.etoiles[k]))) &&
+    (!etat.info || (a.cou != null && a.cou >= etat.info)) &&
     (!etat.favoris || favoris[a.s]) &&
     (!q || normaliser(a.n).includes(q) || normaliser(a.s).startsWith(q)));
 }
@@ -615,6 +632,14 @@ function rendrePairs(a) {
     `<p class="note-bas">Sociétés de la même industrie, de taille proche. Encadré : la meilleure note de chaque colonne. Touchez une ligne pour ouvrir sa fiche.</p>`;
 }
 
+/* Part des informations disponibles pour la note investisseur, et ce qui manque */
+function texteInformations(a) {
+  if (a.cou == null) return "";
+  const manque = CRITERES_INV.filter(([, k]) => a[k] == null).map(([, , lib]) => lib);
+  return `<p class="note-bas">Informations disponibles : ${nombre(a.cou, 0)} % de la note investisseur` +
+    (manque.length ? `. Manque : ${manque.join(", ")}.` : ", rien ne manque.") + "</p>";
+}
+
 function rendreFiche(a, f) {
   const dc = f.devise_comptes || "";
   const dcours = f.devise_cours || a.dv || "";
@@ -670,6 +695,7 @@ function rendreFiche(a, f) {
   <h3>Les notes</h3>
   <div class="barres">${barres}</div>
   <p class="note-bas">Comparée à son groupe : ${echapper(a.g || a.se || "")}.</p>
+  ${texteInformations(a)}
 
   <h3>Comparaison avec le secteur</h3>
   ${rendrePairs(a)}
