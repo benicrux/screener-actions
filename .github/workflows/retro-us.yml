@@ -4,7 +4,7 @@ on:
   schedule:
     # Chaque trimestre (9 janvier, avril, juillet, octobre) : test refait de zéro
     - cron: "23 5 9 1,4,7,10 *"
-  workflow_dispatch: # bouton « Run workflow » pour lancer à la main
+  workflow_dispatch: # bouton « Run workflow » pour lancer à la main (secret SEC_CONTACT requis)
   push:
     branches: [main]
     paths: ["retro_us.py", ".github/workflows/retro-us.yml"]
