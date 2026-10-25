@@ -59,3 +59,26 @@ def test_extraction():
 if __name__ == "__main__":
     test_extraction()
     print("OK")
+
+
+def test_relecture_sans_previsions():
+    """Si Yahoo échoue avec toutes les rubriques, on relit les essentielles."""
+    import collecte
+
+    appels = []
+
+    def faux_get_json(url, params):
+        appels.append(params["modules"])
+        if "earningsTrend" in params["modules"]:
+            raise RuntimeError("HTTP 500")
+        res = REPONSE["quoteSummary"]["result"][0]
+        return {"quoteSummary": {"result": [{k: res[k] for k in collecte.MODULES_ESSENTIELS}]}}
+
+    original = collecte._get_json
+    collecte._get_json = faux_get_json
+    try:
+        ligne, archive = collecte.lire_societe("AET.L")
+    finally:
+        collecte._get_json = original
+    assert len(appels) == 2 and ligne["cours"] == 45.0 and ligne["ca"] == 150e6
+    assert archive == [] and ligne["surprises"] is None

@@ -250,11 +250,23 @@ def _extraire(symbole: str, js: dict) -> tuple[dict, list[dict]]:
     return l, archive
 
 
+MODULES_ESSENTIELS = ["price", "summaryDetail", "defaultKeyStatistics", "financialData"]
+
+
 def lire_societe(symbole: str) -> tuple[dict, list[dict]]:
-    js = _get_json(URL_RESUME.format(symbole),
-                   {"modules": ",".join(MODULES), "formatted": "false",
-                    "corsDomain": "finance.yahoo.com", "symbol": symbole})
-    return _extraire(symbole, js)
+    def lire(modules):
+        js = _get_json(URL_RESUME.format(symbole),
+                       {"modules": ",".join(modules), "formatted": "false",
+                        "corsDomain": "finance.yahoo.com", "symbol": symbole})
+        return _extraire(symbole, js)
+    try:
+        return lire(MODULES)
+    except (Introuvable, Bloque):
+        raise
+    except Exception:
+        # Pour quelques sociétés, Yahoo échoue sur les prévisions ou l'historique des
+        # publications : on relit sans ces modules plutôt que de ne rien avoir.
+        return lire(MODULES_ESSENTIELS)
 
 
 # --------------------------------------------------------------------------- #
@@ -340,7 +352,8 @@ def collecter(univers: pd.DataFrame) -> dict:
 
     verrou = threading.Lock()
     nouvelles, archive = [], []
-    bilan = {"lues": 0, "introuvables": 0, "erreurs": 0, "blocages": 0, "arret": None}
+    bilan = {"lues": 0, "introuvables": 0, "erreurs": 0, "blocages": 0, "arret": None,
+             "detail_erreurs": {}}
     etat = {"pause_jusqu_a": 0.0, "blocages_suite": 0, "stop": False}
 
     def tache(symbole: str):
@@ -372,9 +385,11 @@ def collecter(univers: pd.DataFrame) -> dict:
                     etat["stop"] = True
                     bilan["arret"] = "Yahoo a bloqué les requêtes à répétition"
                 etat["pause_jusqu_a"] = time.monotonic() + min(60 * 2 ** (n - 1), 900)
-        except Exception:
+        except Exception as e:
             with verrou:
                 bilan["erreurs"] += 1
+                if len(bilan["detail_erreurs"]) < 20:  # pour comprendre ce qui coince
+                    bilan["detail_erreurs"][symbole] = f"{type(e).__name__}: {e}"[:200]
 
     with ThreadPoolExecutor(max_workers=config.PARALLELE) as pool:
         futures = [pool.submit(tache, s) for s in lot]
