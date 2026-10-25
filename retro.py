@@ -38,10 +38,12 @@ import univers as module_univers
 from referentiels import INDUSTRIES_FINANCIERES, SOUS_UNITES
 
 DOSSIER = Path("data/retro")
-COMPTES = DOSSIER / "comptes.csv"
+# v2 : colonnes dans un ordre fixe (la v1 mélangeait l'ordre d'un paquet à l'autre)
+COMPTES = DOSSIER / "comptes_v2.csv"
 COURS = DOSSIER / "cours.csv"
 CHANGES = DOSSIER / "changes.csv"
-TRAITES = DOSSIER / "traites.txt"
+TRAITES = DOSSIER / "traites_v2.txt"
+COURS_LUS = DOSSIER / "traites.txt"  # sociétés dont les cours sont déjà dans cours.csv
 RESULTATS = Path("data/retro_resultats.json")
 
 URL_SERIES = ("https://query2.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/"
@@ -54,6 +56,8 @@ POSTES = {
     "OrdinarySharesNumber": "actions", "StockholdersEquity": "fonds_propres",
 }
 # Dates du test (début de mois) : on dispose ensuite de 12 mois de cours
+COLONNES_COMPTES = ["symbole", "fin", "devise", *POSTES.values()]
+COLONNES_COURS = ["symbole", "mois", "cours", "ajuste", "devise"]
 DATES = ["2023-11-01", "2024-05-01", "2024-11-01", "2025-05-01", "2025-10-01"]
 DELAI_PUBLICATION_MOIS = 4
 CAPI_MIN_EUR = 50e6
@@ -118,16 +122,18 @@ def _changes(devises: set[str]) -> None:
     pd.DataFrame(lignes).to_csv(CHANGES, index=False)
 
 
-def _ajouter(fichier: Path, lignes: list[dict]) -> None:
+def _ajouter(fichier: Path, lignes: list[dict], colonnes: list[str]) -> None:
     if lignes:
-        pd.DataFrame(lignes).to_csv(fichier, mode="a", header=not fichier.exists(),
-                                    index=False, float_format="%.6g")
+        pd.DataFrame(lignes, columns=colonnes).to_csv(
+            fichier, mode="a", header=not fichier.exists(), index=False, float_format="%.6g")
 
 
 def collecter(budget_minutes: float) -> None:
     DOSSIER.mkdir(parents=True, exist_ok=True)
+    (DOSSIER / "comptes.csv").unlink(missing_ok=True)  # ancienne version aux colonnes mélangées
     univ = module_univers.charger()
     deja = set(TRAITES.read_text().split()) if TRAITES.exists() else set()
+    cours_lus = set(COURS_LUS.read_text().split()) if COURS_LUS.exists() else set()
     a_lire = [s for s in univ["symbole"] if s not in deja]
     random.Random(1).shuffle(a_lire)  # ordre aléatoire : un échantillon équilibré si on s'arrête
     print(f"   {len(a_lire)} sociétés à lire, {len(deja)} déjà lues.")
@@ -137,8 +143,8 @@ def collecter(budget_minutes: float) -> None:
     etat = {"pause": 0.0, "suite": 0, "stop": False, "lues": 0, "blocages": 0}
 
     def vider():
-        _ajouter(COMPTES, tampon["comptes"])
-        _ajouter(COURS, tampon["cours"])
+        _ajouter(COMPTES, tampon["comptes"], COLONNES_COMPTES)
+        _ajouter(COURS, tampon["cours"], COLONNES_COURS)
         with open(TRAITES, "a") as f:
             f.write("".join(s + "\n" for s in tampon["traites"]))
         for v in tampon.values():
@@ -150,7 +156,8 @@ def collecter(budget_minutes: float) -> None:
         if etat["stop"] or time.monotonic() - debut > budget:
             return
         try:
-            c, p = _comptes(s), _cours(s)
+            c = _comptes(s)
+            p = [] if s in cours_lus else _cours(s)
             with verrou:
                 tampon["comptes"].extend(c)
                 tampon["cours"].extend(p)
