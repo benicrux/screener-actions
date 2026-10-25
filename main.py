@@ -95,6 +95,7 @@ def main() -> None:
         "notees": int(table["n_investisseur"].notna().sum()),
         "jamais_lues": int(jamais),
         "introuvables": int((table["statut"] == "introuvable").sum()),
+        "illisibles": int((table["statut"] == "illisible").sum()),
         "vehicules_ecartes": vehicules,
         "anomalies": anomalies,
         "jours_restants": (int(-(-jamais // rythme)) if rythme and jamais else 0),

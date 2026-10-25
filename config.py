@@ -19,7 +19,7 @@ BUDGET_MINUTES = int(os.environ.get("BUDGET_MINUTES") or 300)
 LOT_MAX = 12000
 # Requêtes simultanées (plus = plus rapide, mais Yahoo bloque si on abuse)
 PARALLELE = 3
-# Une société introuvable chez Yahoo est retentée au bout de N jours
+# Une société introuvable ou illisible chez Yahoo est retentée au bout de N jours
 INTROUVABLE_RETENTE_JOURS = 30
 # Après N blocages consécutifs de Yahoo, on arrête et on reprend au lancement suivant
 BLOCAGES_MAX = 6

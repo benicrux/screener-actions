@@ -82,3 +82,30 @@ def test_relecture_sans_previsions():
         collecte._get_json = original
     assert len(appels) == 2 and ligne["cours"] == 45.0 and ligne["ca"] == 150e6
     assert archive == [] and ligne["surprises"] is None
+
+
+def test_jamais_lue_illisible():
+    """Une société jamais lue qui échoue est notée « illisible » ; une déjà lue garde ses données."""
+    import collecte
+    import config
+    import pandas as pd
+
+    def faux_get_json(url, params):
+        raise RuntimeError("HTTP 500")
+
+    sauve = {}
+    originaux = (collecte._get_json, collecte.charger_donnees, collecte._sauver,
+                 collecte.nettoyer_archives, config.LOT_MAX)
+    collecte._get_json = faux_get_json
+    collecte.charger_donnees = lambda: pd.DataFrame(
+        [{"symbole": "VIEUX", "maj": "2026-01-01", "statut": "ok"}])
+    collecte._sauver = lambda d, n, a: sauve.setdefault("lignes", list(n)) and d
+    collecte.nettoyer_archives = lambda: None
+    try:
+        u = pd.DataFrame({"symbole": ["NEUF", "VIEUX"], "rang_taille": ["1", "1"]})
+        bilan = collecte.collecter(u)
+    finally:
+        (collecte._get_json, collecte.charger_donnees, collecte._sauver,
+         collecte.nettoyer_archives, config.LOT_MAX) = originaux
+    assert bilan["erreurs"] == 2 and set(bilan["detail_erreurs"]) == {"NEUF", "VIEUX"}
+    assert [(l["symbole"], l["statut"]) for l in sauve["lignes"]] == [("NEUF", "illisible")]

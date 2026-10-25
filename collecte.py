@@ -286,7 +286,7 @@ def choisir_lot(univers: pd.DataFrame, donnees: pd.DataFrame, taille: int) -> li
     aujourd_hui = pd.Timestamp(dt.date.today())
     age = (aujourd_hui - pd.to_datetime(u["maj"], errors="coerce")).dt.days
     u["age"] = age.fillna(10_000)
-    attente = u["statut"].eq("introuvable") & (u["age"] < config.INTROUVABLE_RETENTE_JOURS)
+    attente = u["statut"].isin(["introuvable", "illisible"]) & (u["age"] < config.INTROUVABLE_RETENTE_JOURS)
     u = u[~attente & (u["age"] >= 1)]
     u["jamais"] = u["maj"].isna()
     u = u.sort_values(["jamais", "rang_taille", "age"], ascending=[False, True, False])
@@ -348,6 +348,7 @@ def collecter(univers: pd.DataFrame) -> dict:
     budget = config.BUDGET_MINUTES * 60
     donnees = charger_donnees()
     lot = choisir_lot(univers, donnees, config.LOT_MAX)
+    connues = set(donnees["symbole"])
     print(f"   {len(lot)} sociétés à lire (jusqu'à {config.BUDGET_MINUTES} min).")
 
     verrou = threading.Lock()
@@ -390,6 +391,12 @@ def collecter(univers: pd.DataFrame) -> dict:
                 bilan["erreurs"] += 1
                 if len(bilan["detail_erreurs"]) < 20:  # pour comprendre ce qui coince
                     bilan["detail_erreurs"][symbole] = f"{type(e).__name__}: {e}"[:200]
+                if symbole not in connues:
+                    # Jamais lue et illisible même sans les prévisions : notée comme telle et
+                    # retentée plus tard, plutôt que de rester indéfiniment « à lire ».
+                    # Une société déjà lue garde ses données précédentes.
+                    nouvelles.append({"symbole": symbole, "maj": dt.date.today().isoformat(),
+                                      "statut": "illisible"})
 
     with ThreadPoolExecutor(max_workers=config.PARALLELE) as pool:
         futures = [pool.submit(tache, s) for s in lot]
