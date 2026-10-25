@@ -1,18 +1,18 @@
 {
- "date": "2026-10-25 19:54 UTC",
+ "date": "2026-10-25 20:05 UTC",
  "univers": 26465,
  "avec_donnees": 26054,
- "notees": 24078,
+ "notees": 24174,
  "jamais_lues": 0,
  "introuvables": 224,
  "illisibles": 1,
  "vehicules_ecartes": 186,
  "anomalies": {
-  "graves": 314,
+  "graves": 317,
   "legeres": 47
  },
  "jours_restants": 0,
- "cours_du_jour": 26295,
+ "cours_du_jour": 26297,
  "collecte": {
   "lues": 0,
   "introuvables": 0,
