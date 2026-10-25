@@ -1,4 +1,4 @@
-"""Test sur le passé long : sociétés américaines, de 2011 à 2025.
+"""Test sur le passé long : sociétés américaines, de 2012 à 2025.
 
 Les comptes viennent de la SEC (l'autorité boursière américaine), qui publie gratuitement
 tous les chiffres déposés par les sociétés depuis 2009, avec leur date de publication :
@@ -71,8 +71,9 @@ STATUT = Path("data/retro_us_statut.json")
 URL_TICKERS = "https://www.sec.gov/files/company_tickers.json"
 URL_FAITS = "https://data.sec.gov/api/xbrl/companyfacts/CIK{cik:010d}.json"
 
-DATES = retro.dates_test("2011-05-01")
-PERIODES = {"2011 à 2018": ("2011", "2019"), "depuis 2019": ("2019", "2100")}
+# Avant 2012, trop peu de sociétés déposaient leurs comptes au format numérique
+DATES = retro.dates_test("2012-05-01")
+PERIODES = {"2012 à 2018": ("2012", "2019"), "depuis 2019": ("2019", "2100")}
 OBSERVATIONS_MIN = 1000
 
 # Postes comptables américains (US GAAP), par ordre de préférence
@@ -368,7 +369,7 @@ def analyser() -> dict:
         }
     RESULTATS.write_text(json.dumps(res, ensure_ascii=False, indent=1))
     e = res["ensemble"]
-    retro.noter_historique("États-Unis (depuis 2011)",
+    retro.noter_historique("États-Unis (depuis 2012)",
                            e["tranches"][4]["perf_mediane"] - e["tranches"][0]["perf_mediane"],
                            e["tranches"][4]["part_bat_mediane"], e["dates_gagnantes"], e["dates"])
     return res

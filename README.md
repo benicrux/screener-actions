@@ -31,7 +31,7 @@ Ensuite tout est automatique : le calcul tourne **chaque nuit**.
 | Tests du programme (lecture des données, contrôles) | Chaque nuit, avant le calcul ; s'ils échouent, rien n'est publié | Onglet **Actions** |
 | Contrôles de cohérence des chiffres | Chaque nuit | Fiche de la société, `data/anomalies.csv` |
 | Test sur le passé, monde (depuis fin 2023) | Chaque trimestre, le 2 janvier, avril, juillet et octobre | Page « Test sur le passé » |
-| Test sur le passé, États-Unis (depuis 2011, comptes de la SEC) | Chaque trimestre, le 9 janvier, avril, juillet et octobre | Page « Test sur le passé » |
+| Test sur le passé, États-Unis (depuis 2012, comptes de la SEC) | Chaque trimestre, le 9 janvier, avril, juillet et octobre | Page « Test sur le passé » |
 
 Les tests trimestriels relisent toutes les données et ajoutent les dates qui ont désormais 12 mois de recul. Chaque résultat est ajouté à `data/retro_historique.csv`, affiché sur la page : si l'écart entre les mieux et les moins bien notées s'effondre d'un trimestre à l'autre, c'est le signe qu'il faut revoir la note. Les pondérations, elles, ne changent jamais toutes seules.
 
