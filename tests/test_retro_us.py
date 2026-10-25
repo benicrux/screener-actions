@@ -26,6 +26,9 @@ FAITS = {"facts": {"us-gaap": {
     ]}},
     "RevenueFromContractWithCustomerExcludingAssessedTax": {"units": {"USD": [
         fait("2018-01-01", "2018-12-31", 150.0, "2019-02-25"),
+        # 2017 republié en 2019 sous le nouveau poste : le chiffre de 2018 doit rester
+        fait("2017-01-01", "2017-12-31", 118.0, "2019-02-25"),
+        fait("2019-01-01", "2019-12-31", 160.0, "2019-06-30"),  # « publié » avant la fin : ignoré
     ]}},
     "NetIncomeLoss": {"units": {"USD": [
         fait("2016-01-01", "2016-12-31", 10.0, "2017-02-20"),
@@ -50,6 +53,7 @@ def test_comptes():
     l = {r["fin"]: r for r in comptes_annuels("TEST", FAITS)}
     assert set(l) == {"2016-12-31", "2017-12-31", "2018-12-31"}, l.keys()
     assert l["2016-12-31"]["ca"] == 100.0 and l["2016-12-31"]["publie"] == "2017-02-20"
+    assert l["2017-12-31"]["ca"] == 120.0 and l["2017-12-31"]["publie"] == "2018-02-20"
     a = l["2018-12-31"]
     assert a["ca"] == 150.0 and a["resultat_net"] == 15.0 and a["ebitda"] == 25.0
     assert a["tresorerie"] == 50.0 and a["dette"] == 35.0 and a["fonds_propres"] == 80.0

@@ -38,7 +38,7 @@ jobs:
           mkdir -p data/retro_us
           if git fetch -q --depth 1 origin retro-us; then
             git archive FETCH_HEAD | tar -x -C data/retro_us
-            echo "$(wc -l < data/retro_us/traites.txt) sociétés déjà lues."
+            echo "$(cat data/retro_us/traites*.txt 2>/dev/null | wc -l) sociétés déjà lues."
           fi
 
       - name: Collecter l'historique et analyser
@@ -55,7 +55,7 @@ jobs:
         run: |
           git config user.name "screener-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if [ -s data/retro_us/traites.txt ]; then
+          if ls data/retro_us/traites*.txt >/dev/null 2>&1; then
             tmp=$(mktemp -d)
             cp data/retro_us/* "$tmp/"
             git -C "$tmp" init -q -b retro-us

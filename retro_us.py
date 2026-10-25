@@ -36,11 +36,13 @@ import retro
 import univers as module_univers
 
 DOSSIER = Path("data/retro_us")
-COMPTES = DOSSIER / "comptes.csv"
-COURS = DOSSIER / "cours.csv"
-DIVISIONS = DOSSIER / "divisions.csv"
+# À changer quand la lecture des comptes change : tout est alors relu (une quinzaine de minutes)
+VERSION = 2
+COMPTES = DOSSIER / f"comptes_v{VERSION}.csv"
+COURS = DOSSIER / f"cours_v{VERSION}.csv"
+DIVISIONS = DOSSIER / f"divisions_v{VERSION}.csv"
 CHANGES = DOSSIER / "changes.csv"
-TRAITES = DOSSIER / "traites.txt"
+TRAITES = DOSSIER / f"traites_v{VERSION}.txt"
 RESULTATS = Path("data/retro_us_resultats.json")
 
 # La SEC exige dans chaque requête un nom et une adresse e-mail de contact. On la lit dans
@@ -123,7 +125,7 @@ def _premiers(faits: dict, concept: str, duree: bool) -> dict[str, tuple[float, 
             if not str(v.get("form", "")).startswith("10-K") or v.get("val") is None:
                 continue
             fin, publie = v.get("end"), v.get("filed")
-            if not fin or not publie:
+            if not fin or not publie or publie < fin:  # publié avant la fin de l'exercice : erreur
                 continue
             if duree:
                 if not v.get("start"):
@@ -154,11 +156,12 @@ def comptes_annuels(symbole: str, js: dict) -> list[dict]:
     stocks = {k: [_premiers(faits, c, False) for c in concepts] for k, concepts in STOCKS.items()}
 
     def choisir(series, fin):
-        for s in series:
-            v = _proche(s, fin)
-            if v is not None:
-                return v
-        return None
+        # Le chiffre publié le premier, quel que soit le poste utilisé : une société qui change
+        # de poste (par exemple pour la norme ASC 606 en 2018) republie ses anciens exercices
+        # sous le nouveau nom ; prendre ceux-là ferait croire qu'ils n'étaient connus qu'après.
+        # À date égale, l'ordre de préférence des postes départage.
+        trouves = [v for v in (_proche(s, fin) for s in series) if v is not None]
+        return min(trouves, key=lambda v: v[1]) if trouves else None
 
     # Les exercices : dates de fin des chiffres d'affaires ou résultats annuels
     fins = sorted({f for s in flux["ca"] + flux["resultat_net"] for f in s})
@@ -211,6 +214,10 @@ def _corriger_divisions(comptes: pd.DataFrame, divisions: pd.DataFrame) -> pd.Da
 # --------------------------------------------------------------------------- #
 def collecter(budget_minutes: float) -> None:
     DOSSIER.mkdir(parents=True, exist_ok=True)
+    actuels = {COMPTES, COURS, DIVISIONS, CHANGES, TRAITES}
+    for ancien in DOSSIER.iterdir():  # fichiers d'une version précédente de la lecture
+        if ancien not in actuels:
+            ancien.unlink()
     if os.environ.get("RAFRAICHIR"):
         retro.rafraichir(DOSSIER)
     univ = module_univers.charger()
@@ -329,7 +336,8 @@ def analyser() -> dict:
     univ = module_univers.charger()
     comptes = pd.read_csv(COMPTES, dtype={"symbole": str})
     comptes = comptes.sort_values("publie").drop_duplicates(["symbole", "fin"], keep="first")
-    divisions = pd.read_csv(DIVISIONS, dtype={"symbole": str}) if DIVISIONS.exists() else pd.DataFrame()
+    divisions = (pd.read_csv(DIVISIONS, dtype={"symbole": str}).drop_duplicates()
+                 if DIVISIONS.exists() else pd.DataFrame())
     comptes = _corriger_divisions(comptes, divisions)
     comptes["fin_date"] = pd.to_datetime(comptes["fin"], errors="coerce")
     cours = pd.read_csv(COURS, dtype={"symbole": str})
