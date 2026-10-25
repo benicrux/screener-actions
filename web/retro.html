@@ -29,6 +29,7 @@
   table.tab th:first-child, table.tab td:first-child { text-align: left; white-space: normal; }
   table.tab th { font-weight: 600; color: var(--encre-2); font-size: 13px; white-space: normal; }
   ul.limites li { margin: 6px 0; }
+  .sous-titre { margin: 18px 0 6px; font-size: 16px; }
 </style>
 </head>
 <body>
@@ -53,6 +54,24 @@
   <div class="tableau-cadre"><table class="tab" id="tab-dates"></table></div>
   <p class="legende">Les 100 sociétés les mieux notées à chaque date, comparées à l'ensemble.</p>
 
+  <section id="bloc-us" hidden>
+    <h2>États-Unis, depuis 2011</h2>
+    <p id="us-intro"></p>
+    <p class="verdict" id="us-verdict"></p>
+    <div class="graphe" id="graphe-us"></div>
+    <div class="tableau-cadre"><table class="tab" id="tab-us-periodes"></table></div>
+    <p class="legende">Écart de performance médiane à 12 mois entre les 20&nbsp;% les mieux notées et les 20&nbsp;% les moins bien notées, et nombre de dates où les mieux notées ont fait mieux.</p>
+    <h3 class="sous-titre">Les pondérations tiennent-elles ?</h3>
+    <div class="tableau-cadre"><table class="tab" id="tab-us-variantes"></table></div>
+    <p class="legende">Les pondérations actuelles ont été choisies sur 2023-2025 hors États-Unis : la période 2011-2018 n'a servi à rien régler, c'est un vrai test.</p>
+  </section>
+
+  <section id="bloc-historique" hidden>
+    <h2>Historique des tests</h2>
+    <p>Les deux tests sont refaits automatiquement chaque trimestre, pour vérifier que la note continue de fonctionner.</p>
+    <div class="tableau-cadre"><table class="tab" id="tab-historique"></table></div>
+  </section>
+
   <h2>Lion Finance et Afentra</h2>
   <div id="cas"></div>
 
@@ -60,7 +79,7 @@
   <ul class="limites">
     <li>Yahoo ne fournit gratuitement que quatre exercices de comptes et pas les anciennes prévisions des analystes. Le test porte donc sur la partie « comptes » de la note : valorisation, croissance, rentabilité et situation financière, soit 70 % des pondérations. Les révisions, les publications et la visibilité ne sont pas testées.</li>
     <li>Les sociétés disparues depuis (faillites, rachats) ne figurent plus dans la liste : les performances des moins bien notées sont sans doute un peu flattées, ce qui joue plutôt contre le screener.</li>
-    <li>Deux ans de marché seulement : de bons résultats sur cette période ne garantissent pas les suivants.</li>
+    <li>Le test mondial ne porte que sur deux ans ; le test américain, plus long, sert à vérifier que la note tient sur d'autres périodes. Aucun des deux ne garantit l'avenir.</li>
     <li>Un avantage de quelques points par an en moyenne n'empêche pas qu'une action bien notée chute fortement. La note sert à trier, pas à se passer d'analyser.</li>
   </ul>
 </main>
@@ -126,6 +145,36 @@ fetch(`data/retro_resultats.json?v=${VERSION}`).then((r) => r.json()).then((r) =
 }).catch(() => {
   document.getElementById("intro").textContent = "Les résultats du test ne sont pas encore disponibles.";
 });
+
+fetch(`data/retro_us_resultats.json?v=${VERSION}`).then((r) => r.json()).then((r) => {
+  const e = r.ensemble, t = e.tranches;
+  document.getElementById("us-intro").textContent =
+    `Même méthode sur ${F0.format(r.societes)} sociétés américaines, à ${r.dates.length} dates de ${date(r.dates[0])} à ${date(r.dates[r.dates.length - 1])}, avec les comptes déposés auprès de l'autorité boursière américaine (SEC) et leur vraie date de publication. La période couvre plusieurs marchés difficiles (2015-2016, fin 2018, 2020, 2022).`;
+  document.getElementById("us-verdict").textContent =
+    `Les 20\u00a0% les mieux notées ont gagné ${pct(t[4].perf_mediane)} en médiane sur 12 mois, contre ${pct(t[0].perf_mediane)} pour les 20\u00a0% les moins bien notées. Elles ont fait mieux à ${e.dates_gagnantes} dates sur ${e.dates}.`;
+  barres(document.getElementById("graphe-us"), t);
+  document.getElementById("tab-us-periodes").innerHTML =
+    `<tr><th>Période</th><th>Écart moyen</th><th>Dates gagnantes</th></tr>` +
+    Object.entries(r.periodes).map(([k, v]) =>
+      `<tr><td>${k}</td><td>${pct(v.ecart_moyen)}</td><td>${v.dates_gagnantes} sur ${v.dates}</td></tr>`).join("");
+  const periodes = Object.keys(r.periodes);
+  document.getElementById("tab-us-variantes").innerHTML =
+    `<tr><th>Pondérations</th>${periodes.map((p) => `<th>${p}</th>`).join("")}<th>Ensemble</th></tr>` +
+    Object.entries(r.variantes).map(([k, v]) =>
+      `<tr><td>${k}</td>${periodes.map((p) => `<td>${pct(v[p])}</td>`).join("")}<td>${pct(v.ensemble)}</td></tr>`).join("");
+  document.getElementById("bloc-us").hidden = false;
+}).catch(() => {});
+
+fetch(`data/retro_historique.csv?v=${VERSION}`).then((r) => { if (!r.ok) throw 0; return r.text(); }).then((txt) => {
+  const [tete, ...lignes] = txt.trim().split("\n").map((l) => l.split(","));
+  const col = (n) => tete.indexOf(n);
+  document.getElementById("tab-historique").innerHTML =
+    `<tr><th>Test du</th><th>Zone</th><th>Écart</th><th>Mieux notées battant la médiane</th></tr>` +
+    lignes.reverse().map((l) => `<tr><td>${new Date(l[col("date_test")] + "T12:00:00").toLocaleDateString("fr-FR")}</td>
+      <td>${l[col("zone")]}</td><td>${pct(+l[col("ecart_mieux_moins_bien")])}</td>
+      <td>${F0.format(+l[col("part_mieux_notees_battant_mediane")] * 100)}\u00a0%</td></tr>`).join("");
+  document.getElementById("bloc-historique").hidden = false;
+}).catch(() => {});
 </script>
 </body>
 </html>

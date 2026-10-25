@@ -1,0 +1,75 @@
+name: Test sur le passé (États-Unis, depuis 2011)
+
+on:
+  schedule:
+    # Chaque trimestre (9 janvier, avril, juillet, octobre) : test refait de zéro
+    - cron: "23 5 9 1,4,7,10 *"
+  workflow_dispatch: # bouton « Run workflow » pour lancer à la main
+  push:
+    branches: [main]
+    paths: ["retro_us.py", ".github/workflows/retro-us.yml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: retro-us
+  cancel-in-progress: false
+
+jobs:
+  tester:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Installer les dépendances
+        run: pip install -r requirements.txt
+
+      - name: Reprendre les données déjà collectées (branche « retro-us »)
+        run: |
+          mkdir -p data/retro_us
+          if git fetch -q --depth 1 origin retro-us; then
+            git archive FETCH_HEAD | tar -x -C data/retro_us
+            echo "$(wc -l < data/retro_us/traites.txt) sociétés déjà lues."
+          fi
+
+      - name: Collecter l'historique et analyser
+        env:
+          BUDGET_MINUTES: "280"
+          RAFRAICHIR: ${{ github.event_name == 'schedule' && '1' || '' }}
+        run: python retro_us.py
+
+      - name: Sauvegarder
+        if: always()
+        env:
+          JETON: ${{ github.token }}
+        run: |
+          git config user.name "screener-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -s data/retro_us/traites.txt ]; then
+            tmp=$(mktemp -d)
+            cp data/retro_us/* "$tmp/"
+            git -C "$tmp" init -q -b retro-us
+            git -C "$tmp" add .
+            git -C "$tmp" -c user.name="screener-bot" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -q -m "Historique américain pour le test sur le passé ($(date +%F))"
+            git -C "$tmp" push -q --force \
+              "https://x-access-token:${JETON}@github.com/${GITHUB_REPOSITORY}.git" retro-us
+          fi
+          if [ -f data/retro_us_resultats.json ]; then
+            git add data/retro_us_resultats.json data/retro_historique.csv
+            if ! git diff --cached --quiet; then
+              git commit -q -m "Résultats du test américain sur le passé"
+              git pull -q --rebase --autostash
+              git push -q
+            fi
+          fi

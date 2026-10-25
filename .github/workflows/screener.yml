@@ -40,6 +40,10 @@ jobs:
       - name: Installer les dépendances
         run: pip install -r requirements.txt
 
+      - name: Vérifier les calculs (tests automatiques)
+        run: |
+          for t in tests/test_*.py; do python "$t"; done
+
       - name: Récupérer les données détaillées (branche « donnees »)
         run: |
           if git fetch -q --depth 1 origin donnees; then

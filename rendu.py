@@ -83,9 +83,9 @@ def generer(table: pd.DataFrame, statut: dict) -> None:
         f = SITE / nom
         f.write_text(f.read_text().replace("__VERSION__", version))
     (SITE / "data" / "fiches").mkdir(parents=True, exist_ok=True)
-    retro = Path("data/retro_resultats.json")
-    if retro.exists():
-        shutil.copy(retro, SITE / "data" / "retro_resultats.json")
+    for nom in ("retro_resultats.json", "retro_us_resultats.json", "retro_historique.csv"):
+        if (Path("data") / nom).exists():
+            shutil.copy(Path("data") / nom, SITE / "data" / nom)
 
     t = table.copy()
     t["taille_fr"] = t["taille"].map(TAILLES_FR)

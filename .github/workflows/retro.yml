@@ -1,6 +1,9 @@
 name: Test sur le passé
 
 on:
+  schedule:
+    # Chaque trimestre (2 janvier, avril, juillet, octobre) : test refait de zéro
+    - cron: "23 5 2 1,4,7,10 *"
   workflow_dispatch: # bouton « Run workflow » pour lancer à la main
   push:
     branches: [main]
@@ -10,7 +13,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: screener   # jamais en même temps que le calcul de nuit (Yahoo bloquerait)
+  group: retro
   cancel-in-progress: false
 
 jobs:
@@ -41,6 +44,7 @@ jobs:
       - name: Collecter l'historique et analyser
         env:
           BUDGET_MINUTES: "240"
+          RAFRAICHIR: ${{ github.event_name == 'schedule' && '1' || '' }}
         run: python retro.py
 
       - name: Sauvegarder
@@ -62,7 +66,7 @@ jobs:
               "https://x-access-token:${JETON}@github.com/${GITHUB_REPOSITORY}.git" retro
           fi
           if [ -f data/retro_resultats.json ]; then
-            git add data/retro_resultats.json
+            git add data/retro_resultats.json data/retro_historique.csv
             if ! git diff --cached --quiet; then
               git commit -q -m "Résultats du test sur le passé"
               git pull -q --rebase --autostash

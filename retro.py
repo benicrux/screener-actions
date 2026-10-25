@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import datetime as dt
 import json
+import os
 import random
 import sys
 import threading
@@ -58,7 +59,36 @@ POSTES = {
 # Dates du test (début de mois) : on dispose ensuite de 12 mois de cours
 COLONNES_COMPTES = ["symbole", "fin", "devise", *POSTES.values()]
 COLONNES_COURS = ["symbole", "mois", "cours", "ajuste", "devise"]
-DATES = ["2023-11-01", "2024-05-01", "2024-11-01", "2025-05-01", "2025-10-01"]
+HISTORIQUE = Path("data/retro_historique.csv")
+
+
+def dates_test(premiere: str, aujourd_hui: dt.date | None = None) -> list[str]:
+    """Une date tous les six mois (mai et novembre) depuis `premiere`, jusqu'à la plus
+    récente qui dispose déjà de 12 mois de recul, celle-ci incluse."""
+    aujourd_hui = aujourd_hui or dt.date.today()
+    derniere = (pd.Timestamp(aujourd_hui) - pd.DateOffset(months=13)).replace(day=1)
+    dates = [d for d in pd.date_range(premiere, derniere, freq="MS") if d.month in (5, 11)]
+    if not dates or dates[-1] != derniere:
+        dates.append(derniere)
+    return [d.strftime("%Y-%m-%d") for d in dates]
+
+
+def noter_historique(zone: str, ecart: float, part_bat: float, gagnantes: int, dates: int) -> None:
+    """Garde une trace de chaque test, pour vérifier dans le temps que la note tient."""
+    ligne = pd.DataFrame([{"date_test": dt.date.today().isoformat(), "zone": zone,
+                           "ecart_mieux_moins_bien": round(ecart, 4),
+                           "part_mieux_notees_battant_mediane": round(part_bat, 4),
+                           "dates_gagnantes": gagnantes, "dates": dates}])
+    if HISTORIQUE.exists():
+        h = pd.read_csv(HISTORIQUE)
+        h = h[~((h["date_test"] == ligne.at[0, "date_test"]) & (h["zone"] == zone))]
+        ligne = pd.concat([h, ligne], ignore_index=True)
+    ligne.to_csv(HISTORIQUE, index=False)
+
+
+# Les comptes gratuits de Yahoo remontent à 4 exercices : premier test fin 2023
+DATES = dates_test("2023-11-01")
+OBSERVATIONS_MIN = 3000  # une date avec trop peu de sociétés n'est pas retenue
 DELAI_PUBLICATION_MOIS = 4
 CAPI_MIN_EUR = 50e6
 POIDS = {k: v for k, v in config.POIDS_INVESTISSEUR.items()
@@ -89,13 +119,24 @@ def _comptes(symbole: str) -> list[dict]:
     return list(lignes.values())
 
 
-def _cours(symbole: str) -> list[dict]:
+def _cours(symbole: str, plage: str = "5y") -> list[dict]:
+    return _historique(symbole, plage)[0]
+
+
+def _historique(symbole: str, plage: str = "5y") -> tuple[list[dict], list[dict]]:
+    """Cours mensuels (corrigés des divisions d'actions) et liste des divisions."""
     js = collecte._get_json(URL_GRAPHE.format(s=symbole), {
-        "range": "5y", "interval": "1mo", "events": "div,split", "includeAdjustedClose": "true"})
+        "range": plage, "interval": "1mo", "events": "div,split", "includeAdjustedClose": "true"})
     r = ((js.get("chart") or {}).get("result") or [None])[0]
     if not r or not r.get("timestamp"):
-        return []
+        return [], []
     devise = (r.get("meta") or {}).get("currency")
+    divisions = []
+    for v in ((r.get("events") or {}).get("splits") or {}).values():
+        num, den = collecte._v(v.get("numerator")), collecte._v(v.get("denominator"))
+        if num and den and v.get("date"):
+            divisions.append({"symbole": symbole, "ratio": num / den,
+                              "date": dt.datetime.fromtimestamp(v["date"], dt.timezone.utc).date().isoformat()})
 
     fermeture = ((r.get("indicators") or {}).get("quote") or [{}])[0].get("close") or []
     ajuste = ((r.get("indicators") or {}).get("adjclose") or [{}])[0].get("adjclose") or fermeture
@@ -108,21 +149,21 @@ def _cours(symbole: str) -> list[dict]:
         # jamais la ranger dans le mois précédent.
         mois = dt.datetime.fromtimestamp(t + 3 * 86400, dt.timezone.utc).strftime("%Y-%m")
         lignes.append({"symbole": symbole, "mois": mois, "cours": c, "ajuste": a, "devise": devise})
-    return lignes
+    return lignes, divisions
 
 
-def _changes(devises: set[str]) -> None:
+def _changes(devises: set[str], plage: str = "5y", fichier: Path | None = None) -> None:
     lignes = []
     for d in sorted(devises | {"EUR"}):
         if not isinstance(d, str) or d == "USD" or len(d) != 3:
             continue
         try:
-            for l in _cours(f"USD{d}=X"):
+            for l in _cours(f"USD{d}=X", plage):
                 lignes.append({"devise": d, "mois": l["mois"], "par_usd": l["cours"]})
         except Exception as e:
             print(f"   Change {d} indisponible ({e})")
         time.sleep(0.3)
-    pd.DataFrame(lignes).to_csv(CHANGES, index=False)
+    pd.DataFrame(lignes).to_csv(fichier or CHANGES, index=False)
 
 
 def _ajouter(fichier: Path, lignes: list[dict], colonnes: list[str]) -> None:
@@ -131,8 +172,18 @@ def _ajouter(fichier: Path, lignes: list[dict], colonnes: list[str]) -> None:
             fichier, mode="a", header=not fichier.exists(), index=False, float_format="%.6g")
 
 
+def rafraichir(dossier: Path) -> None:
+    """Repart de zéro (tests programmés chaque trimestre) : comptes et cours relus."""
+    for f in dossier.glob("*"):
+        if f.is_file():
+            f.unlink()
+    print("   Données du test précédent effacées : tout est relu.")
+
+
 def collecter(budget_minutes: float) -> None:
     DOSSIER.mkdir(parents=True, exist_ok=True)
+    if os.environ.get("RAFRAICHIR"):
+        rafraichir(DOSSIER)
     (DOSSIER / "comptes.csv").unlink(missing_ok=True)  # ancienne version aux colonnes mélangées
     univ = module_univers.charger()
     deja = set(TRAITES.read_text().split()) if TRAITES.exists() else set()
@@ -222,15 +273,21 @@ def _notes_a_la_date(date: str, univ: pd.DataFrame, comptes: pd.DataFrame,
     mois1 = (t0 + pd.DateOffset(months=12)).strftime("%Y-%m")
     limite = t0 - pd.DateOffset(months=DELAI_PUBLICATION_MOIS)
 
-    c = comptes[comptes["fin_date"] <= limite].sort_values("fin_date")
+    if "publie" in comptes:  # date de publication connue (comptes américains de la SEC)
+        connus = pd.to_datetime(comptes["publie"], errors="coerce") <= t0
+    else:  # sinon : exercice clos depuis au moins 4 mois
+        connus = comptes["fin_date"] <= limite
+    c = comptes[connus].sort_values("fin_date")
     dernier = c.groupby("symbole").tail(1).set_index("symbole")
+    # Comptes trop anciens (société qui ne publie plus) : ignorés
+    dernier = dernier[dernier["fin_date"] >= t0 - pd.DateOffset(months=18)]
     precedent = c.groupby("symbole").nth(-2).set_index("symbole")
 
     p0 = cours[cours["mois"] == mois0].drop_duplicates("symbole").set_index("symbole")
     p1 = cours[cours["mois"] == mois1].drop_duplicates("symbole").set_index("symbole")
 
     d = univ[["symbole", "nom", "secteur", "industrie_en", "continent"]].set_index("symbole")
-    d = d.join(dernier.drop(columns=["fin_date"], errors="ignore"), how="inner")
+    d = d.join(dernier.drop(columns=["fin_date", "publie"], errors="ignore"), how="inner")
     d = d.join(precedent[["ca"]].rename(columns={"ca": "ca_prec"}), how="left")
     d = d.join(p0[["cours", "ajuste", "devise"]].rename(columns={"devise": "devise_cours"}),
                how="inner")
@@ -330,8 +387,10 @@ def analyser() -> dict:
     cours = pd.read_csv(COURS, dtype={"symbole": str})
     par_euro = _taux(pd.read_csv(CHANGES))
 
-    tout = pd.concat([_notes_a_la_date(d, univ, comptes, cours, par_euro) for d in DATES])
-    res = {"genere_le": dt.date.today().isoformat(), "dates": DATES,
+    tout = pd.concat([n for n in (_notes_a_la_date(d, univ, comptes, cours, par_euro) for d in DATES)
+                      if len(n) >= OBSERVATIONS_MIN])
+    dates_retenues = sorted(tout["date"].unique())
+    res = {"genere_le": dt.date.today().isoformat(), "dates": dates_retenues,
            "societes": int(tout.index.nunique()), "observations": int(len(tout)),
            "par_date": {}, "par_note": {}, "par_critere": {}, "par_continent": {},
            "meilleures": {}, "cas": {}}
@@ -359,7 +418,7 @@ def analyser() -> dict:
                  for k, v in r.items() if k in ("date", "note", "valorisation", "croissance",
                                                  "rentabilite", "situation_fi", "perf")}
                 for r in l.reset_index(drop=True).to_dict("records")]
-    derniere = tout[tout["date"] == DATES[-1]].nlargest(20, "note")
+    derniere = tout[tout["date"] == dates_retenues[-1]].nlargest(20, "note")
     res["meilleures"] = [{"symbole": s, "nom": r["nom"], "note": int(r["note"]),
                           "perf": round(float(r["perf"]), 3)} for s, r in derniere.iterrows()]
     def propre(x):
@@ -374,6 +433,10 @@ def analyser() -> dict:
         return x
     res = propre(res)
     RESULTATS.write_text(json.dumps(res, ensure_ascii=False, indent=1))
+    t = res["par_note"]
+    ecarts = [v["perf_mediane_top_100"] - v["perf_mediane_toutes"] for v in res["par_date"].values()]
+    noter_historique("Monde (depuis fin 2023)", t[4]["perf_mediane"] - t[0]["perf_mediane"],
+                     t[4]["part_bat_mediane"], sum(e > 0 for e in ecarts), len(ecarts))
     return res
 
 
