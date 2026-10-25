@@ -31,6 +31,7 @@ Tout est dans `config.py` : pondérations de la note investisseur, durée de col
 ## Ce qu'il faut savoir
 
 - Les données viennent de **Yahoo Finance** (source non officielle) et de **FinanceDatabase** (liste des sociétés). Elles peuvent comporter des erreurs, surtout pour les petites sociétés et les cotations en devises différentes des comptes. Vérifiez toujours avant d'investir.
+- **Contrôles automatiques** : chaque nuit, les chiffres de chaque société sont vérifiés (cours présent et récent, capitalisation cohérente avec le cours, cours dans sa fourchette annuelle, PER et rapport capitalisation / chiffre d'affaires proches de ceux calculés par Yahoo, rendement plausible). Une anomalie grave retire la société du classement jusqu'à sa prochaine lecture ; une anomalie légère écarte seulement le chiffre douteux. La fiche indique la raison, et la liste du jour est dans `data/anomalies.csv`.
 - Si Yahoo bloque temporairement les requêtes, le robot s'arrête proprement et reprend la nuit suivante.
 - Sont écartés : les sociétés russes (impossibles à acheter depuis la France), les fonds cotés et les certificats étrangers (ADR, GDR, BDR), qui doublonnent les vraies sociétés. Réglable dans `config.py`.
 - Ce screener est un outil de repérage, pas un conseil en investissement.
@@ -44,6 +45,7 @@ Tout est dans `config.py` : pondérations de la note investisseur, durée de col
 | `univers.py` | Liste mondiale des sociétés (une seule cotation par société) |
 | `collecte.py` | Lecture des données Yahoo Finance et archive des prévisions |
 | `notes.py` | Calcul des indicateurs et des notes sur 100 |
+| `controles.py` | Contrôles de cohérence des chiffres avant le calcul des notes |
 | `rendu.py`, `web/` | Le site (tableau, filtres, fiches, favoris) |
 | `data/` | Liste des sociétés, taux de change, archive des prévisions, statut |
 | branche `donnees` | Les données détaillées de chaque société, remplacées à chaque passage |

@@ -119,13 +119,18 @@ def indicateurs(base: pd.DataFrame, fx: dict[str, float]) -> pd.DataFrame:
     cours, capi, actions = _num(d, "cours"), _num(d, "capi"), _num(d, "actions")
     d["financiere"] = d["industrie_en"].isin(INDUSTRIES_FINANCIERES)
 
-    # Capitalisation en dollars (Yahoo l'exprime parfois en livres pour un cours en pence)
+    # Capitalisation en dollars. Yahoo l'exprime parfois en livres pour un cours en pence.
+    # Quand la société a plusieurs catégories d'actions (actions A et H chinoises,
+    # actions A et B…), le nombre d'actions ne compte qu'une catégorie : la
+    # capitalisation de Yahoo, qui les compte toutes, fait alors foi (rapport jusqu'à 30).
     calc = cours * actions
     r = capi / calc
-    d["capi_usd"] = np.where(r.between(0.5, 3), capi * t_cours,
+    d["capi_usd"] = np.where(r.between(1 / 3, 30), capi * t_cours,
                     np.where(r.between(0.004, 0.03), capi * t_principale,
                     np.where(calc.notna(), calc * t_cours, capi * t_principale)))
     d["prix_usd"] = cours * t_cours
+    # Nombre d'actions de toutes catégories, déduit de la capitalisation
+    actions = (d["capi_usd"] / d["prix_usd"].where(d["prix_usd"] > 0)).fillna(actions)
 
     ca = _num(d, "ca") * t_comptes
     ca_a0 = _num(d, "ca_a0_moy") * t_ca
@@ -244,7 +249,8 @@ def indicateurs(base: pd.DataFrame, fx: dict[str, float]) -> pd.DataFrame:
     ancien = version.isna()  # premières lectures : « rendement » = sur 12 mois
     rdt = rdt.where(~(ancien & centiemes), rdt * 100)
     rdt = rdt.fillna(rdt_12m)
-    d["rendement_ref"] = rdt.where(rdt < 0.3).fillna(0).where(d["prix_usd"].notna())
+    # (les rendements aberrants sont écartés par les contrôles, voir controles.py)
+    d["rendement_ref"] = rdt.fillna(0).where(d["prix_usd"].notna())
     d["reco"] = _num(d, "reco").where(_num(d, "nb_analystes") >= 1)
     d["perf_52s"] = _num(d, "perf_52s")
     return d

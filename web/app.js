@@ -561,6 +561,9 @@ function minuscule(t) {
 }
 
 function pointsSaillants(a, f) {
+  if (f.anomalie_grave) {
+    return [`Retirée du classement jusqu'à sa prochaine lecture : ${echapper(f.anomalies)}. Les chiffres ci-dessous sont à vérifier.`];
+  }
   const forts = [], faibles = [];
   NOTES_FICHE.forEach(([k, lib]) => {
     if (a[k] == null) return;
@@ -574,6 +577,7 @@ function pointsSaillants(a, f) {
     l.push("Peu ou pas suivie par les analystes : les notes de révisions, de publication et de visibilité manquent souvent.");
   }
   if (a.fin) l.push("Banque ou société financière : jugée sur le PER, le cours / actif net et la rentabilité des fonds propres.");
+  if (f.anomalies) l.push(`Chiffre écarté du calcul des notes : ${echapper(f.anomalies)}.`);
   const age = joursDepuis(f.maj || a.m);
   if (age != null && age > 10) l.push(`Données détaillées lues il y a ${age} jours.`);
   return l;

@@ -15,6 +15,7 @@ import pandas as pd
 
 import collecte
 import config
+import controles
 import notes
 import rendu
 import univers as module_univers
@@ -26,13 +27,13 @@ COLONNES_TEXTE = ["maj", "statut", "devise_cours", "devise_comptes", "devise_bpa
 
 def assembler(univ: pd.DataFrame, donnees: pd.DataFrame, cours: pd.DataFrame) -> pd.DataFrame:
     table = univ.merge(donnees.drop(columns=["nom"], errors="ignore"), on="symbole", how="left")
-    for col in COLONNES_TEXTE + ["cours", "capi", "actions"]:
+    for col in COLONNES_TEXTE + ["cours", "capi", "actions", "date_cours"]:
         if col not in table:
             table[col] = pd.Series(index=table.index, dtype=object)
     if not cours.empty:
         c = cours.dropna(subset=["cours"]).drop_duplicates("symbole").set_index("symbole")
         idx = table["symbole"]
-        for col in ("cours", "devise_cours", "capi", "actions"):
+        for col in ("cours", "devise_cours", "capi", "actions", "date_cours"):
             frais = idx.map(c[col]) if col in c else pd.Series(index=table.index, dtype=object)
             if col in table:
                 table[col] = frais.where(frais.notna(), table[col])
@@ -75,7 +76,13 @@ def main() -> None:
     table = notes.indicateurs(table, fx)
     vehicules = int((table["vehicule"] & table["statut"].eq("ok")).sum())
     table = table[~table["vehicule"]].copy()
-    n = notes.noter(table)
+    table = controles.controler(table)
+    anomalies = controles.enregistrer(table)
+    print(f"   Contrôles : {anomalies['graves']} sociétés retirées du classement, "
+          f"{anomalies['legeres']} avec un chiffre écarté.")
+    classees = table[~table["anomalie_grave"]].copy()
+    n = notes.noter(classees)
+    table["groupe"] = classees["groupe"]
     table = table.join(n.add_prefix("n_"))
 
     lues = (table["statut"] == "ok").sum()
@@ -89,6 +96,7 @@ def main() -> None:
         "jamais_lues": int(jamais),
         "introuvables": int((table["statut"] == "introuvable").sum()),
         "vehicules_ecartes": vehicules,
+        "anomalies": anomalies,
         "jours_restants": (int(-(-jamais // rythme)) if rythme and jamais else 0),
         "cours_du_jour": int(len(cours)),
         "collecte": bilan,
