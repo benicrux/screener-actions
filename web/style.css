@@ -424,10 +424,10 @@ details summary { cursor: pointer; color: var(--accent); }
 .f-hausse { fill: var(--haut); }
 .f-baisse { fill: var(--bas); }
 .groupe-macro { display: flex; flex-direction: column; gap: 8px; }
-.groupe-macro h3 { margin: 6px 0 0; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--encre-2); }
+.groupe-macro h3 { margin: 8px 0 0; padding-left: 9px; border-left: 3px solid var(--accent); font-size: 15px; font-weight: 800; line-height: 1.25; color: var(--encre); }
 .tuiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
 .tuile { background: var(--surface); border: 1px solid var(--filet); border-radius: 10px; padding: 11px; display: flex; flex-direction: column; gap: 5px; }
-.tuile-nom { font-size: 13px; color: var(--encre-2); line-height: 1.3; }
+.tuile-nom { font-size: 14px; font-weight: 700; color: var(--encre); line-height: 1.3; }
 .tuile-valeur { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 8px; }
 .tuile-valeur strong { font-size: 20px; font-weight: 800; letter-spacing: -0.01em; }
 .tuile-valeur span { font-size: 12px; font-weight: 600; color: var(--moy); }
