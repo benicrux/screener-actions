@@ -1,15 +1,15 @@
 {
- "date": "2026-10-26 09:29 UTC",
+ "date": "2026-10-26 15:08 UTC",
  "univers": 26465,
  "avec_donnees": 26055,
- "notees": 23809,
+ "notees": 24207,
  "jamais_lues": 0,
  "introuvables": 224,
  "illisibles": 1,
  "vehicules_ecartes": 185,
  "anomalies": {
-  "graves": 619,
-  "legeres": 677
+  "graves": 220,
+  "legeres": 47
  },
  "jours_restants": 0,
  "cours_du_jour": 0,
@@ -25,5 +25,6 @@
  },
  "usd_par_eur": 1.1217049915872126,
  "depot": "benicrux/screener-actions",
- "passage_complet": "2026-10-26"
+ "passage_complet": "2026-10-26",
+ "nuits_difficiles": 0
 }
