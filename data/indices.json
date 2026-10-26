@@ -512,8 +512,7 @@
    "manquantes": [
     "FRT Federal Realty Investment Trust"
    ],
-   "echec_depuis": null,
-   "erreur": null
+   "echec_depuis": null
   },
   "nasdaq100": {
    "nom": "Nasdaq-100",
@@ -624,8 +623,7 @@
    "lu": "2026-10-26",
    "lues": 101,
    "manquantes": [],
-   "echec_depuis": null,
-   "erreur": null
+   "echec_depuis": null
   },
   "dow": {
    "nom": "Dow Jones",
@@ -666,8 +664,7 @@
    "lu": "2026-10-26",
    "lues": 30,
    "manquantes": [],
-   "echec_depuis": null,
-   "erreur": null
+   "echec_depuis": null
   },
   "tsx60": {
    "nom": "S&P/TSX 60",
@@ -737,8 +734,7 @@
    "lu": "2026-10-26",
    "lues": 59,
    "manquantes": [],
-   "echec_depuis": null,
-   "erreur": null
+   "echec_depuis": null
   },
   "eurostoxx50": {
    "nom": "Euro Stoxx 50",
@@ -799,8 +795,7 @@
    "lu": "2026-10-26",
    "lues": 50,
    "manquantes": [],
-   "echec_depuis": null,
-   "erreur": null
+   "echec_depuis": null
   },
   "cac40": {
    "nom": "CAC 40",
@@ -851,8 +846,7 @@
    "lu": "2026-10-26",
    "lues": 40,
    "manquantes": [],
-   "echec_depuis": null,
-   "erreur": null
+   "echec_depuis": null
   },
   "dax": {
    "nom": "DAX",
@@ -903,8 +897,7 @@
    "lu": "2026-10-26",
    "lues": 40,
    "manquantes": [],
-   "echec_depuis": null,
-   "erreur": null
+   "echec_depuis": null
   },
   "ftse100": {
    "nom": "FTSE 100",
@@ -1016,19 +1009,39 @@
     "FCIT F & C Investment Trust",
     "SMT Scottish Mortgage Investment Trust"
    ],
-   "echec_depuis": null,
-   "erreur": null
+   "echec_depuis": null
   },
   "smi": {
    "nom": "SMI",
    "continent": "Europe",
    "description": "Les 20 plus grandes sociétés suisses",
-   "membres": [],
-   "lu": null,
-   "lues": null,
+   "membres": [
+    "ABBN.SW",
+    "ALC.SW",
+    "AMRZ.SW",
+    "CFR.SW",
+    "GALD.SW",
+    "GEBN.SW",
+    "GIVN.SW",
+    "HOLN.SW",
+    "LOGN.SW",
+    "LONN.SW",
+    "NESN.SW",
+    "NOVN.SW",
+    "PGHN.SW",
+    "RO.SW",
+    "SDZ.SW",
+    "SIKA.SW",
+    "SLHN.SW",
+    "SREN.SW",
+    "UBSG.SW",
+    "ZURN.SW"
+   ],
+   "lu": "2026-10-26",
+   "lues": 20,
    "manquantes": [],
-   "erreur": "ValueError: aucun tableau avec une colonne de codes",
-   "echec_depuis": "2026-10-26"
+   "echec_depuis": null,
+   "erreur": null
   },
   "nikkei225": {
    "nom": "Nikkei 225",
@@ -1264,8 +1277,7 @@
    "lu": "2026-10-26",
    "lues": 225,
    "manquantes": [],
-   "echec_depuis": null,
-   "erreur": null
+   "echec_depuis": null
   },
   "hangseng": {
    "nom": "Hang Seng",
@@ -1368,8 +1380,7 @@
     "1024 Kuaishou",
     "6690 Haier"
    ],
-   "echec_depuis": null,
-   "erreur": null
+   "echec_depuis": null
   },
   "nifty50": {
    "nom": "NIFTY 50",
@@ -1430,8 +1441,7 @@
    "lu": "2026-10-26",
    "lues": 50,
    "manquantes": [],
-   "echec_depuis": null,
-   "erreur": null
+   "echec_depuis": null
   },
   "asx50": {
    "nom": "S&P/ASX 50",
@@ -1493,8 +1503,7 @@
    "manquantes": [
     "VAS Vanguard Australian Shares"
    ],
-   "echec_depuis": null,
-   "erreur": null
+   "echec_depuis": null
   }
  }
 }
