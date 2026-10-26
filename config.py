@@ -57,6 +57,8 @@ SANTE_NOTEES_MIN = 20_000     # sociétés notées (environ 24 000 normalement)
 SANTE_GRAVES_MAX = 2_500      # sociétés retirées par les contrôles (quelques centaines normalement)
 # Nuits de suite où Yahoo a bloqué ou n'a rien renvoyé, avant l'alerte par e-mail
 SANTE_NUITS_MAX = 3
+# Jours de suite où la composition d'un grand indice n'a pas pu être relue sur Wikipédia
+SANTE_INDICES_JOURS = 3
 
 # --- Radar de la page d'accueil -----------------------------------------------------
 # Sociétés de qualité bon marché, sans risque de faillite apparent (voir le journal du

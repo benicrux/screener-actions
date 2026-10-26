@@ -2,3 +2,4 @@ pandas>=2.2
 numpy>=1.26
 yfinance>=1.7,<2
 financedatabase>=2.5
+lxml>=5  # lecture des pages Wikipédia (composition des grands indices)

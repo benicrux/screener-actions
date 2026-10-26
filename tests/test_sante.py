@@ -42,6 +42,19 @@ def test_indicateurs_economiques():
     assert len(problemes(NORMAL, "plusieurs-nuits", True, macro=maigre)) == 1
 
 
+def test_grands_indices():
+    import datetime as dt
+    jour = lambda n: (dt.date.today() - dt.timedelta(days=n)).isoformat()
+    ok = {"indices": {"cac40": {"nom": "CAC 40", "lu": jour(5), "echec_depuis": None}}}
+    assert problemes(NORMAL, "plusieurs-nuits", True, indices=ok) == []
+    recent = {"indices": {"cac40": {"nom": "CAC 40", "echec_depuis": jour(1)}}}
+    assert problemes(NORMAL, "plusieurs-nuits", True, indices=recent) == []   # passager
+    panne = {"indices": {"cac40": {"nom": "CAC 40", "echec_depuis": jour(3)},
+                         "dax": {"nom": "DAX", "echec_depuis": jour(10)}}}
+    p = problemes(NORMAL, "plusieurs-nuits", True, indices=panne)
+    assert len(p) == 1 and "CAC 40, DAX" in p[0]
+
+
 def test_tests_trimestriels():
     from sante import degradation
     l = lambda e, g=5, n=5: {"zone": "Monde (depuis fin 2023)", "ecart_mieux_moins_bien": str(e),
@@ -60,4 +73,5 @@ if __name__ == "__main__":
     test_plusieurs_nuits()
     test_tests_trimestriels()
     test_indicateurs_economiques()
+    test_grands_indices()
     print("OK")

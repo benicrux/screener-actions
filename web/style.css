@@ -370,6 +370,20 @@ details summary { cursor: pointer; color: var(--accent); }
 .puces button[aria-pressed="true"] { background: var(--encre); color: var(--fond); border-color: var(--encre); }
 .puces button.bascule-puce { border-style: dashed; border-color: var(--encre-2); background: transparent; }
 .puces button.bascule-puce[aria-pressed="true"] { border-style: solid; background: var(--encre); color: var(--fond); }
+/* Ligne « Indice » du radar : nombre de sociétés, séparation entre les choix généraux et les indices */
+.puce-nb { margin-left: 7px; font-size: 12px; font-weight: 600; color: var(--encre-2); font-variant-numeric: tabular-nums; }
+.puces button[aria-pressed="true"] .puce-nb { color: inherit; opacity: .75; }
+.puces button.puce-zero:not([aria-pressed="true"]) { color: var(--encre-2); background: transparent; }
+.choix-indice { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.indices-groupe { display: flex; gap: 4px 10px; align-items: center; }
+.indices-zone { flex: none; width: 112px; font-size: 12px; color: var(--encre-2); }
+.puces-petites button { min-height: 32px; padding: 0 11px; font-size: 13px; }
+.puce-note { margin: 0; font-size: 13px; color: var(--encre-2); }
+@media (max-width: 559px) {
+  .indices-groupe { flex-direction: column; align-items: flex-start; }
+  .indices-zone { width: auto; }
+}
+.badge-indice { color: var(--encre); border-color: var(--encre-2); }
 .concentration p { margin: 0 0 10px; font-size: 14px; }
 .barre-pays { display: flex; height: 10px; border-radius: 5px; overflow: hidden; background: var(--filet); }
 .barre-pays span { display: block; height: 100%; }

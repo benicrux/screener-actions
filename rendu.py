@@ -37,6 +37,7 @@ COLONNES = [
     ("na", "analystes", 0),
 ]
 RADAR_ENTREES = Path("data/radar_entrees.json")
+INDICES = Path("data/indices.json")
 
 
 def radar(visibles: pd.DataFrame, usd_par_eur: float | None) -> pd.DataFrame:
@@ -50,6 +51,25 @@ def radar(visibles: pd.DataFrame, usd_par_eur: float | None) -> pd.DataFrame:
              & n("ca_usd").gt(0))  # un chiffre d'affaires publié : écarte les véhicules sans activité
     r = visibles[garde].assign(_note=n("n_investisseur"), _val=n("n_valorisation"))
     return r.sort_values(["_note", "_val"], ascending=False)
+
+
+def grands_indices(symboles_visibles: set[str]) -> list[dict]:
+    """Grands indices pour le filtre du radar (composition relue chaque mois par indices.py) ;
+    un indice jamais lu est absent."""
+    if not INDICES.exists():
+        return []
+    try:
+        donnees = json.loads(INDICES.read_text()).get("indices", {})
+    except ValueError:
+        return []
+    sortie = []
+    for ident, i in donnees.items():
+        membres = sorted(set(i.get("membres") or []) & symboles_visibles)
+        if membres:
+            sortie.append({"id": ident, "nom": i["nom"], "continent": i.get("continent"),
+                           "description": i.get("description"), "lu": i.get("lu"),
+                           "membres": membres})
+    return sortie
 
 
 def dates_entree(symboles: list[str], aujourd_hui: str) -> dict[str, str]:
@@ -147,7 +167,8 @@ def generer(table: pd.DataFrame, statut: dict) -> None:
                           "valorisation_min": config.RADAR_VALORISATION_MIN,
                           "situation_min": config.RADAR_SITUATION_MIN,
                           "capi_min_eur": config.RADAR_CAPI_MIN_EUR},
-               "radar": [[s, entrees[s]] for s in r["symbole"]]}
+               "radar": [[s, entrees[s]] for s in r["symbole"]],
+               "indices": grands_indices(set(visibles["symbole"]))}
     (SITE / "data" / "accueil.json").write_text(
         json.dumps(accueil, ensure_ascii=False, separators=(",", ":")))
 

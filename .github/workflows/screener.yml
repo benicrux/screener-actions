@@ -84,6 +84,11 @@ jobs:
         continue-on-error: true
         run: python macro.py
 
+      - name: Composition des grands indices, relue chaque mois sur Wikipédia (un échec n'interrompt pas le calcul)
+        if: github.event_name != 'push'
+        continue-on-error: true
+        run: python indices.py
+
       - name: Collecter les données et calculer les notes
         env:
           # Lancement automatique après une modification du planning ou du site : court (15 min)

@@ -24,6 +24,8 @@ Ensuite tout est automatique : le calcul tourne **chaque nuit**. GitHub retarde 
 
 Le radar garde les sociétés notées au moins 75, parmi les 35 % les moins chères de leur secteur, avec une situation financière d'au moins 30 (sans risque de faillite apparent) et plus de 100 M€ de capitalisation. Ces seuils se règlent dans `config.py` (rubrique « Radar »). « Ignorer 90 jours » et les favoris sont gardés dans le navigateur.
 
+Le filtre **Indice** du radar sépare les sociétés des grands indices (S&P 500, Nasdaq-100, Dow Jones, S&P/TSX 60, Euro Stoxx 50, CAC 40, DAX, FTSE 100, SMI, Nikkei 225, Hang Seng, NIFTY 50, S&P/ASX 50) de toutes les autres ; il ne montre que les indices des continents choisis, avec le nombre de sociétés du radar dans chacun. La composition des indices est relue une fois par mois sur Wikipédia par `indices.py` : si une page ne répond pas ou a changé, la composition précédente est gardée.
+
 Le contexte économique (taux, inflation, matières premières, devises, chômage) vient de la Réserve fédérale de Saint-Louis, de la BCE, d'Eurostat, de la Banque d'Angleterre et de Yahoo Finance, relus chaque nuit par `macro.py`. La plupart des indicateurs ont une source de secours. Si aucune ne répond, les chiffres de la veille sont gardés ; un indicateur jamais lu est simplement masqué. Le contrôle de santé prévient par e-mail si plus de la moitié manquent ou si les chiffres ont plus de 7 jours.
 
 ## Comment ça marche
@@ -53,7 +55,7 @@ Le screener n'a besoin de personne pour tourner : tout se fait sur GitHub, gratu
 |---|---|
 | Chaque nuit à 4 h 13 (heure d'hiver ; 5 h 13 en été) | Cours du jour, lecture d'un lot de comptes et de prévisions, contrôles, notes, contrôle de santé, publication du site |
 | Chaque matin à 10 h 13 (11 h 13 en été) | Rattrapage, seulement si GitHub n'a pas lancé la tâche de nuit (cela arrive) |
-| Tous les 30 jours | Mise à jour de la liste mondiale des sociétés (entrées et sorties de la cote) |
+| Tous les 30 jours | Mise à jour de la liste mondiale des sociétés (entrées et sorties de la cote) et de la composition des grands indices |
 | Chaque trimestre | Les deux tests sur le passé, puis la vérification que la note tient encore |
 
 La bibliothèque qui lit Yahoo (yfinance) se met à jour toute seule à chaque lancement, dans sa version 1.x : quand Yahoo change son fonctionnement, le correctif publié par ses auteurs est en général repris sans rien faire.
@@ -67,6 +69,7 @@ Un lancement échoue, et vous recevez donc un e-mail, dans ces cas :
 - **Les tests du programme échouent** : rien n'est calculé ni publié, le site garde sa version précédente.
 - **Le contrôle de santé trouve des données anormales** (trop peu de cours reçus, trop peu de sociétés notées, trop de sociétés retirées par les contrôles) : le site garde sa version précédente.
 - **Yahoo bloque ou ne renvoie rien depuis 3 nuits de suite.**
+- **Une source de la page d'accueil est en panne** : indicateurs économiques trop anciens ou trop peu nombreux, ou composition d'un grand indice impossible à relire sur Wikipédia depuis 3 jours (le site reste publié, avec les derniers chiffres connus).
 - **Un test trimestriel se dégrade** : les mieux notées ne font plus mieux que les moins bien notées, ou leur avantage a été divisé par deux.
 
 Les seuils sont réglables dans `config.py` (rubrique « Contrôle de santé »). Enfin, le site affiche un **bandeau rouge** si les données n'ont pas été mises à jour depuis plus de 3 jours, par exemple si GitHub a cessé de lancer les tâches.
@@ -105,11 +108,12 @@ Tout est dans `config.py` : pondérations de la note investisseur, durée de col
 | `notes.py` | Calcul des indicateurs et des notes sur 100 |
 | `controles.py` | Contrôles de cohérence des chiffres avant le calcul des notes |
 | `macro.py` | Indicateurs économiques de la page d'accueil |
+| `indices.py` | Composition des grands indices (filtre « Indice » du radar), relue chaque mois sur Wikipédia |
 | `sante.py` | Contrôle de santé après chaque calcul et chaque test trimestriel : déclenche les e-mails d'alerte |
 | `retro.py`, `retro_us.py` | Tests sur le passé (monde ; États-Unis avec les comptes de la SEC) |
 | `tests/` | Tests automatiques du programme |
 | `rendu.py`, `web/` | Le site : accueil (`index.html`, `accueil.js`), tableau et fiches (`tableau.html`, `app.js`) |
-| `data/` | Liste des sociétés, taux de change, archive des prévisions, statut |
+| `data/` | Liste des sociétés, composition des grands indices, taux de change, archive des prévisions, statut |
 | branche `donnees` | Les données détaillées de chaque société, remplacées à chaque passage |
 | branches `retro`, `retro-us` | L'historique de comptes et de cours des tests sur le passé |
 | `.github/workflows/screener.yml` | Le planning de nuit et la publication |

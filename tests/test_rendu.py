@@ -46,7 +46,20 @@ def test_dates_entree():
         assert json.loads(rendu.RADAR_ENTREES.read_text())["C"] == "2026-10-27"
 
 
+def test_grands_indices():
+    with tempfile.TemporaryDirectory() as d:
+        rendu.INDICES = Path(d) / "indices.json"
+        assert rendu.grands_indices({"A"}) == []                    # pas encore lu
+        rendu.INDICES.write_text(json.dumps({"indices": {
+            "cac40": {"nom": "CAC 40", "continent": "Europe", "lu": "2026-10-27", "membres": ["A", "Z"]},
+            "dax": {"nom": "DAX", "continent": "Europe", "lu": None, "membres": []}}}))
+        i = rendu.grands_indices({"A", "B"})
+        # seules les sociétés affichées sur le site ; un indice vide est masqué
+        assert [x["id"] for x in i] == ["cac40"] and i[0]["membres"] == ["A"]
+
+
 if __name__ == "__main__":
     test_radar()
     test_dates_entree()
+    test_grands_indices()
     print("OK")

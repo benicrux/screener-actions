@@ -4,7 +4,8 @@ Fait échouer le lancement GitHub, ce qui envoie un e-mail au propriétaire du d
 quelque chose ne va pas. Deux moments :
 
     python sante.py avant-publication   # données du jour anormales : le site n'est pas republié
-    python sante.py plusieurs-nuits     # Yahoo bloque depuis plusieurs nuits : alerte seulement
+    python sante.py plusieurs-nuits     # Yahoo bloque depuis plusieurs nuits, sources de l'accueil
+                                        # (indicateurs, grands indices) en panne : alerte seulement
     python sante.py tests-trimestriels Monde   # (ou États-Unis) la note s'est-elle dégradée ?
 
 N'utilise que la bibliothèque standard de Python.
@@ -20,6 +21,7 @@ import config
 STATUT = Path("data/statut.json")
 HISTORIQUE = Path("data/retro_historique.csv")
 MACRO = Path("data/macro.json")
+INDICES = Path("data/indices.json")
 
 
 def degradation(lignes: list[dict], zone: str) -> list[str]:
@@ -46,7 +48,8 @@ def degradation(lignes: list[dict], zone: str) -> list[str]:
     return p
 
 
-def problemes(statut: dict, moment: str, collecte_faite: bool, macro: dict | None = None) -> list[str]:
+def problemes(statut: dict, moment: str, collecte_faite: bool, macro: dict | None = None,
+              indices: dict | None = None) -> list[str]:
     p = []
     if moment == "avant-publication":
         cours = statut.get("cours_du_jour") or 0
@@ -79,6 +82,17 @@ def problemes(statut: dict, moment: str, collecte_faite: bool, macro: dict | Non
             elif nb < 9:
                 p.append(f"Seuls {nb} indicateurs économiques sur 18 ont pu être lus : une ou "
                          "plusieurs sources ont changé (détail dans data/macro.json, « erreurs »).")
+        if indices:
+            import datetime as dt
+            en_panne = [i["nom"] for i in (indices.get("indices") or {}).values()
+                        if i.get("echec_depuis") and (dt.date.today() - dt.date.fromisoformat(
+                            i["echec_depuis"])).days >= config.SANTE_INDICES_JOURS]
+            if en_panne:
+                p.append("La composition de ces grands indices n'a pas pu être relue sur Wikipédia "
+                         f"depuis {config.SANTE_INDICES_JOURS} jours ou plus : {', '.join(en_panne)}. "
+                         "Le radar garde la dernière composition connue (un indice jamais lu est "
+                         "masqué). La page a sans doute changé de présentation : détail dans "
+                         "data/indices.json, « erreur ».")
     return p
 
 
@@ -94,7 +108,9 @@ def main() -> None:
         sys.exit(1)
     statut = json.loads(STATUT.read_text())
     macro = json.loads(MACRO.read_text()) if MACRO.exists() else None
-    signaler(problemes(statut, moment, collecte_faite=not os.environ.get("SANS_COLLECTE"), macro=macro))
+    indices = json.loads(INDICES.read_text()) if INDICES.exists() else None
+    signaler(problemes(statut, moment, collecte_faite=not os.environ.get("SANS_COLLECTE"),
+                       macro=macro, indices=indices))
 
 
 def signaler(liste: list[str]) -> None:

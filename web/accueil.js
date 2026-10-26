@@ -27,18 +27,17 @@ const FORT = {
 const GROUPES = ["Taux des banques centrales", "Taux à 10 ans", "Inflation sur un an",
   "Matières premières", "Devises, marché et emploi"];
 const COULEURS_PAYS = ["var(--accent)", "#5d8aa2", "#a9c3d1", "var(--filet)"];
-// « Grandes valeurs » : plus de 10 milliards de dollars de capitalisation, le seuil des
-// « large caps » ; en pratique, les sociétés des grands indices (CAC 40, S&P 500, Nikkei…)
-const SEUIL_GRANDES_USD = 10e9;
-const TAILLES = [["", "Toutes"], ["grandes", "Grandes valeurs"], ["autres", "Petites et moyennes"]];
 
 let actions = [], parSymbole = new Map(), radar = [], filtre = {}, statut = {}, macro = null;
+// Grands indices (composition relue chaque mois sur Wikipédia) ; symbole -> identifiants
+let indices = [], indicesDe = new Map();
 let favoris = lire("pepites.favoris", {});
 let ignores = lire("pepites.ignores", {});
-let etat = Object.assign({ continents: [], taille: "", sansAnalystes: false }, lire("pepites.accueil", {}));
-// Ancienne préférence : un seul continent
+let etat = Object.assign({ continents: [], indice: "", sansAnalystes: false }, lire("pepites.accueil", {}));
+// Anciennes préférences : un seul continent ; filtre par taille, remplacé par les indices
 if (!Array.isArray(etat.continents)) etat.continents = etat.continent ? [etat.continent] : [];
 delete etat.continent;
+delete etat.taille;
 let affichees = PAR_PAGE;
 let USD_PAR_EUR = 1.1;
 
@@ -110,11 +109,20 @@ async function charger() {
   parSymbole = new Map(actions.map((a) => [a.s, a]));
   radar = (acc.radar || []).map(([sym, depuis]) => ({ a: parSymbole.get(sym), depuis })).filter((x) => x.a);
   filtre = acc.filtre || {};
+  // Indices rangés dans l'ordre des continents (Europe d'abord), puis dans l'ordre du fichier
+  const rang = (c) => { const k = CONTINENTS.indexOf(c); return k < 0 ? 99 : k; };
+  indices = (acc.indices || []).map((i, k) => ({ ...i, k }))
+    .sort((x, y) => rang(x.continent) - rang(y.continent) || x.k - y.k);
+  indicesDe = new Map();
+  indices.forEach((i) => i.membres.forEach((s) => {
+    if (!indicesDe.has(s)) indicesDe.set(s, []);
+    indicesDe.get(s).push(i.id);
+  }));
   nettoyerIgnores();
   afficherEntete(t.maj);
   rendreFavoris();
   rendreSemaine();
-  construireContinents();
+  construireFiltres();
   rendreRadar();
   rendreContexte();
 }
@@ -254,22 +262,12 @@ function nettoyerIgnores() {
   if (change) ecrire("pepites.ignores", ignores);
 }
 
-function construireContinents() {
+function construireFiltres() {
   const presents = new Set(radar.map((r) => r.a.c));
   const liste = [["", "Monde"], ...CONTINENTS.filter((c) => presents.has(c)).map((c) => [c, c])];
   etat.continents = etat.continents.filter((c) => presents.has(c));
   el("radar-continents").innerHTML = liste.map(([c, nom]) =>
     `<button type="button" data-c="${echapper(c)}" aria-pressed="${c ? etat.continents.includes(c) : !etat.continents.length}">${echapper(nom)}</button>`).join("");
-  el("radar-taille").innerHTML = TAILLES.map(([k, nom]) =>
-    `<button type="button" data-taille="${k}" aria-pressed="${etat.taille === k}">${nom}</button>`).join("") +
-    `<button type="button" class="bascule-puce" data-analystes aria-pressed="${etat.sansAnalystes}">Sans analystes seulement</button>`;
-  el("radar-taille").onclick = (e) => {
-    const b = e.target.closest("button");
-    if (!b) return;
-    if (b.hasAttribute("data-analystes")) etat.sansAnalystes = !etat.sansAnalystes;
-    else etat.taille = b.dataset.taille;
-    majFiltresRadar();
-  };
   el("radar-continents").onclick = (e) => {
     const b = e.target.closest("button");
     if (!b) return;
@@ -280,6 +278,13 @@ function construireContinents() {
     }
     majFiltresRadar();
   };
+  el("radar-indice").onclick = (e) => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    if (b.hasAttribute("data-analystes")) etat.sansAnalystes = !etat.sansAnalystes;
+    else etat.indice = b.dataset.indice;
+    majFiltresRadar();
+  };
   majFiltresRadar(false);
 }
 
@@ -287,22 +292,68 @@ function majFiltresRadar(enregistrer = true) {
   if (enregistrer) { ecrire("pepites.accueil", etat); affichees = PAR_PAGE; }
   el("radar-continents").querySelectorAll("button[data-c]").forEach((x) =>
     x.setAttribute("aria-pressed", String(x.dataset.c ? etat.continents.includes(x.dataset.c) : !etat.continents.length)));
-  el("radar-taille").querySelectorAll("button[data-taille]").forEach((x) =>
-    x.setAttribute("aria-pressed", String(x.dataset.taille === etat.taille)));
-  el("radar-taille").querySelector("[data-analystes]").setAttribute("aria-pressed", String(etat.sansAnalystes));
-  const seuil = `${nombre(SEUIL_GRANDES_USD / USD_PAR_EUR / 1e9, 0)} Md€`;
-  const aide = el("radar-aide");
-  aide.hidden = !etat.taille;
-  aide.textContent = etat.taille === "grandes"
-    ? `Plus de ${seuil} de capitalisation : en pratique, les sociétés des grands indices (CAC 40, S&P 500, Nikkei 225…).`
-    : etat.taille === "autres" ? `Moins de ${seuil} de capitalisation : les sociétés moins connues, souvent moins suivies.` : "";
   if (enregistrer) rendreRadar();
 }
 
-function dansZone(a) {
-  const grande = (a.cap || 0) >= SEUIL_GRANDES_USD;
-  return (!etat.continents.length || etat.continents.includes(a.c))
-    && (!etat.taille || (etat.taille === "grandes" ? grande : !grande));
+function dansContinents(a) { return !etat.continents.length || etat.continents.includes(a.c); }
+function dansIndice(a, choix) {
+  if (!choix) return true;
+  const ids = indicesDe.get(a.s);
+  if (choix === "grands") return !!ids;
+  if (choix === "hors") return !ids;
+  return !!ids && ids.includes(choix);
+}
+function dansZone(a) { return dansContinents(a) && dansIndice(a, etat.indice); }
+function indiceChoisi() { return indices.find((i) => i.id === etat.indice); }
+// « du CAC 40 », « de l'Euro Stoxx 50 »
+function duIndice(nom) { return /^[aeiouéèh]/i.test(nom) ? `de l'${nom}` : `du ${nom}`; }
+
+// Ligne « Indice » : les grands indices des continents choisis, avec le nombre de sociétés
+// du radar dans chacun ; refaite à chaque changement (continents, bascule, sociétés ignorées)
+function rendreIndices() {
+  const boite = el("radar-indice");
+  const actif = boite.contains(document.activeElement) ? document.activeElement : null;
+  const cleFocus = actif ? (actif.hasAttribute("data-analystes") ? null : actif.dataset.indice) : undefined;
+  const visibles = indices.filter((i) => !etat.continents.length || etat.continents.includes(i.continent));
+  const valide = !etat.indice || (visibles.length && (["grands", "hors"].includes(etat.indice)
+    || visibles.some((i) => i.id === etat.indice)));
+  if (!valide) { etat.indice = ""; ecrire("pepites.accueil", etat); }
+  const base = radar.filter(({ a }) => !ignores[a.s] && dansContinents(a) && (!etat.sansAnalystes || sansAnalystes(a)));
+  const compte = (choix) => base.filter(({ a }) => dansIndice(a, choix)).length;
+  const puce = (choix, nom, n) => {
+    const presse = etat.indice === choix;
+    // Un indice sans société dans le radar reste visible (c'est une information), en grisé
+    return `<button type="button" data-indice="${echapper(choix)}" aria-pressed="${presse}"${n === 0 ? ' class="puce-zero"' : ""}>${echapper(nom)}${n == null ? "" : `<span class="puce-nb">${nombre(n, 0)}</span>`}</button>`;
+  };
+  const bascule = `<button type="button" class="bascule-puce" data-analystes aria-pressed="${etat.sansAnalystes}">Sans analystes seulement</button>`;
+  // 1re ligne : les choix généraux ; dessous, les indices de chaque continent
+  let html = `<div class="puces">${puce("", "Tous", null)}${visibles.length
+    ? puce("grands", "Grands indices", compte("grands")) + puce("hors", "Hors grands indices", compte("hors")) : ""}${bascule}</div>`;
+  if (visibles.length) {
+    const groupes = [];
+    visibles.forEach((i) => {
+      const g = groupes.find((x) => x[0] === i.continent);
+      if (g) g[1].push(i); else groupes.push([i.continent, [i]]);
+    });
+    html += groupes.map(([c, liste]) => `<div class="indices-groupe">${groupes.length > 1 ? `<span class="indices-zone">${echapper(c)}</span>` : ""}
+      <div class="puces puces-petites">${liste.map((i) => puce(i.id, i.nom, compte(i.id))).join("")}</div></div>`).join("");
+  } else {
+    html += `<p class="puce-note">${indices.length ? "Pas de grand indice suivi sur ce continent."
+      : "La composition des grands indices arrive avec le prochain passage de nuit."}</p>`;
+  }
+  boite.innerHTML = html;
+  // Le bouton cliqué garde le focus (navigation au clavier)
+  if (cleFocus !== undefined) {
+    (cleFocus === null ? boite.querySelector("[data-analystes]")
+      : [...boite.querySelectorAll("button[data-indice]")].find((b) => b.dataset.indice === cleFocus))?.focus();
+  }
+  const choisi = indiceChoisi();
+  const aide = el("radar-aide");
+  aide.textContent = etat.indice === "grands"
+    ? "Sociétés d'au moins un de ces grands indices : les plus connues et les plus suivies par les analystes."
+    : etat.indice === "hors" ? "Sociétés hors de ces grands indices : moins connues, souvent moins suivies par les analystes."
+    : choisi ? `${choisi.description}. Composition relue chaque mois sur Wikipédia${choisi.lu ? ` (le ${date(choisi.lu)})` : ""}.` : "";
+  aide.hidden = !aide.textContent;
 }
 
 function rendreConcentration(liste) {
@@ -311,6 +362,8 @@ function rendreConcentration(liste) {
   const parPays = new Map();
   liste.forEach(({ a }) => parPays.set(a.p, (parPays.get(a.p) || 0) + 1));
   const tries = [...parPays].sort((x, y) => y[1] - x[1]);
+  // Un seul pays (un indice national, par exemple) : rien à comparer
+  if (tries.length < 2) { boite.hidden = true; return; }
   const premiers = tries.slice(0, 3);
   const autres = liste.length - premiers.reduce((t, [, n]) => t + n, 0);
   const parts = [...premiers, ...(autres ? [["Autres pays", autres]] : [])]
@@ -320,8 +373,10 @@ function rendreConcentration(liste) {
   const [paysTete] = premiers[0];
   const poids = Math.round((zone.filter((a) => a.p === paysTete).length / Math.max(zone.length, 1)) * 100);
   boite.hidden = false;
-  const zoneTexte = [etat.continents.length ? ` de ${etat.continents.length > 1 ? "ces continents" : "ce continent"}` : "",
-    etat.taille === "grandes" ? " parmi les grandes valeurs" : etat.taille === "autres" ? " parmi les petites et moyennes" : ""].join("");
+  const choisi = indiceChoisi();
+  const zoneTexte = choisi ? ` ${duIndice(choisi.nom)}` : [
+    etat.indice === "grands" ? " des grands indices" : etat.indice === "hors" ? " hors grands indices" : "",
+    etat.continents.length ? ` de ${etat.continents.length > 1 ? "ces continents" : "ce continent"}` : ""].join("");
   const comparaison = parts[0].part >= poids + 5
     ? `alors que ce pays ne pèse que ${poids} % des sociétés notées${zoneTexte}`
     : `pour ${poids} % des sociétés notées${zoneTexte}`;
@@ -353,6 +408,8 @@ function carteRadar({ a, depuis }) {
       <b>${v ?? "—"}</b></div>`;
   }).join("");
   const nbEtoiles = etoiles(a.inv);
+  const ids = indicesDe.get(a.s) || [];
+  const dansIndices = indices.filter((i) => ids.includes(i.id)).map((i) => i.nom);
   return `<article class="carte radar-carte">
     <div class="radar-haut">
       <div><a class="radar-nom" href="${lienFiche(a.s)}">${echapper(a.n)}</a>
@@ -362,6 +419,7 @@ function carteRadar({ a, depuis }) {
     </div>
     <div class="badges">
       ${nouveau ? `<span class="badge badge-nouveau">Nouveau cette semaine</span>` : ""}
+      ${dansIndices.length ? `<span class="badge badge-indice">${echapper(dansIndices.slice(0, 3).join(" · "))}</span>` : ""}
       <span class="badge${a.na === 1 ? " badge-fragile" : ""}">${texteAnalystes(a)}</span>
     </div>
     <div class="mini-notes">${mini}</div>
@@ -384,6 +442,7 @@ function rendreRadar() {
   el("radar-critere").textContent = f.note_min != null
     ? `Note d'au moins ${f.note_min}, parmi les ${100 - f.valorisation_min} % les moins chères de leur secteur, sans risque de faillite apparent (situation financière d'au moins ${f.situation_min}), plus de ${nombre(f.capi_min_eur / 1e6, 0)} M€ de capitalisation.`
     : "";
+  rendreIndices();
   const tous = radar.filter(({ a }) => dansZone(a) && (!etat.sansAnalystes || sansAnalystes(a)));
   const liste = tous.filter(({ a }) => !ignores[a.s]);
   const nbIgnores = tous.length - liste.length;
@@ -391,7 +450,8 @@ function rendreRadar() {
   rendreConcentration(liste);
   el("radar").innerHTML = liste.length
     ? liste.slice(0, affichees).map(carteRadar).join("")
-    : `<p class="vide-texte">Aucune société ne passe le filtre pour cette sélection.</p>`;
+    : `<p class="vide-texte">${indiceChoisi() ? `Aucune société ${duIndice(indiceChoisi().nom)} ne passe le filtre du radar en ce moment.`
+      : "Aucune société ne passe le filtre pour cette sélection."}</p>`;
   const reste = liste.length - affichees;
   el("radar-plus").hidden = reste <= 0;
   el("radar-plus").textContent = `Voir les ${Math.min(reste, PAR_PAGE)} suivantes`;
