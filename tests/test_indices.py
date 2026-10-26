@@ -41,6 +41,8 @@ def test_conversion_des_codes():
     assert indices.symbole_yahoo("MC.PA", "tel") == "MC.PA"
     assert indices.symbole_yahoo("NDA-FI.HE", "tel") == "NDA-FI.HE"
     assert indices.symbole_yahoo("MC", "tel") is None          # suffixe manquant : par le nom
+    assert indices.symbole_yahoo("NOVN", "tel:.SW") == "NOVN.SW"
+    assert indices.symbole_yahoo("NOVN.SW", "tel:.SW") == "NOVN.SW"
     assert indices.symbole_yahoo("", "us") is None
     assert indices.nom_simple("Alphabet Inc. (Class A)") == indices.nom_simple("Alphabet Inc.") == "alphabet"
     assert indices.nom_simple("LVMH Moët Hennessy Louis Vuitton SE") == "lvmh moet hennessy louis vuitton"
@@ -55,6 +57,14 @@ def test_choix_du_bon_tableau():
     lignes = indices.lire_tableau(composition + changements, ("Symbol",), "us", 4)
     assert [l["symbole"] for l in lignes] == ["AAPL", "BRK-B", "GOOGL", "ZZZZ"]
     assert lignes[2]["nom"] == "Alphabet Inc. (Class A)"
+
+
+def test_titres_dans_la_premiere_ligne():
+    # Page du SMI : la ligne de titres est une ligne ordinaire du tableau
+    page = tableau(["0", "1", "2"], [("Rank", "Name", "Ticker"), ("1", "Novartis International AG", "NOVN.SW"),
+                                     ("2", "Roche Holding AG", "ROG.SW")])
+    lignes = indices.lire_tableau(page, ("Ticker",), "tel:.SW", 2)
+    assert [l["symbole"] for l in lignes] == ["NOVN.SW", "ROG.SW"] and lignes[1]["nom"] == "Roche Holding AG"
 
 
 def test_hong_kong_japon_et_correspondance():

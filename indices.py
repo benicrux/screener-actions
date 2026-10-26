@@ -37,7 +37,8 @@ RELECTURE_JOURS = 30
 
 # (identifiant, nom affiché, continent, page Wikipédia, colonnes du code, règle de conversion
 #  en symbole Yahoo, nombre de sociétés attendu, description courte)
-# Règles : "us" (BRK.B -> BRK-B), "tel" (le code a déjà son suffixe Yahoo : MC.PA),
+# Règles : "us" (BRK.B -> BRK-B), "tel" (le code a déjà son suffixe Yahoo : MC.PA ; « tel:.SW » :
+# suffixe ajouté s'il manque),
 # ".L", ".TO"… (suffixe ajouté, les points deviennent des tirets : BT.A -> BT-A.L),
 # "hk" (SEHK: 5 -> 0005.HK), "jp" (texte « (TYO: 7203) » -> 7203.T)
 INDICES = [
@@ -52,13 +53,13 @@ INDICES = [
     ("eurostoxx50", "Euro Stoxx 50", "Europe", "EURO_STOXX_50",
      ("Ticker", "Symbol"), "tel", 50, "Les 50 plus grandes sociétés de la zone euro"),
     ("cac40", "CAC 40", "Europe", "CAC_40",
-     ("Ticker", "Symbol"), "tel", 40, "Les 40 plus grandes sociétés de la Bourse de Paris"),
+     ("Ticker", "Symbol"), "tel:.PA", 40, "Les 40 plus grandes sociétés de la Bourse de Paris"),
     ("dax", "DAX", "Europe", "DAX",
-     ("Ticker", "Symbol"), "tel", 40, "Les 40 plus grandes sociétés allemandes"),
+     ("Ticker", "Symbol"), "tel:.DE", 40, "Les 40 plus grandes sociétés allemandes"),
     ("ftse100", "FTSE 100", "Europe", "FTSE_100_Index",
      ("Ticker", "EPIC", "Symbol"), ".L", 100, "Les 100 plus grandes sociétés de la Bourse de Londres"),
     ("smi", "SMI", "Europe", "Swiss_Market_Index",
-     ("Ticker", "Symbol"), "tel", 20, "Les 20 plus grandes sociétés suisses"),
+     ("Ticker", "Symbol"), "tel:.SW", 20, "Les 20 plus grandes sociétés suisses"),
     ("nikkei225", "Nikkei 225", "Asie", "Nikkei_225",
      (), "jp", 225, "225 grandes sociétés japonaises"),
     ("hangseng", "Hang Seng", "Asie", "Hang_Seng_Index",
@@ -115,8 +116,11 @@ def symbole_yahoo(brut, regle: str) -> str | None:
         return None
     if regle == "us":
         return code.replace(".", "-")
-    if regle == "tel":
-        return code if re.search(r"\.[A-Z]{1,3}$", code) else None
+    if regle.startswith("tel"):
+        # Code avec son suffixe Yahoo (MC.PA) ; sinon, suffixe de la Bourse de l'indice s'il est donné
+        if re.search(r"\.[A-Z]{1,3}$", code):
+            return code
+        return code.replace(".", "-") + regle[4:] if regle[4:] else None
     if regle == "hk":
         return f"{int(code):04d}.HK" if code.isdigit() else None
     if regle == "jp":
@@ -154,6 +158,11 @@ def lire_tableau(page_html: str, colonnes: tuple, regle: str, attendu: int) -> l
     for df in tableaux:
         noms = _colonnes(df)
         j = _trouver(noms, colonnes)
+        if j is None and len(df) > 1:
+            # Titres écrits comme une ligne ordinaire (page du SMI) : la 1re ligne devient l'en-tête
+            df = df.iloc[1:].set_axis([str(x) for x in df.iloc[0]], axis=1)
+            noms = _colonnes(df)
+            j = _trouver(noms, colonnes)
         if j is None:
             continue
         jn = _trouver(noms, ("Company", "Security", "Name", "Constituent", "Company name"),

@@ -4,6 +4,7 @@ Taux des banques centrales, taux à 10 ans, inflation, matières premières, dev
 volatilité et chômage, sur 5 ans. Sources gratuites et sans inscription :
 - la Réserve fédérale de Saint-Louis (FRED), pour la plupart des séries ;
 - la BCE, Eurostat et la Banque d'Angleterre, pour l'Europe ;
+- l'OCDE, la BRI (Banque des règlements internationaux) et DBnomics, pour le Japon et la Chine ;
 - Yahoo Finance, pour les prix de marché.
 
 Chaque indicateur a une ou plusieurs sources, essayées dans l'ordre. Si aucune ne répond,
@@ -31,7 +32,10 @@ ANCIENNETE_MAX_JOURS = 150  # au-delà, une source est jugée arrêtée : on pas
 # (identifiant, groupe, nom, mode, sources, secteurs qui montent, secteurs qui baissent)
 # mode « points » : variation en points (taux) ; « pourcent » : variation en % (prix).
 # Sources : ("fred", série), ("fred_glissement", série d'indice → variation sur un an),
-# ("bce", flux, clé), ("eurostat", jeu, paramètres), ("boe", série), ("yahoo", symbole, facteur)
+# ("bce", flux, clé), ("eurostat", jeu, paramètres), ("boe", série), ("yahoo", symbole, facteur),
+# ("oecd", flux, clé), ("bri", flux, clé), ("dbnomics", fournisseur/jeu/série)
+# Depuis 2026 : la zone euro compte 21 pays (Bulgarie) et l'inflation suit une nouvelle
+# nomenclature (ECOICOP 2) ; l'OCDE n'alimente plus les séries japonaises et chinoises de FRED.
 INDICATEURS = [
     ("fed", "Taux des banques centrales", "Fed (États-Unis)", "points",
      [("fred", "DFEDTARU")], "Banques", "Immobilier, sociétés endettées"),
@@ -40,7 +44,8 @@ INDICATEURS = [
     ("boe", "Taux des banques centrales", "Banque d'Angleterre", "points",
      [("boe", "IUDBEDR")], "Banques", "Immobilier"),
     ("boj", "Taux des banques centrales", "Banque du Japon", "points",
-     [("fred", "IRSTCB01JPM156N"), ("fred", "INTDSRJPM193N")], "Banques japonaises", "Exportateurs japonais"),
+     [("bri", "WS_CBPOL", "M.JP"), ("bri2", "WS_CBPOL", "M.JP"), ("dbnomics", "BIS/WS_CBPOL/M.JP"),
+      ("fred", "IRSTCB01JPM156N")], "Banques japonaises", "Exportateurs japonais"),
     ("us10", "Taux à 10 ans", "États-Unis", "points",
      [("fred", "DGS10"), ("yahoo", "^TNX", 1.0)], "Assureurs", "Valeurs de croissance chères"),
     ("de10", "Taux à 10 ans", "Allemagne", "points",
@@ -49,11 +54,20 @@ INDICATEURS = [
     ("inf_us", "Inflation sur un an", "États-Unis", "points",
      [("fred_glissement", "CPIAUCSL")], "Énergie, matières premières", "Consommation"),
     ("inf_ze", "Inflation sur un an", "Zone euro", "points",
-     [("bce", "ICP", "M.U2.N.000000.4.ANR")], "Énergie, matières premières", "Consommation"),
+     [("bce", "HICP", "M.U2.N.000000..ANR"),
+      ("eurostat", "prc_hicp_minr", {"geo": "EA", "unit": "RCH_A", "coicop18": "TOTAL"}),
+      ("eurostat", "prc_hicp_minr", {"geo": "EA21", "unit": "RCH_A", "coicop18": "TOTAL"}),
+      ("bce", "ICP", "M.U2.N.000000.4.ANR")], "Énergie, matières premières", "Consommation"),
     ("inf_jp", "Inflation sur un an", "Japon", "points",
-     [("fred_glissement", "JPNCPIALLMINMEI"), ("fred", "CPALTT01JPM659N")], "Banques japonaises", "Consommation"),
+     [("oecd", "OECD.SDD.TPS,DSD_PRICES@DF_PRICES_ALL,1.0", "JPN.M.N.CPI.PA._T.N.GY"),
+      ("oecd", "OECD.SDD.TPS,DSD_PRICES_COICOP2018@DF_PRICES_C2018_ALL,1.0", "JPN.M.N.CPI.PA._T.N.GY"),
+      ("dbnomics", "OECD/DSD_PRICES@DF_PRICES_ALL/JPN.M.N.CPI.PA._T.N.GY"),
+      ("dbnomics", "IMF/CPI/M.JP.PCPI_PC_CP_A_PT")], "Banques japonaises", "Consommation"),
     ("inf_cn", "Inflation sur un an", "Chine", "points",
-     [("fred_glissement", "CHNCPIALLMINMEI"), ("fred", "CPALTT01CNM659N")], "Luxe, matières premières", ""),
+     [("oecd", "OECD.SDD.TPS,DSD_PRICES@DF_PRICES_ALL,1.0", "CHN.M.N.CPI.PA._T.N.GY"),
+      ("oecd", "OECD.SDD.TPS,DSD_PRICES_COICOP2018@DF_PRICES_C2018_ALL,1.0", "CHN.M.N.CPI.PA._T.N.GY"),
+      ("dbnomics", "OECD/DSD_PRICES@DF_PRICES_ALL/CHN.M.N.CPI.PA._T.N.GY"),
+      ("dbnomics", "IMF/CPI/M.CN.PCPI_PC_CP_A_PT")], "Luxe, matières premières", ""),
     ("brent", "Matières premières", "Pétrole (Brent), en $", "pourcent",
      [("fred", "DCOILBRENTEU"), ("yahoo", "BZ=F", 1.0)], "Énergie", "Aérien, chimie, transport"),
     ("cuivre", "Matières premières", "Cuivre, en $ la tonne", "pourcent",
@@ -69,7 +83,9 @@ INDICATEURS = [
     ("cho_us", "Devises, marché et emploi", "Chômage États-Unis", "points",
      [("fred", "UNRATE")], "", "Consommation, banques"),
     ("cho_ze", "Devises, marché et emploi", "Chômage zone euro", "points",
-     [("eurostat", "une_rt_m", {"geo": "EA20", "sex": "T", "age": "TOTAL", "unit": "PC_ACT", "s_adj": "SA"}),
+     [("eurostat", "une_rt_m", {"geo": "EA21", "sex": "T", "age": "TOTAL", "unit": "PC_ACT", "s_adj": "SA"}),
+      ("eurostat", "une_rt_m", {"geo": "EA", "sex": "T", "age": "TOTAL", "unit": "PC_ACT", "s_adj": "SA"}),
+      ("eurostat", "une_rt_m", {"geo": "EA20", "sex": "T", "age": "TOTAL", "unit": "PC_ACT", "s_adj": "SA"}),
       ("fred", "LRHUTTTTEZM156S")], "", "Consommation, banques"),
 ]
 
@@ -90,12 +106,34 @@ def lire_csv_fred(texte: str) -> list[tuple[str, float]]:
 
 
 def lire_csv_bce(texte: str) -> list[tuple[str, float]]:
-    """CSV de la BCE (format csvdata) : colonnes TIME_PERIOD et OBS_VALUE."""
-    points = []
-    for r in csv.DictReader(io.StringIO(texte)):
+    """CSV au format SDMX (BCE, OCDE, BRI) : colonnes TIME_PERIOD et OBS_VALUE.
+
+    Si la clé demandée contient un joker et renvoie plusieurs séries, on garde la plus
+    récente (puis la plus longue)."""
+    series: dict[str, list[tuple[str, float]]] = {}
+    for r in csv.DictReader(io.StringIO(texte.lstrip("\ufeff"))):
         periode, valeur = r.get("TIME_PERIOD") or "", r.get("OBS_VALUE") or ""
-        if periode and valeur not in ("", "NaN"):
-            points.append(((periode + "-01")[:10] if len(periode) == 7 else periode[:10], float(valeur)))
+        if not periode or valeur in ("", "NaN", "NA"):
+            continue
+        try:
+            v = float(valeur)
+        except ValueError:
+            continue
+        jour = (periode + "-01")[:10] if len(periode) == 7 else periode[:10]
+        series.setdefault(r.get("KEY") or r.get("SERIES_KEY") or "", []).append((jour, v))
+    if not series:
+        return []
+    return max(series.values(), key=lambda pts: (max(pts)[0], len(pts)))
+
+
+def lire_dbnomics(js: dict) -> list[tuple[str, float]]:
+    """JSON de DBnomics (api.db.nomics.world, v22) : une série, dates et valeurs."""
+    doc = js["series"]["docs"][0]
+    dates = doc.get("period_start_day") or doc["period"]
+    points = []
+    for d, v in zip(dates, doc["value"]):
+        if isinstance(v, (int, float)):
+            points.append(((d + "-01")[:10] if len(d) == 7 else d[:10], float(v)))
     return points
 
 
@@ -196,6 +234,21 @@ def telecharger(source: tuple, depuis: str) -> list[tuple[str, float]]:
                f"csv.x=yes&Datefrom={debut}&Dateto=now&SeriesCodes={source[1]}"
                "&CSVF=TN&UsingCodes=Y&VPD=Y&VFD=N")
         return lire_csv_boe(_get(url))
+    if genre == "oecd":
+        url = (f"https://sdmx.oecd.org/public/rest/data/{source[1]}/{source[2]}?startPeriod={depuis[:7]}"
+               "&dimensionAtObservation=AllDimensions&format=csvfile")
+        return lire_csv_bce(_get(url))
+    if genre == "bri":
+        url = (f"https://stats.bis.org/api/v1/data/{source[1]}/{source[2]}/all?startPeriod={depuis[:7]}"
+               "&detail=dataonly&format=csv")
+        return lire_csv_bce(_get(url))
+    if genre == "bri2":
+        url = (f"https://stats.bis.org/api/v2/data/dataflow/BIS/{source[1]}/1.0/{source[2]}"
+               f"?startPeriod={depuis[:7]}&format=csv")
+        return lire_csv_bce(_get(url))
+    if genre == "dbnomics":
+        chemin = urllib.parse.quote(source[1], safe="/@._-")
+        return lire_dbnomics(json.loads(_get(f"https://api.db.nomics.world/v22/series/{chemin}?observations=1&format=json")))
     if genre == "yahoo":
         import collecte
         js = collecte._get_json(f"https://query1.finance.yahoo.com/v8/finance/chart/{source[1]}",
@@ -216,17 +269,19 @@ def collecter(aujourd_hui: dt.date | None = None) -> dict:
     for ident, groupe, nom, mode, sources, hausse, baisse in INDICATEURS:
         resume, origine, messages = None, None, []
         for source in sources:
+            nom_source = " ".join([source[0], str(source[1])] + ([source[2]] if len(source) > 2 and isinstance(source[2], str) else [])
+                                  + ([source[2].get("geo", "")] if len(source) > 2 and isinstance(source[2], dict) else []))
             try:
                 r = resumer(telecharger(source, depuis), mode, depuis)
             except Exception as e:  # une source qui ne répond pas : on essaie la suivante
-                messages.append(f"{source[0]} {source[1]} : {type(e).__name__} {str(e)[:80]}")
+                messages.append(f"{nom_source} : {type(e).__name__} {str(e)[:80]}")
                 continue
             if r is None:
-                messages.append(f"{source[0]} {source[1]} : pas assez de chiffres")
+                messages.append(f"{nom_source} : pas assez de chiffres")
                 continue
             age = (aujourd_hui - dt.date.fromisoformat(r["date"])).days
             if age > ANCIENNETE_MAX_JOURS:
-                messages.append(f"{source[0]} {source[1]} : dernier chiffre du {r['date']}")
+                messages.append(f"{nom_source} : dernier chiffre du {r['date']}")
                 continue
             resume, origine = r, f"{source[0]}:{source[1]}"
             break

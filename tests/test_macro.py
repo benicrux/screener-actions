@@ -62,8 +62,23 @@ def test_secours_et_chiffres_precedents(tmp_path=None):
         assert ids["fed"]["valeur"] == 2.25 and r["erreurs"] == {}
 
 
+def test_sdmx_et_dbnomics():
+    # Clé avec joker (BCE) : deux séries, on garde la plus récente
+    bce = ("KEY,FREQ,TIME_PERIOD,OBS_VALUE\n"
+           "HICP.M.U2.N.000000.4F0.ANR,M,2025-11,2.1\nHICP.M.U2.N.000000.4F0.ANR,M,2025-12,2.0\n"
+           "HICP.M.U2.N.000000.4D0.ANR,M,2026-08,1.9\nHICP.M.U2.N.000000.4D0.ANR,M,2026-09,2.2\n")
+    assert macro.lire_csv_bce(bce) == [("2026-08-01", 1.9), ("2026-09-01", 2.2)]
+    # OCDE / BRI : CSV SDMX avec marque d'ordre des octets, valeurs manquantes
+    ocde = "\ufeffSTRUCTURE,REF_AREA,TIME_PERIOD,OBS_VALUE\nDATAFLOW,JPN,2026-08,2.9\nDATAFLOW,JPN,2026-09,NaN\n"
+    assert macro.lire_csv_bce(ocde) == [("2026-08-01", 2.9)]
+    js = {"series": {"docs": [{"period": ["2026-08", "2026-09"], "period_start_day": ["2026-08-01", "2026-09-01"],
+                               "value": [0.5, "NA"]}]}}
+    assert macro.lire_dbnomics(js) == [("2026-08-01", 0.5)]
+
+
 if __name__ == "__main__":
     test_formats()
     test_glissement_et_resume()
     test_secours_et_chiffres_precedents()
+    test_sdmx_et_dbnomics()
     print("OK")
