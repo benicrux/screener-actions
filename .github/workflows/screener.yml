@@ -83,6 +83,9 @@ jobs:
         env:
           # Lancement automatique après une modification du planning ou du site : court (15 min)
           BUDGET_MINUTES: ${{ github.event_name == 'push' && '15' || inputs.minutes || '300' }}
+          # Après une modification du site ou du planning : on republie seulement, sans relire
+          # les données. Seules les tâches programmées de GitHub mettent les données à jour.
+          SANS_COLLECTE: ${{ github.event_name == 'push' && '1' || '' }}
         run: python main.py
 
       - name: Sauvegarder les données
