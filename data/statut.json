@@ -1,26 +1,47 @@
 {
- "date": "2026-10-26 07:26 UTC",
+ "date": "2026-10-26 09:28 UTC",
  "univers": 26465,
  "avec_donnees": 26055,
- "notees": 23978,
+ "notees": 23766,
  "jamais_lues": 0,
  "introuvables": 224,
  "illisibles": 1,
  "vehicules_ecartes": 185,
  "anomalies": {
-  "graves": 519,
-  "legeres": 319
+  "graves": 733,
+  "legeres": 677
  },
  "jours_restants": 0,
  "cours_du_jour": 26297,
  "collecte": {
-  "lues": 6804,
+  "lues": 11748,
   "introuvables": 0,
-  "erreurs": 0,
-  "blocages": 11,
-  "arret": "temps imparti écoulé",
-  "detail_erreurs": {},
-  "minutes": 15.1
+  "erreurs": 236,
+  "blocages": 16,
+  "arret": null,
+  "detail_erreurs": {
+   "603318.SS": "RuntimeError: HTTP 401",
+   "603322.SS": "RuntimeError: HTTP 401",
+   "603320.SS": "RuntimeError: HTTP 401",
+   "603321.SS": "RuntimeError: HTTP 401",
+   "603323.SS": "RuntimeError: HTTP 401",
+   "603325.SS": "RuntimeError: HTTP 401",
+   "603324.SS": "RuntimeError: HTTP 401",
+   "603326.SS": "RuntimeError: HTTP 401",
+   "603327.SS": "RuntimeError: HTTP 401",
+   "603329.SS": "RuntimeError: HTTP 401",
+   "603330.SS": "RuntimeError: HTTP 401",
+   "603332.SS": "RuntimeError: HTTP 401",
+   "603331.SS": "RuntimeError: HTTP 401",
+   "603333.SS": "RuntimeError: HTTP 401",
+   "603336.SS": "RuntimeError: HTTP 401",
+   "603335.SS": "RuntimeError: HTTP 401",
+   "603344.SS": "RuntimeError: HTTP 401",
+   "603339.SS": "RuntimeError: HTTP 401",
+   "603348.SS": "RuntimeError: HTTP 401",
+   "603350.SS": "RuntimeError: HTTP 401"
+  },
+  "minutes": 37.4
  },
  "poids": {
   "valorisation": 30,
@@ -31,7 +52,7 @@
   "publication": 10,
   "visibilite": 5
  },
- "usd_par_eur": 1.1210762331838564,
+ "usd_par_eur": 1.1217049915872126,
  "depot": "benicrux/screener-actions",
- "passage_complet": null
+ "passage_complet": "2026-10-26"
 }

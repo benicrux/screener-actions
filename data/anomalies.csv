@@ -1,18 +1,21 @@
 symbole,nom,pays,anomalie_grave,anomalies
 000016.SZ,"Konka Group Co., Ltd.",Chine,True,pas de cotation depuis le 03/09/2026
 000725.KS,"Hyundai Engineering & Construction Co., Ltd.",Corée du Sud,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 0,2 chez Yahoo (erreur de devise probable)"
-0013.HK,HUTCHMED (China) Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 4,6 contre 35,9 chez Yahoo (erreur de devise probable) ; PER de 18,1 contre 141,6 chez Yahoo"
+0013.HK,HUTCHMED (China) Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 4,6 contre 35,9 chez Yahoo (erreur de devise probable) ; PER de 18,0 contre 141,6 chez Yahoo"
 0053.HK,Guoco Group Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 1,0 contre 8,1 chez Yahoo (erreur de devise probable)"
-0100.HK,MiniMax Group Inc,Chine,True,"capitalisation / chiffre d'affaires de 46,8 contre 367,5 chez Yahoo (erreur de devise probable)"
+0069.HK,Shangri-La Asia Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 0,8 contre 5,9 chez Yahoo (erreur de devise probable)"
+0100.HK,MiniMax Group Inc,Chine,True,"capitalisation / chiffre d'affaires de 46,9 contre 367,5 chez Yahoo (erreur de devise probable)"
 0105.HK,Associated International Hotels Limited,Hong Kong,True,pas de cotation depuis le 05/10/2026
 0142.HK,First Pacific Company Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 0,2 contre 1,9 chez Yahoo (erreur de devise probable)"
 0179.HK,Johnson Electric Holdings Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 0,4 contre 3,4 chez Yahoo (erreur de devise probable)"
+0206.HK,"CM Energy Tech Co., Ltd.",Hong Kong,True,"capitalisation / chiffre d'affaires de 0,5 contre 4,3 chez Yahoo (erreur de devise probable)"
 023440.KQ,"Jeil Steel Mfg Co., Ltd.",Corée du Sud,True,pas de cotation depuis le 23/03/2026
 0247.HK,Tsim Sha Tsui Properties Limited,Hong Kong,True,pas de cotation depuis le 03/03/2026
 025870.KQ,"Silla Sg Co., Ltd.",Corée du Sud,True,pas de cotation depuis le 14/09/2026
 0274.HK,Renaissance Asia Silk Road Group Limited,Hong Kong,True,pas de cotation depuis le 30/06/2025
 028080.KQ,"Humax Holdings Co., Ltd.",Corée du Sud,True,pas de cotation depuis le 28/09/2026
 0288.HK,WH Group Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 0,4 contre 2,9 chez Yahoo (erreur de devise probable)"
+0303.HK,"VTech Holdings, Ltd.",Hong Kong,True,"capitalisation / chiffre d'affaires de 0,8 contre 6,6 chez Yahoo (erreur de devise probable)"
 0316.HK,Orient Overseas (International) Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 1,3 contre 10,1 chez Yahoo (erreur de devise probable)"
 036690.KQ,"COMMAX Co.,Ltd",Corée du Sud,True,cours manquant ; pas de cotation depuis le 29/10/2025
 037330.KQ,"Inzi Display Co.,Ltd",Corée du Sud,True,pas de cotation depuis le 07/10/2026
@@ -25,127 +28,190 @@ symbole,nom,pays,anomalie_grave,anomalies
 065570.KQ,"SAMYUNG ENC Co., Ltd.",Corée du Sud,True,pas de cotation depuis le 11/02/2025
 066790.KQ,"Korea Cable T.V Chung-Buk System Co., Ltd.",Corée du Sud,True,pas de cotation depuis le 20/06/2025
 0669.HK,Techtronic Industries Company Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 1,9 contre 15,2 chez Yahoo (erreur de devise probable)"
+0676.HK,Pegasus International Holdings Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 36,4 contre 285,7 chez Yahoo (erreur de devise probable)"
 068240.KQ,"Dawonsys Co.,Ltd.",Corée du Sud,True,pas de cotation depuis le 16/03/2026
+0716.HK,Singamas Container Holdings Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 0,3 contre 2,0 chez Yahoo (erreur de devise probable)"
 072770.KQ,"MemRAY BT Co., LTD.",Corée du Sud,True,pas de cotation depuis le 02/10/2026
 0769.HK,China Rare Earth Holdings Limited,Chine,True,pas de cotation depuis le 18/06/2025
 079970.KQ,"TOBESOFT Co., Ltd.",Corée du Sud,True,pas de cotation depuis le 21/03/2025
-0853.HK,MicroPort Scientific Corporation,Chine,True,pas de cotation depuis le 31/08/2026
+0853.HK,MicroPort Scientific Corporation,Chine,True,"pas de cotation depuis le 31/08/2026 ; capitalisation / chiffre d'affaires de 1,3 contre 10,5 chez Yahoo (erreur de devise probable)"
 087260.KQ,"Mobile Appliance, Inc.",Corée du Sud,True,pas de cotation depuis le 20/07/2026
 0898.HK,Multifield International Holdings Limited,Hong Kong,True,pas de cotation depuis le 08/10/2026
+0975.HK,Mongolian Mining Corp.,Mongolie,True,"capitalisation / chiffre d'affaires de 0,9 contre 7,0 chez Yahoo (erreur de devise probable)"
 0992.HK,Lenovo Group Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 0,4 contre 3,0 chez Yahoo (erreur de devise probable)"
 0I50.L,Trip.com Group Limited,Singapour,True,"capitalisation / chiffre d'affaires de 2,7 contre 0,4 chez Yahoo (erreur de devise probable) ; PER de 76,5 contre 11,7 chez Yahoo"
 0I5R.L,CytRx Corporation,États-Unis,True,pas de cotation depuis le 19/05/2026
+0M8Y.L,Lasernet Group AB,Suède,True,"pas de cotation depuis le 05/06/2026 ; PER de 202,4 contre 33,7 chez Yahoo"
 0OKP.L,Socfinaf S.A.,Luxembourg,True,pas de cotation depuis le 12/05/2026
 0QP6.L,Leclanché S.A.,Suisse,True,pas de cotation depuis le 29/05/2026
 0QTE.L,LiveChat Software S.A.,Pologne,True,pas de cotation depuis le 09/12/2024
 0RAB.L,Cnova N.V.,Pays-Bas,True,cours manquant
+0RF1.L,WISeKey International Holding AG,Suisse,True,pas de cotation depuis le 23/09/2026
 0RG4.IL,TORM plc,Royaume-Uni,True,"capitalisation / chiffre d'affaires de 2,0 contre 13,3 chez Yahoo (erreur de devise probable)"
 0RMV.IL,TechnipFMC plc,Royaume-Uni,True,pas de cotation depuis le 14/09/2026
+0TB.F,"Theravance Biopharma, Inc.",Îles Caïmans,True,"pas de cotation depuis le 23/09/2026 ; PER de 34,9 contre 16,2 chez Yahoo"
 0VZ2.F,"Acreage Holdings, Inc.",États-Unis,True,cours manquant ; cours en dehors de sa fourchette sur un an ; pas de cotation depuis le 09/12/2024
+1029.HK,IRC Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 0,3 contre 2,5 chez Yahoo (erreur de devise probable)"
+1051.HK,G-Resources Group Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 5,4 contre 42,3 chez Yahoo (erreur de devise probable)"
 1188.HK,Hybrid Kinetic Group Limited,Hong Kong,True,pas de cotation depuis le 31/03/2025
 1199.HK,COSCO SHIPPING Ports Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 1,7 contre 13,6 chez Yahoo (erreur de devise probable)"
 1208.HK,MMG Limited,Australie,True,"capitalisation / chiffre d'affaires de 1,4 contre 11,3 chez Yahoo (erreur de devise probable)"
-1231.HK,Newton Resources Ltd,Hong Kong,True,pas de cotation depuis le 08/10/2026
+1231.HK,Newton Resources Ltd,Hong Kong,True,"pas de cotation depuis le 08/10/2026 ; capitalisation / chiffre d'affaires de 1,4 contre 11,3 chez Yahoo (erreur de devise probable)"
 1252.HK,China Tianrui Group Cement Company Limited,Chine,True,pas de cotation depuis le 20/03/2026
 1258.HK,China Nonferrous Mining Corporation Limited,Chine,True,"capitalisation / chiffre d'affaires de 1,6 contre 12,3 chez Yahoo (erreur de devise probable)"
 1299.HK,AIA Group Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 3,6 contre 28,3 chez Yahoo (erreur de devise probable)"
 1308.HK,SITC International Holdings Company Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 4,6 contre 35,8 chez Yahoo (erreur de devise probable)"
-1347.HK,Hua Hong Semiconductor Limited,Chine,True,"capitalisation / chiffre d'affaires de 7,1 contre 56,0 chez Yahoo (erreur de devise probable)"
+1346.HK,Lever Style Corporation,Hong Kong,True,"capitalisation / chiffre d'affaires de 0,5 contre 3,9 chez Yahoo (erreur de devise probable)"
+1347.HK,Hua Hong Semiconductor Limited,Chine,True,"capitalisation / chiffre d'affaires de 7,2 contre 56,0 chez Yahoo (erreur de devise probable)"
 1377.HK,"Guangdong Dtech Technology Co., Ltd.",Chine,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,6 contre 22,4 chez Yahoo (erreur de devise probable)"
 1415.HK,Cowell e Holdings Inc.,Chine,True,"capitalisation / chiffre d'affaires de 0,6 contre 4,9 chez Yahoo (erreur de devise probable)"
 1448.HK,Fu Shou Yuan International Group Limited,Chine,True,pas de cotation depuis le 19/03/2026
 1519.HK,J&T Global Express Ltd,Chine,True,"capitalisation / chiffre d'affaires de 0,8 contre 6,1 chez Yahoo (erreur de devise probable)"
+1523.HK,Plover Bay Technologies Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 7,7 contre 60,6 chez Yahoo (erreur de devise probable)"
 1548.HK,Genscript Biotech Corporation,Chine,True,"capitalisation / chiffre d'affaires de 10,9 contre 85,6 chez Yahoo (erreur de devise probable)"
 1553.HK,Maike Tube Industry Holdings Limited,Chine,True,pas de cotation depuis le 09/10/2026
 1668.HK,China South City Holdings Limited,Hong Kong,True,pas de cotation depuis le 11/08/2025
-1748.HK,Xin Yuan Enterprises Group Limited,Chine,True,pas de cotation depuis le 20/02/2025
+1691.HK,JS Global Lifestyle Company Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 0,5 contre 3,7 chez Yahoo (erreur de devise probable)"
+1696.HK,Sisram Medical Ltd,Israël,True,"capitalisation / chiffre d'affaires de 0,3 contre 2,3 chez Yahoo (erreur de devise probable)"
+1712.HK,Dragon Mining Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 1,3 contre 7,2 chez Yahoo (erreur de devise probable)"
+1731.HK,Prosperous Industrial (Holdings) Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 0,4 contre 3,3 chez Yahoo (erreur de devise probable)"
+1747.HK,Home Control International Limited,Singapour,True,"capitalisation / chiffre d'affaires de 2,7 contre 20,9 chez Yahoo (erreur de devise probable)"
+1748.HK,Xin Yuan Enterprises Group Limited,Chine,True,"pas de cotation depuis le 20/02/2025 ; capitalisation / chiffre d'affaires de 1,7 contre 13,5 chez Yahoo (erreur de devise probable)"
 1755.HK,"S-Enjoy Service Group Co., Limited",Chine,True,pas de cotation depuis le 31/03/2025
+1767.HK,TS Wonders Holding Limited,Singapour,True,"capitalisation / chiffre d'affaires de 0,8 contre 5,0 chez Yahoo (erreur de devise probable)"
+1811.HK,"CGN New Energy Holdings Co., Ltd.",Singapour,True,"capitalisation / chiffre d'affaires de 0,7 contre 5,4 chez Yahoo (erreur de devise probable)"
 1828.HK,FWD Group Holdings Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 1,7 contre 13,1 chez Yahoo (erreur de devise probable)"
 1831.HK,ShiFang Holding Limited,Chine,True,pas de cotation depuis le 24/08/2026
+1832.HK,S.A.I. Leisure Group Company Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 0,9 contre 7,4 chez Yahoo (erreur de devise probable)"
 183490.KQ,Enzychem Lifesciences Corporation,Corée du Sud,True,pas de cotation depuis le 23/03/2026
+1836.HK,Stella International Holdings Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 0,9 contre 6,9 chez Yahoo (erreur de devise probable)"
 1860.HK,Mobvista Inc.,Chine,True,"capitalisation / chiffre d'affaires de 0,9 contre 7,1 chez Yahoo (erreur de devise probable)"
+1865.HK,Pengo Holdings Group Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 1,5 contre 9,3 chez Yahoo (erreur de devise probable)"
+1872.HK,Guan Chao Holdings Limited,Singapour,True,"capitalisation / chiffre d'affaires de 1,0 contre 6,1 chez Yahoo (erreur de devise probable)"
 1876.HK,Budweiser Brewing Company APAC Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 1,7 contre 13,6 chez Yahoo (erreur de devise probable)"
+1878.HK,SouthGobi Resources Ltd.,Hong Kong,True,"capitalisation / chiffre d'affaires de 0,1 contre 1,0 chez Yahoo (erreur de devise probable)"
 1910.HK,Samsonite International S.A.,Luxembourg,True,"capitalisation / chiffre d'affaires de 0,6 contre 5,1 chez Yahoo (erreur de devise probable)"
+1912.HK,Contel Technology Company Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 3,0 contre 23,4 chez Yahoo (erreur de devise probable)"
 1913.HK,Prada S.p.A.,Italie,True,"capitalisation / chiffre d'affaires de 1,8 contre 16,2 chez Yahoo (erreur de devise probable)"
 1928.HK,Sands China Ltd.,Macao,True,"capitalisation / chiffre d'affaires de 1,4 contre 11,3 chez Yahoo (erreur de devise probable)"
+1970.HK,"IMAX China Holding, Inc.",Chine,True,"capitalisation / chiffre d'affaires de 4,4 contre 34,7 chez Yahoo (erreur de devise probable)"
+1D4.SI,Aoxin Q & M Dental Group Limited,Singapour,True,"capitalisation / chiffre d'affaires de 5,7 contre 1,1 chez Yahoo (erreur de devise probable)"
 1J9.F,Jiayuan International Group Limited,Hong Kong,True,cours manquant
-2026.HK,Pony AI Inc. Class A,Chine,True,"capitalisation / chiffre d'affaires de 17,5 contre 137,4 chez Yahoo (erreur de devise probable)"
+1MZ.SI,Nam Cheong Limited,Singapour,True,"capitalisation / chiffre d'affaires de 1,5 contre 0,5 chez Yahoo (erreur de devise probable) ; PER de 11,2 contre 2,8 chez Yahoo"
+2020.OL,2020 Bulkers Ltd.,Bermudes,True,"capitalisation / chiffre d'affaires de 5,9 contre 55,1 chez Yahoo (erreur de devise probable) ; rendement de 124 % jugé exceptionnel"
+2026.HK,Pony AI Inc. Class A,Chine,True,"capitalisation / chiffre d'affaires de 17,7 contre 137,4 chez Yahoo (erreur de devise probable)"
+2038.HK,FIH Mobile Limited,Taïwan,True,"capitalisation / chiffre d'affaires de 0,2 contre 1,5 chez Yahoo (erreur de devise probable)"
+2142.HK,HBM Holdings Limited,Chine,True,"capitalisation / chiffre d'affaires de 6,3 contre 49,5 chez Yahoo (erreur de devise probable)"
 2160.HK,MicroPort CardioFlow Medtech Corporation,Chine,True,"pas de cotation depuis le 31/08/2026 ; capitalisation / chiffre d'affaires de 3,6 contre 28,6 chez Yahoo (erreur de devise probable)"
 2172.HK,MicroPort NeuroTech Limited,Chine,True,pas de cotation depuis le 31/08/2026
-2225.HK,Jinhai International Group Holdings Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 48,1 contre 294,9 chez Yahoo (erreur de devise probable)"
+2209.HK,YesAsia Holdings Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 0,3 contre 2,2 chez Yahoo (erreur de devise probable)"
+2225.HK,Jinhai International Group Holdings Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 49,3 contre 294,9 chez Yahoo (erreur de devise probable)"
 2232.HK,Crystal International Group Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 1,0 contre 8,1 chez Yahoo (erreur de devise probable)"
+2239.HK,SMIT Holdings Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 3,2 contre 25,3 chez Yahoo (erreur de devise probable)"
 2252.HK,"Shanghai MicroPort MedBot (Group) Co., Ltd.",Chine,True,pas de cotation depuis le 31/08/2026
 225430.KQ,"KMPHARMACEUTICAL Co.,Ltd.",Corée du Sud,True,pas de cotation depuis le 14/09/2026
+2257.HK,Sirnaomics Ltd.,États-Unis,True,"capitalisation / chiffre d'affaires de 1827,4 contre 14334,3 chez Yahoo (erreur de devise probable)"
 2259.HK,Zijin Gold International Company Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 5,2 contre 40,8 chez Yahoo (erreur de devise probable)"
 2270.HK,"Desun Real Estate Investment Services Group Co., Ltd.",Chine,True,pas de cotation depuis le 06/10/2026
+2285.HK,Chervon Holdings Limited,Chine,True,"capitalisation / chiffre d'affaires de 1,3 contre 10,5 chez Yahoo (erreur de devise probable)"
+2317.HK,Vedan International (Holdings) Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 0,3 contre 2,6 chez Yahoo (erreur de devise probable)"
 2343.HK,Pacific Basin Shipping Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 1,1 contre 8,9 chez Yahoo (erreur de devise probable)"
 234920.KQ,"Zaigle Co., Ltd.",Corée du Sud,True,pas de cotation depuis le 29/10/2025
-2361.HK,Sinohealth Technology Holdings Limited,Chine,True,pas de cotation depuis le 08/10/2026
+2409.HK,Seacon Shipping Group Holdings Limited,Chine,True,"capitalisation / chiffre d'affaires de 0,9 contre 7,0 chez Yahoo (erreur de devise probable)"
 241560.KS,Doosan Bobcat Inc.,Corée du Sud,True,"capitalisation / chiffre d'affaires de 0,6 contre 733,8 chez Yahoo (erreur de devise probable)"
 246720.KQ,ASTA Corporation,Corée du Sud,True,pas de cotation depuis le 24/03/2026
 2479.HK,"Tianju Dihe (Suzhou) Data Co., Ltd.",Chine,True,pas de cotation depuis le 31/03/2025
+2507.HK,Cirrus Aircraft Limited,États-Unis,True,"capitalisation / chiffre d'affaires de 1,2 contre 9,2 chez Yahoo (erreur de devise probable)"
 2510.HK,TS Lines Ltd,Taïwan,True,"capitalisation / chiffre d'affaires de 2,1 contre 16,3 chez Yahoo (erreur de devise probable)"
 256.F,Azure Power Global Limited,Inde,True,cours manquant
 2588.HK,BOC Aviation Limited,Singapour,True,"capitalisation / chiffre d'affaires de 2,6 contre 20,8 chez Yahoo (erreur de devise probable)"
 258830.KQ,"Sejong Medical Co., Ltd.",Corée du Sud,True,cours manquant ; pas de cotation depuis le 29/10/2025
-2592.HK,Cloudbreak Pharma Inc.,États-Unis,True,pas de cotation depuis le 09/09/2026
+2592.HK,Cloudbreak Pharma Inc.,États-Unis,True,"pas de cotation depuis le 09/09/2026 ; capitalisation / chiffre d'affaires de 498,0 contre 3906,2 chez Yahoo (erreur de devise probable)"
+2610.HK,Nanshan Aluminium Intrnatnl Holdings Ltd,Indonésie,True,"capitalisation / chiffre d'affaires de 1,8 contre 13,9 chez Yahoo (erreur de devise probable)"
 2627.HK,Ab&B Bio-Tech Co. Ltd. JS,Chine,True,cours manquant
-2629.HK,Mirxes Holding Company Limited,Singapour,True,pas de cotation depuis le 31/03/2026
+2629.HK,Mirxes Holding Company Limited,Singapour,True,"pas de cotation depuis le 31/03/2026 ; capitalisation / chiffre d'affaires de 22,3 contre 174,7 chez Yahoo (erreur de devise probable)"
 263050.KQ,"Eutilex.Co.,Ltd.",Corée du Sud,True,pas de cotation depuis le 06/02/2026
 2637.TW,"Wisdom Marine Lines Co., Limited",Îles Caïmans,True,"capitalisation / chiffre d'affaires de 3,7 contre 121,3 chez Yahoo (erreur de devise probable)"
+2665.HK,Seyond Holdings Ltd,États-Unis,True,"capitalisation / chiffre d'affaires de 0,9 contre 6,8 chez Yahoo (erreur de devise probable)"
+2878.HK,Solomon Systech (International) Ltd.,Hong Kong,True,"capitalisation / chiffre d'affaires de 0,7 contre 5,8 chez Yahoo (erreur de devise probable)"
 2898.HK,"Sunho Biologics, Inc.",Chine,True,pas de cotation depuis le 06/03/2026
+2B5.VI,BAIC Motor Corporation Limited,Chine,True,"capitalisation / chiffre d'affaires de 0,0 contre 0,0 chez Yahoo (erreur de devise probable)"
 2JI.F,"Bank of Jinzhou Co., Ltd.",Chine,True,cours manquant
 3696.HK,InSilico Medicine Cayman TopCo,Hong Kong,True,"capitalisation / chiffre d'affaires de 19,9 contre 156,5 chez Yahoo (erreur de devise probable)"
 3869.HK,Hospital Corporation of China Limited,Chine,True,pas de cotation depuis le 21/09/2026
+3918.HK,NagaCorp Ltd.,Cambodge,True,"capitalisation / chiffre d'affaires de 2,0 contre 15,6 chez Yahoo (erreur de devise probable)"
+3928.HK,China Next-Gen Commerce and Supply Chain Limited,Singapour,True,"capitalisation / chiffre d'affaires de 48,2 contre 295,2 chez Yahoo (erreur de devise probable)"
+5202.T,"Nippon Sheet Glass Company, Limited",Japon,True,pas de cotation depuis le 25/09/2026
+5GD.SI,Sunpower Group Ltd.,Chine,True,"capitalisation / chiffre d'affaires de 0,7 contre 0,1 chez Yahoo (erreur de devise probable)"
 5SR.SI,Zhongmin Baihui Retail Group Ltd.,Singapour,True,pas de cotation depuis le 09/09/2026
 5Y8.F,"Shinsun Holdings (Group) Co., Ltd.",Chine,True,cours manquant
-6015.SR,Americana Restaurants International PLC,Émirats arabes unis,True,"capitalisation / chiffre d'affaires de 1,9 contre 7,2 chez Yahoo (erreur de devise probable) ; PER prévu de 17,2 contre 65,2 chez Yahoo"
+6015.SR,Americana Restaurants International PLC,Émirats arabes unis,True,"capitalisation / chiffre d'affaires de 2,0 contre 7,2 chez Yahoo (erreur de devise probable) ; PER prévu de 18,3 contre 65,2 chez Yahoo"
 6088.HK,FIT Hon Teng Limited,Taïwan,True,"capitalisation / chiffre d'affaires de 0,6 contre 4,9 chez Yahoo (erreur de devise probable)"
+6486.T,Eagle Industry Co Ltd,Japon,True,pas de cotation depuis le 28/09/2026
 6696.HK,Many Idea Cloud Holdings Limited,Chine,True,pas de cotation depuis le 30/03/2026
+6699.HK,Angelalign Technology Inc.,États-Unis,True,"capitalisation / chiffre d'affaires de 4,1 contre 31,9 chez Yahoo (erreur de devise probable)"
 6858.HK,Honma Golf Limited,Japon,True,pas de cotation depuis le 08/10/2026
 688235.SS,BeOne Medicines Ltd. Class A,Suisse,True,"capitalisation / chiffre d'affaires de 9,8 contre 65,1 chez Yahoo (erreur de devise probable)"
 6883.HK,Eternal Beauty Holdings Limited,Îles Caïmans,True,pas de cotation depuis le 16/03/2026
 688347.SS,Hua Hong Semiconductor Ltd,Chine,True,"capitalisation / chiffre d'affaires de 15,4 contre 102,8 chez Yahoo (erreur de devise probable) ; PER de 57,9 contre 385,9 chez Yahoo"
 688981.SS,Semiconductor Manufacturing International Corporation,Chine,True,"capitalisation / chiffre d'affaires de 12,7 contre 84,0 chez Yahoo (erreur de devise probable)"
 690D.DE,"Haier Smart Home Co., Ltd. Class D",Chine,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 0,1 chez Yahoo (erreur de devise probable)"
+6929.HK,OrbusNeich Medical Group Holdings Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 2,0 contre 15,7 chez Yahoo (erreur de devise probable)"
 6966.HK,China Wan Tong Yuan (Holdings) Limited,Chine,True,pas de cotation depuis le 30/09/2026
 6CB.F,Global Cord Blood Corporation,Hong Kong,True,cours manquant
 7240.T,NOK Corporation,Japon,True,pas de cotation depuis le 28/09/2026
 75Y.F,Comarch S.A.,Pologne,True,cours manquant
 8148.HK,Wuxi Life International Holdings Group Limited,Hong Kong,True,pas de cotation depuis le 09/10/2026
-8GA.F,Greatview Aseptic Packaging Company Limited,Chine,True,pas de cotation depuis le 18/02/2025
+8GA.F,Greatview Aseptic Packaging Company Limited,Chine,True,"pas de cotation depuis le 18/02/2025 ; capitalisation / chiffre d'affaires de 1,8 contre 0,2 chez Yahoo (erreur de devise probable)"
+900920.SS,"Shanghai Diesel Engine Co., Ltd.",Chine,True,"capitalisation / chiffre d'affaires de 0,4 contre 0,1 chez Yahoo (erreur de devise probable) ; PER de 2,5 contre 0,8 chez Yahoo"
 900948.SS,"Inner Mongolia Yitai Coal Co., Ltd.",Chine,True,"capitalisation / chiffre d'affaires de 1,5 contre 0,2 chez Yahoo (erreur de devise probable)"
 900957.SS,"Shanghai Lingyun Industries Development Co., Ltd",Chine,True,cours manquant
 9568.SR,Mayar Holding Co.,Arabie saoudite,True,pas de cotation depuis le 18/08/2026
 9596.SR,Quara Finance Co.,Arabie saoudite,True,pas de cotation depuis le 22/09/2026
+9658.HK,Super Hi International Holding Ltd.,Singapour,True,"capitalisation / chiffre d'affaires de 0,7 contre 5,3 chez Yahoo (erreur de devise probable) ; PER de 12,9 contre 101,0 chez Yahoo"
 9881.HK,Rongta Technology (Xiamen) Group Co.,Chine,True,pas de cotation depuis le 31/03/2026
+9911.HK,Newborn Town Inc.,Chine,True,"capitalisation / chiffre d'affaires de 1,3 contre 10,6 chez Yahoo (erreur de devise probable)"
+AAPG,Ascentage Pharma Group International American Depository Shares,Chine,True,"capitalisation / chiffre d'affaires de 15,0 contre 2,2 chez Yahoo (erreur de devise probable)"
+ABMM.JK,PT ABM Investama Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 0,4 contre 6660,8 chez Yahoo (erreur de devise probable)"
 ACCELSAB.MX,"Accel, S.A.B. de C.V.",Mexique,True,pas de cotation depuis le 31/12/2025
 ADHI.JK,PT Adhi Karya (Persero) Tbk,Indonésie,True,pas de cotation depuis le 21/08/2026
 ADKT,The Adirondack Trust Company,États-Unis,True,pas de cotation depuis le 05/02/2026
 ADL.F,ADLER Real Estate AG,Allemagne,True,cours manquant
 ADMR.JK,PT Alamtri Minerals Indonesia Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 2,6 contre 46837,8 chez Yahoo (erreur de devise probable)"
 ADRO.JK,PT Alamtri Resources Indonesia Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 1,9 contre 34873,7 chez Yahoo (erreur de devise probable)"
+AFYA,Afya Limited Class A,Brésil,True,"capitalisation / chiffre d'affaires de 1,7 contre 0,3 chez Yahoo (erreur de devise probable)"
+AGBK,AGI Inc,Brésil,True,"capitalisation / chiffre d'affaires de 2,8 contre 0,6 chez Yahoo (erreur de devise probable)"
 AGRIP,"AgriBank, FCB",États-Unis,True,cours manquant
 AHLA.DE,Alibaba Group Holding Limited,Chine,True,"capitalisation / chiffre d'affaires de 1,6 contre 0,2 chez Yahoo (erreur de devise probable)"
+AIFU,AIFU Inc.,Chine,True,"capitalisation / chiffre d'affaires de 0,9 contre 0,1 chez Yahoo (erreur de devise probable)"
 AIMTRON.NS,Aimtron Electronics Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
+AKBM.OL,Aker BioMarine AS,Norvège,True,"pas de cotation depuis le 01/10/2026 ; capitalisation / chiffre d'affaires de 5,0 contre 47,1 chez Yahoo (erreur de devise probable)"
 AKRBP.OL,Aker BP ASA,Norvège,True,"capitalisation / chiffre d'affaires de 2,2 contre 20,9 chez Yahoo (erreur de devise probable)"
 ALEATIC.MX,"Aleatica, S.A.B. de C.V.",Mexique,True,cours manquant
-ALIV-SDB.ST,Autoliv Inc.,Suède,True,"capitalisation / chiffre d'affaires de 0,7 contre 7,2 chez Yahoo (erreur de devise probable) ; PER prévu de 9,5 contre 133,4 chez Yahoo"
+ALIV-SDB.ST,Autoliv Inc.,Suède,True,"capitalisation / chiffre d'affaires de 0,8 contre 7,2 chez Yahoo (erreur de devise probable) ; PER prévu de 9,8 contre 133,4 chez Yahoo"
+ALLT.TA,Allot Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 4,1 contre 12,6 chez Yahoo (erreur de devise probable)"
 ALNGO.OL,Awilco LNG ASA,Norvège,True,pas de cotation depuis le 09/10/2026
-AMMN.JK,PT Amman Mineral Internasional Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 4,3 contre 77939,6 chez Yahoo (erreur de devise probable)"
+ALRE.TA,Almadev Real Estate Inc.,Canada,True,"capitalisation / chiffre d'affaires de 3,8 contre 8,4 chez Yahoo (erreur de devise probable)"
+AMMN.JK,PT Amman Mineral Internasional Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 4,2 contre 77939,6 chez Yahoo (erreur de devise probable)"
 AMS.VI,ams-OSRAM AG,Autriche,True,cours manquant
 AMX,"America Movil, S.A.B. de C.V.",Mexique,True,"capitalisation / chiffre d'affaires de 1,4 contre 0,1 chez Yahoo (erreur de devise probable)"
 ANEP.AT,Anonimi Naftiliaki Etaria Kritis S.A.,Grèce,True,cours manquant
-ANG.JO,AngloGold Ashanti Limited,Afrique du Sud,True,"capitalisation / chiffre d'affaires de 3,6 contre 59,3 chez Yahoo (erreur de devise probable)"
+ANG.JO,AngloGold Ashanti Limited,Afrique du Sud,True,"capitalisation / chiffre d'affaires de 3,7 contre 59,3 chez Yahoo (erreur de devise probable)"
 ANTARCHILE.SN,AntarChile S.A.,Chili,True,"capitalisation / chiffre d'affaires de 0,1 contre 102,8 chez Yahoo (erreur de devise probable)"
+AP4.SI,Riverstone Holdings Limited,Singapour,True,"capitalisation / chiffre d'affaires de 3,5 contre 1,1 chez Yahoo (erreur de devise probable)"
 APIC.JK,PT Pacific Strategic Financial Tbk,Indonésie,True,capitalisation incohérente avec le cours et le nombre d'actions
-ASB.WA,ASBISc Enterprises Plc,Chypre,True,"capitalisation / chiffre d'affaires de 0,4 contre 1,6 chez Yahoo (erreur de devise probable) ; PER prévu de 10,7 contre 26,1 chez Yahoo"
-ASMDEE-B.ST,Asmodee Group AB,Suède,True,"capitalisation / chiffre d'affaires de 2,0 contre 22,8 chez Yahoo (erreur de devise probable) ; PER de 7,1 contre 78,7 chez Yahoo"
+ARCI.JK,PT Archi Indonesia Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 2,3 contre 41515,1 chez Yahoo (erreur de devise probable) ; PER prévu de 6,7 contre 122912,0 chez Yahoo"
+ARD.TA,Arad Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 0,8 contre 2,6 chez Yahoo (erreur de devise probable)"
+ARF.TA,Ashdod Refinery Ltd,Israël,True,"capitalisation / chiffre d'affaires de 0,2 contre 0,5 chez Yahoo (erreur de devise probable)"
+ARGO.TA,ARGO Properties N.V.,Pays-Bas,True,"capitalisation / chiffre d'affaires de 14,2 contre 49,8 chez Yahoo (erreur de devise probable) ; PER de 25,0 contre 11,0 chez Yahoo"
+ASB.WA,ASBISc Enterprises Plc,Chypre,True,"capitalisation / chiffre d'affaires de 0,4 contre 1,6 chez Yahoo (erreur de devise probable) ; PER prévu de 11,1 contre 26,1 chez Yahoo"
+ASMDEE-B.ST,Asmodee Group AB,Suède,True,"capitalisation / chiffre d'affaires de 2,1 contre 22,8 chez Yahoo (erreur de devise probable) ; PER de 7,1 contre 78,7 chez Yahoo"
 ATAT,Atour Lifestyle Holdings Limited,Chine,True,"capitalisation / chiffre d'affaires de 2,5 contre 0,4 chez Yahoo (erreur de devise probable)"
 ATCD,Altair Corp.,États-Unis,True,pas de cotation depuis le 05/02/2026
 ATHM,Autohome Inc. Class A,Chine,True,"capitalisation / chiffre d'affaires de 2,8 contre 0,4 chez Yahoo (erreur de devise probable)"
 ATKR.MX,Atkore Inc.,États-Unis,True,"pas de cotation depuis le 30/03/2026 ; capitalisation / chiffre d'affaires de 0,7 contre 12,2 chez Yahoo (erreur de devise probable)"
-AUTO.OL,AutoStore,Norvège,True,"capitalisation / chiffre d'affaires de 7,7 contre 71,4 chez Yahoo (erreur de devise probable)"
+AUNA,Auna SA,Pérou,True,"capitalisation / chiffre d'affaires de 0,3 contre 0,1 chez Yahoo (erreur de devise probable)"
+AUTO.OL,AutoStore,Norvège,True,"capitalisation / chiffre d'affaires de 7,8 contre 71,4 chez Yahoo (erreur de devise probable)"
 AVOI,"Advanced Voice Recognition Systems, Inc.",États-Unis,True,cours manquant
 B49.SI,World Precision Machinery Limited,Chine,True,pas de cotation depuis le 23/09/2026
 B4B.F,Metro AG,Allemagne,True,cours manquant
@@ -162,47 +228,67 @@ BCIC.JK,PT Bank JTrust Indonesia Tbk,Indonésie,True,capitalisation incohérente
 BDMN.JK,PT Bank Danamon Indonesia Tbk,Indonésie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 2,4 chez Yahoo (erreur de devise probable)"
 BEKE,KE Holdings Inc.,Chine,True,"capitalisation / chiffre d'affaires de 1,4 contre 0,2 chez Yahoo (erreur de devise probable)"
 BEKS.JK,"PT. Bank Pembangunan Daerah Banten, Tbk",Indonésie,True,capitalisation incohérente avec le cours et le nombre d'actions
+BETCO.ST,Better Collective A/S,Danemark,True,"capitalisation / chiffre d'affaires de 0,9 contre 10,5 chez Yahoo (erreur de devise probable) ; PER prévu de 6,1 contre 67,7 chez Yahoo"
+BETS-B.ST,Betsson AB,Suède,True,"capitalisation / chiffre d'affaires de 1,0 contre 10,9 chez Yahoo (erreur de devise probable) ; PER prévu de 8,3 contre 63,5 chez Yahoo"
 BEVIDESB.MX,"Farmacias Benavides, S.A.B. de C.V.",Mexique,True,pas de cotation depuis le 22/07/2026
+BEWI.OL,BEWi ASA,Norvège,True,"capitalisation / chiffre d'affaires de 0,5 contre 4,8 chez Yahoo (erreur de devise probable)"
 BEZ.L,Beazley plc,Royaume-Uni,True,pas de cotation depuis le 01/10/2026
 BHAT.JK,PT Bhakti Multi Artha Tbk,Indonésie,True,pas de cotation depuis le 29/06/2026
+BHK.SI,SIIC Environment Holdings Ltd.,Singapour,True,"capitalisation / chiffre d'affaires de 0,3 contre 0,1 chez Yahoo (erreur de devise probable)"
 BIDU,"Baidu, Inc.",Chine,True,"capitalisation / chiffre d'affaires de 1,4 contre 0,2 chez Yahoo (erreur de devise probable)"
 BILI,Bilibili Inc. Class Z,Chine,True,"capitalisation / chiffre d'affaires de 1,2 contre 0,2 chez Yahoo (erreur de devise probable)"
+BIPI.JK,PT Astrindo Nusantara Infrastruktur Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 1,7 contre 31688,3 chez Yahoo (erreur de devise probable)"
 BKGM,BankGuam Holding Company,États-Unis,True,pas de cotation depuis le 30/09/2026
-BKSL.JK,PT Sentul City Tbk,Indonésie,True,capitalisation incohérente avec le cours et le nombre d'actions
+BKSL.JK,PT Sentul City Tbk,Indonésie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 2,6 chez Yahoo (erreur de devise probable)"
+BLUMAR.SN,Blumar S.A.,Chili,True,"capitalisation / chiffre d'affaires de 0,8 contre 834,5 chez Yahoo (erreur de devise probable)"
 BMD.L,Baronsmead Second Venture Trust Plc,Royaume-Uni,True,pas de cotation depuis le 08/10/2026
 BMG173841013.SW,BW LPG Limited,Bermudes,True,cours manquant
-BNBR.JK,PT Bakrie & Brothers Tbk,Indonésie,True,capitalisation incohérente avec le cours et le nombre d'actions
+BN2.SI,Valuetronics Holdings Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 1,4 contre 0,2 chez Yahoo (erreur de devise probable)"
+BNBR.JK,PT Bakrie & Brothers Tbk,Indonésie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 3,1 chez Yahoo (erreur de devise probable)"
 BNGA.JK,PT Bank CIMB Niaga Tbk Class A,Indonésie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 2,3 chez Yahoo (erreur de devise probable)"
-BNII.JK,PT Bank Maybank Indonesia Tbk,Indonésie,True,capitalisation incohérente avec le cours et le nombre d'actions
+BNII.JK,PT Bank Maybank Indonesia Tbk,Indonésie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 1,5 chez Yahoo (erreur de devise probable)"
 BNLI.JK,PT Bank Permata Tbk,Indonésie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 5,3 chez Yahoo (erreur de devise probable)"
+BNOR.OL,BlueNord ASA,Norvège,True,"capitalisation / chiffre d'affaires de 1,5 contre 14,3 chez Yahoo (erreur de devise probable) ; PER de 4,9 contre 45,5 chez Yahoo"
 BOC.AX,Bougainville Copper Limited,Papouasie-Nouvelle-Guinée,True,pas de cotation depuis le 31/08/2026
 BOLSASTGO.SN,"Bolsa de Comercio de Santiago, Bolsa de Valores",Chili,True,pas de cotation depuis le 23/07/2024
-BREN.JK,PT Barito Renewables Energy Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 26,7 contre 485291,0 chez Yahoo (erreur de devise probable)"
-BRMS.JK,PT Bumi Resources Minerals Tbk Class A,Indonésie,True,"capitalisation / chiffre d'affaires de 14,8 contre 269284,0 chez Yahoo (erreur de devise probable)"
+BREN.JK,PT Barito Renewables Energy Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 26,6 contre 485291,0 chez Yahoo (erreur de devise probable)"
+BRIM.IC,Brim hf.,Islande,True,"capitalisation / chiffre d'affaires de 2,7 contre 360,1 chez Yahoo (erreur de devise probable)"
+BRMS.JK,PT Bumi Resources Minerals Tbk Class A,Indonésie,True,"capitalisation / chiffre d'affaires de 14,7 contre 269284,0 chez Yahoo (erreur de devise probable)"
 BRPT.JK,PT Barito Pacific Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 0,7 contre 13283,9 chez Yahoo (erreur de devise probable)"
 BS6.SI,"Yangzijiang Shipbuilding Holdings, Ltd.",Chine,True,"capitalisation / chiffre d'affaires de 3,0 contre 0,6 chez Yahoo (erreur de devise probable)"
 BSBR.BA,Banco Santander SA (Brazil),Brésil,True,"capitalisation / chiffre d'affaires de 0,0 contre 13,6 chez Yahoo (erreur de devise probable)"
 BSEN.TA,Bet Shemesh Engines Holdings (1997) Ltd,Israël,True,"capitalisation / chiffre d'affaires de 7,5 contre 23,2 chez Yahoo (erreur de devise probable)"
 BSND,Boston Sand & Gravel Co.,États-Unis,True,pas de cotation depuis le 05/02/2026
-BUMI.JK,PT Bumi Resources Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 1,8 contre 32218,3 chez Yahoo (erreur de devise probable) ; PER prévu de 15,5 contre 280000,0 chez Yahoo"
+BSSR.JK,PT Baramulti Suksessarana Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 1,0 contre 18424,6 chez Yahoo (erreur de devise probable)"
+BULL.JK,PT Buana Lintas Lautan Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 1,2 contre 21857,9 chez Yahoo (erreur de devise probable)"
+BUMI.JK,PT Bumi Resources Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 1,8 contre 32218,3 chez Yahoo (erreur de devise probable) ; PER prévu de 15,2 contre 280000,0 chez Yahoo"
+BWAY.TA,BrainsWay Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 7,5 contre 23,0 chez Yahoo (erreur de devise probable)"
+BWE.OL,BW Energy Ltd.,Bermudes,True,"capitalisation / chiffre d'affaires de 2,0 contre 19,2 chez Yahoo (erreur de devise probable)"
+BWM.SI,Zheneng Jinjiang Environment Holding Company Limited,Chine,True,"capitalisation / chiffre d'affaires de 1,3 contre 0,2 chez Yahoo (erreur de devise probable)"
+BWMX,"Betterware de Mexico, S.A.B. de C.V.",Mexique,True,"capitalisation / chiffre d'affaires de 0,7 contre 0,0 chez Yahoo (erreur de devise probable)"
+BWO.OL,BW Offshore Limited,Bermudes,True,"capitalisation / chiffre d'affaires de 1,5 contre 14,0 chez Yahoo (erreur de devise probable) ; PER prévu de 5,0 contre 12,1 chez Yahoo"
 BXP.MX,"Boston Properties, Inc.",États-Unis,True,"pas de cotation depuis le 27/06/2025 ; capitalisation / chiffre d'affaires de 3,9 contre 72,6 chez Yahoo (erreur de devise probable)"
 BY6.VI,"BYD Co., Ltd.",Chine,True,"capitalisation / chiffre d'affaires de 0,7 contre 0,1 chez Yahoo (erreur de devise probable)"
 BYAN.JK,PT Bayan Resources Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 5,4 contre 97767,2 chez Yahoo (erreur de devise probable)"
 BYW.DE,BayWa Aktiengesellschaft,Allemagne,True,capitalisation incohérente avec le cours et le nombre d'actions
 BZ,KANZHUN LIMITED American Depository Shares,Chine,True,"capitalisation / chiffre d'affaires de 5,5 contre 0,8 chez Yahoo (erreur de devise probable)"
 C6TB.F,China Construction Bank Corporation Class H,Chine,True,"capitalisation / chiffre d'affaires de 3,4 contre 0,5 chez Yahoo (erreur de devise probable)"
-CAMT.TA,Camtek Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 11,1 contre 34,5 chez Yahoo (erreur de devise probable)"
+CAMT.TA,Camtek Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 11,3 contre 34,5 chez Yahoo (erreur de devise probable)"
+CAP.SN,CAP S.A.,Chili,True,"capitalisation / chiffre d'affaires de 0,3 contre 324,6 chez Yahoo (erreur de devise probable) ; PER prévu de 46,9 contre 3,6 chez Yahoo"
 CAROZZI.SN,Carozzi S.A.,Chili,True,pas de cotation depuis le 24/09/2026
 CASP.L,Caspian Sunrise plc,Royaume-Uni,True,pas de cotation depuis le 30/06/2026
 CAT-A.ST,Catella AB (publ),Suède,True,capitalisation incohérente avec le cours et le nombre d'actions
 CBA.L,Ceiba Investments,Australie,True,pas de cotation depuis le 10/06/2026
+CDEV.TA,Cohen Development Gas & Oil Ltd,Israël,True,"capitalisation / chiffre d'affaires de 11,1 contre 35,8 chez Yahoo (erreur de devise probable)"
 CE2.F,CropEnergies AG,Allemagne,True,cours manquant
 CEDU.SI,Dasin Retail Trust,Singapour,True,pas de cotation depuis le 18/07/2025
 CELLECOR.NS,Cellecor Gadgets Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
 CEMEXCPO.MX,"CEMEX, S.A.B. de C.V.",Mexique,True,"capitalisation / chiffre d'affaires de 0,9 contre 16,2 chez Yahoo (erreur de devise probable)"
+CFH0.F,China Foods Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 0,4 contre 0,0 chez Yahoo (erreur de devise probable)"
 CH0008175645.SW,Téléverbier S.A.,Suisse,True,cours manquant
 CHA,Chagee Holdings Limited,Chine,True,"capitalisation / chiffre d'affaires de 1,2 contre 0,2 chez Yahoo (erreur de devise probable)"
 CHX.F,Ciech S.A.,Pologne,True,cours manquant
+CIBUS.ST,Cibus Real Estate AB (publ),Suède,True,"capitalisation / chiffre d'affaires de 4,7 contre 52,0 chez Yahoo (erreur de devise probable) ; PER prévu de 11,2 contre 137,6 chez Yahoo"
 CIDMEGA.MX,"Grupe, S.A.B. de C.V.",Mexique,True,pas de cotation depuis le 07/10/2026
 CITZ,Citizens Bancshares Corporation,États-Unis,True,capitalisation incohérente avec le cours et le nombre d'actions
 CKNQP,"CoBank, ACB",États-Unis,True,cours manquant
@@ -217,54 +303,77 @@ COC.F,L'Occitane International S.A.,Luxembourg,True,cours manquant
 COLBUN.SN,Colbun S.A.,Chili,True,"capitalisation / chiffre d'affaires de 1,7 contre 1648,6 chez Yahoo (erreur de devise probable)"
 COLLADO.MX,"G Collado, S.A.B. de C.V.",Mexique,True,pas de cotation depuis le 28/10/2025
 COPEC.SN,Empresas Copec S.A.,Chili,True,"capitalisation / chiffre d'affaires de 0,3 contre 263,8 chez Yahoo (erreur de devise probable)"
+CPAC,Cementos Pacasmayo S.A.A.,Pérou,True,"capitalisation / chiffre d'affaires de 1,7 contre 0,5 chez Yahoo (erreur de devise probable)"
 CRDE,"Cardinal Ethanol, LLC",États-Unis,True,pas de cotation depuis le 22/04/2025
 CRISTALES.SN,Cristalerias de Chile S.A.,Chili,True,pas de cotation depuis le 02/10/2026
 CTCL.BO,Captain Technocast Limited,Inde,True,pas de cotation depuis le 09/10/2026
-CUAN.JK,PT Petrindo Jaya Kreasi Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 2,1 contre 38482,4 chez Yahoo (erreur de devise probable) ; PER prévu de 13,9 contre 255000,0 chez Yahoo"
+CUAN.JK,PT Petrindo Jaya Kreasi Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 2,0 contre 38482,4 chez Yahoo (erreur de devise probable) ; PER prévu de 13,4 contre 255000,0 chez Yahoo"
 CUSI,"Cuisine Solutions, Inc.",États-Unis,True,pas de cotation depuis le 05/02/2026
 CVGU.F,CSPC Pharmaceutical Group Limited,Chine,True,"capitalisation / chiffre d'affaires de 2,4 contre 0,3 chez Yahoo (erreur de devise probable)"
 CVH4.F,CST GROUP LIMITED,Hong Kong,True,cours manquant
+CYD,China Yuchai International Limited,Singapour,True,"capitalisation / chiffre d'affaires de 0,2 contre 0,0 chez Yahoo (erreur de devise probable)"
 DAO,"Youdao, Inc.",Chine,True,"capitalisation / chiffre d'affaires de 2,5 contre 0,4 chez Yahoo (erreur de devise probable)"
+DBMG,DBM Global Inc.,États-Unis,True,pas de cotation depuis le 06/10/2026
+DDL,Dingdong (Cayman) Limited,Japon,True,"capitalisation / chiffre d'affaires de 0,2 contre 0,0 chez Yahoo (erreur de devise probable)"
+DELG.TA,Delta Galil Industries Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 0,7 contre 2,1 chez Yahoo (erreur de devise probable)"
 DFV.F,DFV Deutsche Familienversicherung AG,Allemagne,True,cours manquant
 DHT-UN.TO,DRI Healthcare Trust,Canada,True,capitalisation incohérente avec le cours et le nombre d'actions
+DNO.OL,DNO ASA,Norvège,True,"capitalisation / chiffre d'affaires de 1,0 contre 9,4 chez Yahoo (erreur de devise probable) ; PER de 3,2 contre 29,5 chez Yahoo"
+DNORD.CO,Dampskibsselskabet NORDEN A/S,Danemark,True,"capitalisation / chiffre d'affaires de 0,4 contre 3,0 chez Yahoo (erreur de devise probable)"
 DOFG.OL,DOF Group ASA,Norvège,True,"capitalisation / chiffre d'affaires de 1,6 contre 14,7 chez Yahoo (erreur de devise probable)"
 DPEL.NS,Divine Power Energy Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
 DSSA.JK,PT Dian Swastatika Sentosa Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 2,0 contre 36525,9 chez Yahoo (erreur de devise probable)"
+DTC.JO,Datatec Limited,Afrique du Sud,True,"capitalisation / chiffre d'affaires de 0,4 contre 6,2 chez Yahoo (erreur de devise probable)"
 DUNCANFOX.SN,Duncan Fox S.A.,Chili,True,pas de cotation depuis le 24/09/2026
+EAST.ST,Eastnine AB (publ),Suède,True,"capitalisation / chiffre d'affaires de 6,1 contre 67,7 chez Yahoo (erreur de devise probable) ; PER prévu de 10,4 contre 137,6 chez Yahoo"
 ECL.SN,Engie Energia Chile S.A.,Chili,True,"capitalisation / chiffre d'affaires de 1,0 contre 971,6 chez Yahoo (erreur de devise probable)"
+ECNR.TA,Econergy,Israël,True,"capitalisation / chiffre d'affaires de 142,1 contre 494,1 chez Yahoo (erreur de devise probable) ; PER prévu de 0,5 contre 173,0 chez Yahoo"
+ECR.MC,"Ercros, S.A.",Espagne,True,pas de cotation depuis le 10/09/2026
 EDNR.MI,Edison S.p.A.,Italie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 0,5 chez Yahoo (erreur de devise probable)"
 EFFWA.NS,Effwa Infra & Research Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
-ELAL.TA,El Al Israel Airlines Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 1,0 contre 3,3 chez Yahoo (erreur de devise probable)"
+EHG.WA,Eurohold Bulgaria AD,Bulgarie,True,"capitalisation / chiffre d'affaires de 0,7 contre 2,8 chez Yahoo (erreur de devise probable)"
+EIM.IC,Eimskipafelag Íslands hf.,Islande,True,"capitalisation / chiffre d'affaires de 0,4 contre 58,3 chez Yahoo (erreur de devise probable)"
+ELAL.TA,El Al Israel Airlines Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 1,1 contre 3,3 chez Yahoo (erreur de devise probable)"
+ELLO.TA,Ellomay Capital Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 6,0 contre 20,8 chez Yahoo (erreur de devise probable)"
 ELME,Elme Communities,États-Unis,True,cours en dehors de sa fourchette sur un an
+ELO.OL,Elopak ASA,Norvège,True,"capitalisation / chiffre d'affaires de 0,7 contre 7,4 chez Yahoo (erreur de devise probable)"
 ELPC,Companhia Paranaense de Energia (COPEL),Brésil,True,"capitalisation / chiffre d'affaires de 1,8 contre 0,4 chez Yahoo (erreur de devise probable)"
+ELTEL.ST,Eltel AB (publ),Suède,True,"capitalisation / chiffre d'affaires de 0,3 contre 3,0 chez Yahoo (erreur de devise probable) ; PER de 6,6 contre 73,2 chez Yahoo"
 ELTY.JK,PT Bakrieland Development Tbk,Indonésie,True,capitalisation incohérente avec le cours et le nombre d'actions
-ELUX-A.ST,AB Electrolux (publ),Suède,True,capitalisation incohérente avec le cours et le nombre d'actions
-EMAS.JK,PT Merdeka Gold Resources Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 167,7 contre 3038690,0 chez Yahoo (erreur de devise probable) ; PER prévu de 17,3 contre 312653,0 chez Yahoo"
+ELUX-A.ST,AB Electrolux (publ),Suède,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 0,2 chez Yahoo (erreur de devise probable)"
+EMAS.JK,PT Merdeka Gold Resources Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 166,4 contre 3038690,0 chez Yahoo (erreur de devise probable) ; PER prévu de 17,1 contre 312653,0 chez Yahoo"
+EMBLA.CO,Embla Medical hf.,Islande,True,"capitalisation / chiffre d'affaires de 1,7 contre 11,5 chez Yahoo (erreur de devise probable)"
 EMBONOR-A.SN,Coca-Cola Embonor S.A.,Chili,True,pas de cotation depuis le 27/05/2026
 EMH.JO,eMedia Holdings Limited,Afrique du Sud,True,capitalisation incohérente avec le cours et le nombre d'actions
+ENAEX.SN,Enaex S.A.,Chili,True,"capitalisation / chiffre d'affaires de 1,3 contre 1298,9 chez Yahoo (erreur de devise probable)"
 ENELAM.SN,Enel Americas S.A.,Chili,True,"capitalisation / chiffre d'affaires de 0,6 contre 615,7 chez Yahoo (erreur de devise probable)"
 ENELCHILE.SN,Enel Chile S.A.,Chili,True,"capitalisation / chiffre d'affaires de 1,4 contre 1354,7 chez Yahoo (erreur de devise probable)"
 ENELDXCH.SN,Enel Distribucion Chile S.A.,Chili,True,pas de cotation depuis le 31/08/2026
 ENELGXCH.SN,Enel Generacion Chile S.A.,Chili,True,"capitalisation / chiffre d'affaires de 1,6 contre 1603,9 chez Yahoo (erreur de devise probable)"
 ENG.WA,Energa S.A.,Pologne,True,pas de cotation depuis le 29/09/2026
-ENKAI.IS,Enka Insaat ve Sanayi A.S.,Turquie,True,"capitalisation / chiffre d'affaires de 2,5 contre 123,5 chez Yahoo (erreur de devise probable) ; PER prévu de 7,9 contre 20,1 chez Yahoo"
-ENLT.TA,Enlight Renewable Energy Ltd,Israël,True,"capitalisation / chiffre d'affaires de 16,3 contre 50,7 chez Yahoo (erreur de devise probable)"
-ENRG.JK,PT Energi Mega Persada Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 2,6 contre 46975,1 chez Yahoo (erreur de devise probable)"
+ENH.OL,SED Energy Holdings Plc,Chypre,True,"capitalisation / chiffre d'affaires de 2,1 contre 19,9 chez Yahoo (erreur de devise probable)"
+ENKAI.IS,Enka Insaat ve Sanayi A.S.,Turquie,True,"capitalisation / chiffre d'affaires de 2,5 contre 123,5 chez Yahoo (erreur de devise probable) ; PER prévu de 7,8 contre 20,1 chez Yahoo"
+ENLT.TA,Enlight Renewable Energy Ltd,Israël,True,"capitalisation / chiffre d'affaires de 16,4 contre 50,7 chez Yahoo (erreur de devise probable)"
+ENRG.JK,PT Energi Mega Persada Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 2,5 contre 46975,1 chez Yahoo (erreur de devise probable)"
 EQNR.OL,Equinor ASA,Norvège,True,"capitalisation / chiffre d'affaires de 1,0 contre 9,5 chez Yahoo (erreur de devise probable)"
 EQPA6.SA,Equatorial Pará Distribuidora de Energia S.A.,Brésil,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 1,1 chez Yahoo (erreur de devise probable)"
 EQT.ST,EQT AB (publ),Suède,True,"capitalisation / chiffre d'affaires de 11,3 contre 125,6 chez Yahoo (erreur de devise probable)"
-ESLT.TA,Elbit Systems Ltd,Israël,True,"capitalisation / chiffre d'affaires de 4,0 contre 12,4 chez Yahoo (erreur de devise probable) ; PER prévu de 40,9 contre 266,8 chez Yahoo"
+ESLT.TA,Elbit Systems Ltd,Israël,True,"capitalisation / chiffre d'affaires de 4,1 contre 12,4 chez Yahoo (erreur de devise probable) ; PER prévu de 41,8 contre 266,8 chez Yahoo"
+ESSA.JK,PT ESSA Industries Indonesia Tbk.,Indonésie,True,"capitalisation / chiffre d'affaires de 1,4 contre 25547,2 chez Yahoo (erreur de devise probable)"
 ESVAL-C.SN,Esval S.A.,Chili,True,pas de cotation depuis le 24/08/2026
-EVO.ST,Evolution Gaming Group AB (publ),Suède,True,"capitalisation / chiffre d'affaires de 6,6 contre 73,6 chez Yahoo (erreur de devise probable)"
+EVO.ST,Evolution Gaming Group AB (publ),Suède,True,"capitalisation / chiffre d'affaires de 6,4 contre 73,6 chez Yahoo (erreur de devise probable)"
 EXCE,"EXCO Resources, Inc.",États-Unis,True,pas de cotation depuis le 05/02/2026
+FBRT.TA,FMS Enterprises Migun Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 3,7 contre 11,5 chez Yahoo (erreur de devise probable)"
 FER.AS,Ferrovial SE,Pays-Bas,True,pas de cotation depuis le 10/09/2026
 FIBRAPL14.MX,FIBRA Prologis,Mexique,True,"capitalisation / chiffre d'affaires de 9,8 contre 182,7 chez Yahoo (erreur de devise probable)"
 FIH2.F,Goldin Financial Holdings Limited,Hong Kong,True,cours manquant
 FINAMEXO.MX,Casa de Bolsa Finamex S.A.B. de C.V.,Mexique,True,pas de cotation depuis le 04/09/2026
+FINV,FinVolution Group,Chine,True,"capitalisation / chiffre d'affaires de 0,4 contre 0,1 chez Yahoo (erreur de devise probable)"
 FMTY14.MX,"Fibra Mty, S.A.P.I. de C.V.",Mexique,True,capitalisation incohérente avec le cours et le nombre d'actions
 FNOVA17.MX,"Banco Actinver S.A., Institucion de Banca Multiple, Grupo Financiero Actinver",Mexique,True,capitalisation incohérente avec le cours et le nombre d'actions
 FOCUS.BO,Focus Lighting and Fixtures Limited,Inde,True,pas de cotation depuis le 07/10/2026
 FORE.PA,La Forestiere Equatoriale SA,Côte d'Ivoire,True,pas de cotation depuis le 28/09/2026
+FORTY.TA,Formula Systems (1985) Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 0,7 contre 2,1 chez Yahoo (erreur de devise probable)"
 FR0004026714.SW,Claranova SE,France,True,cours manquant
 FRES.MX,Fresnillo plc,Mexique,True,"capitalisation / chiffre d'affaires de 4,4 contre 82,2 chez Yahoo (erreur de devise probable)"
 FROWARD.SN,Portuaria Cabo Froward S.A.,Chili,True,pas de cotation depuis le 07/10/2026
@@ -274,52 +383,70 @@ G7E.F,Golden Eagle Retail Group Limited,Chine,True,cours manquant
 GB0003753778.SW,The Go-Ahead Group plc,Royaume-Uni,True,cours manquant
 GB00B1P6ZR11.SW,N Brown Group plc,Royaume-Uni,True,cours manquant
 GB00BKS7YK08.SW,Treatt plc,Royaume-Uni,True,cours manquant
-GCC.MX,"GCC, S.A.B. de C.V.",Mexique,True,"capitalisation / chiffre d'affaires de 2,0 contre 38,4 chez Yahoo (erreur de devise probable)"
+GCC.MX,"GCC, S.A.B. de C.V.",Mexique,True,"capitalisation / chiffre d'affaires de 2,1 contre 38,4 chez Yahoo (erreur de devise probable)"
 GDS,GDS Holdings Limited,Chine,True,"capitalisation / chiffre d'affaires de 2,4 contre 0,4 chez Yahoo (erreur de devise probable) ; PER de 72,0 contre 10,3 chez Yahoo"
 GEMC.ME,PJSC United Medical Group,Chypre,True,pas de cotation depuis le 08/07/2022
 GEMS.JK,Golden Energy and Resources Limited,Indonésie,True,"capitalisation / chiffre d'affaires de 0,9 contre 15743,5 chez Yahoo (erreur de devise probable)"
 GFGY,"Granite Falls Energy, LLC",États-Unis,True,pas de cotation depuis le 24/09/2026
-GFI.JO,Gold Fields Limited,Afrique du Sud,True,"capitalisation / chiffre d'affaires de 2,7 contre 45,3 chez Yahoo (erreur de devise probable)"
+GFH.AE,GFH Bank B.S.C.,Bahreïn,True,"capitalisation / chiffre d'affaires de 3,5 contre 12,9 chez Yahoo (erreur de devise probable) ; PER de 2,7 contre 9,9 chez Yahoo"
+GFI.JO,Gold Fields Limited,Afrique du Sud,True,"capitalisation / chiffre d'affaires de 2,8 contre 45,3 chez Yahoo (erreur de devise probable)"
 GGBL.NS,Ganesh Green Bharat Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
 GIB.F,GSW Immobilien AG,Allemagne,True,cours manquant
-GMAB.CO,Genmab A/S,Danemark,True,"capitalisation / chiffre d'affaires de 5,9 contre 39,4 chez Yahoo (erreur de devise probable)"
+GILT.TA,Gilat Satellite Networks Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 1,2 contre 3,6 chez Yahoo (erreur de devise probable)"
+GMAB.CO,Genmab A/S,Danemark,True,"capitalisation / chiffre d'affaires de 6,7 contre 39,4 chez Yahoo (erreur de devise probable)"
 GMEXICOB.MX,"Grupo Mexico, S.A.B. de C.V.",Mexique,True,"capitalisation / chiffre d'affaires de 4,2 contre 78,7 chez Yahoo (erreur de devise probable)"
 GNP.MX,"Grupo Nacional Provincial, S.A.B.",Mexique,True,pas de cotation depuis le 22/09/2026
 GOLF.SN,Sociedad Anonima de Deportes Club de Golf Santiago,Chili,True,pas de cotation depuis le 15/09/2026
+GOTU,Gaotu Techedu Inc.,Chine,True,"capitalisation / chiffre d'affaires de 0,6 contre 0,1 chez Yahoo (erreur de devise probable)"
 GPAR3.SA,Companhia CELG de Participacoes S/A,Brésil,True,pas de cotation depuis le 09/10/2026
 GPH1.MX,"Grupo Palacio de Hierro, S.A.B. de C.V.",Mexique,True,pas de cotation depuis le 07/08/2025
 GR0A.F,Enlightify Inc.,Chine,True,pas de cotation depuis le 13/10/2025
 GRUMAB.MX,"Gruma, S.A.B. de C.V.",Mexique,True,"capitalisation / chiffre d'affaires de 0,7 contre 12,8 chez Yahoo (erreur de devise probable)"
+GRVY,"GRAVITY Co., Ltd.",Corée du Sud,True,"capitalisation / chiffre d'affaires de 1,1 contre 0,0 chez Yahoo (erreur de devise probable)"
 GSANBORB-1.MX,"Grupo Sanborns, S.A.B. de C.V.",Mexique,True,cours manquant
 GSH.JO,Grindrod Shipping Holdings Ltd.,Singapour,True,cours manquant
 GSK.BA,GlaxoSmithKline plc,Royaume-Uni,True,"capitalisation / chiffre d'affaires de 2,5 contre 5044,5 chez Yahoo (erreur de devise probable)"
+GTC.WA,Globe Trade Centre S.A.,Pologne,True,"capitalisation / chiffre d'affaires de 1,5 contre 6,7 chez Yahoo (erreur de devise probable) ; PER prévu de 18,3 contre 4,5 chez Yahoo"
 GTSWF,GetSwift Technologies Limited,États-Unis,True,capitalisation incohérente avec le cours et le nombre d'actions
 GZE1R.RG,AS Latvijas Gaze,Lettonie,True,cours manquant
 H5E.F,HELMA Eigenheimbau Aktiengesellschaft,Allemagne,True,cours manquant
-HACK.ST,Hacksaw AB,Suède,True,"capitalisation / chiffre d'affaires de 6,3 contre 70,5 chez Yahoo (erreur de devise probable) ; PER prévu de 6,1 contre 67,7 chez Yahoo"
-HAUTO.OL,Hoegh Autoliners ASA,Norvège,True,"capitalisation / chiffre d'affaires de 2,6 contre 23,9 chez Yahoo (erreur de devise probable)"
+HACK.ST,Hacksaw AB,Suède,True,"capitalisation / chiffre d'affaires de 6,4 contre 70,5 chez Yahoo (erreur de devise probable) ; PER prévu de 6,2 contre 67,7 chez Yahoo"
+HAMP.IC,Hampidjan Hf.,Islande,True,"capitalisation / chiffre d'affaires de 1,1 contre 143,5 chez Yahoo (erreur de devise probable)"
+HAUTO.OL,Hoegh Autoliners ASA,Norvège,True,"capitalisation / chiffre d'affaires de 2,7 contre 23,9 chez Yahoo (erreur de devise probable)"
 HCLTECH.NS,HCL Technologies Limited,Inde,True,"capitalisation / chiffre d'affaires de 2,7 contre 257,4 chez Yahoo (erreur de devise probable)"
 HEOL,"Highwater Ethanol, LLC",États-Unis,True,pas de cotation depuis le 19/09/2024
 HERC,H.E.R.C. Products Inc.,États-Unis,True,capitalisation incohérente avec le cours et le nombre d'actions
-HEXA-B.ST,Hexagon AB,Suède,True,"capitalisation / chiffre d'affaires de 4,6 contre 51,4 chez Yahoo (erreur de devise probable)"
+HEXA-B.ST,Hexagon AB,Suède,True,"capitalisation / chiffre d'affaires de 4,7 contre 51,4 chez Yahoo (erreur de devise probable)"
+HGGE.TA,Hagag,Israël,True,"capitalisation / chiffre d'affaires de 10,0 contre 34,6 chez Yahoo (erreur de devise probable)"
+HIPR.TA,Hiper Global,Israël,True,"capitalisation / chiffre d'affaires de 1,5 contre 4,5 chez Yahoo (erreur de devise probable)"
 HKB.SI,AMTD International Inc.,Hong Kong,True,pas de cotation depuis le 25/08/2026
 HRBR,"Harbor Diversified, Inc.",États-Unis,True,pas de cotation depuis le 05/02/2026
+HRUM.JK,PT Harum Energy Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 0,3 contre 5301,6 chez Yahoo (erreur de devise probable)"
+HSTR.V,Heliostar Metals Ltd.,Canada,True,pas de cotation depuis le 06/10/2026
 HSW.IR,Hostelworld Group plc,Irlande,True,pas de cotation depuis le 18/08/2026
 HTHT,H World Group Limited,Chine,True,"capitalisation / chiffre d'affaires de 3,7 contre 0,5 chez Yahoo (erreur de devise probable)"
+HTT,High Templar Tech Limited American depositary shares each representing one,Chine,True,"capitalisation / chiffre d'affaires de 104,6 contre 15,7 chez Yahoo (erreur de devise probable)"
+HUG.WA,"Huuuge, Inc.",États-Unis,True,"capitalisation / chiffre d'affaires de 1,3 contre 4,9 chez Yahoo (erreur de devise probable) ; PER prévu de 4,9 contre 19,4 chez Yahoo"
+HUYA,HUYA Inc.,Chine,True,"capitalisation / chiffre d'affaires de 0,5 contre 0,1 chez Yahoo (erreur de devise probable)"
 IANSA.SN,Empresas Iansa S.A.,Chili,True,pas de cotation depuis le 07/09/2026
 IBST.JK,PT Inti Bangun Sejahtera Tbk,Indonésie,True,pas de cotation depuis le 20/04/2026
-ICL.TA,ICL Group Ltd,Israël,True,"capitalisation / chiffre d'affaires de 0,8 contre 2,5 chez Yahoo (erreur de devise probable) ; PER prévu de 11,3 contre 37,0 chez Yahoo"
+ICL.TA,ICL Group Ltd,Israël,True,"capitalisation / chiffre d'affaires de 0,8 contre 2,5 chez Yahoo (erreur de devise probable) ; PER prévu de 11,4 contre 37,0 chez Yahoo"
 IDEALB-1.MX,"Impulsora del Desarrollo y el Empleo en America Latina, S.A.B. de C.V.",Mexique,True,pas de cotation depuis le 18/02/2026
 IFA.HM,LS Invest AG,Allemagne,True,capitalisation incohérente avec le cours et le nombre d'actions
 IFS,Intercorp Financial Services Inc.,Pérou,True,"capitalisation / chiffre d'affaires de 3,3 contre 1,0 chez Yahoo (erreur de devise probable)"
 IKFC.F,China Shenhua Energy Co. Ltd. Class H,Chine,True,"capitalisation / chiffre d'affaires de 2,2 contre 0,3 chez Yahoo (erreur de devise probable)"
+ILCO.TA,Israel Corporation Ltd,Israël,True,"capitalisation / chiffre d'affaires de 0,2 contre 0,7 chez Yahoo (erreur de devise probable)"
 INAG.BA,Insumos Agroquimicos S.A.,Argentine,True,pas de cotation depuis le 01/09/2026
 INCO.JK,PT Vale Indonesia Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 2,0 contre 35433,5 chez Yahoo (erreur de devise probable) ; PER prévu de 5,2 contre 18,3 chez Yahoo"
+INDY.JK,PT Indika Energy Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 0,3 contre 4942,6 chez Yahoo (erreur de devise probable)"
 INFINIUM.NS,Infinium Pharmachem Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
 INFY.NS,Infosys Limited,Inde,True,"capitalisation / chiffre d'affaires de 2,4 contre 226,8 chez Yahoo (erreur de devise probable)"
 INKP.JK,PT Indah Kiat Pulp & Paper Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 0,6 contre 11618,4 chez Yahoo (erreur de devise probable)"
 INL.JO,Investec plc,Afrique du Sud,True,"capitalisation / chiffre d'affaires de 0,8 contre 17,1 chez Yahoo (erreur de devise probable)"
 INTR,Inter & Co. Inc.,Brésil,True,"capitalisation / chiffre d'affaires de 2,4 contre 0,5 chez Yahoo (erreur de devise probable)"
+IQ,"iQIYI, Inc.",Chine,True,"capitalisation / chiffre d'affaires de 0,2 contre 0,0 chez Yahoo (erreur de devise probable)"
+ISRA.TA,Isramco Negev 2 Limited Partnership,Israël,True,"capitalisation / chiffre d'affaires de 4,1 contre 12,8 chez Yahoo (erreur de devise probable)"
+ITMG.JK,PT Indo Tambangraya Megah Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 0,8 contre 14161,8 chez Yahoo (erreur de devise probable)"
 IVQ.TO,Invesque Inc.,Canada,True,capitalisation incohérente avec le cours et le nombre d'actions
 IVX.F,InVision Aktiengesellschaft,Allemagne,True,cours manquant
 JALA.F,"Japan Airlines Co., Ltd.",Japon,True,"capitalisation / chiffre d'affaires de 0,6 contre 0,0 chez Yahoo (erreur de devise probable)"
@@ -327,14 +454,20 @@ JD,"JD.com, Inc. Class A",Chine,True,"capitalisation / chiffre d'affaires de 0,2
 JISLDVREQS.NS,Jain Irrigation Systems Limited,Inde,True,capitalisation incohérente avec le cours et le nombre d'actions
 JMT2.SG,"Johnson, Matthey PLC Registered",Royaume-Uni,True,pas de cotation depuis le 14/08/2026
 JUVA.CN,Juva Life Inc.,Canada,True,cours manquant
+KAMBI.ST,Kambi Group plc,Malte,True,"capitalisation / chiffre d'affaires de 2,1 contre 23,7 chez Yahoo (erreur de devise probable) ; PER prévu de 13,0 contre 30,2 chez Yahoo"
 KAMP.AT,Reds S.A.,Grèce,True,cours manquant
 KARNIKA.NS,Karnika Industries Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
+KARO,Karooooo Ltd.,Singapour,True,"capitalisation / chiffre d'affaires de 5,4 contre 0,3 chez Yahoo (erreur de devise probable)"
 KC,Kingsoft Cloud Holdings Limited,Chine,True,"capitalisation / chiffre d'affaires de 1,5 contre 0,2 chez Yahoo (erreur de devise probable)"
+KCC.OL,Klaveness Combination Carriers ASA,Norvège,True,"capitalisation / chiffre d'affaires de 2,4 contre 22,6 chez Yahoo (erreur de devise probable)"
+KCO.F,Klockner & Co SE,Allemagne,True,pas de cotation depuis le 12/08/2026
 KEFI,Keweenaw Financial Corporation,États-Unis,True,pas de cotation depuis le 05/02/2026
+KER.WA,Kernel Holding S.A.,Ukraine,True,"capitalisation / chiffre d'affaires de 0,3 contre 1,3 chez Yahoo (erreur de devise probable)"
 KERVT.IS,Kerevitas Gida Sanayi ve Ticaret A.S.,Turquie,True,cours manquant
 KHRN.V,Khiron Life Sciences Corp.,Canada,True,cours manquant
 KIT.OL,Kitron ASA,Norvège,True,"capitalisation / chiffre d'affaires de 1,6 contre 17,0 chez Yahoo (erreur de devise probable)"
 KKC-R.BK,Kulthorn Kirby Public Company Limited,Thaïlande,True,pas de cotation depuis le 26/07/2024
+KMDA.TA,Kamada Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 2,4 contre 7,3 chez Yahoo (erreur de devise probable)"
 KNF1L.VS,AB Klaipedos nafta,Lituanie,True,cours manquant
 KODYTECH.NS,Kody Technolab Ltd.,Inde,True,pas de cotation depuis le 19/07/2024
 KRK.WA,"Krka, d. d.",Slovénie,True,"capitalisation / chiffre d'affaires de 3,7 contre 16,2 chez Yahoo (erreur de devise probable)"
@@ -342,18 +475,24 @@ LH.MX,Laboratory Corporation of America Holdings,États-Unis,True,"pas de cotati
 LI,Li Auto Inc.,Chine,True,"capitalisation / chiffre d'affaires de 0,7 contre 0,1 chez Yahoo (erreur de devise probable)"
 LNA1L.VS,AB Linas Agro Group,Lituanie,True,cours manquant
 LPPF.JK,PT MDS Retailing Tbk,Indonésie,True,capitalisation incohérente avec le cours et le nombre d'actions
+LTE.JO,Lighthouse Capital Limited,Maurice,True,"capitalisation / chiffre d'affaires de 5,4 contre 101,0 chez Yahoo (erreur de devise probable)"
 LTM.SN,LATAM Airlines Group S.A.,Chili,True,"capitalisation / chiffre d'affaires de 0,8 contre 829,3 chez Yahoo (erreur de devise probable) ; PER de 0,0 contre 9,2 chez Yahoo"
-MAAS,Maase Inc.,Chine,True,"capitalisation / chiffre d'affaires de 5433,0 contre 814,8 chez Yahoo (erreur de devise probable)"
+LU,Lufax Holding Ltd,Chine,True,"capitalisation / chiffre d'affaires de 0,2 contre 0,0 chez Yahoo (erreur de devise probable)"
+MAAS,Maase Inc.,Chine,True,"capitalisation / chiffre d'affaires de 5432,7 contre 814,8 chez Yahoo (erreur de devise probable)"
 MAERSK-A.CO,A.P. Moller - Maersk A/S,Danemark,True,"capitalisation / chiffre d'affaires de 0,9 contre 5,7 chez Yahoo (erreur de devise probable)"
 MAYA.JK,PT Bank Mayapada Internasional Tbk,Indonésie,True,capitalisation incohérente avec le cours et le nombre d'actions
 MCDIF,Mcdermott International Ltd.,États-Unis,True,pas de cotation depuis le 05/02/2026
+MCOL.JK,PT Prima Andalan Mandiri Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 1,0 contre 17414,8 chez Yahoo (erreur de devise probable)"
 MCOV-B.ST,Medicover AB (publ),Suède,True,"capitalisation / chiffre d'affaires de 1,5 contre 17,0 chez Yahoo (erreur de devise probable) ; PER prévu de 27,2 contre 600,0 chez Yahoo"
 MDKA.JK,PT Merdeka Copper Gold Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 1,1 contre 20795,0 chez Yahoo (erreur de devise probable) ; PER prévu de 11,1 contre 44,3 chez Yahoo"
 MDMG.ME,MD Medical Group Investments Plc,Chypre,True,pas de cotation depuis le 08/07/2022
+MEDC.JK,PT Medco Energi Internasional Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 0,8 contre 13758,6 chez Yahoo (erreur de devise probable)"
 MEGACPO.MX,"Megacable Holdings, S. A. B. de C. V.",Mexique,True,capitalisation incohérente avec le cours et le nombre d'actions
 MF6.F,MagForce AG,Allemagne,True,cours manquant
+MFI,mF International Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 107,4 contre 13,7 chez Yahoo (erreur de devise probable)"
 MGP1.SG,Marfrig Global Foods S.A.,Brésil,True,"capitalisation / chiffre d'affaires de 0,1 contre 0,0 chez Yahoo (erreur de devise probable)"
 MHC-UN.TO,Flagship Communities,États-Unis,True,capitalisation incohérente avec le cours et le nombre d'actions
+MINERA.SN,Minera Valparaiso S.A.,Chili,True,"capitalisation / chiffre d'affaires de 0,8 contre 789,3 chez Yahoo (erreur de devise probable)"
 MINSAB.MX,"Grupo Minsa, S.A.B. de C.V.",Mexique,True,pas de cotation depuis le 21/09/2026
 MIPAZ.IS,Milpa Ticari ve Sinai Urunler Pazarlama Sanayi ve Ticaret A.S.,Turquie,True,cours manquant
 MIRI.L,Mirriad Advertising plc,Royaume-Uni,True,pas de cotation depuis le 20/05/2026
@@ -363,99 +502,154 @@ MLHYD.PA,Hydraulique P.B Societe anonyme,France,True,pas de cotation depuis le 0
 MLPL.JK,PT Multipolar Tbk Class A,Indonésie,True,capitalisation incohérente avec le cours et le nombre d'actions
 MLPLC.PA,Placoplatre SA,France,True,pas de cotation depuis le 11/08/2026
 MNSO,MINISO Group Holding Limited,Chine,True,"capitalisation / chiffre d'affaires de 0,8 contre 0,1 chez Yahoo (erreur de devise probable)"
+MOLYMET.SN,Molibdenos y Metales S.A.,Chili,True,"capitalisation / chiffre d'affaires de 0,5 contre 491,4 chez Yahoo (erreur de devise probable)"
+MOMO,Hello Group Inc.,Chine,True,"capitalisation / chiffre d'affaires de 0,4 contre 0,1 chez Yahoo (erreur de devise probable)"
 MOWI.OL,Mowi ASA,Norvège,True,"capitalisation / chiffre d'affaires de 1,8 contre 18,6 chez Yahoo (erreur de devise probable)"
+MPCC.OL,MPC Container Ships ASA,Norvège,True,"capitalisation / chiffre d'affaires de 3,0 contre 27,8 chez Yahoo (erreur de devise probable)"
 MSON-A.ST,Midsona AB (publ),Suède,True,capitalisation incohérente avec le cours et le nombre d'actions
-MSTR.MX,MicroStrategy Incorporated,États-Unis,True,"capitalisation / chiffre d'affaires de 124,0 contre 2320,4 chez Yahoo (erreur de devise probable)"
-MTG-A.ST,Modern Times Group MTG AB (publ),Suède,True,capitalisation incohérente avec le cours et le nombre d'actions
+MSP.JO,MAS Real Estate Inc.,Île de Man,True,"capitalisation / chiffre d'affaires de 7,2 contre 134,2 chez Yahoo (erreur de devise probable)"
+MSTR.MX,MicroStrategy Incorporated,États-Unis,True,"capitalisation / chiffre d'affaires de 124,2 contre 2320,4 chez Yahoo (erreur de devise probable)"
+MTG-A.ST,Modern Times Group MTG AB (publ),Suède,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 1,1 chez Yahoo (erreur de devise probable)"
 MTR.BA,Matba Rofex S.A.,Argentine,True,cours manquant
+MULTI-X.SN,Multiexport Foods S.A.,Chili,True,"capitalisation / chiffre d'affaires de 0,5 contre 473,0 chez Yahoo (erreur de devise probable)"
 N91.JO,Ninety One Group,Afrique du Sud,True,"capitalisation / chiffre d'affaires de 2,9 contre 64,4 chez Yahoo (erreur de devise probable)"
 NAVARINO.SN,Navarino S.A.,Chili,True,pas de cotation depuis le 25/08/2026
+NB2.F,Northern Data AG,Allemagne,True,pas de cotation depuis le 06/08/2026
+NEMAKA.MX,"Nemak, S. A. B. de C. V.",Mexique,True,"capitalisation / chiffre d'affaires de 0,1 contre 1,7 chez Yahoo (erreur de devise probable)"
 NHHS,"NorthStar Healthcare Income, Inc.",États-Unis,True,pas de cotation depuis le 18/08/2025
-NICE.TA,NICE Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 2,2 contre 6,8 chez Yahoo (erreur de devise probable) ; PER prévu de 8,8 contre 2744,6 chez Yahoo"
+NICE.TA,NICE Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 2,3 contre 6,8 chez Yahoo (erreur de devise probable) ; PER prévu de 9,4 contre 2744,6 chez Yahoo"
 NIO,NIO Inc.,Chine,True,"capitalisation / chiffre d'affaires de 0,5 contre 0,1 chez Yahoo (erreur de devise probable)"
 NKT.CO,NKT A/S,Danemark,True,"capitalisation / chiffre d'affaires de 1,6 contre 12,0 chez Yahoo (erreur de devise probable)"
+NOAH,Noah Holdings Limited,Chine,True,"capitalisation / chiffre d'affaires de 1,2 contre 0,2 chez Yahoo (erreur de devise probable)"
 NOD.OL,Nordic Semiconductor ASA,Norvège,True,"capitalisation / chiffre d'affaires de 4,3 contre 40,5 chez Yahoo (erreur de devise probable)"
-NPN.JO,Naspers Limited,Afrique du Sud,True,"capitalisation / chiffre d'affaires de 2,8 contre 47,2 chez Yahoo (erreur de devise probable) ; PER de 33,0 contre 6,4 chez Yahoo"
-NSIS-B.CO,Novonesis Novozymes B,Danemark,True,"capitalisation / chiffre d'affaires de 7,0 contre 52,2 chez Yahoo (erreur de devise probable)"
+NPN.JO,Naspers Limited,Afrique du Sud,True,"capitalisation / chiffre d'affaires de 2,8 contre 47,2 chez Yahoo (erreur de devise probable) ; PER de 32,9 contre 6,4 chez Yahoo"
+NS8U.SI,Hutchison Port Holdings Trust,Singapour,True,"capitalisation / chiffre d'affaires de 1,2 contre 0,1 chez Yahoo (erreur de devise probable)"
+NSIS-B.CO,Novonesis Novozymes B,Danemark,True,"capitalisation / chiffre d'affaires de 6,9 contre 52,2 chez Yahoo (erreur de devise probable)"
 NTES,Netease Inc,Chine,True,"capitalisation / chiffre d'affaires de 4,3 contre 0,7 chez Yahoo (erreur de devise probable)"
 NTN.L,Northern 3 VCT,Japon,True,pas de cotation depuis le 24/09/2026
 NUEVAPOLAR.SN,Empresas La Polar S.A.,Chili,True,cours manquant
-NVMI.TA,Nova Measuring Instruments Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 10,5 contre 32,6 chez Yahoo (erreur de devise probable)"
-NVPT.TA,"Navitas Petroleum, Limited Partnership",Israël,True,"capitalisation / chiffre d'affaires de 5,6 contre 17,6 chez Yahoo (erreur de devise probable)"
-NWMD.TA,NewMed Energy - Limited Partnership,Israël,True,"capitalisation / chiffre d'affaires de 7,2 contre 22,5 chez Yahoo (erreur de devise probable)"
+NVMI.TA,Nova Measuring Instruments Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 10,6 contre 32,6 chez Yahoo (erreur de devise probable)"
+NVPT.TA,"Navitas Petroleum, Limited Partnership",Israël,True,"capitalisation / chiffre d'affaires de 5,7 contre 17,6 chez Yahoo (erreur de devise probable)"
+NWMD.TA,NewMed Energy - Limited Partnership,Israël,True,"capitalisation / chiffre d'affaires de 7,4 contre 22,5 chez Yahoo (erreur de devise probable)"
 NWR-R.BK,Nawarat Patanakarn Public Company Limited,Thaïlande,True,pas de cotation depuis le 19/05/2025
-NXSN.TA,Next Vision Stabilized Systems,Israël,True,"capitalisation / chiffre d'affaires de 22,6 contre 70,2 chez Yahoo (erreur de devise probable) ; PER prévu de 19,2 contre 5972,5 chez Yahoo"
+NXSN.TA,Next Vision Stabilized Systems,Israël,True,"capitalisation / chiffre d'affaires de 22,5 contre 70,2 chez Yahoo (erreur de devise probable) ; PER prévu de 19,1 contre 5972,5 chez Yahoo"
+NYAX.TA,Nayax,Israël,True,"capitalisation / chiffre d'affaires de 4,1 contre 12,9 chez Yahoo (erreur de devise probable) ; PER de 72,9 contre 227,0 chez Yahoo"
 NYM.F,Nymox Pharmaceutical Corporation,Bahamas,True,cours manquant
+ODF.OL,Odfjell SE,Norvège,True,"capitalisation / chiffre d'affaires de 0,9 contre 8,3 chez Yahoo (erreur de devise probable)"
 ODL.OL,Odfjell Drilling Ltd.,Royaume-Uni,True,"capitalisation / chiffre d'affaires de 2,5 contre 23,4 chez Yahoo (erreur de devise probable)"
-OPCE.TA,OPC Energy Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 6,9 contre 21,4 chez Yahoo (erreur de devise probable)"
+OKEA.OL,OKEA Asa,Norvège,True,"capitalisation / chiffre d'affaires de 0,6 contre 5,5 chez Yahoo (erreur de devise probable)"
+OPCE.TA,OPC Energy Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 7,0 contre 21,4 chez Yahoo (erreur de devise probable)"
+OPG.WA,Cpi Fim S.a.,Luxembourg,True,"capitalisation / chiffre d'affaires de 8,7 contre 38,1 chez Yahoo (erreur de devise probable)"
 ORBIA.MX,"Orbia Advance Corporation, S.A.B. de C.V.",Mexique,True,"capitalisation / chiffre d'affaires de 0,3 contre 5,4 chez Yahoo (erreur de devise probable)"
 ORIANA.NS,Oriana Power Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
+ORL.TA,Oil Refineries Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 0,3 contre 0,8 chez Yahoo (erreur de devise probable)"
 OSA.MI,OSAI Automation System SpA,Italie,True,pas de cotation depuis le 05/06/2025
 OSKU.F,"Japan Exchange Group, Inc.",Japon,True,"capitalisation / chiffre d'affaires de 10,0 contre 0,1 chez Yahoo (erreur de devise probable)"
 OTV.VI,Ottakringer Getranke AG,Autriche,True,cours manquant
+PAC.L,Pacific Assets Trust,Mexique,True,pas de cotation depuis le 16/09/2026
 PAGS,PagSeguro Digital Ltd.,Brésil,True,"capitalisation / chiffre d'affaires de 0,8 contre 0,2 chez Yahoo (erreur de devise probable)"
-PAN.JO,Pan African Resources PLC,Afrique du Sud,True,"capitalisation / chiffre d'affaires de 2,6 contre 44,1 chez Yahoo (erreur de devise probable)"
+PAN.JO,Pan African Resources PLC,Afrique du Sud,True,"capitalisation / chiffre d'affaires de 2,7 contre 44,1 chez Yahoo (erreur de devise probable)"
 PAR.AX,Paradigm Biopharmaceuticals Limited,Australie,True,pas de cotation depuis le 18/09/2026
 PAYP,PayPay Corporation American Depository Shares,Japon,True,"capitalisation / chiffre d'affaires de 4,0 contre 0,0 chez Yahoo (erreur de devise probable)"
+PCBT.TA,P.C.B. Technologies Ltd,Israël,True,"capitalisation / chiffre d'affaires de 1,8 contre 5,6 chez Yahoo (erreur de devise probable)"
 PCCL.NS,Petro Carbon & Chemicals Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
-PCO.WA,Pepco Group NV,Pologne,True,"capitalisation / chiffre d'affaires de 1,3 contre 5,7 chez Yahoo (erreur de devise probable) ; PER prévu de 14,5 contre 114,8 chez Yahoo"
+PCO.WA,Pepco Group NV,Pologne,True,"capitalisation / chiffre d'affaires de 1,3 contre 5,7 chez Yahoo (erreur de devise probable) ; PER prévu de 14,6 contre 114,8 chez Yahoo"
 PCOK,"Pacific Oak Strategic Opportunity REIT, Inc.",États-Unis,True,pas de cotation depuis le 04/05/2026
+PCT.SI,PC Partner Group Limited,Singapour,True,"capitalisation / chiffre d'affaires de 0,4 contre 0,1 chez Yahoo (erreur de devise probable)"
 PDD,PDD Holdings Inc.,Irlande,True,"capitalisation / chiffre d'affaires de 1,7 contre 0,2 chez Yahoo (erreur de devise probable)"
 PE&OLES.MX,"Industrias Penoles, S.A.B. de C.V.",Mexique,True,"capitalisation / chiffre d'affaires de 1,6 contre 29,4 chez Yahoo (erreur de devise probable)"
 PEAB3.SA,Companhia de Participacoes Alianca da Bahia,Brésil,True,pas de cotation depuis le 07/10/2026
+PEHUENCHE.SN,Empresa Electrica Pehuenche S.A.,Chili,True,"capitalisation / chiffre d'affaires de 9,2 contre 9159,4 chez Yahoo (erreur de devise probable)"
+PEN.OL,Panoro Energy ASA,Norvège,True,"capitalisation / chiffre d'affaires de 2,7 contre 25,6 chez Yahoo (erreur de devise probable)"
 PENN.MX,"Penn National Gaming, Inc.",États-Unis,True,"pas de cotation depuis le 01/07/2026 ; capitalisation / chiffre d'affaires de 0,4 contre 6,6 chez Yahoo (erreur de devise probable)"
+PERI.TA,Perion Network Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 0,8 contre 2,5 chez Yahoo (erreur de devise probable)"
+PEXIP.OL,Pexip Holding ASA,Norvège,True,"capitalisation / chiffre d'affaires de 5,9 contre 55,2 chez Yahoo (erreur de devise probable)"
 PF.BK,Property Perfect Public Company Limited,Thaïlande,True,pas de cotation depuis le 14/08/2026
-PGEO.JK,PT Pertamina Geothermal Energy Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 5,1 contre 91539,3 chez Yahoo (erreur de devise probable)"
+PFSE.DE,PFISTERER Holding SE,Allemagne,True,pas de cotation depuis le 07/10/2026
+PGAS.JK,PT Perusahaan Gas Negara Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 0,4 contre 8093,0 chez Yahoo (erreur de devise probable)"
+PGEO.JK,PT Pertamina Geothermal Energy Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 5,0 contre 91539,3 chez Yahoo (erreur de devise probable)"
 PHI,PLDT Inc.,Philippines,True,"capitalisation / chiffre d'affaires de 1,2 contre 0,0 chez Yahoo (erreur de devise probable)"
+PICS,PicS N.V.,Brésil,True,"capitalisation / chiffre d'affaires de 0,7 contre 0,1 chez Yahoo (erreur de devise probable)"
+PINE.L,Pinewood Technologies Group PLC,Royaume-Uni,True,pas de cotation depuis le 08/10/2026
 PLAIS.AT,Plaisio Computers S.A.,Grèce,True,cours manquant
 PLATIND.NS,Platinum Industries Limited,Inde,True,capitalisation incohérente avec le cours et le nombre d'actions
+PLSV.OL,Paratus Energy Services Ltd.,Bermudes,True,"capitalisation / chiffre d'affaires de 5,5 contre 51,5 chez Yahoo (erreur de devise probable)"
 PLWN,Pinelawn Cemetery,États-Unis,True,pas de cotation depuis le 05/02/2026
 POLL.JK,PT Pollux Properties Indonesia Tbk,Indonésie,True,pas de cotation depuis le 01/07/2024
+POWR.JK,PT Cikarang Listrindo Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 1,4 contre 25900,2 chez Yahoo (erreur de devise probable)"
 PPWLM,PacifiCorp,États-Unis,True,cours manquant
+PRDM.TA,Prodalim Investments Ltd,Israël,True,"capitalisation / chiffre d'affaires de 1,3 contre 4,0 chez Yahoo (erreur de devise probable)"
 PRIZOR.NS,Prizor Viztech Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
 PROV.NS,Proventus Agrocom Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
+PRTC.TA,Priortech Ltd,Israël,True,"capitalisation / chiffre d'affaires de 27,1 contre 85,0 chez Yahoo (erreur de devise probable)"
+PSAB.JK,PT J Resources Asia Pasifik Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 2,0 contre 36810,6 chez Yahoo (erreur de devise probable)"
+PSRU,Valiant Eagle Inc.,États-Unis,True,pas de cotation depuis le 30/09/2026
 PTPP.JK,PT PP (Persero) Tbk,Indonésie,True,pas de cotation depuis le 02/10/2026
 PTRO.JK,PT Petrosea Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 1,6 contre 29068,4 chez Yahoo (erreur de devise probable)"
 PTTEP.BK,PTT Exploration and Production Public Company Limited,Thaïlande,True,"capitalisation / chiffre d'affaires de 2,0 contre 67,5 chez Yahoo (erreur de devise probable)"
+PUCOBRE.SN,Sociedad Punta del Cobre S.A.,Chili,True,"capitalisation / chiffre d'affaires de 3,7 contre 3632,3 chez Yahoo (erreur de devise probable)"
 QAGR11.SA,Quasar Agro - Fundo De Investimento Imobiliario,Brésil,True,cours manquant
+QES.SI,China Sunsine Chemical Holdings Ltd.,Singapour,True,"capitalisation / chiffre d'affaires de 0,8 contre 0,2 chez Yahoo (erreur de devise probable)"
+QFIN,"Qfin Holdings, Inc.",Chine,True,"capitalisation / chiffre d'affaires de 0,3 contre 0,0 chez Yahoo (erreur de devise probable)"
+QLTU.TA,Qualitau Ltd,Israël,True,"capitalisation / chiffre d'affaires de 6,6 contre 20,6 chez Yahoo (erreur de devise probable)"
 QNBFL.IS,QNB Finans Finansal Kiralama AS,Turquie,True,cours manquant
+QNS.SI,Southern Alliance Mining Ltd.,Malaisie,True,"capitalisation / chiffre d'affaires de 3,4 contre 1,1 chez Yahoo (erreur de devise probable)"
+RAJA.JK,PT Rukun Raharja Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 2,1 contre 36918,2 chez Yahoo (erreur de devise probable) ; PER prévu de 16,4 contre 295000,0 chez Yahoo"
+RATI.TA,Ratio Energies - Limited Partnership,Israël,True,"capitalisation / chiffre d'affaires de 6,6 contre 20,4 chez Yahoo (erreur de devise probable)"
 RBRF11.SA,Fundo Investimento Imobiliario Rbr Alpha Fundos De Fundos,Brésil,True,pas de cotation depuis le 02/10/2025
 REMUS.NS,Remus Pharmaceuticals Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
+RERE,ATRenew Inc.,Chine,True,"capitalisation / chiffre d'affaires de 0,2 contre 0,0 chez Yahoo (erreur de devise probable)"
 RH.MX,RH,États-Unis,True,"pas de cotation depuis le 01/10/2026 ; capitalisation / chiffre d'affaires de 0,6 contre 12,1 chez Yahoo (erreur de devise probable)"
 RLX,RLX Technology Inc.,Chine,True,"capitalisation / chiffre d'affaires de 2,9 contre 0,4 chez Yahoo (erreur de devise probable)"
 RNW,ReNew Energy Global plc,Royaume-Uni,True,"capitalisation / chiffre d'affaires de 1,7 contre 0,0 chez Yahoo (erreur de devise probable)"
 ROCK-A.CO,ROCKWOOL International A/S,Danemark,True,"capitalisation / chiffre d'affaires de 1,4 contre 10,5 chez Yahoo (erreur de devise probable)"
 ROH-R.BK,Royal Orchid Hotel (Thailand) Public Company Limited,Thaïlande,True,pas de cotation depuis le 04/06/2025
+ROMA,Roma Green Finance Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 295,3 contre 37,6 chez Yahoo (erreur de devise probable)"
 RPAD3.SA,Alfa Holdings S.A.,Brésil,True,pas de cotation depuis le 09/10/2026
+RPOL.TA,RP Optical Lab,Israël,True,"capitalisation / chiffre d'affaires de 16,0 contre 49,5 chez Yahoo (erreur de devise probable)"
 RTX.MX,Raytheon Technologies Corporation,États-Unis,True,"capitalisation / chiffre d'affaires de 2,7 contre 50,6 chez Yahoo (erreur de devise probable)"
 S6MA.F,"Seven & i Holdings Co., Ltd.",Japon,True,"capitalisation / chiffre d'affaires de 0,5 contre 0,0 chez Yahoo (erreur de devise probable)"
 SAAKSHI.NS,Saakshi Medtech & Panels Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
 SAB1L.VS,AB Siauliu Bankas,Lituanie,True,cours manquant
-SAR.L,Sareum Holdings plc,Royaume-Uni,True,pas de cotation depuis le 07/10/2026
+SAP.JO,Sappi Ltd.,Afrique du Sud,True,"capitalisation / chiffre d'affaires de 0,1 contre 1,3 chez Yahoo (erreur de devise probable)"
 SAVE.L,Savannah Energy PLC,Royaume-Uni,True,pas de cotation depuis le 30/06/2026
 SBOX,QuantumKore Inc.,États-Unis,True,cours manquant
 SCPJ,Scope Industries,États-Unis,True,pas de cotation depuis le 05/02/2026
 SDR.L,Schroders plc,Royaume-Uni,True,pas de cotation depuis le 01/10/2026
+SEA1.OL,Sea1 Offshore Inc.,Norvège,True,"capitalisation / chiffre d'affaires de 1,5 contre 14,4 chez Yahoo (erreur de devise probable)"
 SEB-C.ST,Skandinaviska Enskilda Banken AB Class C,Suède,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,1 contre 5,4 chez Yahoo (erreur de devise probable)"
 SEQUA.BR,Sequana Medical NV,Belgique,True,pas de cotation depuis le 28/04/2026
 SGR-U.TO,Slate Grocery REIT,Canada,True,capitalisation incohérente avec le cours et le nombre d'actions
 SHG.F,Sun Hung Kai Properties Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 3,2 contre 0,4 chez Yahoo (erreur de devise probable)"
+SHIP.JK,PT Sillo Maritime Perdana Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 1,6 contre 28685,7 chez Yahoo (erreur de devise probable)"
+SIFY,Sify Technologies Limited,Inde,True,"capitalisation / chiffre d'affaires de 1,7 contre 0,0 chez Yahoo (erreur de devise probable)"
 SIPD.JK,PT Sreeya Sewu Indonesia Tbk,Indonésie,True,capitalisation incohérente avec le cours et le nombre d'actions
+SK.SN,Sigdo Koppers S.A.,Chili,True,"capitalisation / chiffre d'affaires de 0,4 contre 393,2 chez Yahoo (erreur de devise probable)"
 SKM,"SK Telecom Co.,Ltd",Corée du Sud,True,"capitalisation / chiffre d'affaires de 0,9 contre 0,0 chez Yahoo (erreur de devise probable)"
 SLB.BA,Schlumberger Limited,États-Unis,True,"capitalisation / chiffre d'affaires de 0,3 contre 390,5 chez Yahoo (erreur de devise probable)"
 SLE.L,San Leon Energy plc,Irlande,True,cours manquant
 SLMNP,LyondellBasell Advanced Polymers Inc.,États-Unis,True,pas de cotation depuis le 05/02/2026
 SMCB.JK,PT Solusi Bangun Indonesia Tbk,Indonésie,True,pas de cotation depuis le 30/01/2025
+SMDR.JK,PT Samudera Indonesia Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 0,4 contre 7447,2 chez Yahoo (erreur de devise probable)"
 SMFG,"Sumitomo Mitsui Financial Group, Inc.",Japon,True,"capitalisation / chiffre d'affaires de 5,0 contre 0,0 chez Yahoo (erreur de devise probable) ; PER prévu de 21,8 contre 58,0 chez Yahoo"
 SMMA.JK,PT Sinar Mas Multiartha Tbk,Indonésie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,1 contre 3,9 chez Yahoo (erreur de devise probable)"
+SMMT.JK,PT Golden Eagle Energy Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 5,3 contre 95775,8 chez Yahoo (erreur de devise probable)"
 SMO1.F,"Sumitomo Electric Industries, Ltd.",Japon,True,"capitalisation / chiffre d'affaires de 1,0 contre 0,0 chez Yahoo (erreur de devise probable)"
+SMOP.OL,Smartoptics Group AS,Norvège,True,"capitalisation / chiffre d'affaires de 4,9 contre 46,9 chez Yahoo (erreur de devise probable)"
+SMSAAM.SN,Sociedad Matriz SAAM S.A.,Chili,True,"capitalisation / chiffre d'affaires de 1,9 contre 1857,9 chez Yahoo (erreur de devise probable) ; PER prévu de 12,7 contre 26,9 chez Yahoo"
+SMSH.TA,Smart Shooter Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 8,0 contre 24,4 chez Yahoo (erreur de devise probable)"
+SNR.L,Senior Plc,Royaume-Uni,True,pas de cotation depuis le 07/10/2026
 SO7.F,Nan Hai Corporation Limited,Chine,True,cours manquant
+SOFF.OL,Solstad Offshore ASA,Norvège,True,"capitalisation / chiffre d'affaires de 2,5 contre 23,0 chez Yahoo (erreur de devise probable)"
+SOFW.TA,SofWave Medical Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 3,9 contre 12,1 chez Yahoo (erreur de devise probable)"
 SPEL.PA,Fonciere Volta,France,True,pas de cotation depuis le 06/10/2026
+SPH.WA,Sopharma AD,Bulgarie,True,"capitalisation / chiffre d'affaires de 1,2 contre 5,5 chez Yahoo (erreur de devise probable)"
 SQM-B.SN,Sociedad Quimica y Minera de Chile S.A.,Chili,True,"capitalisation / chiffre d'affaires de 2,4 contre 2417,4 chez Yahoo (erreur de devise probable)"
 STK.AX,Strickland Metals Limited,Australie,True,cours en dehors de sa fourchette sur un an
 STNE,StoneCo Ltd.,Brésil,True,"capitalisation / chiffre d'affaires de 1,0 contre 0,2 chez Yahoo (erreur de devise probable)"
 SUBC.OL,Subsea 7 S.A.,Luxembourg,True,"capitalisation / chiffre d'affaires de 1,3 contre 12,6 chez Yahoo (erreur de devise probable)"
 SUPR.JK,PT Solusi Tunas Pratama Tbk,Indonésie,True,pas de cotation depuis le 14/04/2025
+SVN.IC,Sildarvinnslan Hf.,Islande,True,"capitalisation / chiffre d'affaires de 4,2 contre 565,5 chez Yahoo (erreur de devise probable)"
 SWIOU,"Southwest Iowa Renewable Energy, LLC",États-Unis,True,pas de cotation depuis le 03/01/2025
 T14.SI,Tianjin Zhong Xin Pharmaceutical Group Corporation Limited,Chine,True,"capitalisation / chiffre d'affaires de 4,7 contre 0,7 chez Yahoo (erreur de devise probable) ; rendement de 27 % jugé exceptionnel"
 TAC.NS,TAC Infosec Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
@@ -464,50 +658,68 @@ TAVHL.IS,TAV Havalimanlari Holding A.S.,Turquie,True,"capitalisation / chiffre d
 TBBB,BBB Foods Inc.,Mexique,True,"capitalisation / chiffre d'affaires de 1,4 contre 0,1 chez Yahoo (erreur de devise probable)"
 TCOM,Trip.com Group Limited,Chine,True,"capitalisation / chiffre d'affaires de 2,5 contre 0,4 chez Yahoo (erreur de devise probable) ; PER de 52,2 contre 8,0 chez Yahoo"
 TECK-A.TO,Teck Resources Ltd,Canada,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 2,9 chez Yahoo (erreur de devise probable)"
+TEKNA.OL,Tekna Holding AS,Norvège,True,"capitalisation / chiffre d'affaires de 5,5 contre 35,9 chez Yahoo (erreur de devise probable)"
 TEL2-A.ST,Tele2 AB (publ),Suède,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 3,6 chez Yahoo (erreur de devise probable)"
 TENERGY.AT,Terna Energy Societe Anonyme Commercial Technical Company,Grèce,True,cours manquant
-TEVA.TA,Teva Pharmaceutical Industries Limited,Israël,True,"capitalisation / chiffre d'affaires de 2,7 contre 8,3 chez Yahoo (erreur de devise probable)"
+TEVA.TA,Teva Pharmaceutical Industries Limited,Israël,True,"capitalisation / chiffre d'affaires de 2,6 contre 8,3 chez Yahoo (erreur de devise probable)"
 TGS.OL,TGS ASA,Norvège,True,"capitalisation / chiffre d'affaires de 2,1 contre 19,8 chez Yahoo (erreur de devise probable) ; PER de 4,2 contre 39,2 chez Yahoo"
 THYAO.IS,Turk Hava Yollari Anonim Ortakligi,Turquie,True,"capitalisation / chiffre d'affaires de 0,3 contre 13,5 chez Yahoo (erreur de devise probable)"
+TJGC,TJGC Group Limited,Hong Kong,True,"capitalisation / chiffre d'affaires de 88,0 contre 11,2 chez Yahoo (erreur de devise probable)"
+TKIM.JK,PT Pabrik Kertas Tjiwi Kimia Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 1,1 contre 19782,6 chez Yahoo (erreur de devise probable)"
+TLSY.TA,Telsys Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 5,2 contre 16,1 chez Yahoo (erreur de devise probable)"
 TME,Tencent Music Entertainment Group,Chine,True,"capitalisation / chiffre d'affaires de 2,7 contre 0,4 chez Yahoo (erreur de devise probable)"
 TMI.L,Taylor Maritime Investments Limited,Guernesey,True,capitalisation incohérente avec le cours et le nombre d'actions
+TMRP.TA,Tamar Petroleum Ltd,Israël,True,"capitalisation / chiffre d'affaires de 3,0 contre 9,4 chez Yahoo (erreur de devise probable)"
 TOM.OL,Tomra Systems ASA,Norvège,True,"capitalisation / chiffre d'affaires de 1,8 contre 18,8 chez Yahoo (erreur de devise probable)"
-TPIA.JK,PT. Chandra Asri Petrochemical Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 0,8 contre 13671,0 chez Yahoo (erreur de devise probable) ; PER prévu de 11,1 contre 92,2 chez Yahoo"
+TPGM.TA,TopGum Industries Ltd.,Israël,True,"capitalisation / chiffre d'affaires de 3,1 contre 9,6 chez Yahoo (erreur de devise probable)"
+TPIA.JK,PT. Chandra Asri Petrochemical Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 0,7 contre 13671,0 chez Yahoo (erreur de devise probable) ; PER prévu de 10,7 contre 92,2 chez Yahoo"
 TPRP,Tower Properties Company,États-Unis,True,pas de cotation depuis le 07/10/2026
 TPX-A.TO,Molson Coors Canada Inc.,Canada,True,"capitalisation incohérente avec le cours et le nombre d'actions ; pas de cotation depuis le 29/09/2026 ; capitalisation / chiffre d'affaires de 0,1 contre 5,4 chez Yahoo (erreur de devise probable)"
 TR-R.BK,Thai Rayon Public Company Limited,Thaïlande,True,pas de cotation depuis le 02/09/2025
 TR7.F,Triton International Limited,Bermudes,True,cours manquant
+TROAX.ST,Troax Group AB (publ),Suède,True,"capitalisation / chiffre d'affaires de 2,7 contre 30,2 chez Yahoo (erreur de devise probable) ; PER de 29,3 contre 323,2 chez Yahoo"
+TRPZ.TA,Turpaz Industries Ltd,Israël,True,"capitalisation / chiffre d'affaires de 6,5 contre 20,2 chez Yahoo (erreur de devise probable)"
 TSEM.TA,Tower Semiconductor Ltd,Israël,True,"capitalisation / chiffre d'affaires de 11,2 contre 34,8 chez Yahoo (erreur de devise probable)"
 TTCL-R.BK,TTCL Public Company Limited,Thaïlande,True,pas de cotation depuis le 20/05/2026
 U-U.TO,Sprott Physical Uranium Trust USD (U.U),Canada,True,capitalisation incohérente avec le cours et le nombre d'actions
+U9E.SI,China Everbright Water Ltd.,Chine,True,"capitalisation / chiffre d'affaires de 0,8 contre 0,1 chez Yahoo (erreur de devise probable)"
 UBS.MC,"Urbas Grupo Financiero, S.A.",Espagne,True,pas de cotation depuis le 30/04/2025
+UNIC.JK,PT Unggul Indah Cahaya Tbk,Indonésie,True,"capitalisation / chiffre d'affaires de 0,7 contre 12854,3 chez Yahoo (erreur de devise probable)"
 UNPA,UNB Corp.,États-Unis,True,pas de cotation depuis le 05/02/2026
 V3S.F,Vectron Systems AG,Allemagne,True,pas de cotation depuis le 30/09/2024
 VAR.OL,Vår Energi AS,Norvège,True,"capitalisation / chiffre d'affaires de 1,3 contre 12,1 chez Yahoo (erreur de devise probable)"
 VENTANAS.SN,Puerto Ventanas S.A.,Chili,True,pas de cotation depuis le 07/10/2026
 VESTA.MX,Corporacion Inmobiliaria Vesta S.A.B. de C.V.,Mexique,True,"capitalisation / chiffre d'affaires de 10,8 contre 202,1 chez Yahoo (erreur de devise probable)"
 VILAS.NS,Vilas Transcore Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
+VIMIAN.ST,Vimian Group AB,Suède,True,"capitalisation / chiffre d'affaires de 4,1 contre 45,4 chez Yahoo (erreur de devise probable)"
+VINP,Vinci Partners Investments Ltd.,Brésil,True,"capitalisation / chiffre d'affaires de 3,6 contre 0,7 chez Yahoo (erreur de devise probable)"
 VINSYS.NS,Vinsys IT Services India Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
 VINYAS.NS,Vinyas Innovative Technologies Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
 VIS.AT,VIS Containers Manufacturing Co. Ltd,Grèce,True,cours manquant
-VISTAA.MX,"Vista Oil & Gas, S.A.B. de C.V.",Mexique,True,"capitalisation / chiffre d'affaires de 2,3 contre 43,9 chez Yahoo (erreur de devise probable)"
+VISTAA.MX,"Vista Oil & Gas, S.A.B. de C.V.",Mexique,True,"capitalisation / chiffre d'affaires de 2,4 contre 43,9 chez Yahoo (erreur de devise probable)"
 VLTFF,Volta Finance Limited,États-Unis,True,pas de cotation depuis le 06/04/2026
 VMARCIND.NS,V-Marc India Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
+VNET,"VNET Group, Inc.",Chine,True,"capitalisation / chiffre d'affaires de 0,7 contre 0,1 chez Yahoo (erreur de devise probable)"
+VOLARA.MX,"Controladora Vuela Compania de Aviacion, S.A.B. de C.V.",Mexique,True,"capitalisation / chiffre d'affaires de 0,2 contre 3,7 chez Yahoo (erreur de devise probable)"
 VOLCAN.SN,Compania Industrial El Volcan S.A.,Chili,True,pas de cotation depuis le 13/03/2026
-VPLAY-A.ST,Viaplay Group AB (publ),Suède,True,capitalisation incohérente avec le cours et le nombre d'actions
+VPLAY-A.ST,Viaplay Group AB (publ),Suède,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 0,5 chez Yahoo (erreur de devise probable)"
 VSPT.SN,Vina San Pedro Tarapaca S.A.,Chili,True,pas de cotation depuis le 28/09/2026
 VWS.CO,Vestas Wind Systems A/S,Danemark,True,"capitalisation / chiffre d'affaires de 1,2 contre 8,9 chez Yahoo (erreur de devise probable)"
-WAWI.OL,Wallenius Wilhelmsen ASA,Norvège,True,"capitalisation / chiffre d'affaires de 1,5 contre 14,1 chez Yahoo (erreur de devise probable)"
+WAWI.OL,Wallenius Wilhelmsen ASA,Norvège,True,"capitalisation / chiffre d'affaires de 1,6 contre 14,1 chez Yahoo (erreur de devise probable)"
 WBBW,"Westbury Bancorp, Inc.",États-Unis,True,pas de cotation depuis le 05/02/2026
 WCRS,"Western Capital Resources, Inc.",États-Unis,True,pas de cotation depuis le 05/02/2026
+WDH,Waterdrop Inc.,Chine,True,"capitalisation / chiffre d'affaires de 0,5 contre 0,1 chez Yahoo (erreur de devise probable)"
 WENC,West Enclave Merger Corp.,Mexique,True,pas de cotation depuis le 05/10/2026
 WMTC.BA,Walmart Inc,États-Unis,True,cours en dehors de sa fourchette sur un an
-WTBFA,W.T.B. Financial Corporation,États-Unis,True,capitalisation incohérente avec le cours et le nombre d'actions
-WWI.OL,Wilh. Wilhelmsen Holding ASA,Norvège,True,"capitalisation / chiffre d'affaires de 3,0 contre 27,9 chez Yahoo (erreur de devise probable)"
+WRD,WeRide Inc.,Chine,True,"capitalisation / chiffre d'affaires de 11,0 contre 1,7 chez Yahoo (erreur de devise probable)"
+WTBFA,W.T.B. Financial Corporation,États-Unis,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 3,5 chez Yahoo (erreur de devise probable)"
+WWI.OL,Wilh. Wilhelmsen Holding ASA,Norvège,True,"capitalisation / chiffre d'affaires de 3,1 contre 27,9 chez Yahoo (erreur de devise probable)"
+XJB.SI,"G.H.Y Culture & Media Holding Co., Limited",Singapour,True,"capitalisation / chiffre d'affaires de 0,7 contre 0,1 chez Yahoo (erreur de devise probable)"
 XP,XP Inc. Class A,Brésil,True,"capitalisation / chiffre d'affaires de 4,1 contre 0,8 chez Yahoo (erreur de devise probable)"
 XPEV,XPeng Inc.,Chine,True,"capitalisation / chiffre d'affaires de 0,8 contre 0,1 chez Yahoo (erreur de devise probable)"
 Y92.SI,Thai Beverage Public Company Limited,Thaïlande,True,"capitalisation / chiffre d'affaires de 0,9 contre 0,0 chez Yahoo (erreur de devise probable)"
 YAR.OL,Yara International ASA,Norvège,True,"capitalisation / chiffre d'affaires de 0,7 contre 6,1 chez Yahoo (erreur de devise probable)"
+YB,Yuanbao Inc.,Chine,True,"capitalisation / chiffre d'affaires de 0,7 contre 0,1 chez Yahoo (erreur de devise probable)"
 YEIS.MC,"Elaia Investment Spain Socimi, S.A.",Espagne,True,pas de cotation depuis le 11/09/2026
 YENT.MC,"Entrecampos Cuatro, Socimi, S.A.",Espagne,True,pas de cotation depuis le 27/08/2026
 YGMP.MC,"GMP Property SOCIMI, S.A.",Espagne,True,pas de cotation depuis le 09/10/2026
@@ -517,181 +729,424 @@ YORS.MC,"Optimum RE Spain, SOCIMI, S.A.",Espagne,True,cours manquant
 YRM.MI,Rosetti Marino SpA,Italie,True,pas de cotation depuis le 30/09/2026
 YSIL.MC,"Silicius Real Estate SOCIMI, S.A.",Espagne,True,pas de cotation depuis le 19/08/2026
 YVRS.MC,"Elix Vintage Residencial SOCIMI, S.A.",Espagne,True,cours manquant
+Z25.SI,Yanlord Land Group Limited,Singapour,True,"capitalisation / chiffre d'affaires de 0,4 contre 0,1 chez Yahoo (erreur de devise probable) ; PER prévu de 11,3 contre 80,0 chez Yahoo"
+ZH,Zhihu Inc.,Chine,True,"capitalisation / chiffre d'affaires de 0,7 contre 0,1 chez Yahoo (erreur de devise probable)"
 ZTECH.NS,Z-Tech (India) Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
-000012.SZ,"CSG Holding Co., Ltd.",Chine,False,"PER prévu de 25,6 contre 7,0 chez Yahoo"
-000031.SZ,"Grandjoy Holdings Group Co., Ltd.",Chine,False,"PER prévu de 30,7 contre 8,0 chez Yahoo"
-000034.SZ,"Digital China Group Co., Ltd.",Chine,False,"PER prévu de 22,4 contre 8,4 chez Yahoo"
-000037.SZ,"Shenzhen Nanshan Power Co., Ltd.",Chine,False,"PER de 70,2 contre 24,6 chez Yahoo"
+000012.SZ,"CSG Holding Co., Ltd.",Chine,False,"PER prévu de 25,5 contre 7,0 chez Yahoo"
+000031.SZ,"Grandjoy Holdings Group Co., Ltd.",Chine,False,"PER prévu de 30,9 contre 8,0 chez Yahoo"
+000034.SZ,"Digital China Group Co., Ltd.",Chine,False,"PER prévu de 22,5 contre 8,4 chez Yahoo"
+000037.SZ,"Shenzhen Nanshan Power Co., Ltd.",Chine,False,"PER de 70,1 contre 24,6 chez Yahoo"
 000050.SZ,"Tianma Microelectronics Co., Ltd.",Chine,False,"PER prévu de 28,2 contre 65,7 chez Yahoo"
 000088.SZ,"Shenzhen Yan Tian Port Holdings Co.,Ltd.",Chine,False,"PER de 84,5 contre 16,0 chez Yahoo"
-000401.SZ,"Tangshan Jidong Cement Co.,Ltd.",Chine,False,"PER prévu de 70,6 contre 7,7 chez Yahoo"
+000401.SZ,"Tangshan Jidong Cement Co.,Ltd.",Chine,False,"PER prévu de 70,8 contre 7,7 chez Yahoo"
 000403.SZ,"Pacific Shuanglin Bio-pharmacy Co., LTD",Chine,False,"PER prévu de 22,3 contre 9,2 chez Yahoo"
-000408.SZ,Zangge Holding Company Limited,Chine,False,"PER de 32,7 contre 15,0 chez Yahoo"
+000408.SZ,Zangge Holding Company Limited,Chine,False,"PER de 32,5 contre 15,0 chez Yahoo"
 000521.SZ,"Changhong Meiling Co., Ltd.",Chine,False,"PER prévu de 10,0 contre 4,7 chez Yahoo"
 000530.SZ,"Bingshan Refrigeration & Heat Transfer Technologies Co., Ltd.",Chine,False,"PER prévu de 57,2 contre 24,5 chez Yahoo"
 000531.SZ,Guangzhou Hengyun Enterprises Holding Ltd,Chine,False,"PER de 83,9 contre 16,3 chez Yahoo"
-0006.HK,Power Assets Holdings Limited,Hong Kong,False,"PER de 262,5 contre 7,4 chez Yahoo"
+0006.HK,Power Assets Holdings Limited,Hong Kong,False,"PER de 262,3 contre 7,4 chez Yahoo"
 000620.SZ,"Macrolink Culturaltainment Development Co., Ltd.",Chine,False,"PER prévu de 39,9 contre 5,6 chez Yahoo"
 000623.SZ,"Jilin Aodong Pharmaceutical Group Co., Ltd.",Chine,False,"PER de 58,6 contre 6,3 chez Yahoo"
 000625.SZ,Chongqing Changan Automobile Company Limited,Chine,False,"PER prévu de 17,8 contre 7,7 chez Yahoo"
-000636.SZ,"Guangdong Fenghua Advanced Technology (Holding) Co., Ltd.",Chine,False,"PER prévu de 35,0 contre 71,8 chez Yahoo"
+000636.SZ,"Guangdong Fenghua Advanced Technology (Holding) Co., Ltd.",Chine,False,"PER prévu de 35,1 contre 71,8 chez Yahoo"
 000656.SZ,"Jinke Property Group Co., Ltd.",Chine,False,"PER de 3,9 contre 0,3 chez Yahoo"
-000661.SZ,Changchun High & New Technology Industry (Group) Inc.,Chine,False,"PER prévu de 22,9 contre 6,7 chez Yahoo"
+000661.SZ,Changchun High & New Technology Industry (Group) Inc.,Chine,False,"PER prévu de 23,0 contre 6,7 chez Yahoo"
 000668.SZ,"Rongfeng Holding Group Co.,Ltd.",Chine,False,"PER de 470,3 contre 85,1 chez Yahoo"
 000685.SZ,"Zhongshan Public Utilities Group Co.,Ltd.",Chine,False,"PER prévu de 5,8 contre 12,8 chez Yahoo"
-000713.SZ,"Hefei Fengle Seed Co., Ltd",Chine,False,"PER de 1128,7 contre 50,5 chez Yahoo"
-000723.SZ,"Shanxi Meijin Energy Co., Ltd.",Chine,False,"PER prévu de 23,9 contre 11,5 chez Yahoo"
-000738.SZ,"Aecc Aero-Engine Control Co.,Ltd.",Chine,False,"PER prévu de 61,6 contre 25,5 chez Yahoo"
+000713.SZ,"Hefei Fengle Seed Co., Ltd",Chine,False,"PER de 1132,8 contre 50,5 chez Yahoo"
+000723.SZ,"Shanxi Meijin Energy Co., Ltd.",Chine,False,"PER prévu de 23,8 contre 11,5 chez Yahoo"
+000738.SZ,"Aecc Aero-Engine Control Co.,Ltd.",Chine,False,"PER prévu de 61,7 contre 25,5 chez Yahoo"
 000783.SZ,Changjiang Securities Company Limited,Chine,False,"PER prévu de 8,4 contre 22,1 chez Yahoo"
 000789.SZ,"Jiangxi Wannianqing Cement Co., Ltd.",Chine,False,"PER prévu de 57,1 contre 13,8 chez Yahoo"
-0008.HK,PCCW Limited,Hong Kong,False,"PER prévu de 35,0 contre 162,0 chez Yahoo"
+0008.HK,PCCW Limited,Hong Kong,False,"PER prévu de 35,2 contre 162,0 chez Yahoo"
 000803.SZ,Shandong High Speed Renewable Energy Group Limited,Chine,False,"PER prévu de 13,5 contre 5,8 chez Yahoo"
 000860.SZ,"Beijing Shunxin Agriculture Co.,Ltd",Chine,False,"PER prévu de 47,5 contre 14,6 chez Yahoo"
-000862.SZ,"Ning Xia Yin Xing Energy Co.,Ltd",Chine,False,"PER prévu de 16,4 contre 5,6 chez Yahoo"
-000930.SZ,"COFCO Biotechnology Co., Ltd.",Chine,False,"PER prévu de 61,0 contre 8,4 chez Yahoo"
+000862.SZ,"Ning Xia Yin Xing Energy Co.,Ltd",Chine,False,"PER prévu de 16,3 contre 5,6 chez Yahoo"
+000930.SZ,"COFCO Biotechnology Co., Ltd.",Chine,False,"PER prévu de 61,1 contre 8,4 chez Yahoo"
 000937.SZ,"Jizhong Energy Resources Co., Ltd.",Chine,False,"PER prévu de 14,6 contre 4,1 chez Yahoo"
 000949.SZ,"Xinxiang Chemical Fiber Co., Ltd.",Chine,False,"PER prévu de 9,6 contre 3,6 chez Yahoo"
 000966.SZ,"Guodian Changyuan Electric Power Co., Ltd.",Chine,False,"PER prévu de 22,6 contre 8,9 chez Yahoo"
-002157.SZ,Jiangxi Zhengbang Technology Co.Ltd.,Chine,False,"PER prévu de 17,8 contre 47,7 chez Yahoo"
-002266.SZ,"Zhefu Holding Group Co., Ltd.",Chine,False,"PER prévu de 8,4 contre 17,5 chez Yahoo"
+001322.SZ,"Arrow Home Group Co., Ltd.",Chine,False,"PER prévu de 69,8 contre 16,5 chez Yahoo"
+002036.SZ,"LianChuang Electronic Technology Co., Ltd.",Chine,False,"PER prévu de 285,0 contre 35,6 chez Yahoo"
+002079.SZ,"Suzhou Good-Ark Electronics Co., Ltd.",Chine,False,"PER prévu de 38,3 contre 18,7 chez Yahoo"
+002127.SZ,"NanJi E-Commerce Co., Ltd.",Chine,False,"PER prévu de 20,7 contre 41,4 chez Yahoo"
+002157.SZ,Jiangxi Zhengbang Technology Co.Ltd.,Chine,False,"PER prévu de 17,9 contre 47,7 chez Yahoo"
+002177.SZ,"Guangzhou Kingteller Technology Co.,Ltd.",Chine,False,"PER de 1230,0 contre 271,5 chez Yahoo"
+002182.SZ,"Baowu Magnesium Technology Co., Ltd.",Chine,False,"PER prévu de 32,6 contre 11,4 chez Yahoo"
+002212.SZ,Topsec Technologies Group Inc.,Chine,False,"PER prévu de 61,7 contre 28,8 chez Yahoo"
+002266.SZ,"Zhefu Holding Group Co., Ltd.",Chine,False,"PER prévu de 8,5 contre 17,5 chez Yahoo"
+002284.SZ,"Zhejiang Asia-Pacific Mechanical & Electronic Co.,Ltd",Chine,False,"PER prévu de 8,2 contre 27,5 chez Yahoo"
+002344.SZ,"Haining China Leather Market Co.,Ltd",Chine,False,"PER prévu de 51,5 contre 24,1 chez Yahoo"
+002346.SZ,"Shanghai Zhezhong Group Co., Ltd.",Chine,False,"PER de 27,1 contre 10,7 chez Yahoo"
+002357.SZ,"Sichuan Fulin Transportation Group Co., Ltd.",Chine,False,"PER de 837,5 contre 9,2 chez Yahoo"
+002368.SZ,Taiji Computer Corporation Limited,Chine,False,"PER prévu de 52,7 contre 20,5 chez Yahoo"
 002407.SZ,"Do-Fluoride New Materials Co., Ltd.",Chine,False,"PER prévu de 24,1 contre 179,4 chez Yahoo"
-002456.SZ,"OFILM Group Co., Ltd.",Chine,False,"PER prévu de 57,8 contre 23,6 chez Yahoo"
-002611.SZ,"Guangdong Dongfang Precision Science & Technology Co., Ltd.",Chine,False,"PER de 17,3 contre 4,0 chez Yahoo"
+002456.SZ,"OFILM Group Co., Ltd.",Chine,False,"PER prévu de 57,9 contre 23,6 chez Yahoo"
+002510.SZ,"Tianjin Motor Dies Co., Ltd.",Chine,False,"PER de 356,9 contre 114,0 chez Yahoo"
+002543.SZ,"Guangdong Vanward New Electric Co., Ltd.",Chine,False,"PER prévu de 19,1 contre 8,1 chez Yahoo"
+002611.SZ,"Guangdong Dongfang Precision Science & Technology Co., Ltd.",Chine,False,"PER de 17,4 contre 4,0 chez Yahoo"
+002614.SZ,"Xiamen Comfort Science&Technology Group Co., Ltd",Chine,False,"PER prévu de 99,0 contre 37,7 chez Yahoo"
+002637.SZ,"Zanyu Technology Group Co., Ltd.",Chine,False,"PER prévu de 6,3 contre 14,1 chez Yahoo"
+002677.SZ,"Zhejiang Meida Industrial Co., Ltd.",Chine,False,"PER prévu de 100,5 contre 40,2 chez Yahoo"
+002707.SZ,"UTour Group Co., Ltd.",Chine,False,"PER prévu de 61,8 contre 24,7 chez Yahoo"
+002741.SZ,"Guangdong Guanghua Sci-Tech Co., Ltd.",Chine,False,"PER prévu de 23,5 contre 137,2 chez Yahoo"
+002778.SZ,"Jiangsu Gaoke Petrochemical Co., Ltd",Chine,False,"PER de 228,5 contre 110,2 chez Yahoo"
+002780.SZ,"Beijing Sanfo Outdoor Products Co., Ltd",Chine,False,"PER prévu de 14,6 contre 61,8 chez Yahoo"
+002790.SZ,"Xiamen R&T Plumbing Technology Co., Ltd.",Chine,False,"PER prévu de 99,3 contre 10,5 chez Yahoo"
+002791.SZ,"Guangdong KinLong Hardware Products Co.,Ltd.",Chine,False,"PER prévu de 54,0 contre 19,3 chez Yahoo"
 002841.SZ,Guangzhou Shiyuan Electronic Technology Company Limited,Chine,False,"PER prévu de 11,2 contre 22,6 chez Yahoo"
+002858.SZ,"Shanghai Lisheng Racing Co.,Ltd.",Chine,False,"PER prévu de 45,8 contre 19,3 chez Yahoo"
+002870.SZ,Guangdong Senssun Weighing Apparatus Group Ltd.,Chine,False,"PER prévu de 50,6 contre 16,2 chez Yahoo"
+002918.SZ,"Monalisa Group CO.,Ltd",Chine,False,"PER prévu de 22,9 contre 7,6 chez Yahoo"
+002960.SZ,"Jade Bird Fire Co., Ltd.",Chine,False,"PER prévu de 18,5 contre 9,1 chez Yahoo"
 0138.KL,Zetrix AI Berhad,Malaisie,False,rendement de 42 % jugé exceptionnel
+0156.HK,Lippo China Resources Limited,Hong Kong,False,"PER de 15,6 contre 7,0 chez Yahoo"
+0259.HK,Yeebo (International Holdings) Limited,Hong Kong,False,"PER de 22,6 contre 1,1 chez Yahoo"
 035810.KQ,"EASY HOLDINGS Co., Ltd.",Corée du Sud,False,rendement de 31 % jugé exceptionnel
 0382.HK,Edvantage Group Holdings Limited,Chine,False,rendement de 36 % jugé exceptionnel
-1038.HK,CK Infrastructure Holdings Limited,Hong Kong,False,"PER de 93,8 contre 6,9 chez Yahoo"
+0618.HK,Peking University Resources (Holdings) Company Limited,Hong Kong,False,"PER de 1,2 contre 0,4 chez Yahoo"
+0623.HK,Golden Bridge Group Holdings Limited,Chine,False,"PER de 17,0 contre 2,0 chez Yahoo"
+0809.HK,Global Bio-chem Technology Group Company Limited,Hong Kong,False,"PER de 11,5 contre 3,3 chez Yahoo"
+0934.HK,Sinopec Kantons Holdings Limited,Hong Kong,False,"PER de 45,9 contre 11,2 chez Yahoo"
+0OHC.L,Groupe Gorge SA,France,False,"PER de 109,8 contre 46,8 chez Yahoo"
+1038.HK,CK Infrastructure Holdings Limited,Hong Kong,False,"PER de 93,7 contre 6,9 chez Yahoo"
+1061.HK,Essex Bio-Technology Limited,Chine,False,"PER prévu de 3,4 contre 7,7 chez Yahoo"
+1103.TW,Chia Hsin Cement Corp,Taïwan,False,"PER de 20,7 contre 9,6 chez Yahoo"
 1114.HK,Brilliance China Automotive Holdings Limited,Hong Kong,False,rendement de 29 % jugé exceptionnel
+11B.WA,11 bit studios S.A.,Pologne,False,"PER prévu de 6,6 contre 2,2 chez Yahoo"
+1221.HK,Sino Hotels (Holdings) Limited,Hong Kong,False,"PER de 188,5 contre 17,7 chez Yahoo"
+1310.HK,HKBN Ltd.,Hong Kong,False,"PER prévu de 10,4 contre 22,4 chez Yahoo"
+1414.T,"SHO-BOND Holdings Co.,Ltd.",Japon,False,"PER prévu de 16,4 contre 4,1 chez Yahoo"
+1414.TW,Tung Ho Steel Enterprise Corp,Taïwan,False,"PER de 88,5 contre 32,1 chez Yahoo"
+1416.TW,Kwong Fong Industries Corporation,Taïwan,False,"PER de 25,0 contre 11,3 chez Yahoo"
+1419.TW,"Shinkong Textile Co.,Ltd.",Taïwan,False,"PER de 16,2 contre 4,6 chez Yahoo"
+1439.TW,Ascent Development Co Ltd,Taïwan,False,"PER de 173,8 contre 9,2 chez Yahoo"
+1459.TW,"Lan Fa Textile Co.,Ltd.",Taïwan,False,"PER de 16,6 contre 6,8 chez Yahoo"
+1540.TW,"Roundtop Machinery Industries Co., Ltd.",Taïwan,False,"PER de 175,5 contre 15,3 chez Yahoo"
+1713.TW,Cathay Chemical Works Inc.,Taïwan,False,"PER de 197,8 contre 9,5 chez Yahoo"
+1720.T,"Tokyu Construction Co., Ltd.",Japon,False,"PER prévu de 7,7 contre 20,0 chez Yahoo"
 1801.T,Taisei Corporation,Japon,False,"PER prévu de 11,2 contre 23,9 chez Yahoo"
 1803.T,Shimizu Corporation,Japon,False,"PER prévu de 10,6 contre 25,3 chez Yahoo"
+1809.TW,"China Glaze Co.,Ltd.",Taïwan,False,"PER prévu de 40,5 contre 470,0 chez Yahoo"
+1810.SR,Seera Holding Group,Arabie saoudite,False,"PER prévu de 26,5 contre 11,9 chez Yahoo"
+1810.TW,Hocheng Corporation,Taïwan,False,"PER de 12,5 contre 6,2 chez Yahoo"
+1861.T,"Kumagai Gumi Co.,Ltd.",Japon,False,"PER prévu de 8,7 contre 3,3 chez Yahoo"
 1878.T,"Daito Trust Construction Co.,Ltd.",Japon,False,"PER prévu de 9,8 contre 2,3 chez Yahoo"
 1893.T,"Penta-Ocean Construction Co., Ltd.",Japon,False,"PER prévu de 9,1 contre 19,5 chez Yahoo"
 1911.T,"Sumitomo Forestry Co., Ltd.",Japon,False,"PER prévu de 7,9 contre 2,1 chez Yahoo"
+1926.T,"Raito Kogyo Co., Ltd.",Japon,False,"PER prévu de 11,7 contre 4,6 chez Yahoo"
+1934.T,Yurtec Corporation,Japon,False,"PER prévu de 10,7 contre 22,6 chez Yahoo"
 1942.T,"Kandenko Co.,Ltd.",Japon,False,"PER prévu de 13,1 contre 30,3 chez Yahoo"
 1944.T,Kinden Corporation,Japon,False,"PER prévu de 13,1 contre 31,7 chez Yahoo"
-2010.SR,Saudi Basic Industries Corporation,Arabie saoudite,False,"PER prévu de 24,4 contre 11,7 chez Yahoo"
-2020.OL,2020 Bulkers Ltd.,Bermudes,False,rendement de 124 % jugé exceptionnel
+1945.T,Tokyo Energy & Systems Inc.,Japon,False,"PER prévu de 10,8 contre 31,1 chez Yahoo"
+1968.T,"Taihei Dengyo Kaisha, Ltd.",Japon,False,"PER prévu de 11,8 contre 4,8 chez Yahoo"
+2010.SR,Saudi Basic Industries Corporation,Arabie saoudite,False,"PER prévu de 25,5 contre 11,7 chez Yahoo"
+2060.SR,National Industrialization Company,Arabie saoudite,False,"PER prévu de 36,0 contre 7,2 chez Yahoo"
+2124.T,"JAC Recruitment Co., Ltd.",Japon,False,"PER prévu de 15,7 contre 7,7 chez Yahoo"
 2139.HK,"Bank of Gansu Co., Ltd.",Chine,False,rendement de 57 % jugé exceptionnel
+2146.T,UT Group Co Ltd,Japon,False,"PER prévu de 18,4 contre 0,8 chez Yahoo"
+2150.SR,The National Company for Glass Industries,Arabie saoudite,False,"PER de 94,2 contre 10,1 chez Yahoo"
+2160.T,GNI Group Ltd.,Japon,False,"PER prévu de 81,1 contre 14,8 chez Yahoo"
 2180.HK,ManpowerGroup Greater China Limited,Chine,False,rendement de 44 % jugé exceptionnel
-2250.SR,Saudi Industrial Investment Group,Arabie saoudite,False,"PER prévu de 21,0 contre 9,7 chez Yahoo"
+2200.SR,Arabian Pipes Company,Arabie saoudite,False,"PER prévu de 8,3 contre 0,4 chez Yahoo"
+2216.T,Kanro Inc.,Japon,False,"PER prévu de 13,4 contre 4,9 chez Yahoo"
+2250.SR,Saudi Industrial Investment Group,Arabie saoudite,False,"PER prévu de 21,3 contre 9,7 chez Yahoo"
 2264.T,"Morinaga Milk Industry Co., Ltd.",Japon,False,"PER prévu de 13,3 contre 4,4 chez Yahoo"
 2282.T,NH Foods Ltd.,Japon,False,"PER prévu de 13,6 contre 6,2 chez Yahoo"
-2310.SR,Sahara International Petrochemical Company,Arabie saoudite,False,"PER prévu de 21,8 contre 6,4 chez Yahoo"
+2310.SR,Sahara International Petrochemical Company,Arabie saoudite,False,"PER prévu de 22,2 contre 6,4 chez Yahoo"
+2320.SR,Al-Babtain Power and Telecommunication Co.,Arabie saoudite,False,"PER prévu de 4,4 contre 13,2 chez Yahoo"
+2323.TW,CMC Magnetics Corporation,Taïwan,False,"PER de 8,2 contre 3,5 chez Yahoo"
+2379.T,dip Corporation,Japon,False,"PER prévu de 25,9 contre 7,5 chez Yahoo"
+2442.TW,"Jean Co.,Ltd",Taïwan,False,"PER de 6,4 contre 2,9 chez Yahoo"
+2469.T,Hibino Corporation,Japon,False,"PER prévu de 11,0 contre 4,4 chez Yahoo"
 2474.TW,"Catcher Technology Co., Ltd.",Taïwan,False,"PER de 44,4 contre 14,4 chez Yahoo"
+2492.T,Infomart Corporation,Japon,False,"PER prévu de 49,8 contre 100,3 chez Yahoo"
 2501.T,Sapporo Holdings Limited,Japon,False,"PER de 496,8 contre 95,1 chez Yahoo"
+2505.TW,Kuo Yang Construction Co Ltd,Taïwan,False,"PER de 19,3 contre 9,1 chez Yahoo"
+2538.TW,KEE TAI Properties Co Ltd,Taïwan,False,"PER de 38,9 contre 14,7 chez Yahoo"
 2559.HK,Dida Inc.,Chine,False,rendement de 120 % jugé exceptionnel
 2579.T,Coca-Cola Bottlers Japan Holdings Inc.,Japon,False,"PER prévu de 21,2 contre 42,4 chez Yahoo"
+2602.T,"The Nisshin OilliO Group,Ltd.",Japon,False,"PER prévu de 14,7 contre 4,0 chez Yahoo"
+2695.T,"Kura Sushi,Inc.",Japon,False,"PER prévu de 44,3 contre 15,0 chez Yahoo"
+2704.TW,"The Ambassador Hotel,Ltd.",Taïwan,False,"PER de 65,9 contre 16,8 chez Yahoo"
+2752.T,Fujio Food Group Inc.,Japon,False,"PER prévu de 205,1 contre 51,0 chez Yahoo"
 285490.KQ,"NOVATECH Co., Ltd.",Corée du Sud,False,rendement de 26 % jugé exceptionnel
+2910.T,"Rock Field Co., Ltd.",Japon,False,"PER prévu de 98,3 contre 29,2 chez Yahoo"
+2915.TW,Ruentex Industries Limited,Taïwan,False,"PER de 227,3 contre 4,1 chez Yahoo"
+2929.T,Pharma Foods International Co Ltd,Japon,False,"PER prévu de 11,4 contre 4,3 chez Yahoo"
+2998.T,CREAL Inc.,Japon,False,"PER prévu de 5,7 contre 2,1 chez Yahoo"
+300026.SZ,"Tianjin Chase Sun Pharmaceutical Co.,Ltd",Chine,False,"PER prévu de 21,1 contre 7,7 chez Yahoo"
+300070.SZ,"Beijing Originwater Technology Co., Ltd.",Chine,False,"PER prévu de 33,2 contre 11,2 chez Yahoo"
+300072.SZ,"Beijing Haixin Energy Technology Co., Ltd.",Chine,False,"PER prévu de 53,4 contre 1,5 chez Yahoo"
+300125.SZ,"Lingda Group Co., Ltd.",Chine,False,"PER de 88,9 contre 12,9 chez Yahoo"
+300129.SZ,"Shanghai Taisheng Wind Power Equipment Co., Ltd.",Chine,False,"PER prévu de 19,9 contre 8,4 chez Yahoo"
 300142.SZ,"Walvax Biotechnology Co., Ltd.",Chine,False,"PER prévu de 139,6 contre 27,9 chez Yahoo"
+3002.T,Gunze Limited,Japon,False,"PER prévu de 20,0 contre 9,0 chez Yahoo"
 300223.SZ,"Ingenic Semiconductor Co.,Ltd.",Chine,False,"PER prévu de 15,0 contre 59,0 chez Yahoo"
-300253.SZ,"Winning Health Technology Group Co., Ltd.",Chine,False,"PER prévu de 91,6 contre 31,8 chez Yahoo"
+300253.SZ,"Winning Health Technology Group Co., Ltd.",Chine,False,"PER prévu de 91,5 contre 31,8 chez Yahoo"
+300315.SZ,"Ourpalm Co., Ltd.",Chine,False,"PER prévu de 87,6 contre 40,5 chez Yahoo"
+300369.SZ,"Nsfocus Information Technology Co., Ltd.",Chine,False,"PER prévu de 51,5 contre 148,1 chez Yahoo"
 300398.SZ,"Shanghai Phichem Material Co., Ltd.",Chine,False,"PER prévu de 22,3 contre 45,7 chez Yahoo"
-300418.SZ,"Beijing Kunlun Tech Co., Ltd.",Chine,False,"PER prévu de 122,4 contre 29,8 chez Yahoo"
+300410.SZ,"Guangdong Zhengye Technology Co., Ltd.",Chine,False,"PER prévu de 40,3 contre 4,1 chez Yahoo"
+300418.SZ,"Beijing Kunlun Tech Co., Ltd.",Chine,False,"PER prévu de 122,3 contre 29,8 chez Yahoo"
 300432.SZ,"Mianyang Fulin Precision Machining Co., Ltd.",Chine,False,"PER prévu de 6,3 contre 20,0 chez Yahoo"
+300434.SZ,Sichuan Goldstone Asia Pharmaceutical Inc.,Chine,False,"PER de 447,3 contre 30,8 chez Yahoo"
 300438.SZ,"Guangzhou Great Power Energy and Technology Co., Ltd",Chine,False,"PER prévu de 6,0 contre 43,9 chez Yahoo"
-300548.SZ,"Broadex Technologies Co., Ltd.",Chine,False,"PER prévu de 30,4 contre 220,0 chez Yahoo"
-300604.SZ,"Hangzhou Changchuan Technology Co.,Ltd",Chine,False,"PER prévu de 30,4 contre 135,9 chez Yahoo"
+300451.SZ,"B-SOFT Co.,Ltd.",Chine,False,"PER prévu de 184,0 contre 24,5 chez Yahoo"
+300497.SZ,"Jiangxi Fushine Pharmaceutical Co., Ltd.",Chine,False,"PER prévu de 7,9 contre 51,7 chez Yahoo"
+300548.SZ,"Broadex Technologies Co., Ltd.",Chine,False,"PER prévu de 30,3 contre 220,0 chez Yahoo"
+300604.SZ,"Hangzhou Changchuan Technology Co.,Ltd",Chine,False,"PER prévu de 30,3 contre 135,9 chez Yahoo"
+300631.SZ,"JiangSu JiuWu Hi-Tech Co., Ltd.",Chine,False,"PER prévu de 23,9 contre 8,6 chez Yahoo"
+300653.SZ,"Yantai Zhenghai Biotechnology Co., Ltd.",Chine,False,"PER prévu de 38,8 contre 13,2 chez Yahoo"
 300660.SZ,"Jiangsu Leili Motor Co., Ltd",Chine,False,"PER prévu de 40,8 contre 18,0 chez Yahoo"
-300666.SZ,"Konfoong Materials International Co., Ltd",Chine,False,"PER prévu de 40,0 contre 87,5 chez Yahoo"
-300672.SZ,"Hunan Goke Microelectronics Co.,Ltd.",Chine,False,"PER prévu de 49,9 contre 197,9 chez Yahoo"
+300666.SZ,"Konfoong Materials International Co., Ltd",Chine,False,"PER prévu de 39,9 contre 87,5 chez Yahoo"
+300672.SZ,"Hunan Goke Microelectronics Co.,Ltd.",Chine,False,"PER prévu de 49,8 contre 197,9 chez Yahoo"
 300676.SZ,"BGI Genomics Co., Ltd.",Chine,False,"PER prévu de 117,6 contre 249,8 chez Yahoo"
+300749.SZ,"Guangdong Topstrong Living Innovation and Integration Co., Ltd.",Chine,False,"PER de 117,1 contre 38,3 chez Yahoo"
+300809.SZ,"Hiecise Precision Equipment Co.,Ltd.",Chine,False,"PER de 114,3 contre 24,2 chez Yahoo"
+300841.SZ,"Chengdu Kanghua Biological Products Co., Ltd.",Chine,False,"PER prévu de 20,0 contre 8,0 chez Yahoo"
+300856.SZ,"Nanjing COSMOS Chemical Co., Ltd.",Chine,False,"PER prévu de 21,6 contre 9,2 chez Yahoo"
+300922.SZ,"Qinhuangdao Tianqin Equipment Manufacturing Co.,Ltd.",Chine,False,"PER de 6900,2 contre 71,3 chez Yahoo"
+300969.SZ,"NINGBO HENGSHUAI Co., LTD.",Chine,False,"PER prévu de 49,3 contre 19,6 chez Yahoo"
+301004.SZ,"Zhejiang Cayi Vacuum Container Co., Ltd.",Chine,False,"PER prévu de 10,1 contre 4,0 chez Yahoo"
+301120.SZ,"Newonder Special Electric Co.,Ltd",Chine,False,"PER prévu de 66,9 contre 26,5 chez Yahoo"
 301236.SZ,"iSoftStone Information Technology (Group) Co., Ltd.",Chine,False,"PER prévu de 71,8 contre 34,8 chez Yahoo"
+3016.TW,Episil-Precision Inc.,Taïwan,False,"PER prévu de 31,0 contre 92,9 chez Yahoo"
+3050.SR,Southern Province Cement Company,Arabie saoudite,False,"PER prévu de 20,3 contre 9,8 chez Yahoo"
+3054.TW,"LIWANLI Innovation Co., Ltd.",Taïwan,False,"PER de 25,3 contre 11,4 chez Yahoo"
 3092.T,"ZOZO, Inc.",Japon,False,"PER prévu de 20,2 contre 7,3 chez Yahoo"
+3176.T,"Sanyo Trading Co., Ltd.",Japon,False,"PER prévu de 12,2 contre 5,6 chez Yahoo"
+3182.T,Oisix ra daichi Inc.,Japon,False,"PER prévu de 11,0 contre 61,8 chez Yahoo"
+3193.T,"Eternal Hospitality Group Co.,Ltd.",Japon,False,"PER prévu de 18,6 contre 5,6 chez Yahoo"
+3196.T,"HOTLAND Co.,Ltd.",Japon,False,"PER prévu de 37,3 contre 17,0 chez Yahoo"
 3231.T,"Nomura Real Estate Holdings, Inc.",Japon,False,"PER prévu de 8,4 contre 2,0 chez Yahoo"
+3279.T,Activia Properties Inc.,Japon,False,"PER prévu de 18,2 contre 7,2 chez Yahoo"
 3283.T,"Nippon Prologis REIT, Inc.",Japon,False,"PER prévu de 26,5 contre 9,4 chez Yahoo"
+3346.TW,"Laster Tech Co., Ltd.",Taïwan,False,"PER prévu de 75,0 contre 26,6 chez Yahoo"
+3356.TW,GeoVision Inc.,Taïwan,False,"PER de 27,1 contre 4,4 chez Yahoo"
 338100.KS,"NH Prime REIT Co., Ltd.",Corée du Sud,False,rendement de 45 % jugé exceptionnel
 3387.T,create restaurants holdings inc.,Japon,False,"PER prévu de 58,9 contre 20,9 chez Yahoo"
 3389.HK,Hengdeli Holdings Limited,Hong Kong,False,rendement de 79 % jugé exceptionnel
 3391.T,Tsuruha Holdings Inc.,Japon,False,"PER prévu de 17,7 contre 3,6 chez Yahoo"
+3392.T,"Delica Foods Holdings Co.,Ltd.",Japon,False,"PER prévu de 6,7 contre 14,4 chez Yahoo"
 3401.T,Teijin Limited,Japon,False,"PER prévu de 15,5 contre 4,5 chez Yahoo"
+3418.T,"Balnibarbi Co.,Ltd.",Japon,False,"PER prévu de 30,3 contre 14,3 chez Yahoo"
+3443.T,"Kawada Technologies, Inc.",Japon,False,"PER prévu de 7,5 contre 3,1 chez Yahoo"
+3449.T,Technoflex Corporation,Japon,False,"PER prévu de 12,5 contre 36,7 chez Yahoo"
+3468.T,Star Asia Investment Corp,Japon,False,"PER de 31,4 contre 15,5 chez Yahoo"
+3491.T,"GA technologies Co., Ltd.",Japon,False,"PER prévu de 6,7 contre 16,4 chez Yahoo"
+3673.T,"Broadleaf Co., Ltd.",Japon,False,"PER prévu de 16,9 contre 46,7 chez Yahoo"
+3697.T,"SHIFT, Inc.",Japon,False,"PER prévu de 17,2 contre 1,5 chez Yahoo"
+3707.TWO,Episil Holding Inc.,Taïwan,False,"PER prévu de 14,8 contre 234,7 chez Yahoo"
+3765.T,Gungho Online Entertainment Inc.,Japon,False,"PER prévu de 29,3 contre 11,4 chez Yahoo"
+3778.T,SAKURA Internet Inc.,Japon,False,"PER prévu de 16,9 contre 39,4 chez Yahoo"
+3854.T,I'll Inc,Japon,False,"PER prévu de 14,7 contre 29,9 chez Yahoo"
+3891.T,Nippon Kodoshi Corporation,Japon,False,"PER prévu de 9,9 contre 25,0 chez Yahoo"
 3994.T,"Money Forward,Inc.",Japon,False,"PER prévu de 101,0 contre 936,7 chez Yahoo"
+4001.SR,Abdullah Al-Othaim Markets Company,Arabie saoudite,False,"PER prévu de 17,2 contre 8,1 chez Yahoo"
 4004.T,Resonac Holdings Corporation,Japon,False,"PER prévu de 14,1 contre 49,7 chez Yahoo"
+4150.SR,Arriyadh Development Co.,Arabie saoudite,False,"PER de 40,7 contre 9,3 chez Yahoo"
+4163.SR,Al-Dawaa Medical Services Company,Arabie saoudite,False,"PER prévu de 13,7 contre 6,7 chez Yahoo"
 4183.T,Mitsui Chemicals,Japon,False,"PER prévu de 11,2 contre 4,6 chez Yahoo"
 4186.T,"Tokyo Ohka Kogyo Co., Ltd.",Japon,False,"PER prévu de 17,3 contre 38,6 chez Yahoo"
+4210.SR,Saudi Research and Media Group,Arabie saoudite,False,"PER prévu de 232,2 contre 3,8 chez Yahoo"
+4259.T,ExaWizards Inc.,Japon,False,"PER prévu de 42,8 contre 231,6 chez Yahoo"
+4343.T,"Aeon Fantasy Co., Ltd.",Japon,False,"PER prévu de 10,8 contre 24,9 chez Yahoo"
+4373.T,"Simplex Holdings,Inc.",Japon,False,"PER prévu de 18,9 contre 8,2 chez Yahoo"
 4385.T,"Mercari, Inc.",Japon,False,"PER prévu de 13,1 contre 34,5 chez Yahoo"
+4419.T,Finatext Holdings Ltd.,Japon,False,"PER prévu de 19,8 contre 78,4 chez Yahoo"
+4443.T,"Sansan, Inc.",Japon,False,"PER prévu de 21,1 contre 60,8 chez Yahoo"
+4461.T,DKS Co. Ltd.,Japon,False,"PER prévu de 11,5 contre 35,5 chez Yahoo"
+4471.T,Sanyo Chemical Industries Ltd.,Japon,False,"PER prévu de 12,4 contre 5,4 chez Yahoo"
+4478.T,freee K.K.,Japon,False,"PER prévu de 40,8 contre 151,4 chez Yahoo"
 4503.T,Astellas Pharma Inc.,Japon,False,"PER prévu de 12,6 contre 33,8 chez Yahoo"
 4506.T,"Sumitomo Dainippon Pharma Co., Ltd.",Japon,False,"PER prévu de 8,3 contre 107,3 chez Yahoo"
+4552.T,"JCR Pharmaceuticals Co., Ltd.",Japon,False,"PER prévu de 143,3 contre 14,1 chez Yahoo"
+4569.T,"KYORIN Holdings, Inc.",Japon,False,"PER prévu de 40,2 contre 10,8 chez Yahoo"
+4641.T,Altech Corporation,Japon,False,"PER prévu de 13,4 contre 5,0 chez Yahoo"
 4676.T,"Fuji Media Holdings, Inc.",Japon,False,"PER prévu de 10,8 contre 24,5 chez Yahoo"
+4707.TWO,Pan Asia Chemical Co.,Taïwan,False,"PER de 53,7 contre 23,2 chez Yahoo"
+4736.TW,TaiDoc Technology Corporation,Taïwan,False,"PER de 11,5 contre 5,4 chez Yahoo"
+4776.T,"Cybozu, Inc.",Japon,False,"PER prévu de 16,1 contre 50,5 chez Yahoo"
 4812.T,Dentsu Soken Inc,Japon,False,"PER prévu de 25,9 contre 10,1 chez Yahoo"
+4825.T,Weathernews Inc.,Japon,False,"PER prévu de 18,0 contre 6,7 chez Yahoo"
+4828.T,Business Engineering Corporation,Japon,False,"PER prévu de 16,1 contre 5,5 chez Yahoo"
+4914.T,Takasago International Corporation,Japon,False,"PER prévu de 12,7 contre 5,6 chez Yahoo"
+4970.T,"Toyo Gosei Co.,Ltd.",Japon,False,"PER prévu de 11,4 contre 22,9 chez Yahoo"
+4972.T,"Soken Chemical & Engineering Co., Ltd.",Japon,False,"PER prévu de 15,1 contre 7,1 chez Yahoo"
+4977.TW,"PCL Technologies, Inc.",Îles Caïmans,False,"PER de 256,1 contre 49,8 chez Yahoo"
+4985.T,Earth Corporation,Japon,False,"PER prévu de 16,9 contre 34,4 chez Yahoo"
 5076.T,INFRONEER Holdings Inc,Japon,False,"PER prévu de 9,3 contre 24,7 chez Yahoo"
+5200.KL,UOA Development Bhd,Malaisie,False,"PER de 18,3 contre 9,1 chez Yahoo"
+5208.T,"Arisawa Mfg. Co., Ltd.",Japon,False,"PER prévu de 13,9 contre 29,1 chez Yahoo"
 5211.KL,Sunway Berhad,Malaisie,False,"PER de 9,3 contre 2,7 chez Yahoo"
+5232.T,"Sumitomo Osaka Cement Co., Ltd.",Japon,False,"PER prévu de 9,6 contre 3,6 chez Yahoo"
+5288.T,Asia Pile Holdings Corporation,Japon,False,"PER prévu de 6,6 contre 13,4 chez Yahoo"
+5384.T,Fujimi Incorporated,Japon,False,"PER prévu de 15,3 contre 6,2 chez Yahoo"
 5393.T,Nichias Corporation,Japon,False,"PER prévu de 15,3 contre 7,0 chez Yahoo"
 5401.T,Nippon Steel Corporation,Japon,False,"PER prévu de 9,3 contre 1,2 chez Yahoo"
+5423.T,"Tokyo Steel Manufacturing Co., Ltd.",Japon,False,"PER prévu de 18,9 contre 9,1 chez Yahoo"
 5444.T,"Yamato Kogyo Co., Ltd.",Japon,False,"PER de 34,1 contre 11,0 chez Yahoo"
 5463.T,Maruichi Steel Tube Ltd.,Japon,False,"PER prévu de 12,5 contre 6,2 chez Yahoo"
+5480.T,"Nippon Yakin Kogyo Co., Ltd.",Japon,False,"PER prévu de 10,8 contre 4,3 chez Yahoo"
+5482.T,Aichi Steel Corporation,Japon,False,"PER prévu de 15,3 contre 7,0 chez Yahoo"
 5706.T,"Mitsui Mining & Smelting Co., Ltd.",Japon,False,"PER prévu de 11,5 contre 3,4 chez Yahoo"
 5713.T,"Sumitomo Metal Mining Co.,Ltd.",Japon,False,"PER prévu de 8,8 contre 19,9 chez Yahoo"
 5714.T,"Dowa Holdings Co., Ltd.",Japon,False,"PER prévu de 7,3 contre 16,2 chez Yahoo"
+5715.T,Furukawa Co,Japon,False,"PER prévu de 13,3 contre 27,3 chez Yahoo"
+5726.T,"OSAKA Titanium Technologies Co., Ltd.",Japon,False,"PER prévu de 14,2 contre 5,7 chez Yahoo"
 5741.T,UACJ Corporation,Japon,False,"PER prévu de 7,8 contre 3,3 chez Yahoo"
 5805.T,"SWCC Showa Holdings Co., Ltd.",Japon,False,"PER prévu de 12,6 contre 5,2 chez Yahoo"
 5830.T,Iyogin Holdings Inc,Japon,False,"PER prévu de 8,8 contre 22,3 chez Yahoo"
 5831.T,Shizuoka Financial Group Inc,Japon,False,"PER prévu de 11,0 contre 23,3 chez Yahoo"
 5832.T,Chugin Financial Group Inc,Japon,False,"PER prévu de 9,8 contre 22,1 chez Yahoo"
 5844.T,Kyoto Financial Group Inc,Japon,False,"PER prévu de 13,3 contre 28,6 chez Yahoo"
-600064.SS,Nanjing Gaoke Company Limited,Chine,False,"PER de 28,5 contre 8,0 chez Yahoo"
-600110.SS,"Nuode Investment Co.,Ltd",Chine,False,"PER prévu de 25,3 contre 119,6 chez Yahoo"
-600208.SS,"Quzhou Xin'an Development Co.,Ltd. Class A",Chine,False,"PER prévu de 39,0 contre 8,8 chez Yahoo"
+5857.T,"ARE Holdings,Inc.",Japon,False,"PER prévu de 8,0 contre 17,3 chez Yahoo"
+600063.SS,"Anhui Wanwei Updated High-Tech Material Industry Co.,Ltd",Chine,False,"PER prévu de 11,6 contre 24,3 chez Yahoo"
+600064.SS,Nanjing Gaoke Company Limited,Chine,False,"PER de 28,6 contre 8,0 chez Yahoo"
+600110.SS,"Nuode Investment Co.,Ltd",Chine,False,"PER prévu de 25,2 contre 119,6 chez Yahoo"
+600123.SS,"Shanxi Lanhua Sci-Tech Venture Co.,Ltd",Chine,False,"PER prévu de 22,1 contre 5,7 chez Yahoo"
+600197.SS,"Xinjiang Yilite Industry Co.,Ltd",Chine,False,"PER prévu de 21,5 contre 10,5 chez Yahoo"
+600208.SS,"Quzhou Xin'an Development Co.,Ltd. Class A",Chine,False,"PER prévu de 38,9 contre 8,8 chez Yahoo"
+600266.SS,"Beijing Urban Construction Investment & Development Co., Ltd.",Chine,False,"PER prévu de 23,6 contre 6,9 chez Yahoo"
+600325.SS,"Huafa Industrial Co.,Ltd.Zhuhai",Chine,False,"PER prévu de 9,1 contre 3,7 chez Yahoo"
+600328.SS,"CNSIG Inner Mongolia Chemical Industry Co., Ltd.",Chine,False,"PER prévu de 111,4 contre 6,7 chez Yahoo"
 600372.SS,"AVIC Airborne Systems Co., Ltd.",Chine,False,"PER prévu de 44,5 contre 20,6 chez Yahoo"
-600390.SS,Minmetals Capital Company Limited,Chine,False,"PER prévu de 42,9 contre 7,3 chez Yahoo"
+600390.SS,Minmetals Capital Company Limited,Chine,False,"PER prévu de 43,0 contre 7,3 chez Yahoo"
 600392.SS,"Shenghe Resources Holding Co., Ltd",Chine,False,"PER prévu de 13,3 contre 30,7 chez Yahoo"
+600395.SS,"Guizhou Panjiang Refined Coal Co.,Ltd.",Chine,False,"PER prévu de 13,9 contre 95,8 chez Yahoo"
+600399.SS,"Fushun Special Steel Co.,LTD.",Chine,False,"PER prévu de 30,4 contre 12,2 chez Yahoo"
 600418.SS,"Anhui Jianghuai Automobile Group Corp.,Ltd.",Chine,False,"PER prévu de 14,7 contre 106,2 chez Yahoo"
+600422.SS,"KPC Pharmaceuticals, Inc.",Chine,False,"PER prévu de 26,9 contre 6,5 chez Yahoo"
 600435.SS,"North Navigation Control Technology Co.,Ltd.",Chine,False,"PER prévu de 126,1 contre 60,0 chez Yahoo"
+600446.SS,"Shenzhen Kingdom Sci-Tech Co., Ltd",Chine,False,"PER prévu de 73,1 contre 20,6 chez Yahoo"
 600499.SS,"Keda Industrial Group Co., Ltd.",Chine,False,"PER prévu de 5,3 contre 13,2 chez Yahoo"
-600515.SS,"Hainan Airport Infrastructure Co., Ltd",Chine,False,"PER prévu de 133,0 contre 33,1 chez Yahoo"
+600515.SS,"Hainan Airport Infrastructure Co., Ltd",Chine,False,"PER prévu de 132,5 contre 33,1 chez Yahoo"
 600521.SS,"Zhejiang Huahai Pharmaceutical Co., Ltd.",Chine,False,"PER prévu de 19,9 contre 50,7 chez Yahoo"
-600570.SS,Hundsun Technologies Inc.,Chine,False,"PER de 77,5 contre 31,6 chez Yahoo"
-600674.SS,"Sichuan Chuantou Energy Co.,Ltd.",Chine,False,"PER de 98,6 contre 17,4 chez Yahoo"
+600570.SS,Hundsun Technologies Inc.,Chine,False,"PER de 77,4 contre 31,6 chez Yahoo"
+600674.SS,"Sichuan Chuantou Energy Co.,Ltd.",Chine,False,"PER de 98,2 contre 17,4 chez Yahoo"
+600686.SS,"Xiamen King Long Motor Group Co., Ltd.",Chine,False,"PER prévu de 6,9 contre 15,4 chez Yahoo"
 600711.SS,"Chengtun Mining Group Co., Ltd.",Chine,False,"PER prévu de 5,7 contre 13,8 chez Yahoo"
+600740.SS,"Shanxi Coking Co., Ltd.",Chine,False,"PER prévu de 18,1 contre 5,6 chez Yahoo"
+600764.SS,China Marine Information Electronics Company Limited,Chine,False,"PER prévu de 80,1 contre 30,5 chez Yahoo"
 600765.SS,"AVIC Heavy Machinery Co., Ltd.",Chine,False,"PER prévu de 24,2 contre 10,4 chez Yahoo"
-600879.SS,China Aerospace Times Electronics Co. Ltd.,Chine,False,"PER prévu de 107,5 contre 49,7 chez Yahoo"
-600893.SS,"Aecc Aviation Power Co.,Ltd",Chine,False,"PER prévu de 124,9 contre 54,3 chez Yahoo"
+600790.SS,"Zhejiang China Light&Textile Industrial City Group Co.,Ltd",Chine,False,"PER de 108,0 contre 22,4 chez Yahoo"
+600821.SS,"NYOCOR Co., Ltd.",Chine,False,"PER prévu de 21,9 contre 8,5 chez Yahoo"
+600841.SS,Shanghai New Power Automotive Technology Company Limited,Chine,False,"PER de 7,5 contre 2,3 chez Yahoo"
+600854.SS,"Jiangsu chunlan refrigerating equipment stock co.,ltd.",Chine,False,"PER de 417,9 contre 21,4 chez Yahoo"
+600876.SS,Triumph New Energy Company Limited,Chine,False,"PER prévu de 349,5 contre 69,9 chez Yahoo"
+600879.SS,China Aerospace Times Electronics Co. Ltd.,Chine,False,"PER prévu de 107,7 contre 49,7 chez Yahoo"
+600893.SS,"Aecc Aviation Power Co.,Ltd",Chine,False,"PER prévu de 124,8 contre 54,3 chez Yahoo"
 600961.SS,"Zhuzhou Smelter Group Co.,Ltd.",Chine,False,"PER prévu de 6,4 contre 16,4 chez Yahoo"
 600968.SS,CNOOC Energy Technology & Services Limited,Chine,False,"PER prévu de 6,5 contre 14,1 chez Yahoo"
-600977.SS,"China Film Co.,Ltd.",Chine,False,"PER de 1125,5 contre 245,0 chez Yahoo"
-601016.SS,"CECEP Wind-power Corporation Co.,Ltd.",Chine,False,"PER prévu de 25,3 contre 11,7 chez Yahoo"
+600971.SS,"Anhui Hengyuan Coal-Electricity Group Co., Ltd.",Chine,False,"PER prévu de 25,5 contre 7,0 chez Yahoo"
+600977.SS,"China Film Co.,Ltd.",Chine,False,"PER de 1124,8 contre 245,0 chez Yahoo"
+600983.SS,"Whirlpool China Co., Ltd.",Chine,False,"PER prévu de 10,9 contre 740,0 chez Yahoo"
+600997.SS,"Kailuan Energy Chemical Co.,Ltd.",Chine,False,"PER prévu de 14,9 contre 4,3 chez Yahoo"
+601016.SS,"CECEP Wind-power Corporation Co.,Ltd.",Chine,False,"PER prévu de 25,2 contre 11,7 chez Yahoo"
 601233.SS,"Tongkun Group Co., Ltd.",Chine,False,"PER prévu de 6,8 contre 16,8 chez Yahoo"
-601360.SS,360 Security Technology Inc.,Chine,False,"PER prévu de 142,2 contre 869,0 chez Yahoo"
+601360.SS,360 Security Technology Inc.,Chine,False,"PER prévu de 141,9 contre 869,0 chez Yahoo"
 601611.SS,China Nuclear Engineering Corporation Limited,Chine,False,"PER prévu de 25,3 contre 11,3 chez Yahoo"
 601872.SS,"China Merchants Energy Shipping Co., Ltd.",Chine,False,"PER prévu de 8,7 contre 19,5 chez Yahoo"
 601901.SS,"Founder Securities Co., Ltd.",Chine,False,"PER prévu de 9,8 contre 19,9 chez Yahoo"
-601933.SS,"Yonghui Superstores Co., Ltd.",Chine,False,"PER prévu de 34,1 contre 98,0 chez Yahoo"
+601933.SS,"Yonghui Superstores Co., Ltd.",Chine,False,"PER prévu de 34,2 contre 98,0 chez Yahoo"
+603026.SS,"Shida Shinghwa Advanced Material Group Co., Ltd.",Chine,False,"PER prévu de 5,0 contre 40,2 chez Yahoo"
 603031.SS,"Anhui Anfu Battery Technology Co., Ltd.",Chine,False,"PER prévu de 17,0 contre 176,6 chez Yahoo"
+603033.SS,"Zhejiang Sanwei Rubber Item Co., Ltd.",Chine,False,"PER prévu de 69,4 contre 13,3 chez Yahoo"
+603060.SS,"China Building Material Test & Certification Group Co., Ltd.",Chine,False,"PER prévu de 27,7 contre 13,5 chez Yahoo"
+603076.SS,"Ningbo Lehui International Engineering Equipment Co.,Ltd",Chine,False,"PER prévu de 116,6 contre 7,4 chez Yahoo"
 603083.SS,"CIG ShangHai Co., Ltd.",Chine,False,"PER prévu de 5,2 contre 286,1 chez Yahoo"
-603127.SS,"Joinn Laboratories (China) Co.,Ltd.",Chine,False,"PER de 252,1 contre 34,7 chez Yahoo"
+603096.SS,Thinkingdom Media Group Ltd.,Chine,False,"PER prévu de 26,4 contre 13,0 chez Yahoo"
+603099.SS,"Changbai Mountain Tourism Co., Ltd.",Chine,False,"PER de 463,4 contre 74,2 chez Yahoo"
+603127.SS,"Joinn Laboratories (China) Co.,Ltd.",Chine,False,"PER de 252,3 contre 34,7 chez Yahoo"
+603200.SS,"Shanghai Emperor of Cleaning Hi-Tech Co., Ltd",Chine,False,"PER prévu de 15,9 contre 48,5 chez Yahoo"
+603208.SS,"Jiangshan Oupai Door Industry Co., Ltd",Chine,False,"PER prévu de 57,1 contre 5,1 chez Yahoo"
 603225.SS,"Xinfengming Group Co., Ltd.",Chine,False,"PER prévu de 8,2 contre 21,4 chez Yahoo"
-603228.SS,"Shenzhen Kinwong Electronic Co., Ltd.",Chine,False,"PER prévu de 14,7 contre 44,0 chez Yahoo"
-603688.SS,"Jiangsu Pacific Quartz Co., Ltd",Chine,False,"PER prévu de 36,8 contre 2,4 chez Yahoo"
+603228.SS,"Shenzhen Kinwong Electronic Co., Ltd.",Chine,False,"PER prévu de 14,6 contre 44,0 chez Yahoo"
+603279.SS,"Jingjin Environmental Protection Co.,Ltd.",Chine,False,"PER prévu de 12,0 contre 5,8 chez Yahoo"
+603688.SS,"Jiangsu Pacific Quartz Co., Ltd",Chine,False,"PER prévu de 36,7 contre 2,4 chez Yahoo"
 603733.SS,"Xianhe Co.,Ltd.",Chine,False,"PER prévu de 7,9 contre 17,5 chez Yahoo"
 603766.SS,"Loncin Motor Co., Ltd.",Chine,False,"PER prévu de 12,5 contre 26,8 chez Yahoo"
+603969.SS,"Silvery Dragon Group Co., Ltd. Tianjin",Chine,False,"PER prévu de 8,2 contre 18,2 chez Yahoo"
+605009.SS,"Hangzhou Haoyue Personal Care Co., Ltd",Chine,False,"PER prévu de 16,7 contre 8,0 chez Yahoo"
+605333.SS,"Kunshan Huguang Auto Harness Co.,Ltd.",Chine,False,"PER prévu de 19,1 contre 9,3 chez Yahoo"
 605376.SS,"Jiangsu Boqian New Materials Stock Co., Ltd.",Chine,False,"PER prévu de 31,3 contre 129,2 chez Yahoo"
+605598.SS,"Shanghai Geoharbour Construction Group Co., Ltd.",Chine,False,"PER prévu de 136,7 contre 25,3 chez Yahoo"
+6088.T,SIGMAXYZ Inc.,Japon,False,"PER prévu de 10,8 contre 5,3 chez Yahoo"
 6098.T,"Recruit Holdings Co., Ltd.",Japon,False,"PER prévu de 27,3 contre 63,0 chez Yahoo"
+6104.T,"Shibaura Machine Co.,Ltd.",Japon,False,"PER prévu de 20,4 contre 9,5 chez Yahoo"
 6134.T,Fuji Corporation,Japon,False,"PER prévu de 11,4 contre 31,7 chez Yahoo"
+6143.T,"Sodick Co., Ltd.",Japon,False,"PER prévu de 8,1 contre 62,6 chez Yahoo"
+6145.T,"Nittoku Co., Ltd.",Japon,False,"PER prévu de 11,5 contre 23,3 chez Yahoo"
+6196.T,"Strike Company,Limited",Japon,False,"PER prévu de 11,5 contre 4,0 chez Yahoo"
+6226.T,"Moriya Transportation Engineering and Manufacturing Co.,Ltd.",Japon,False,"PER prévu de 14,5 contre 30,5 chez Yahoo"
+6258.T,Hirata Corporation,Japon,False,"PER prévu de 11,4 contre 5,6 chez Yahoo"
 6268.T,Nabtesco Corporation,Japon,False,"PER prévu de 18,1 contre 38,4 chez Yahoo"
 6269.T,"MODEC, Inc.",Japon,False,"PER prévu de 8,4 contre 22,3 chez Yahoo"
+6278.T,Union Tool Co,Japon,False,"PER prévu de 14,3 contre 31,0 chez Yahoo"
+6309.T,"Tomoe Engineering Co., Ltd.",Japon,False,"PER prévu de 12,4 contre 5,1 chez Yahoo"
 6323.T,Rorze Corporation,Japon,False,"PER prévu de 12,0 contre 25,0 chez Yahoo"
+6332.T,"Tsukishima Kikai Co., Ltd.",Japon,False,"PER prévu de 10,1 contre 20,5 chez Yahoo"
+6349.T,Komori Corporation,Japon,False,"PER prévu de 12,8 contre 43,6 chez Yahoo"
 6368.T,Organo Corporation,Japon,False,"PER prévu de 14,3 contre 4,9 chez Yahoo"
+6376.T,"Nikkiso Co., Ltd.",Japon,False,"PER prévu de 11,0 contre 24,5 chez Yahoo"
+6379.T,RAIZNEXT Corporation,Japon,False,"PER prévu de 16,0 contre 7,7 chez Yahoo"
+6387.T,SAMCO Inc.,Japon,False,"PER prévu de 13,7 contre 32,1 chez Yahoo"
 6417.T,"Sankyo Co., Ltd.",Japon,False,"PER prévu de 10,2 contre 1477,3 chez Yahoo"
 6442.TW,EZconn Corporation,Taïwan,False,"PER prévu de 10,8 contre 750,0 chez Yahoo"
 6454.T,"Max Co., Ltd.",Japon,False,"PER prévu de 19,3 contre 7,8 chez Yahoo"
+6457.T,Glory Ltd.,Japon,False,"PER prévu de 12,0 contre 27,1 chez Yahoo"
+6458.T,Sinko Industries Ltd.,Japon,False,"PER prévu de 11,3 contre 3,4 chez Yahoo"
+6480.T,"Nippon Thompson Co., Ltd.",Japon,False,"PER prévu de 9,7 contre 22,5 chez Yahoo"
 6481.T,"THK Co., Ltd.",Japon,False,"PER prévu de 13,6 contre 28,2 chez Yahoo"
 6507.T,"Sinfonia Technology Co.,Ltd.",Japon,False,"PER prévu de 14,7 contre 29,9 chez Yahoo"
 6508.T,Meidensha Corporation,Japon,False,"PER prévu de 14,3 contre 31,9 chez Yahoo"
+6590.T,Shibaura Mechatronics Corporation,Japon,False,"PER prévu de 9,7 contre 4,1 chez Yahoo"
+6600.HK,"OneRobotics (Shenzhen) Co., Ltd.",Chine,False,"PER prévu de 160,0 contre 27,9 chez Yahoo"
+6617.T,"Takaoka Toko Co., Ltd.",Japon,False,"PER prévu de 8,8 contre 37,8 chez Yahoo"
 6622.T,DAIHEN Corporation,Japon,False,"PER prévu de 11,8 contre 3,4 chez Yahoo"
+6627.T,"Tera Probe, Inc.",Japon,False,"PER prévu de 9,5 contre 4,4 chez Yahoo"
+6638.T,"Mimaki Engineering Co., Ltd.",Japon,False,"PER prévu de 7,5 contre 15,8 chez Yahoo"
+6640.TWO,"Gallant Micro. Machining Co., LTD.",Taïwan,False,"PER prévu de 25,3 contre 72,3 chez Yahoo"
+6676.T,Buffalo Inc.,Japon,False,"PER prévu de 10,9 contre 33,5 chez Yahoo"
 6701.T,NEC Corporation,Japon,False,"PER prévu de 20,4 contre 7,5 chez Yahoo"
+6707.T,"Sanken Electric Co., Ltd.",Japon,False,"PER prévu de 40,0 contre 1,8 chez Yahoo"
+6736.T,Sun Corporation,Japon,False,"PER de 147,2 contre 22,9 chez Yahoo"
+6741.T,"Nippon Signal Co., Ltd.",Japon,False,"PER prévu de 9,6 contre 21,1 chez Yahoo"
+6742.T,"Kyosan Electric Manufacturing Co., Ltd.",Japon,False,"PER prévu de 8,2 contre 17,9 chez Yahoo"
 6754.T,Anritsu Corporation,Japon,False,"PER prévu de 17,5 contre 37,9 chez Yahoo"
+6768.T,Tamura Corporation,Japon,False,"PER prévu de 9,7 contre 19,6 chez Yahoo"
+6777.T,Santec Corporation,Japon,False,"PER prévu de 17,9 contre 39,7 chez Yahoo"
 6787.T,"Meiko Electronics Co., Ltd.",Japon,False,"PER prévu de 11,6 contre 29,5 chez Yahoo"
+6794.T,"Foster Electric Company, Limited",Japon,False,"PER prévu de 13,7 contre 28,5 chez Yahoo"
+6814.T,"Furuno Electric Co., Ltd.",Japon,False,"PER prévu de 12,6 contre 33,1 chez Yahoo"
 6857.T,Advantest Corporation,Japon,False,"PER prévu de 25,5 contre 130,7 chez Yahoo"
 6871.T,"Micronics Japan Co., Ltd.",Japon,False,"PER prévu de 16,5 contre 50,2 chez Yahoo"
-688048.SS,Suzhou Everbright Photonics,Chine,False,"PER prévu de 163,7 contre 943,2 chez Yahoo"
-688266.SS,"Suzhou Zelgen Biopharmaceuticals Co., Ltd.",Chine,False,"PER de 196,4 contre 49,9 chez Yahoo"
+6875.T,MegaChips Corporation,Japon,False,"PER de 96,8 contre 17,3 chez Yahoo"
+688032.SS,Hoymiles Power Electronics Inc.,Chine,False,"PER prévu de 26,2 contre 11,1 chez Yahoo"
+688048.SS,Suzhou Everbright Photonics,Chine,False,"PER prévu de 163,6 contre 943,2 chez Yahoo"
+688063.SS,"Pylon Technologies Co., Ltd.",Chine,False,"PER prévu de 16,6 contre 63,4 chez Yahoo"
+688186.SS,"Zhangjiagang Guangda Special Material Co., Ltd.",Chine,False,"PER prévu de 12,1 contre 5,6 chez Yahoo"
+688266.SS,"Suzhou Zelgen Biopharmaceuticals Co., Ltd.",Chine,False,"PER de 197,7 contre 49,9 chez Yahoo"
+688283.SS,"Chengdu KSW Technologies Co.,Ltd.",Chine,False,"PER de 134,1 contre 66,9 chez Yahoo"
+688310.SS,Maider Medical Industry Equipment Co. Ltd.,Chine,False,"PER de 173,9 contre 50,6 chez Yahoo"
+688311.SS,"Chengdu M&S Electronics Technology Co.,Ltd.",Chine,False,"PER prévu de 23,5 contre 10,0 chez Yahoo"
+688326.SS,"Beijing Jingwei Hirain Technologies Co., Inc.",Chine,False,"PER prévu de 16,3 contre 97,4 chez Yahoo"
+688330.SS,"Shanghai Holystar Information Technology Co., Ltd.",Chine,False,"PER de 31,8 contre 5,6 chez Yahoo"
 688388.SS,Guangdong Jiayuan Technology Co.Ltd.,Chine,False,"PER prévu de 14,5 contre 140,1 chez Yahoo"
-688484.SS,Southchip Semiconductor Technology,Chine,False,"PER prévu de 84,5 contre 19,6 chez Yahoo"
-688519.SS,"Nanya New Material Technology Co.,Ltd",Chine,False,"PER prévu de 42,5 contre 118,7 chez Yahoo"
-688668.SS,"Dongguan Dingtong Precision Metal Co., Ltd.",Chine,False,"PER prévu de 24,9 contre 60,5 chez Yahoo"
+688390.SS,"Jiangsu Goodwe Power Supply Technology Co., Ltd",Chine,False,"PER prévu de 9,4 contre 30,3 chez Yahoo"
+688484.SS,Southchip Semiconductor Technology,Chine,False,"PER prévu de 84,7 contre 19,6 chez Yahoo"
+688508.SS,Wuxi Chipown Micro-electronics limited,Chine,False,"PER prévu de 24,0 contre 70,8 chez Yahoo"
+688519.SS,"Nanya New Material Technology Co.,Ltd",Chine,False,"PER prévu de 42,4 contre 118,7 chez Yahoo"
+688526.SS,"Wuhan Keqian Biology Co.,Ltd",Chine,False,"PER de 47,3 contre 17,6 chez Yahoo"
+688595.SS,Chipsea Technologies (shenzhen) Corp.,Chine,False,"PER prévu de 26,7 contre 88,3 chez Yahoo"
+688598.SS,"KBC Corporation, Ltd.",Chine,False,"PER prévu de 116,6 contre 26,8 chez Yahoo"
+688668.SS,"Dongguan Dingtong Precision Metal Co., Ltd.",Chine,False,"PER prévu de 24,8 contre 60,5 chez Yahoo"
 688700.SS,"Kunshan Dongwei Technology Co.,Ltd.",Chine,False,"PER prévu de 18,8 contre 52,8 chez Yahoo"
+6946.T,"Nippon Avionics Co., Ltd.",Japon,False,"PER prévu de 16,2 contre 40,7 chez Yahoo"
 6952.T,"Casio Computer Co.,Ltd.",Japon,False,"PER prévu de 18,6 contre 43,8 chez Yahoo"
 6976.T,"Taiyo Yuden Co., Ltd.",Japon,False,"PER prévu de 19,8 contre 45,8 chez Yahoo"
+6999.T,KOA Corporation,Japon,False,"PER prévu de 15,6 contre 39,0 chez Yahoo"
 7003.T,"MITSUI E&S Co.,Ltd.",Japon,False,"PER prévu de 9,4 contre 26,6 chez Yahoo"
 7012.T,"Kawasaki Heavy Industries, Ltd.",Japon,False,"PER prévu de 13,2 contre 3,8 chez Yahoo"
 7013.T,IHI Corporation,Japon,False,"PER prévu de 15,5 contre 4,1 chez Yahoo"
@@ -699,10 +1154,19 @@ ZTECH.NS,Z-Tech (India) Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
 7182.T,"JAPAN POST BANK Co., Ltd.",Japon,False,"PER prévu de 12,3 contre 25,4 chez Yahoo"
 7186.T,"Concordia Financial Group, Ltd.",Japon,False,"PER prévu de 10,4 contre 22,0 chez Yahoo"
 7211.T,Mitsubishi Motors Corporation,Japon,False,"PER prévu de 9,6 contre 3,8 chez Yahoo"
+7242.T,KYB Corporation,Japon,False,"PER prévu de 9,0 contre 2,5 chez Yahoo"
+7245.T,"Daido Metal Co., Ltd.",Japon,False,"PER prévu de 7,5 contre 16,1 chez Yahoo"
 7282.T,"Toyoda Gosei Co., Ltd.",Japon,False,"PER prévu de 8,7 contre 2,8 chez Yahoo"
+7388.T,FP Partner Inc,Japon,False,"PER prévu de 27,6 contre 10,4 chez Yahoo"
+7456.T,"MATSUDA SANGYO Co., Ltd.",Japon,False,"PER prévu de 6,3 contre 17,1 chez Yahoo"
 7532.T,Pan Pacific International Holdings Corporation,Japon,False,"PER prévu de 17,6 contre 4,2 chez Yahoo"
+7717.T,"V Technology Co.,Ltd.",Japon,False,"PER prévu de 9,4 contre 20,7 chez Yahoo"
+7740.T,"Tamron Co.,Ltd.",Japon,False,"PER prévu de 15,6 contre 4,3 chez Yahoo"
 7747.T,"Asahi Intecc Co., Ltd.",Japon,False,"PER prévu de 23,0 contre 46,3 chez Yahoo"
 7806.T,"MTG Co.,Ltd.",Japon,False,"PER prévu de 25,4 contre 114,1 chez Yahoo"
+7826.T,"Furuya Metal Co., Ltd.",Japon,False,"PER prévu de 10,8 contre 22,5 chez Yahoo"
+7846.T,Pilot Corporation,Japon,False,"PER prévu de 14,0 contre 5,7 chez Yahoo"
+7917.T,ZACROS Corporation,Japon,False,"PER prévu de 11,7 contre 3,2 chez Yahoo"
 7936.T,ASICS Corporation,Japon,False,"PER prévu de 21,8 contre 45,3 chez Yahoo"
 7984.T,"Kokuyo Co., Ltd.",Japon,False,"PER prévu de 16,7 contre 4,2 chez Yahoo"
 8001.T,ITOCHU Corporation,Japon,False,"PER prévu de 15,8 contre 3,7 chez Yahoo"
@@ -710,11 +1174,18 @@ ZTECH.NS,Z-Tech (India) Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
 8022.T,Mizuno Corporation,Japon,False,"PER prévu de 15,4 contre 6,8 chez Yahoo"
 8035.T,Tokyo Electron Limited,Japon,False,"PER prévu de 18,5 contre 7,1 chez Yahoo"
 8053.T,Sumitomo Corporation,Japon,False,"PER prévu de 11,7 contre 3,9 chez Yahoo"
+8057.T,"Uchida Yoko Co., Ltd.",Japon,False,"PER prévu de 11,1 contre 2,9 chez Yahoo"
+8060.SR,Walaa Cooperative Insurance Company,Arabie saoudite,False,"PER prévu de 12,0 contre 4,6 chez Yahoo"
 8088.T,IWATANI Corporation,Japon,False,"PER prévu de 8,9 contre 2,8 chez Yahoo"
+8110.TW,"Walton Advanced Engineering, Inc.",Taïwan,False,"PER de 19,2 contre 8,1 chez Yahoo"
+8111.T,Goldwin Inc,Japon,False,"PER prévu de 11,3 contre 3,5 chez Yahoo"
 8113.T,Unicharm Corporation,Japon,False,"PER prévu de 20,7 contre 5,9 chez Yahoo"
+8117.T,Central Automotive Products Ltd,Japon,False,"PER prévu de 11,1 contre 4,2 chez Yahoo"
 8136.T,Sanrio Co. Ltd.,Japon,False,"PER prévu de 21,3 contre 9,8 chez Yahoo"
+8174.T,"Nippon Gas Co., Ltd.",Japon,False,"PER prévu de 18,2 contre 6,9 chez Yahoo"
 8227.T,"SHIMAMURA Co., Ltd.",Japon,False,"PER prévu de 13,9 contre 5,8 chez Yahoo"
-8230.SR,Al Rajhi Company for Cooperative Insurance,Arabie saoudite,False,"PER prévu de 14,8 contre 6,5 chez Yahoo"
+8230.SR,Al Rajhi Company for Cooperative Insurance,Arabie saoudite,False,"PER prévu de 15,4 contre 6,5 chez Yahoo"
+8273.T,"Izumi Co., Ltd.",Japon,False,"PER prévu de 10,6 contre 2,9 chez Yahoo"
 8308.T,"Resona Holdings, Inc.",Japon,False,"PER prévu de 11,6 contre 24,5 chez Yahoo"
 8309.T,"Sumitomo Mitsui Trust Group,Inc.",Japon,False,"PER prévu de 10,6 contre 4,3 chez Yahoo"
 8334.T,"The Gunma Bank, Ltd.",Japon,False,"PER prévu de 11,1 contre 37,9 chez Yahoo"
@@ -725,115 +1196,216 @@ ZTECH.NS,Z-Tech (India) Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
 8411.T,"Mizuho Financial Group, Inc.",Japon,False,"PER prévu de 10,4 contre 22,1 chez Yahoo"
 8418.T,"Yamaguchi Financial Group, Inc.",Japon,False,"PER prévu de 10,0 contre 27,8 chez Yahoo"
 8524.T,"North Pacific Bank,Ltd.",Japon,False,"PER prévu de 9,3 contre 35,4 chez Yahoo"
+8585.T,Orient Corporation,Japon,False,"PER prévu de 11,2 contre 45,4 chez Yahoo"
+8595.T,"JAFCO Group Co., Ltd.",Japon,False,"PER prévu de 15,9 contre 6,3 chez Yahoo"
 8630.T,"Sompo Holdings, Inc.",Japon,False,"PER prévu de 10,8 contre 26,2 chez Yahoo"
 8750.T,Dai-ichi Life,Japon,False,"PER prévu de 11,6 contre 4,9 chez Yahoo"
 8766.T,"Tokio Marine Holdings, Inc.",Japon,False,"PER prévu de 15,6 contre 1,2 chez Yahoo"
+8841.T,"TOC Co.,Ltd.",Japon,False,"PER prévu de 19,3 contre 76,7 chez Yahoo"
+8937.TWO,"Her Chee Industrial Co., Ltd.",Taïwan,False,"PER de 13279,2 contre 295,6 chez Yahoo"
 8952.T,Japan Real Estate Investment,Japon,False,"PER prévu de 22,6 contre 4,7 chez Yahoo"
 9008.T,Keio Corporation,Japon,False,"PER prévu de 11,2 contre 2,9 chez Yahoo"
 9009.T,"Keisei Electric Railway Co., Ltd.",Japon,False,"PER prévu de 14,5 contre 4,3 chez Yahoo"
 9065.T,Sankyu Inc.,Japon,False,"PER prévu de 11,6 contre 3,3 chez Yahoo"
+9302.T,Mitsui-Soko Holdings Co Ltd,Japon,False,"PER prévu de 17,9 contre 7,5 chez Yahoo"
 9418.T,"U-NEXT HOLDINGS Co.,Ltd.",Japon,False,"PER prévu de 15,0 contre 6,0 chez Yahoo"
 9433.T,KDDI Corporation,Japon,False,"PER prévu de 13,4 contre 1231,8 chez Yahoo"
 9436.T,Okinawa Cellular Telephone Company,Japon,False,"PER prévu de 21,0 contre 10,2 chez Yahoo"
 9533.T,Toho Gas Co Ltd,Japon,False,"PER prévu de 16,4 contre 5,5 chez Yahoo"
+9552.T,"Quants Research Institute Holdings,Inc.",Japon,False,"PER prévu de 14,5 contre 5,2 chez Yahoo"
 9602.T,"Toho Co., Ltd.",Japon,False,"PER prévu de 25,1 contre 7,1 chez Yahoo"
+9682.T,DTS Corporation,Japon,False,"PER prévu de 15,0 contre 5,1 chez Yahoo"
 9684.T,"Square Enix Holdings Co., Ltd.",Japon,False,"PER prévu de 24,6 contre 10,8 chez Yahoo"
+9716.T,"NOMURA Co., Ltd.",Japon,False,"PER prévu de 13,2 contre 33,4 chez Yahoo"
+9722.T,Fujita Kanko Inc.,Japon,False,"PER prévu de 17,9 contre 4,1 chez Yahoo"
 9843.T,"Nitori Holdings Co., Ltd.",Japon,False,"PER prévu de 19,4 contre 3,8 chez Yahoo"
+9889.T,JBCC Holdings Inc.,Japon,False,"PER prévu de 20,0 contre 7,4 chez Yahoo"
 9945.TW,"Ruentex Development Co.,Ltd.",Taïwan,False,"PER de 10,2 contre 5,0 chez Yahoo"
 9984.T,SoftBank Group Corp.,Japon,False,"PER de 88,6 contre 5,0 chez Yahoo"
 ABR,"Arbor Realty Trust, Inc.",États-Unis,False,rendement de 32 % jugé exceptionnel
 AD,Array Digital Infrastructure Inc.,États-Unis,False,"PER de 439,6 contre 4,4 chez Yahoo"
-AEFES.IS,Anadolu Efes Biracilik ve Malt Sanayii Anonim Sirketi,Turquie,False,"PER prévu de 6,2 contre 0,5 chez Yahoo"
-AKER.OL,Aker ASA,Norvège,False,"PER prévu de 14,4 contre 43,8 chez Yahoo"
+ADMIE.AT,Admie Holding S.A.,Grèce,False,"PER de 18,5 contre 7,7 chez Yahoo"
+AEFES.IS,Anadolu Efes Biracilik ve Malt Sanayii Anonim Sirketi,Turquie,False,"PER prévu de 6,1 contre 0,5 chez Yahoo"
+AGHOL.IS,AG Anadolu Grubu Holding A.S.,Turquie,False,"PER prévu de 8,6 contre 0,2 chez Yahoo"
+AKER.OL,Aker ASA,Norvège,False,"PER prévu de 14,5 contre 43,8 chez Yahoo"
+ALIF-B.ST,AddLife AB (publ),Suède,False,"PER prévu de 25,3 contre 58,1 chez Yahoo"
 ALM,Almonty Industries Inc.,États-Unis,False,"PER de 117,3 contre 49,2 chez Yahoo"
 ALS.TO,Altius Minerals Corporation,Canada,False,"PER de 53,8 contre 8,3 chez Yahoo"
-ANTM.JK,PT Antam (Persero) Tbk,Indonésie,False,"PER prévu de 5,7 contre 19,5 chez Yahoo"
+AMSC,American Superconductor Corporation,États-Unis,False,"PER de 20,5 contre 8,5 chez Yahoo"
+ANSGR.IS,Anadolu Anonim Turk Sigorta Sirketi,Turquie,False,"PER prévu de 2,4 contre 0,7 chez Yahoo"
+ANTM.JK,PT Antam (Persero) Tbk,Indonésie,False,"PER prévu de 5,6 contre 19,5 chez Yahoo"
+AP-UN.TO,Allied Properties,Canada,False,"PER prévu de 7,3 contre 3,1 chez Yahoo"
+ARCLK.IS,Arcelik Anonim Sirketi,Turquie,False,"PER prévu de 10,4 contre 4,6 chez Yahoo"
+ARKO,Arko Corp.,États-Unis,False,"PER prévu de 29,3 contre 76,2 chez Yahoo"
+ARTO.JK,PT Bank Jago Tbk,Indonésie,False,"PER prévu de 11,1 contre 22,4 chez Yahoo"
 ARYT.TA,Aryt Industries,Israël,False,rendement de 29 % jugé exceptionnel
 ASLI.L,abrdn European Logistics Income PLC,Royaume-Uni,False,rendement de 51 % jugé exceptionnel
-BFT.WA,Benefit Systems,Pologne,False,"PER prévu de 19,9 contre 137,4 chez Yahoo"
-BIOA-B.ST,BioArctic AB (publ),Suède,False,"PER prévu de 43,4 contre 103,4 chez Yahoo"
+ATRLJ-B.ST,Atrium Ljungberg AB (publ),Suède,False,"PER prévu de 12,2 contre 2,1 chez Yahoo"
+AYGAZ.IS,Aygaz A.S.,Turquie,False,"PER prévu de 7,1 contre 19,8 chez Yahoo"
+BCPG.BK,BCPG Public Company Limited,Thaïlande,False,"PER de 29,0 contre 9,3 chez Yahoo"
+BESALCO.SN,Besalco S.A.,Chili,False,"PER prévu de 10,5 contre 33,1 chez Yahoo"
+BFT.WA,Benefit Systems,Pologne,False,"PER prévu de 19,7 contre 137,4 chez Yahoo"
+BIOA-B.ST,BioArctic AB (publ),Suède,False,"PER prévu de 44,8 contre 103,4 chez Yahoo"
+BKFR.TA,Bait Bakfar,Israël,False,"PER de 21,5 contre 8,7 chez Yahoo"
 BLSH,Bullish,Îles Caïmans,False,"PER prévu de 9,3 contre 39,2 chez Yahoo"
+BSTG.TA,Bst Group E.A.W. Ltd.,Israël,False,"PER de 14,3 contre 4,7 chez Yahoo"
 BUFAB.ST,Bufab AB (publ),Suède,False,"PER prévu de 24,6 contre 7,4 chez Yahoo"
+BUKA.JK,PT Bukalapak.com Tbk.,Indonésie,False,"PER prévu de 11,5 contre 23,5 chez Yahoo"
 CBDG.PA,Compagnie du Cambodge,France,False,"PER de 961,4 contre 206,5 chez Yahoo"
-CDR.WA,CD Projekt S.A.,Pologne,False,"PER prévu de 29,7 contre 169,9 chez Yahoo"
+CDR.WA,CD Projekt S.A.,Pologne,False,"PER prévu de 29,8 contre 169,9 chez Yahoo"
+CGEO.L,Georgia Capital PLC,Géorgie,False,"PER de 20,9 contre 3,2 chez Yahoo"
 CHAD,DeFi Development Corp. Variable Rate Series C Perpetual Preferred Stock,États-Unis,False,rendement de 131 % jugé exceptionnel
-CIEB.MX,"Corporacion Interamericana de Entretenimiento, S.A.B. de C.V.",Mexique,False,rendement de 28 % jugé exceptionnel
-CLIS.TA,Clal Insurance Enterprises Holdings Ltd.,Israël,False,"PER prévu de 9,8 contre 982,2 chez Yahoo"
+CIEB.MX,"Corporacion Interamericana de Entretenimiento, S.A.B. de C.V.",Mexique,False,"PER de 6,2 contre 1,6 chez Yahoo ; rendement de 28 % jugé exceptionnel"
+CLIS.TA,Clal Insurance Enterprises Holdings Ltd.,Israël,False,"PER prévu de 10,0 contre 982,2 chez Yahoo"
+CLW.AX,Charter Hall Long WALE REIT,Australie,False,"PER de 48,1 contre 8,7 chez Yahoo"
+CMW.AX,Cromwell Property Group,Australie,False,"PER de 155,9 contre 6,7 chez Yahoo"
+CRI.WA,Creotech Instruments S.A.,Pologne,False,"PER de 1968,1 contre 139,4 chez Yahoo"
+CRMD,CorMedix Inc.,États-Unis,False,"PER prévu de 138,5 contre 22,4 chez Yahoo"
 CTY1S.HE,Citycon Oyj,Finlande,False,rendement de 30 % jugé exceptionnel
-DLF.NS,DLF Limited,Inde,False,"PER de 185,7 contre 35,8 chez Yahoo"
+CVVY.TO,Cavvy Energy Ltd.,Canada,False,"PER prévu de 9,0 contre 21,8 chez Yahoo"
+DB.V,Decibel Cannabis Company Inc.,Canada,False,"PER prévu de 4,5 contre 95,4 chez Yahoo"
+DEWA.JK,PT Darma Henwa Tbk,Indonésie,False,"PER de 5,0 contre 2,3 chez Yahoo"
+DKG.DE,Deutsche Konsum REIT-AG,Allemagne,False,"PER prévu de 11,1 contre 2,8 chez Yahoo"
+DLF.NS,DLF Limited,Inde,False,"PER de 186,0 contre 35,8 chez Yahoo"
 DNET.JK,PT Indoritel Makmur Internasional Tbk.,Indonésie,False,"PER de 317,5 contre 125,2 chez Yahoo"
 DNP.WA,Dino Polska S.A.,Pologne,False,"PER prévu de 19,7 contre 2,2 chez Yahoo"
+DOAS.IS,Dogus Otomotiv Servis ve Ticaret A.S.,Turquie,False,"PER prévu de 3,6 contre 1,2 chez Yahoo"
 DVD.OL,Deep Value Driller AS,Norvège,False,rendement de 72 % jugé exceptionnel
 EARN,Ellington Residential Mortgage REIT,États-Unis,False,rendement de 26 % jugé exceptionnel
 ECC,Eagle Point Credit Company Inc.,États-Unis,False,rendement de 27 % jugé exceptionnel
 EIS.F,Eisen- und Huttenwerke AG,Allemagne,False,rendement de 38 % jugé exceptionnel
-EREGL.IS,Eregli Demir ve Celik Fabrikalari T.A.S.,Turquie,False,"PER prévu de 13,2 contre 5,1 chez Yahoo"
-EZJ.L,easyJet plc,Royaume-Uni,False,"PER de 32,5 contre 12,6 chez Yahoo"
+EREGL.IS,Eregli Demir ve Celik Fabrikalari T.A.S.,Turquie,False,"PER prévu de 13,0 contre 5,1 chez Yahoo"
+EUR.AX,European Lithium Limited,Australie,False,"PER de 45,4 contre 0,8 chez Yahoo"
+EZJ.L,easyJet plc,Royaume-Uni,False,"PER de 32,6 contre 12,6 chez Yahoo"
+FAG.ST,Fagerhult Group AB,Suède,False,"PER prévu de 11,1 contre 5,3 chez Yahoo"
 FALABELLA.SN,Falabella S.A.,Chili,False,"PER prévu de 16,1 contre 37,8 chez Yahoo"
 FIBRAUP18.MX,"Upsite Mexico, S.A.P.I. de C.V.",Mexique,False,rendement de 57 % jugé exceptionnel
+FISH.V,Sailfish Royalty Corp.,Îles Vierges britanniques,False,"PER prévu de 19,9 contre 181,2 chez Yahoo"
 FLUT,Flutter Entertainment plc,États-Unis,False,"PER prévu de 46,3 contre 11,5 chez Yahoo"
 FROTO.IS,Ford Otomotiv Sanayi A.S.,Turquie,False,"PER prévu de 4,6 contre 0,4 chez Yahoo"
+FTG.TO,Firan Technology Group Corporation,Canada,False,"PER prévu de 30,6 contre 70,7 chez Yahoo"
 GBAN.BA,"Naturgy BAN, S.A.",Argentine,False,rendement de 37 % jugé exceptionnel
+GDWN.L,Goodwin PLC,Royaume-Uni,False,"PER de 539,8 contre 197,8 chez Yahoo"
+GEL,"Genesis Energy, L.P.",États-Unis,False,"PER prévu de 176,0 contre 18,8 chez Yahoo"
+GNE,Genie Energy Ltd.,États-Unis,False,"PER prévu de 18,0 contre 36,3 chez Yahoo"
+GPE.L,Great Portland Estates Plc,Royaume-Uni,False,"PER de 29,3 contre 8,7 chez Yahoo"
 GRND3.SA,Grendene S.A.,Brésil,False,rendement de 28 % jugé exceptionnel
+GRPN,"Groupon, Inc.",États-Unis,False,"PER prévu de 18,7 contre 6,9 chez Yahoo"
 GSF.OL,Grieg Seafood ASA,Norvège,False,rendement de 156 % jugé exceptionnel
 H02.SI,Haw Par Corporation Limited,Singapour,False,"PER de 30,3 contre 12,5 chez Yahoo"
-H78.SI,Hongkong Land Holdings Limited,Bermudes,False,"PER de 22,3 contre 8,1 chez Yahoo"
+H78.SI,Hongkong Land Holdings Limited,Bermudes,False,"PER de 22,2 contre 8,1 chez Yahoo"
 HALKB.IS,Turkiye Halk Bankasi A.S.,Turquie,False,"PER prévu de 4,3 contre 9,7 chez Yahoo"
-HARL.TA,Harel Insurance Investments & Financial Services Ltd,Israël,False,"PER prévu de 12,8 contre 27,5 chez Yahoo"
+HARL.TA,Harel Insurance Investments & Financial Services Ltd,Israël,False,"PER prévu de 13,1 contre 27,5 chez Yahoo"
 HBRE3.SA,HBR Realty Empreendimentos Imobiliarios S.A.,Brésil,False,rendement de 56 % jugé exceptionnel
-IDEA.NS,Vodafone Idea Limited,Inde,False,"PER de 25,3 contre 3,5 chez Yahoo"
+HERDEZ.MX,"Grupo Herdez, S.A.B. de C.V.",Mexique,False,"PER de 43,7 contre 14,5 chez Yahoo"
+HG1.F,HOMAG Group AG,Allemagne,False,"PER de 772,9 contre 15,1 chez Yahoo"
+HOV,"Hovnanian Enterprises, Inc.",États-Unis,False,"PER prévu de 47,1 contre 7,9 chez Yahoo"
+IDEA.NS,Vodafone Idea Limited,Inde,False,"PER de 25,2 contre 3,5 chez Yahoo"
+IDHC.L,Integrated Diagnostics Holdings Plc,Jersey,False,"PER prévu de 6,5 contre 0,3 chez Yahoo"
 IEP,Icahn Enterprises L.P.,États-Unis,False,rendement de 35 % jugé exceptionnel
+IES.TA,I.E.S Holdings Ltd,Israël,False,"PER de 61,7 contre 19,8 chez Yahoo"
 IGO.AX,IGO Limited,Australie,False,"PER de 270,7 contre 26,1 chez Yahoo"
 ILC.SN,Inversiones La Construcción S.A.,Chili,False,"PER prévu de 6,8 contre 17,9 chez Yahoo"
+INOXGREEN.NS,Inox Green Energy Services Limited,Inde,False,"PER de 131,8 contre 35,1 chez Yahoo"
 IREN.SW,Investis Holding SA,Suisse,False,"PER de 28,2 contre 13,2 chez Yahoo"
 IVR,Invesco Mortgage Capital Inc.,États-Unis,False,rendement de 26 % jugé exceptionnel
-JET2.L,Jet2 plc,Royaume-Uni,False,"PER de 17,3 contre 6,7 chez Yahoo"
+JAG.TO,Jaguar Mining Inc.,Canada,False,"PER prévu de 2,0 contre 5,1 chez Yahoo"
+JAYKAY.NS,Jaykay Enterprises Limited,Inde,False,"PER de 42,3 contre 13,6 chez Yahoo"
+JET2.L,Jet2 plc,Royaume-Uni,False,"PER de 17,5 contre 6,7 chez Yahoo"
+JMS.AX,Jupiter Mines Limited,Australie,False,"PER de 85,2 contre 11,8 chez Yahoo"
+JPFA.JK,PT Japfa Comfeed Indonesia Tbk,Indonésie,False,"PER prévu de 4,1 contre 8,6 chez Yahoo"
+JSWDULUX.NS,JSW Dulux Limited,Inde,False,"PER de 14,0 contre 6,5 chez Yahoo"
+KAR.ST,Karnov Group AB (publ),Suède,False,"PER prévu de 14,6 contre 49,7 chez Yahoo"
+KIRIINDUS.NS,Kiri Industries Limited,Inde,False,"PER de 19,4 contre 0,5 chez Yahoo"
+KRDMD.IS,Kardemir Karabuk Demir Celik Sanayi Ve Ticaret A.S.,Turquie,False,"PER prévu de 5,3 contre 261,7 chez Yahoo"
 KSPI,Joint Stock Company Kaspi.kz American Depository Shares,Kazakhstan,False,"PER prévu de 6,3 contre 0,0 chez Yahoo"
 KYIV,Kyivstar Group Ltd.,Émirats arabes unis,False,"PER prévu de 7,8 contre 0,2 chez Yahoo"
+LAHAV.TA,Lahav LR Real Estate Ltd,Israël,False,"PER de 26,5 contre 10,9 chez Yahoo"
+LCFS.TO,Tidewater Renewables Ltd.,Canada,False,"PER prévu de 8,9 contre 416,0 chez Yahoo"
 LGND,Ligand Pharmaceuticals Incorporated,États-Unis,False,"PER de 76,2 contre 32,0 chez Yahoo"
+LSAK,Lesaka Technologies Inc.,Afrique du Sud,False,"PER prévu de 18,9 contre 8,3 chez Yahoo"
+LUZN.TA,Amos Luzon Development and Energy Group Ltd,Israël,False,"PER de 13,1 contre 6,0 chez Yahoo"
 LX,LexinFintech Holdings Ltd.,Chine,False,rendement de 29 % jugé exceptionnel
 LYFT,"Lyft, Inc.",États-Unis,False,"PER de 5,9 contre 2,5 chez Yahoo"
 MALLPLAZA.SN,Plaza S.A.,Chili,False,"PER prévu de 16,4 contre 64,3 chez Yahoo"
 MAV4.L,Maven Income & Growth VCT 4,Royaume-Uni,False,rendement de 313 % jugé exceptionnel
-MGOR.TA,Mega Or Holdings Ltd,Israël,False,"PER de 47,0 contre 14,0 chez Yahoo"
-MLSR.TA,Melisron Ltd.,Israël,False,"PER prévu de 9,5 contre 946,4 chez Yahoo"
+MAVI.IS,Mavi Giyim Sanayi ve Ticaret A.S.,Turquie,False,"PER prévu de 7,0 contre 2,1 chez Yahoo"
+MCAP.ST,MedCap AB (publ),Suède,False,"PER prévu de 23,9 contre 113,2 chez Yahoo"
+MDTR.TA,Mediterranean Towers Ltd.,Israël,False,"PER de 31,2 contre 7,1 chez Yahoo"
+MGOR.TA,Mega Or Holdings Ltd,Israël,False,"PER de 47,9 contre 14,0 chez Yahoo"
+MILDEF.ST,MilDef Group AB (publ),Suède,False,"PER prévu de 19,6 contre 80,9 chez Yahoo"
+MLSR.TA,Melisron Ltd.,Israël,False,"PER prévu de 9,6 contre 946,4 chez Yahoo"
 MPCES.OL,MPC Energy Solutions NV,Pays-Bas,False,rendement de 641 % jugé exceptionnel
 MTAV.TA,Meitav Investment House Ltd,Israël,False,"PER prévu de 16,4 contre 1635,8 chez Yahoo"
+MUX.TO,McEwen Inc.,Canada,False,"PER de 29,9 contre 11,7 chez Yahoo"
+NGL,NGL Energy Partners LP,États-Unis,False,"PER prévu de 8,7 contre 18,3 chez Yahoo"
+NMAX,Newsmax Inc.,États-Unis,False,"PER prévu de 36,9 contre 113,3 chez Yahoo"
+NPK,"National Presto Industries, Inc.",États-Unis,False,"PER prévu de 20,7 contre 171,2 chez Yahoo"
 NXT.AX,NEXTDC Limited,Australie,False,"PER de 106,0 contre 46,2 chez Yahoo"
+OMER,Omeros Corporation,États-Unis,False,"PER de 289,2 contre 13,6 chez Yahoo"
+OPCT3.SA,OceanPact Servicos Maritimos S.A.,Brésil,False,"PER prévu de 5,4 contre 23,1 chez Yahoo"
 OSR.HM,OSRAM Licht AG,Allemagne,False,"PER de 1867,8 contre 32,0 chez Yahoo"
+OVZON.ST,Ovzon AB (publ),Suède,False,"PER prévu de 18,2 contre 707,6 chez Yahoo"
 OXLC,Oxford Lane Capital Corp.,États-Unis,False,rendement de 35 % jugé exceptionnel
 OXSQ,Oxford Square Capital Corp.,États-Unis,False,rendement de 32 % jugé exceptionnel
 PANW,"Palo Alto Networks, Inc.",États-Unis,False,"PER prévu de 172,2 contre 78,0 chez Yahoo"
-PHOE.TA,The Phoenix Holdings Ltd.,Israël,False,"PER prévu de 12,6 contre 29,9 chez Yahoo"
+PETKM.IS,Petkim Petrokimya Holding A.S.,Turquie,False,"PER prévu de 16,5 contre 4,3 chez Yahoo"
+PHM.MC,Pharma Mar SA,Espagne,False,"PER de 47,9 contre 22,9 chez Yahoo"
+PHOE.TA,The Phoenix Holdings Ltd.,Israël,False,"PER prévu de 12,9 contre 29,9 chez Yahoo"
+PLAN.SW,Plazza AG,Suisse,False,"PER de 29,0 contre 13,8 chez Yahoo"
 PNOR.OL,PetroNor E&P Limited,Royaume-Uni,False,rendement de 26 % jugé exceptionnel
 PPLI,People Incorporated,États-Unis,False,"PER prévu de 37,9 contre 15,7 chez Yahoo"
-PRX.AS,Prosus N.V.,Pays-Bas,False,"PER de 61,9 contre 7,6 chez Yahoo"
+PRX.AS,Prosus N.V.,Pays-Bas,False,"PER de 61,8 contre 7,6 chez Yahoo"
 PSEC,Prospect Capital Corporation,États-Unis,False,rendement de 28 % jugé exceptionnel
+QAMC.QA,Qatar Aluminium Manufacturing Company Q.P.S.C.,Qatar,False,"PER de 249,0 contre 10,5 chez Yahoo"
 QFG.BR,Quest for Growth Belgium,Belgique,False,rendement de 38 % jugé exceptionnel
-SAHOL.IS,Haci Ömer Sabanci Holding A.S.,Turquie,False,"PER prévu de 7,0 contre 3,1 chez Yahoo"
+QNCD.QA,Qatar National Cement Company (Q.P.S.C.),Qatar,False,"PER prévu de 13,7 contre 0,3 chez Yahoo"
+RALYH.IS,Ral Yatirim Holding A.S.,Turquie,False,"PER de 25,9 contre 1,7 chez Yahoo"
+RIGL,"Rigel Pharmaceuticals, Inc.",États-Unis,False,"PER de 7,4 contre 2,9 chez Yahoo"
+RKET.HM,Rocket Internet SE,Allemagne,False,"PER de 37,5 contre 2,1 chez Yahoo"
+RLRE.TA,Rami Levy Shekma Real Estate Ltd.,Israël,False,"PER de 24,3 contre 10,8 chez Yahoo"
+SAHOL.IS,Haci Ömer Sabanci Holding A.S.,Turquie,False,"PER prévu de 6,9 contre 3,1 chez Yahoo"
 SBRA,"Sabra Health Care REIT, Inc.",États-Unis,False,"PER de 239,7 contre 78,2 chez Yahoo"
 SCAR3.SA,Sao Carlos Empreendimentos e Participacoes S.A.,Brésil,False,rendement de 53 % jugé exceptionnel
-SHC.L,Shaftesbury Capital PLC,Royaume-Uni,False,"PER de 14,6 contre 6,8 chez Yahoo"
-SINCH.ST,Sinch AB (publ),Suède,False,"PER prévu de 12,3 contre 61,9 chez Yahoo"
-SMIN.L,Smiths Group plc,Royaume-Uni,False,"PER de 155,6 contre 53,2 chez Yahoo"
+SEIT.L,SDCL Energy Efficiency Income Plc,Royaume-Uni,False,"PER prévu de 4,7 contre 0,0 chez Yahoo"
+SHC.L,Shaftesbury Capital PLC,Royaume-Uni,False,"PER de 14,7 contre 6,8 chez Yahoo"
+SIGNATURE.NS,Signatureglobal (India) Limited,Inde,False,"PER de 76,3 contre 9,5 chez Yahoo"
+SIMP.JK,PT Salim Ivomas Pratama Tbk,Indonésie,False,"PER prévu de 3,9 contre 10,8 chez Yahoo"
+SINCH.ST,Sinch AB (publ),Suède,False,"PER prévu de 12,6 contre 61,9 chez Yahoo"
+SMGR.JK,PT Semen Indonesia (Persero) Tbk,Indonésie,False,"PER prévu de 9,9 contre 4,6 chez Yahoo"
+SMIN.L,Smiths Group plc,Royaume-Uni,False,"PER de 157,2 contre 53,2 chez Yahoo"
+SMU.SN,SMU S.A.,Chili,False,"PER prévu de 14,9 contre 6,7 chez Yahoo"
 SNAP,Snap Inc.,États-Unis,False,"PER prévu de 47,6 contre 8,1 chez Yahoo"
+SNDL,SNDL Inc.,Canada,False,"PER prévu de 180,8 contre 43,0 chez Yahoo"
+SOHU,Sohu.com Limited,Chine,False,"PER de 38,1 contre 1,5 chez Yahoo"
+SOKM.IS,Sok Marketler Ticaret A.S.,Turquie,False,"PER prévu de 13,7 contre 4,5 chez Yahoo"
 SOQUICOM.SN,Soquimich Comercial S.A.,Chili,False,rendement de 6052 % jugé exceptionnel
+SOTL.NS,Savita Oil Technologies Limited,Inde,False,"PER prévu de 0,4 contre 11,3 chez Yahoo"
 STX.WA,Stalexport Autostrady S.A.,Pologne,False,rendement de 37 % jugé exceptionnel
+SUM.NZ,Summerset Group Holdings Limited,Nouvelle-Zélande,False,"PER de 23,0 contre 5,3 chez Yahoo"
 SUN,Sunoco LP,États-Unis,False,"PER prévu de 7,2 contre 18,6 chez Yahoo"
 SYNE3.SA,Syn Prop & Tech S.A.,Brésil,False,rendement de 66 % jugé exceptionnel
-TASE.TA,The Tel-Aviv Stock Exchange Ltd.,Israël,False,"PER prévu de 36,1 contre 137,5 chez Yahoo"
+TASE.TA,The Tel-Aviv Stock Exchange Ltd.,Israël,False,"PER prévu de 36,4 contre 137,5 chez Yahoo"
 TBCG.L,TBC Bank Group PLC,Royaume-Uni,False,"PER prévu de 5,1 contre 1,8 chez Yahoo"
+TBLA,Taboola.com Ltd.,Israël,False,"PER prévu de 10,6 contre 4,7 chez Yahoo"
 TDS,"Telephone and Data Systems, Inc.",États-Unis,False,"PER de 34,8 contre 8,8 chez Yahoo"
 TEAM,Atlassian Corporation Plc,Australie,False,"PER prévu de 103,8 contre 33,8 chez Yahoo"
 TGTX,"TG Therapeutics, Inc.",États-Unis,False,"PER de 45,3 contre 19,7 chez Yahoo"
+TINS.JK,PT TIMAH Tbk,Indonésie,False,"PER prévu de 4,5 contre 20,3 chez Yahoo"
+TKFEN.IS,Tekfen Holding Anonim Sirketi,Turquie,False,"PER prévu de 120,0 contre 12,9 chez Yahoo"
 TOEN.TA,Tomer Energy Royalties (2012) Ltd.,Israël,False,rendement de 36 % jugé exceptionnel
 TPL,Texas Pacific Land Corporation,États-Unis,False,"PER prévu de 33,1 contre 4,6 chez Yahoo"
 TPVG,TriplePoint Venture Growth BDC Corp.,États-Unis,False,rendement de 30 % jugé exceptionnel
-TURSG.IS,Turkiye Sigorta Anonim Sirketi,Turquie,False,"PER prévu de 2,6 contre 1,1 chez Yahoo"
+TRS,TriMas Corporation,États-Unis,False,"PER de 98,0 contre 16,1 chez Yahoo"
+TURSG.IS,Turkiye Sigorta Anonim Sirketi,Turquie,False,"PER prévu de 2,5 contre 1,1 chez Yahoo"
+UPP.AE,Union Properties Public Joint Stock Company,Émirats arabes unis,False,"PER de 12,8 contre 5,0 chez Yahoo"
 VAKBN.IS,Turkiye Vakiflar Bankasi Turk Anonim Ortakligi,Turquie,False,"PER prévu de 2,3 contre 5,4 chez Yahoo"
+VISN,Vistance Networks Inc.,États-Unis,False,"PER de 681,2 contre 32,1 chez Yahoo"
 VITROA.MX,"Vitro, S.A.B. de C.V.",Mexique,False,rendement de 693 % jugé exceptionnel
 VULC3.SA,Vulcabras Azaleia S.A.,Brésil,False,rendement de 49 % jugé exceptionnel
+WEST,Westrock Coffee Company,États-Unis,False,"PER prévu de 987,5 contre 54,9 chez Yahoo"
 WFCNP,Wells Fargo & Company PFD DIV EQUALIZ,États-Unis,False,rendement de 56 % jugé exceptionnel
-XTB.WA,X-Trade Brokers Dom Maklerski S.A.,Pologne,False,"PER prévu de 8,6 contre 18,3 chez Yahoo"
+XTB.WA,X-Trade Brokers Dom Maklerski S.A.,Pologne,False,"PER prévu de 8,7 contre 18,3 chez Yahoo"
 YHTI.MC,Hotei Properties Group Socimi S.A.,Espagne,False,rendement de 42 % jugé exceptionnel
 YPFD.BA,YPF Sociedad Anonima,Argentine,False,"PER prévu de 12,3 contre 2,7 chez Yahoo"
+ZZ-B.ST,Zinzino Holding AB,Suède,False,"PER prévu de 11,1 contre 23,0 chez Yahoo"
