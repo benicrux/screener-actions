@@ -31,7 +31,10 @@ const COULEURS_PAYS = ["var(--accent)", "#5d8aa2", "#a9c3d1", "var(--filet)"];
 let actions = [], parSymbole = new Map(), radar = [], filtre = {}, statut = {}, macro = null;
 let favoris = lire("pepites.favoris", {});
 let ignores = lire("pepites.ignores", {});
-let etat = Object.assign({ continent: "", sansAnalystes: false }, lire("pepites.accueil", {}));
+let etat = Object.assign({ continents: [], sansAnalystes: false }, lire("pepites.accueil", {}));
+// Ancienne préférence : un seul continent
+if (!Array.isArray(etat.continents)) etat.continents = etat.continent ? [etat.continent] : [];
+delete etat.continent;
 let affichees = PAR_PAGE;
 let USD_PAR_EUR = 1.1;
 
@@ -250,23 +253,29 @@ function nettoyerIgnores() {
 function construireContinents() {
   const presents = new Set(radar.map((r) => r.a.c));
   const liste = [["", "Monde"], ...CONTINENTS.filter((c) => presents.has(c)).map((c) => [c, c])];
-  if (etat.continent && !presents.has(etat.continent)) etat.continent = "";
+  etat.continents = etat.continents.filter((c) => presents.has(c));
   el("radar-continents").innerHTML = liste.map(([c, nom]) =>
-    `<button type="button" data-c="${echapper(c)}" aria-pressed="${etat.continent === c}">${echapper(nom)}</button>`).join("") +
+    `<button type="button" data-c="${echapper(c)}" aria-pressed="${c ? etat.continents.includes(c) : !etat.continents.length}">${echapper(nom)}</button>`).join("") +
     `<button type="button" class="bascule-puce" data-analystes aria-pressed="${etat.sansAnalystes}">Sans analystes seulement</button>`;
   el("radar-continents").onclick = (e) => {
     const b = e.target.closest("button");
     if (!b) return;
     if (b.hasAttribute("data-analystes")) etat.sansAnalystes = !etat.sansAnalystes;
-    else etat.continent = b.dataset.c;
+    else if (!b.dataset.c) etat.continents = [];  // « Monde » : tous les continents
+    else {
+      const c = b.dataset.c;
+      etat.continents = etat.continents.includes(c) ? etat.continents.filter((x) => x !== c) : [...etat.continents, c];
+    }
     ecrire("pepites.accueil", etat);
     affichees = PAR_PAGE;
     el("radar-continents").querySelectorAll("button[data-c]").forEach((x) =>
-      x.setAttribute("aria-pressed", String(x.dataset.c === etat.continent)));
+      x.setAttribute("aria-pressed", String(x.dataset.c ? etat.continents.includes(x.dataset.c) : !etat.continents.length)));
     el("radar-continents").querySelector("[data-analystes]").setAttribute("aria-pressed", String(etat.sansAnalystes));
     rendreRadar();
   };
 }
+
+function dansZone(a) { return !etat.continents.length || etat.continents.includes(a.c); }
 
 function rendreConcentration(liste) {
   const boite = el("concentration");
@@ -279,11 +288,15 @@ function rendreConcentration(liste) {
   const parts = [...premiers, ...(autres ? [["Autres pays", autres]] : [])]
     .map(([p, n], i) => ({ p, part: Math.round((n / liste.length) * 100), couleur: COULEURS_PAYS[Math.min(i, 3)] }));
   // Poids du premier pays parmi les sociétés notées de la même zone
-  const zone = actions.filter((a) => a.inv != null && (!etat.continent || a.c === etat.continent));
+  const zone = actions.filter((a) => a.inv != null && dansZone(a));
   const [paysTete] = premiers[0];
   const poids = Math.round((zone.filter((a) => a.p === paysTete).length / Math.max(zone.length, 1)) * 100);
   boite.hidden = false;
-  boite.innerHTML = `<p><strong>${echapper(paysTete)} : ${parts[0].part} % du radar</strong>, alors que ce pays ne pèse que ${poids} % des sociétés notées${etat.continent ? ` de cette zone` : ""}.</p>
+  const zoneTexte = etat.continents.length ? ` de ${etat.continents.length > 1 ? "ces continents" : "ce continent"}` : "";
+  const comparaison = parts[0].part >= poids + 5
+    ? `alors que ce pays ne pèse que ${poids} % des sociétés notées${zoneTexte}`
+    : `pour ${poids} % des sociétés notées${zoneTexte}`;
+  boite.innerHTML = `<p><strong>${echapper(paysTete)} : ${parts[0].part} % du radar</strong>, ${comparaison}.</p>
     <div class="barre-pays" aria-hidden="true">${parts.map((x) => `<span style="width:${x.part}%;background:${x.couleur}"></span>`).join("")}</div>
     <div class="legende-pays">${parts.map((x) => `<span><i style="background:${x.couleur}"></i>${echapper(x.p)} ${x.part} %</span>`).join("")}</div>`;
 }
@@ -342,7 +355,7 @@ function rendreRadar() {
   el("radar-critere").textContent = f.note_min != null
     ? `Note d'au moins ${f.note_min}, parmi les ${100 - f.valorisation_min} % les moins chères de leur secteur, sans risque de faillite apparent (situation financière d'au moins ${f.situation_min}), plus de ${nombre(f.capi_min_eur / 1e6, 0)} M€ de capitalisation.`
     : "";
-  const tous = radar.filter(({ a }) => (!etat.continent || a.c === etat.continent) && (!etat.sansAnalystes || sansAnalystes(a)));
+  const tous = radar.filter(({ a }) => dansZone(a) && (!etat.sansAnalystes || sansAnalystes(a)));
   const liste = tous.filter(({ a }) => !ignores[a.s]);
   const nbIgnores = tous.length - liste.length;
   el("radar-compte").textContent = `${nombre(liste.length, 0)} société${liste.length > 1 ? "s" : ""}`;
