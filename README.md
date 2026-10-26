@@ -19,7 +19,7 @@ Ensuite tout est automatique : le calcul tourne **chaque nuit**. GitHub retarde 
 ## Les pages du site
 
 - **Accueil** : tes favoris (avec un signal « à revoir » quand la note a perdu 15 points, que la société n'est plus bon marché, que sa situation financière devient fragile ou après 6 mois sans réexamen), les publications de résultats des 7 jours, le **radar des pépites** et le **contexte économique**.
-- **Tableau complet** (`tableau.html`) : toutes les sociétés, avec les filtres et les fiches.
+- **Screener** (`tableau.html`) : toutes les sociétés, avec les filtres et les fiches.
 - **Test sur le passé** (`retro.html`) : ce que la note aurait donné ces dernières années.
 
 Le radar garde les sociétés notées au moins 75, parmi les 35 % les moins chères de leur secteur, avec une situation financière d'au moins 30 (sans risque de faillite apparent) et plus de 100 M€ de capitalisation. Ces seuils se règlent dans `config.py` (rubrique « Radar »). « Ignorer 90 jours » et les favoris sont gardés dans le navigateur.

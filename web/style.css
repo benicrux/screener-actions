@@ -361,6 +361,11 @@ details summary { cursor: pointer; color: var(--accent); }
 .tag-favori { background: var(--or-fond); color: var(--or); }
 .tag-radar { background: var(--moy-fond); color: var(--accent); }
 .puces { display: flex; flex-wrap: wrap; gap: 6px; }
+.filtres-radar { display: flex; flex-direction: column; gap: 8px; }
+.filtre-ligne { display: flex; gap: 10px; align-items: flex-start; }
+.filtre-nom { flex: none; width: 78px; padding-top: 10px; font-size: 13px; color: var(--encre-2); }
+.filtre-ligne .puces { flex: 1; min-width: 0; }
+.filtre-aide { margin: 0 0 0 88px; font-size: 13px; color: var(--encre-2); }
 .puces button { min-height: 38px; padding: 0 13px; border-radius: 999px; border: 1px solid var(--filet); background: var(--surface); cursor: pointer; font-size: 14px; }
 .puces button[aria-pressed="true"] { background: var(--encre); color: var(--fond); border-color: var(--encre); }
 .puces button.bascule-puce { border-style: dashed; border-color: var(--encre-2); background: transparent; }

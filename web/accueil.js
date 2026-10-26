@@ -27,11 +27,15 @@ const FORT = {
 const GROUPES = ["Taux des banques centrales", "Taux à 10 ans", "Inflation sur un an",
   "Matières premières", "Devises, marché et emploi"];
 const COULEURS_PAYS = ["var(--accent)", "#5d8aa2", "#a9c3d1", "var(--filet)"];
+// « Grandes valeurs » : plus de 10 milliards de dollars de capitalisation, le seuil des
+// « large caps » ; en pratique, les sociétés des grands indices (CAC 40, S&P 500, Nikkei…)
+const SEUIL_GRANDES_USD = 10e9;
+const TAILLES = [["", "Toutes"], ["grandes", "Grandes valeurs"], ["autres", "Petites et moyennes"]];
 
 let actions = [], parSymbole = new Map(), radar = [], filtre = {}, statut = {}, macro = null;
 let favoris = lire("pepites.favoris", {});
 let ignores = lire("pepites.ignores", {});
-let etat = Object.assign({ continents: [], sansAnalystes: false }, lire("pepites.accueil", {}));
+let etat = Object.assign({ continents: [], taille: "", sansAnalystes: false }, lire("pepites.accueil", {}));
 // Ancienne préférence : un seul continent
 if (!Array.isArray(etat.continents)) etat.continents = etat.continent ? [etat.continent] : [];
 delete etat.continent;
@@ -158,7 +162,7 @@ function rendreFavoris() {
     .sort((x, y) => (x.a ? 0 : 1) - (y.a ? 0 : 1) || String(x.a?.n ?? x.s).localeCompare(String(y.a?.n ?? y.s), "fr"));
   if (!liste.length) {
     el("favoris-resume").textContent = "";
-    el("favoris").innerHTML = `<p class="vide-texte">Aucun favori pour l'instant. Ajoute-en depuis le radar ci-dessous ou depuis le tableau, avec le bouton ☆ Favori.</p>`;
+    el("favoris").innerHTML = `<p class="vide-texte">Aucun favori pour l'instant. Ajoute-en depuis le radar ci-dessous ou depuis le screener, avec le bouton ☆ Favori.</p>`;
     return;
   }
   let aRevoir = 0;
@@ -255,27 +259,51 @@ function construireContinents() {
   const liste = [["", "Monde"], ...CONTINENTS.filter((c) => presents.has(c)).map((c) => [c, c])];
   etat.continents = etat.continents.filter((c) => presents.has(c));
   el("radar-continents").innerHTML = liste.map(([c, nom]) =>
-    `<button type="button" data-c="${echapper(c)}" aria-pressed="${c ? etat.continents.includes(c) : !etat.continents.length}">${echapper(nom)}</button>`).join("") +
+    `<button type="button" data-c="${echapper(c)}" aria-pressed="${c ? etat.continents.includes(c) : !etat.continents.length}">${echapper(nom)}</button>`).join("");
+  el("radar-taille").innerHTML = TAILLES.map(([k, nom]) =>
+    `<button type="button" data-taille="${k}" aria-pressed="${etat.taille === k}">${nom}</button>`).join("") +
     `<button type="button" class="bascule-puce" data-analystes aria-pressed="${etat.sansAnalystes}">Sans analystes seulement</button>`;
-  el("radar-continents").onclick = (e) => {
+  el("radar-taille").onclick = (e) => {
     const b = e.target.closest("button");
     if (!b) return;
     if (b.hasAttribute("data-analystes")) etat.sansAnalystes = !etat.sansAnalystes;
-    else if (!b.dataset.c) etat.continents = [];  // « Monde » : tous les continents
+    else etat.taille = b.dataset.taille;
+    majFiltresRadar();
+  };
+  el("radar-continents").onclick = (e) => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    if (!b.dataset.c) etat.continents = [];  // « Monde » : tous les continents
     else {
       const c = b.dataset.c;
       etat.continents = etat.continents.includes(c) ? etat.continents.filter((x) => x !== c) : [...etat.continents, c];
     }
-    ecrire("pepites.accueil", etat);
-    affichees = PAR_PAGE;
-    el("radar-continents").querySelectorAll("button[data-c]").forEach((x) =>
-      x.setAttribute("aria-pressed", String(x.dataset.c ? etat.continents.includes(x.dataset.c) : !etat.continents.length)));
-    el("radar-continents").querySelector("[data-analystes]").setAttribute("aria-pressed", String(etat.sansAnalystes));
-    rendreRadar();
+    majFiltresRadar();
   };
+  majFiltresRadar(false);
 }
 
-function dansZone(a) { return !etat.continents.length || etat.continents.includes(a.c); }
+function majFiltresRadar(enregistrer = true) {
+  if (enregistrer) { ecrire("pepites.accueil", etat); affichees = PAR_PAGE; }
+  el("radar-continents").querySelectorAll("button[data-c]").forEach((x) =>
+    x.setAttribute("aria-pressed", String(x.dataset.c ? etat.continents.includes(x.dataset.c) : !etat.continents.length)));
+  el("radar-taille").querySelectorAll("button[data-taille]").forEach((x) =>
+    x.setAttribute("aria-pressed", String(x.dataset.taille === etat.taille)));
+  el("radar-taille").querySelector("[data-analystes]").setAttribute("aria-pressed", String(etat.sansAnalystes));
+  const seuil = `${nombre(SEUIL_GRANDES_USD / USD_PAR_EUR / 1e9, 0)} Md€`;
+  const aide = el("radar-aide");
+  aide.hidden = !etat.taille;
+  aide.textContent = etat.taille === "grandes"
+    ? `Plus de ${seuil} de capitalisation : en pratique, les sociétés des grands indices (CAC 40, S&P 500, Nikkei 225…).`
+    : etat.taille === "autres" ? `Moins de ${seuil} de capitalisation : les sociétés moins connues, souvent moins suivies.` : "";
+  if (enregistrer) rendreRadar();
+}
+
+function dansZone(a) {
+  const grande = (a.cap || 0) >= SEUIL_GRANDES_USD;
+  return (!etat.continents.length || etat.continents.includes(a.c))
+    && (!etat.taille || (etat.taille === "grandes" ? grande : !grande));
+}
 
 function rendreConcentration(liste) {
   const boite = el("concentration");
@@ -292,7 +320,8 @@ function rendreConcentration(liste) {
   const [paysTete] = premiers[0];
   const poids = Math.round((zone.filter((a) => a.p === paysTete).length / Math.max(zone.length, 1)) * 100);
   boite.hidden = false;
-  const zoneTexte = etat.continents.length ? ` de ${etat.continents.length > 1 ? "ces continents" : "ce continent"}` : "";
+  const zoneTexte = [etat.continents.length ? ` de ${etat.continents.length > 1 ? "ces continents" : "ce continent"}` : "",
+    etat.taille === "grandes" ? " parmi les grandes valeurs" : etat.taille === "autres" ? " parmi les petites et moyennes" : ""].join("");
   const comparaison = parts[0].part >= poids + 5
     ? `alors que ce pays ne pèse que ${poids} % des sociétés notées${zoneTexte}`
     : `pour ${poids} % des sociétés notées${zoneTexte}`;
