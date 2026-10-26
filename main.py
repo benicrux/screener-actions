@@ -105,6 +105,13 @@ def main() -> None:
         "usd_par_eur": fx.get("EUR"),
         "depot": os.environ.get("GITHUB_REPOSITORY"),
     }
+    # Date du dernier passage complet (collecte de nuit), gardée par les lancements courts :
+    # sert au créneau de rattrapage du matin, qui ne tourne que si la nuit n'a rien donné
+    ancien = Path("data/statut.json")
+    precedent = json.loads(ancien.read_text()).get("passage_complet") if ancien.exists() else None
+    complet = not sans_collecte and config.BUDGET_MINUTES >= 60
+    statut["passage_complet"] = (dt.datetime.now(dt.timezone.utc).date().isoformat()
+                                 if complet else precedent)
     Path("data").mkdir(exist_ok=True)
     Path("data/statut.json").write_text(json.dumps(statut, ensure_ascii=False, indent=1))
 

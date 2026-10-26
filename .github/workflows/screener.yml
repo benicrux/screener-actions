@@ -4,6 +4,9 @@ on:
   schedule:
     # Chaque jour à 3 h 13 UTC (4 h 13 à Paris en hiver, 5 h 13 en été)
     - cron: "13 3 * * *"
+    # Rattrapage à 9 h 13 UTC : GitHub retarde ou saute parfois les tâches de nuit.
+    # Ne fait rien si le passage complet du jour a déjà eu lieu.
+    - cron: "13 9 * * *"
   workflow_dispatch: # bouton « Run workflow » pour lancer à la main
     inputs:
       minutes:
@@ -24,7 +27,30 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  garde:
+    runs-on: ubuntu-latest
+    outputs:
+      passer: ${{ steps.verif.outputs.passer }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+      - id: verif
+        name: Le passage du jour a-t-il déjà eu lieu ?
+        run: |
+          passer=false
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            fait=$(python3 -c "import json; print(json.load(open('data/statut.json')).get('passage_complet') or '')" 2>/dev/null || true)
+            if [ "$fait" = "$(date -u +%F)" ]; then
+              passer=true
+              echo "Le passage complet du jour a déjà eu lieu : rien à faire."
+            fi
+          fi
+          echo "passer=$passer" >> "$GITHUB_OUTPUT"
+
   calculer:
+    needs: garde
+    if: needs.garde.outputs.passer != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 340
     steps:

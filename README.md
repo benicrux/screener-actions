@@ -14,7 +14,7 @@ Un screener gratuit inspiré de Zone Bourse : environ 27 000 sociétés cotées 
 2. Onglet **Actions** → **Screener** → **Run workflow** → **Run workflow**.
 3. Le site est à l'adresse `https://benicrux.github.io/screener-actions/`. Sur téléphone, « Ajouter à l'écran d'accueil » pour l'avoir comme une appli.
 
-Ensuite tout est automatique : le calcul tourne **chaque nuit**.
+Ensuite tout est automatique : le calcul tourne **chaque nuit**. GitHub retarde parfois les tâches programmées de plusieurs heures, voire les saute : un créneau de rattrapage, en milieu de matinée, relance le calcul seulement si la nuit n'a rien donné.
 
 ## Comment ça marche
 
