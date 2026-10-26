@@ -57,3 +57,11 @@ SANTE_NOTEES_MIN = 20_000     # sociétés notées (environ 24 000 normalement)
 SANTE_GRAVES_MAX = 2_500      # sociétés retirées par les contrôles (quelques centaines normalement)
 # Nuits de suite où Yahoo a bloqué ou n'a rien renvoyé, avant l'alerte par e-mail
 SANTE_NUITS_MAX = 3
+
+# --- Radar de la page d'accueil -----------------------------------------------------
+# Sociétés de qualité bon marché, sans risque de faillite apparent (voir le journal du
+# projet, 26 octobre 2026, pour le choix de ces seuils)
+RADAR_NOTE_MIN = 75            # note investisseur
+RADAR_VALORISATION_MIN = 65    # parmi les 35 % les moins chères de leur secteur
+RADAR_SITUATION_MIN = 30       # situation financière (non notée pour les banques : acceptée)
+RADAR_CAPI_MIN_EUR = 100e6     # capitalisation minimale, en euros

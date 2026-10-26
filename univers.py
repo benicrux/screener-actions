@@ -57,6 +57,9 @@ def construire() -> pd.DataFrame:
         certificats = brut["name"].fillna("").str.contains(
             r"\b(?:GDR|ADR|ADS|CDR)\b|Depositary", regex=True)
         preferentielles = brut["symbol"].str.match(r"^[A-Z]+-P[A-Z]?$")  # actions de préférence US
+        # Fonds d'investissement britanniques classés dans d'autres secteurs (énergie…)
+        fonds |= brut["name"].fillna("").str.contains(
+            r"(?:Income|Infrastructure|Investment|Renewables?) Trust (?:PLC|plc)\b", regex=True)
         brut = brut[~(fonds | adr_gre_a_gre | bdr | certificats | preferentielles)]
 
     brut["suffixe"] = brut["symbol"].map(_suffixe)

@@ -831,6 +831,7 @@ function rendreFiche(a, f) {
 /* ------------------------------------------------------------------ */
 function ouvrirDepuisAdresse() {
   const s = decodeURIComponent(location.hash.slice(1));
+  if (s === "aide") { derniereFocalisation = document.activeElement; montrer("aide"); return; }
   if (s && parSymbole.has(s)) ouvrir(s, false);
 }
 document.getElementById("btn-fermer").onclick = fermer;

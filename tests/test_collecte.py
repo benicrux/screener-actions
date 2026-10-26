@@ -35,6 +35,9 @@ REPONSE = {"quoteSummary": {"result": [{
          "epsTrend": {"current": {"raw": 0.12}, "7daysAgo": {"raw": 0.11},
                       "90daysAgo": {"raw": 0.10}}},
     ]},
+    "calendarEvents": {"earnings": {"earningsDate": [{"raw": 1793318400, "fmt": "2026-10-30"},
+                                                     {"raw": 1793404800, "fmt": "2026-10-31"}],
+                                    "isEarningsDateEstimate": True}},
     "earningsHistory": {"history": [
         {"quarter": {"raw": 1719705600, "fmt": "2024-06-30"}, "surprisePercent": {"raw": 0.1}},
         {"quarter": {"raw": 1735603200, "fmt": "2024-12-31"}, "surprisePercent": {"raw": -0.05}},
@@ -54,6 +57,7 @@ def test_extraction():
     assert ligne["fin_exercice"] == "2024-12-31"
     assert ligne["surprises"] == "2024-06-30:0.1000;2024-12-31:-0.0500"
     assert len(archive) == 2 and archive[1]["exercice"] == "2026-12-31"
+    assert ligne["prochaine_publication"] == "2026-10-30" and ligne["publication_estimee"] is True
 
 
 if __name__ == "__main__":

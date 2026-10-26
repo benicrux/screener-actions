@@ -19,6 +19,7 @@ import config
 
 STATUT = Path("data/statut.json")
 HISTORIQUE = Path("data/retro_historique.csv")
+MACRO = Path("data/macro.json")
 
 
 def degradation(lignes: list[dict], zone: str) -> list[str]:
@@ -45,7 +46,7 @@ def degradation(lignes: list[dict], zone: str) -> list[str]:
     return p
 
 
-def problemes(statut: dict, moment: str, collecte_faite: bool) -> list[str]:
+def problemes(statut: dict, moment: str, collecte_faite: bool, macro: dict | None = None) -> list[str]:
     p = []
     if moment == "avant-publication":
         cours = statut.get("cours_du_jour") or 0
@@ -68,6 +69,16 @@ def problemes(statut: dict, moment: str, collecte_faite: bool) -> list[str]:
                      "Les cours du jour peuvent encore arriver, mais les comptes et prévisions "
                      "ne sont plus relus. Si cela dure, Yahoo a sans doute changé son "
                      "fonctionnement : le programme est à adapter.")
+        if macro:
+            import datetime as dt
+            age = (dt.date.today() - dt.date.fromisoformat(macro.get("maj", "2000-01-01"))).days
+            nb = len(macro.get("indicateurs") or [])
+            if age > 7:
+                p.append(f"Les indicateurs économiques de la page d'accueil n'ont pas été mis à jour "
+                         f"depuis {age} jours.")
+            elif nb < 9:
+                p.append(f"Seuls {nb} indicateurs économiques sur 18 ont pu être lus : une ou "
+                         "plusieurs sources ont changé (détail dans data/macro.json, « erreurs »).")
     return p
 
 
@@ -82,7 +93,8 @@ def main() -> None:
         print("::error::Fichier data/statut.json absent : le calcul n'a pas abouti.")
         sys.exit(1)
     statut = json.loads(STATUT.read_text())
-    signaler(problemes(statut, moment, collecte_faite=not os.environ.get("SANS_COLLECTE")))
+    macro = json.loads(MACRO.read_text()) if MACRO.exists() else None
+    signaler(problemes(statut, moment, collecte_faite=not os.environ.get("SANS_COLLECTE"), macro=macro))
 
 
 def signaler(liste: list[str]) -> None:

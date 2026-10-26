@@ -22,7 +22,8 @@ import univers as module_univers
 
 
 COLONNES_TEXTE = ["maj", "statut", "devise_cours", "devise_comptes", "devise_bpa", "devise_ca",
-                  "surprises", "ex_a0", "ex_a1", "fin_exercice"]
+                  "surprises", "ex_a0", "ex_a1", "fin_exercice", "prochaine_publication",
+                  "publication_estimee"]
 
 
 def assembler(univ: pd.DataFrame, donnees: pd.DataFrame, cours: pd.DataFrame) -> pd.DataFrame:

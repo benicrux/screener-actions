@@ -16,6 +16,16 @@ Un screener gratuit inspiré de Zone Bourse : environ 27 000 sociétés cotées 
 
 Ensuite tout est automatique : le calcul tourne **chaque nuit**. GitHub retarde parfois les tâches programmées de plusieurs heures, voire les saute : un créneau de rattrapage, en milieu de matinée, relance le calcul seulement si la nuit n'a rien donné.
 
+## Les pages du site
+
+- **Accueil** : tes favoris (avec un signal « à revoir » quand la note a perdu 15 points, que la société n'est plus bon marché, que sa situation financière devient fragile ou après 6 mois sans réexamen), les publications de résultats des 7 jours, le **radar des pépites** et le **contexte économique**.
+- **Tableau complet** (`tableau.html`) : toutes les sociétés, avec les filtres et les fiches.
+- **Test sur le passé** (`retro.html`) : ce que la note aurait donné ces dernières années.
+
+Le radar garde les sociétés notées au moins 75, parmi les 35 % les moins chères de leur secteur, avec une situation financière d'au moins 30 (sans risque de faillite apparent) et plus de 100 M€ de capitalisation. Ces seuils se règlent dans `config.py` (rubrique « Radar »). « Ignorer 90 jours » et les favoris sont gardés dans le navigateur.
+
+Le contexte économique (taux, inflation, matières premières, devises, chômage) vient de la Réserve fédérale de Saint-Louis, de la BCE, d'Eurostat, de la Banque d'Angleterre et de Yahoo Finance, relus chaque nuit par `macro.py`. La plupart des indicateurs ont une source de secours. Si aucune ne répond, les chiffres de la veille sont gardés ; un indicateur jamais lu est simplement masqué. Le contrôle de santé prévient par e-mail si plus de la moitié manquent ou si les chiffres ont plus de 7 jours.
+
 ## Comment ça marche
 
 - **Chaque nuit**, le robot récupère les cours du jour de toutes les sociétés, puis les données détaillées (comptes, prévisions des analystes, publications) d'un lot de quelques milliers de sociétés. Le monde entier est relu en une à deux semaines. Les premiers jours, les grandes sociétés arrivent d'abord, les petites ensuite.
@@ -94,10 +104,11 @@ Tout est dans `config.py` : pondérations de la note investisseur, durée de col
 | `collecte.py` | Lecture des données Yahoo Finance et archive des prévisions |
 | `notes.py` | Calcul des indicateurs et des notes sur 100 |
 | `controles.py` | Contrôles de cohérence des chiffres avant le calcul des notes |
+| `macro.py` | Indicateurs économiques de la page d'accueil |
 | `sante.py` | Contrôle de santé après chaque calcul et chaque test trimestriel : déclenche les e-mails d'alerte |
 | `retro.py`, `retro_us.py` | Tests sur le passé (monde ; États-Unis avec les comptes de la SEC) |
 | `tests/` | Tests automatiques du programme |
-| `rendu.py`, `web/` | Le site (tableau, filtres, fiches, favoris) |
+| `rendu.py`, `web/` | Le site : accueil (`index.html`, `accueil.js`), tableau et fiches (`tableau.html`, `app.js`) |
 | `data/` | Liste des sociétés, taux de change, archive des prévisions, statut |
 | branche `donnees` | Les données détaillées de chaque société, remplacées à chaque passage |
 | branches `retro`, `retro-us` | L'historique de comptes et de cours des tests sur le passé |

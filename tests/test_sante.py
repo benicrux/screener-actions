@@ -32,6 +32,16 @@ def test_plusieurs_nuits():
     assert len(problemes({**NORMAL, "nuits_difficiles": 3}, "plusieurs-nuits", True)) == 1
 
 
+def test_indicateurs_economiques():
+    import datetime as dt
+    frais = {"maj": dt.date.today().isoformat(), "indicateurs": [{}] * 17}
+    assert problemes(NORMAL, "plusieurs-nuits", True, macro=frais) == []
+    vieux = {"maj": "2026-01-01", "indicateurs": [{}] * 17}
+    assert len(problemes(NORMAL, "plusieurs-nuits", True, macro=vieux)) == 1
+    maigre = {"maj": dt.date.today().isoformat(), "indicateurs": [{}] * 4}
+    assert len(problemes(NORMAL, "plusieurs-nuits", True, macro=maigre)) == 1
+
+
 def test_tests_trimestriels():
     from sante import degradation
     l = lambda e, g=5, n=5: {"zone": "Monde (depuis fin 2023)", "ecart_mieux_moins_bien": str(e),
@@ -49,4 +59,5 @@ if __name__ == "__main__":
     test_notes_et_anomalies()
     test_plusieurs_nuits()
     test_tests_trimestriels()
+    test_indicateurs_economiques()
     print("OK")

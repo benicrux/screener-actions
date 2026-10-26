@@ -26,7 +26,7 @@ DONNEES = Path("data/donnees.csv")
 ESTIMATIONS = Path("data/estimations")
 DEVISES = Path("data/devises.csv")
 MODULES = ["price", "summaryDetail", "defaultKeyStatistics", "financialData",
-           "earningsTrend", "earningsHistory"]
+           "earningsTrend", "earningsHistory", "calendarEvents"]
 URL_RESUME = "https://query2.finance.yahoo.com/v10/finance/quoteSummary/{}"
 URL_COTES = "https://query1.finance.yahoo.com/v7/finance/quote"
 
@@ -160,7 +160,7 @@ def _extraire(symbole: str, js: dict) -> tuple[dict, list[dict]]:
         "symbole": symbole,
         "maj": dt.date.today().isoformat(),
         "statut": "ok",
-        "version": 4,
+        "version": 5,
         "nom_yahoo": pr.get("longName") or pr.get("shortName"),
         "devise_cours": pr.get("currency") or sd.get("currency"),
         "devise_comptes": fd.get("financialCurrency"),
@@ -238,6 +238,12 @@ def _extraire(symbole: str, js: dict) -> tuple[dict, list[dict]]:
                                    or l.get(f"ca_{cle}_moy") is not None):
             archive.append({"date": l["maj"], "symbole": symbole, "exercice": l[f"ex_{cle}"],
                             "bpa_moy": l.get(f"bpa_{cle}_moy"), "ca_moy": l.get(f"ca_{cle}_moy")})
+
+    # Prochaine publication de résultats (date annoncée, ou estimée par Yahoo)
+    publication = (resultat.get("calendarEvents") or {}).get("earnings") or {}
+    dates = sorted(d for d in (_date(x) for x in (publication.get("earningsDate") or [])) if d)
+    l["prochaine_publication"] = dates[0] if dates else None
+    l["publication_estimee"] = bool(publication.get("isEarningsDateEstimate")) if dates else None
 
     surprises = []
     for h in ((resultat.get("earningsHistory") or {}).get("history") or []):

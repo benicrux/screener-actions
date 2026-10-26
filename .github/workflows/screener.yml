@@ -79,6 +79,11 @@ jobs:
             echo "Pas encore de données détaillées."
           fi
 
+      - name: Indicateurs économiques de la page d'accueil (un échec n'interrompt pas le calcul)
+        if: github.event_name != 'push'
+        continue-on-error: true
+        run: python macro.py
+
       - name: Collecter les données et calculer les notes
         env:
           # Lancement automatique après une modification du planning ou du site : court (15 min)

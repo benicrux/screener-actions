@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Pépites — screener d'actions</title>
-<meta name="description" content="Screener d'actions mondial, notes sur 100 inspirées de Zone Bourse.">
+<title>Pépites — accueil</title>
+<meta name="description" content="Screener d'actions mondial : favoris, radar des pépites et contexte économique.">
 <meta name="theme-color" content="#12263a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,92 +12,80 @@
 <link rel="stylesheet" href="style.css?v=__VERSION__">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M9 4h14l7 9-14 16L2 13z' fill='%23c9962b'/%3E%3C/svg%3E">
 </head>
-<body>
-<header class="entete">
+<body class="accueil">
+<div class="acc-page">
+
+<header class="acc-entete">
   <div class="marque">
     <h1>Pépites</h1>
     <p class="couverture" id="couverture">Chargement des données…</p>
     <p class="alerte-maj" id="alerte-maj" role="status" hidden></p>
   </div>
-  <div class="liens-entete">
-    <button class="aide" id="btn-aide" type="button" aria-haspopup="dialog">Comment lire les notes</button>
-    <a class="aide" href="retro.html">Test sur le passé</a>
-  </div>
+  <nav class="nav-pages" aria-label="Pages du site">
+    <a href="./" aria-current="page">Accueil</a>
+    <a href="tableau.html">Tableau complet</a>
+    <a href="retro.html">Test sur le passé</a>
+    <a href="tableau.html#aide">Comment lire les notes</a>
+  </nav>
 </header>
 
-<section class="filtres" aria-label="Filtres">
-  <label class="recherche">
-    <span class="sr">Rechercher une action</span>
-    <input id="recherche" type="search" placeholder="Rechercher une société ou un symbole" autocomplete="off">
-  </label>
+<div class="acc-grille">
+  <div class="acc-principal">
 
-  <div class="continents" id="continents" role="group" aria-label="Continents (plusieurs choix possibles)"></div>
-  <div class="pays-filtre">
-    <button type="button" class="lien" id="btn-pays" aria-expanded="false" aria-controls="liste-pays">Pays : tous</button>
-    <div class="liste-pays" id="liste-pays" hidden></div>
+    <section class="acc-section" aria-labelledby="t-surveiller">
+      <div class="acc-titre">
+        <h2 id="t-surveiller">À surveiller</h2>
+        <p>Tes favoris et les résultats publiés dans les 7 jours</p>
+      </div>
+      <div class="acc-deux">
+        <div class="carte">
+          <div class="carte-tete"><h3>Mes favoris</h3><span id="favoris-resume"></span></div>
+          <div id="favoris"></div>
+        </div>
+        <div class="carte">
+          <div class="carte-tete"><h3>Cette semaine : publications</h3><span>favoris et radar</span></div>
+          <div id="semaine"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="acc-section" aria-labelledby="t-radar">
+      <div class="acc-titre acc-titre-ligne">
+        <div>
+          <h2 id="t-radar">Radar des pépites</h2>
+          <p id="radar-critere"></p>
+        </div>
+        <span class="acc-compte" id="radar-compte"></span>
+      </div>
+      <div class="puces" id="radar-continents" role="group" aria-label="Continent"></div>
+      <div class="carte concentration" id="concentration" hidden></div>
+      <div class="radar-cartes" id="radar"></div>
+      <div class="radar-pied">
+        <button type="button" class="bouton-contour" id="radar-plus" hidden></button>
+        <button type="button" class="lien" id="radar-ignores" hidden></button>
+      </div>
+    </section>
+
   </div>
 
-  <div class="echelles" id="echelles"></div>
+  <aside class="acc-cote" aria-labelledby="t-contexte">
+    <div class="acc-titre">
+      <h2 id="t-contexte">Le contexte économique</h2>
+      <p class="legende-fleches">Quand le chiffre augmente :
+        <span><svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12"><path d="M6 1.5l4.5 7.5h-9z" class="f-hausse"/></svg>secteurs favorisés</span>
+        <span><svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12"><path d="M6 10.5L1.5 3h9z" class="f-baisse"/></svg>secteurs pénalisés</span>
+      </p>
+    </div>
+    <div id="contexte"><p class="vide-texte">Chargement…</p></div>
+  </aside>
+</div>
 
-  <button type="button" class="lien filtres-bascule" id="btn-filtres" aria-expanded="false" aria-controls="selecteurs">Plus de filtres</button>
-  <div class="selecteurs" id="selecteurs">
-    <label><span>Secteur</span><select id="f-secteur"></select></label>
-    <label><span>Industrie</span><select id="f-industrie"></select></label>
-    <label class="bascule"><input type="checkbox" id="f-favoris"><span>Mes favoris</span></label>
-  </div>
+<footer class="acc-pied">
+  <p>Mis à jour chaque nuit par GitHub, à partir de Yahoo Finance, de la Réserve fédérale de Saint-Louis, de la BCE, d'Eurostat et de la Banque d'Angleterre.</p>
+  <p>Un outil de repérage, pas un conseil en investissement.</p>
+</footer>
 
-  <div class="resume-filtres">
-    <p id="compte" aria-live="polite"></p>
-    <button type="button" id="btn-reinit" class="lien">Effacer les filtres</button>
-  </div>
-</section>
-
-<main>
-  <div class="tableau-cadre">
-    <table class="tableau" id="tableau">
-      <thead><tr id="entetes"></tr></thead>
-      <tbody id="lignes"></tbody>
-    </table>
-  </div>
-  <button type="button" id="btn-plus" class="plus" hidden>Afficher 100 actions de plus</button>
-  <p class="vide" id="vide" hidden>Aucune action ne correspond. Élargissez les filtres ou effacez-les.</p>
-</main>
-
-<div class="voile" id="voile" hidden></div>
-<aside class="fiche" id="fiche" role="dialog" aria-modal="true" aria-labelledby="fiche-nom" hidden>
-  <div class="fiche-barre">
-    <button type="button" class="fermer" id="btn-fermer">Fermer</button>
-  </div>
-  <div class="fiche-corps" id="fiche-corps"></div>
-</aside>
-
-<aside class="fiche" id="aide" role="dialog" aria-modal="true" aria-labelledby="aide-titre" hidden>
-  <div class="fiche-barre">
-    <button type="button" class="fermer" id="btn-fermer-aide">Fermer</button>
-  </div>
-  <div class="fiche-corps texte">
-    <h2 id="aide-titre">Comment lire les notes</h2>
-    <p>Chaque note va de 1 à 100. Une note de 80 signifie que la société fait mieux que 80 % des sociétés de son secteur sur ce critère. Les banques et assureurs sont comparés entre eux.</p>
-    <p>Le curseur de capitalisation garde les sociétés dont la valeur en Bourse, en euros, est comprise entre les deux bornes choisies. Les étoiles fixent une note investisseur minimale : une étoile garde toutes les sociétés notées, deux étoiles 20 et plus, trois 40 et plus, quatre 60 et plus, cinq 80 et plus. Touchez de nouveau l'étoile choisie pour retirer le filtre.</p>
-    <p class="echelle"><span class="n n-bas">25</span> faible <span class="n n-moy">55</span> moyen <span class="n n-haut">75</span> bon <span class="n n-or">88</span> pépite (notes investisseur et trading)</p>
-    <dl class="glossaire">
-      <dt>Note investisseur</dt><dd>La synthèse pour un placement de moyen-long terme : valorisation 30 %, croissance 15 %, rentabilité 15 %, situation financière 10 %, révisions des analystes 15 %, publications 10 %, visibilité 5 %.</dd>
-      <dt>Note trading</dt><dd>La synthèse de court terme : valorisation, révisions de la semaine, visibilité.</dd>
-      <dt>Valorisation</dt><dd>Valeur d'entreprise rapportée au chiffre d'affaires passé et prévu. Plus c'est bas, meilleure est la note. Banques : PER et cours / actif net.</dd>
-      <dt>Croissance</dt><dd>Progression du chiffre d'affaires sur un an et prévue par les analystes, les prévisions comptant davantage.</dd>
-      <dt>Rentabilité</dt><dd>Marge nette passée et prévue. Banques : marge et rentabilité des fonds propres.</dd>
-      <dt>Situation financière</dt><dd>Trésorerie nette rapportée au chiffre d'affaires, et dette nette rapportée à l'EBITDA. Non calculée pour les banques.</dd>
-      <dt>Révisions</dt><dd>Les analystes relèvent-ils leurs prévisions de bénéfice par action ? Sur 3 mois, 4 mois et un an (long terme) ou sur la semaine (court terme).</dd>
-      <dt>Publication</dt><dd>Les derniers résultats ont-ils dépassé les attentes des analystes ?</dd>
-      <dt>Visibilité</dt><dd>Les analystes sont-ils d'accord entre eux ? Des prévisions resserrées donnent une bonne note.</dd>
-      <dt>PER, potentiel, rendement</dt><dd>Cours / bénéfice par action, écart entre l'objectif de cours moyen des analystes et le cours, dividende / cours.</dd>
-    </dl>
-    <p>Les données viennent de Yahoo Finance et de FinanceDatabase. Elles peuvent comporter des erreurs, surtout pour les petites sociétés : vérifiez toujours avant d'investir. Ce screener est un outil de repérage, pas un conseil en investissement.</p>
-    <p>Les notes ont été testées sur le passé : <a href="retro.html">voir les résultats</a>.</p>
-    <p id="aide-maj"></p>
-  </div>
-</aside>
-
-<script src="app.js?v=__VERSION__"></script>
+</div>
+<script src="accueil.js?v=__VERSION__"></script>
 </body>
 </html>

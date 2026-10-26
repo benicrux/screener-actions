@@ -11,6 +11,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+import config
 from referentiels import TAILLES_FR
 
 SITE = Path("site")
@@ -32,7 +33,34 @@ COLONNES = [
     ("dn", "dette_nette_ebitda", 1), ("p52", "perf_52s", 3), ("m", "maj", None),
     ("fin", "financiere", None), ("g", "groupe", None), ("cou", "n_couverture", 0),
     ("px", "cours", "sig"), ("dv", "devise_cours", None),
+    ("pp", "prochaine_publication", None), ("ppe", "publication_estimee", None),
 ]
+RADAR_ENTREES = Path("data/radar_entrees.json")
+
+
+def radar(visibles: pd.DataFrame, usd_par_eur: float | None) -> pd.DataFrame:
+    """Les sociétés du radar de la page d'accueil, les mieux notées d'abord."""
+    n = lambda c: pd.to_numeric(visibles.get(c), errors="coerce")
+    capi_eur = n("capi_usd") / (usd_par_eur or 1.0)
+    garde = (n("n_investisseur").ge(config.RADAR_NOTE_MIN)
+             & n("n_valorisation").ge(config.RADAR_VALORISATION_MIN)
+             & (n("n_situation_fi").isna() | n("n_situation_fi").ge(config.RADAR_SITUATION_MIN))
+             & capi_eur.ge(config.RADAR_CAPI_MIN_EUR)
+             & n("ca_usd").gt(0))  # un chiffre d'affaires publié : écarte les véhicules sans activité
+    r = visibles[garde].assign(_note=n("n_investisseur"), _val=n("n_valorisation"))
+    return r.sort_values(["_note", "_val"], ascending=False)
+
+
+def dates_entree(symboles: list[str], aujourd_hui: str) -> dict[str, str]:
+    """Date d'entrée dans le radar de chaque société ; une société qui en sort l'oublie."""
+    if RADAR_ENTREES.exists():
+        anciennes = json.loads(RADAR_ENTREES.read_text())
+        entrees = {s: anciennes.get(s, aujourd_hui) for s in symboles}
+    else:  # tout premier calcul : date inconnue, personne n'est marqué « nouveau »
+        entrees = {s: "" for s in symboles}
+    RADAR_ENTREES.parent.mkdir(exist_ok=True)
+    RADAR_ENTREES.write_text(json.dumps(entrees, ensure_ascii=False, indent=0, sort_keys=True))
+    return entrees
 
 
 def _propre(x, arrondi=None):
@@ -79,11 +107,11 @@ def generer(table: pd.DataFrame, statut: dict) -> None:
     # Numéro de version dans les adresses des fichiers : le navigateur ne mélange pas
     # une ancienne page gardée en mémoire avec les nouvelles données
     version = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%d%H%M")
-    for nom in ("index.html", "app.js", "retro.html"):
+    for nom in ("index.html", "tableau.html", "app.js", "accueil.js", "retro.html"):
         f = SITE / nom
         f.write_text(f.read_text().replace("__VERSION__", version))
     (SITE / "data" / "fiches").mkdir(parents=True, exist_ok=True)
-    for nom in ("retro_resultats.json", "retro_us_resultats.json", "retro_historique.csv"):
+    for nom in ("retro_resultats.json", "retro_us_resultats.json", "retro_historique.csv", "macro.json"):
         if (Path("data") / nom).exists():
             shutil.copy(Path("data") / nom, SITE / "data" / nom)
 
@@ -106,6 +134,18 @@ def generer(table: pd.DataFrame, statut: dict) -> None:
                "champs": [c for c, _, _ in COLONNES], "dicos": dicos, "lignes": lignes}
     (SITE / "data" / "screener.json").write_text(
         json.dumps(tableau, ensure_ascii=False, separators=(",", ":")))
+
+    # Page d'accueil : le radar (avec la date d'entrée de chaque société)
+    r = radar(visibles, statut.get("usd_par_eur"))
+    entrees = dates_entree(r["symbole"].tolist(), dt.date.today().isoformat())
+    accueil = {"maj": dt.date.today().isoformat(),
+               "filtre": {"note_min": config.RADAR_NOTE_MIN,
+                          "valorisation_min": config.RADAR_VALORISATION_MIN,
+                          "situation_min": config.RADAR_SITUATION_MIN,
+                          "capi_min_eur": config.RADAR_CAPI_MIN_EUR},
+               "radar": [[s, entrees[s]] for s in r["symbole"]]}
+    (SITE / "data" / "accueil.json").write_text(
+        json.dumps(accueil, ensure_ascii=False, separators=(",", ":")))
 
     resumes = _resumes()
     fiches: dict[str, dict] = {}

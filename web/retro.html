@@ -16,6 +16,7 @@
   .page h2 { margin: 30px 0 8px; font-size: 18px; font-weight: 700; padding-bottom: 4px; border-bottom: 1px solid var(--filet); }
   .page p { margin: 10px 0; max-width: 66ch; }
   .retour { display: inline-block; margin-bottom: 14px; color: var(--accent); text-underline-offset: 3px; }
+  .retour + .retour { margin-left: 16px; }
   .verdict { font-size: 17px; }
   .graphe { display: grid; gap: 8px; margin: 14px 0 6px; }
   .rangee { display: grid; grid-template-columns: 118px minmax(0, 1fr) 62px; align-items: center; gap: 10px; font-size: 14px; }
@@ -34,7 +35,7 @@
 </head>
 <body>
 <main class="page">
-  <a class="retour" href="./">← Retour au screener</a>
+  <a class="retour" href="./">← Accueil</a> <a class="retour" href="tableau.html">Tableau des actions</a>
   <h1>Test sur le passé</h1>
   <p id="intro">Chargement des résultats…</p>
 
