@@ -32,7 +32,12 @@ def test_controles():
         "ancien": societe(date_cours="2026-08-01"),
         "devise": societe(ps_yahoo=40.0),
         "per": societe(per_yahoo=60.0),
-        "per_prevu": societe(per_prevu_yahoo=50.0),
+        "per_prevu": societe(per_prevu_yahoo=50.0),         # PER prévu de Yahoo : ignoré
+        # Cours en euros, comptes en yens : Yahoo divise sans convertir (ratio faux de 176)
+        "yahoo_sans_change": societe(ps_yahoo=2.0 / 176, per_yahoo=15.0 / 176, taux_cours=1.0,
+                                     taux_principale=1.0, taux_comptes=1 / 176, taux_bpa=1 / 176),
+        # Résultat exceptionnel corrigé par nous : on compare le PER avant correction
+        "exceptionnel": societe(per_12m=40.0, per_12m_brut=15.0, per_yahoo=15.5),
         "rendement": societe(rendement_ref=0.6),
         "non_lue": societe(statut="introuvable", cours=np.nan),
     }
@@ -40,9 +45,9 @@ def test_controles():
     graves = set(d.index[d["anomalie_grave"]])
     avec = set(d.index[d["anomalies"].notna()])
     assert graves == {"capi", "fourchette", "ancien", "devise"}, graves
-    assert avec == graves | {"per", "per_prevu", "rendement"}, avec
+    assert avec == graves | {"per", "rendement"}, avec
     assert np.isnan(d.loc["per", "per"]) and np.isnan(d.loc["per", "per_12m"])
-    assert np.isnan(d.loc["per_prevu", "per_a1"]) and d.loc["per_prevu", "per_12m"] == 15.0
+    assert d.loc["per_prevu", "per_a1"] == 12.0 and d.loc["yahoo_sans_change", "ve_ca"] == 2.1
     assert np.isnan(d.loc["rendement", "rendement_ref"])
     assert np.isnan(d.loc["devise", "ve_ca"])
     assert d.loc["saine", "ve_ca"] == 2.1

@@ -115,6 +115,9 @@ def indicateurs(base: pd.DataFrame, fx: dict[str, float]) -> pd.DataFrame:
     t_comptes = d["devise_comptes"].fillna(principale).map(taux)
     t_bpa = d.get("devise_bpa", pd.Series(index=d.index)).fillna(d["devise_comptes"]).fillna(principale).map(taux)
     t_ca = d.get("devise_ca", pd.Series(index=d.index)).fillna(d["devise_comptes"]).fillna(principale).map(taux)
+    # Gardés pour les contrôles : Yahoo calcule certains ratios sans convertir les devises
+    d["taux_cours"], d["taux_principale"] = t_cours, t_principale
+    d["taux_comptes"], d["taux_bpa"] = t_comptes, t_bpa
 
     cours, capi, actions = _num(d, "cours"), _num(d, "capi"), _num(d, "actions")
     d["financiere"] = d["industrie_en"].isin(INDUSTRIES_FINANCIERES)
@@ -157,6 +160,8 @@ def indicateurs(base: pd.DataFrame, fx: dict[str, float]) -> pd.DataFrame:
     ecart_cours = np.abs(np.log(_ratio(bpa_cours, reference).where(lambda x: x > 0)))
     ecart_comptes = np.abs(np.log(_ratio(bpa_comptes, reference).where(lambda x: x > 0)))
     bpa_12m = bpa_cours.where(~(ecart_comptes < ecart_cours), bpa_comptes)
+    # PER avant la correction des résultats exceptionnels : sert à comparer avec Yahoo
+    d["per_12m_brut"] = _ratio(d["prix_usd"], bpa_12m.where(bpa_12m > 0))
 
     # Résultats exceptionnels : une marge nette très supérieure à la marge opérationnelle
     # vient d'une plus-value ou d'une participation, pas de l'activité (ex. holdings).

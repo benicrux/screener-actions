@@ -38,6 +38,18 @@ def _hors(a: pd.Series, b: pd.Series, facteur: float = ECART_MAX) -> pd.Series:
     return (a > 0) & (b > 0) & ((r > facteur) | (r < 1 / facteur))
 
 
+def _hors_yahoo(a: pd.Series, b: pd.Series, *facteurs: pd.Series) -> pd.Series:
+    """Comme _hors, pour un ratio de Yahoo. Quand le cours et les comptes sont dans des devises
+    différentes (ou le cours en centièmes : pence, agorot…), Yahoo divise souvent l'un par
+    l'autre sans convertir : son ratio est alors faux d'un facteur égal au taux de change.
+    On n'alerte que si notre chiffre s'écarte du ratio de Yahoo tel quel ET de chacune de
+    ses versions converties."""
+    hors = _hors(a, b)
+    for k in facteurs:
+        hors &= _hors(a, b * k.fillna(1.0))
+    return hors
+
+
 def _fmt(x: float) -> str:
     return f"{x:.1f}".replace(".", ",")
 
@@ -87,22 +99,25 @@ def controler(d: pd.DataFrame, aujourd_hui: dt.date | None = None) -> pd.DataFra
 
     # 5. Rapport capitalisation / chiffre d'affaires très différent de celui de Yahoo :
     #    signe d'une erreur de devise entre le cours et les comptes
+    t_cours, t_princ = _num(d, "taux_cours"), _num(d, "taux_principale")
+    t_comptes, t_bpa = _num(d, "taux_comptes"), _num(d, "taux_bpa")
+    facteurs = (t_cours / t_comptes, t_princ / t_comptes, t_cours / t_bpa, t_princ / t_bpa)
     ps = _num(d, "capi_usd") / _num(d, "ca_usd").where(lambda s: s > 0)
     ps_yahoo = _num(d, "ps_yahoo")
-    signaler(_hors(ps, ps_yahoo),
+    signaler(_hors_yahoo(ps, ps_yahoo, *facteurs[:2]),
              lambda i: (f"capitalisation / chiffre d'affaires de {_fmt(ps[i])} contre "
                         f"{_fmt(ps_yahoo[i])} chez Yahoo (erreur de devise probable)"),
              True, ("ve_ca", "ve_ebitda"))
 
-    # 6. PER très différent de celui de Yahoo : bénéfice par action douteux
-    per12, per_yahoo = _num(d, "per_12m"), _num(d, "per_yahoo")
-    signaler(_hors(per12, per_yahoo),
+    # 6. PER très différent de celui de Yahoo : bénéfice par action douteux (devise, unité).
+    #    On compare notre PER avant correction des résultats exceptionnels, pour ne pas
+    #    confondre cette correction volontaire avec une erreur. Le PER prévu de Yahoo
+    #    (forwardPE) n'est pas utilisé : trop souvent faux, surtout en Asie.
+    per12 = _num(d, "per_12m_brut").fillna(_num(d, "per_12m"))
+    per_yahoo = _num(d, "per_yahoo")
+    signaler(_hors_yahoo(per12, per_yahoo, *facteurs),
              lambda i: f"PER de {_fmt(per12[i])} contre {_fmt(per_yahoo[i])} chez Yahoo",
              False, ("per", "per_12m", "per_a1"))
-    per_a1, per_prevu = _num(d, "per_a1"), _num(d, "per_prevu_yahoo")
-    signaler(_hors(per_a1, per_prevu) & ~_hors(per12, per_yahoo),
-             lambda i: f"PER prévu de {_fmt(per_a1[i])} contre {_fmt(per_prevu[i])} chez Yahoo",
-             False, ("per", "per_a1"))
 
     # 7. Rendement du dividende aberrant (souvent un dividende exceptionnel)
     rdt = _num(d, "rendement_ref")
