@@ -49,3 +49,11 @@ TAILLE_MIN_SECTEUR = 30
 ARCHIVE_MOIS_CONSERVES = 15
 # Une société n'est archivée qu'une fois tous les N jours (suffisant pour les révisions)
 ARCHIVE_INTERVALLE_JOURS = 7
+
+# --- Contrôle de santé après chaque calcul ----------------------------------------
+# En dessous de ces seuils, le site n'est pas republié et GitHub envoie un e-mail d'échec
+SANTE_COURS_MIN = 20_000      # cours du jour reçus de Yahoo (environ 26 000 normalement)
+SANTE_NOTEES_MIN = 20_000     # sociétés notées (environ 24 000 normalement)
+SANTE_GRAVES_MAX = 2_500      # sociétés retirées par les contrôles (quelques centaines normalement)
+# Nuits de suite où Yahoo a bloqué ou n'a rien renvoyé, avant l'alerte par e-mail
+SANTE_NUITS_MAX = 3

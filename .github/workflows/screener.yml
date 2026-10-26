@@ -88,6 +88,11 @@ jobs:
           SANS_COLLECTE: ${{ github.event_name == 'push' && '1' || '' }}
         run: python main.py
 
+      - name: Contrôle de santé (données anormales = site non republié et e-mail d'alerte)
+        env:
+          SANS_COLLECTE: ${{ github.event_name == 'push' && '1' || '' }}
+        run: python sante.py avant-publication
+
       - name: Sauvegarder les données
         if: always()
         env:
@@ -132,3 +137,14 @@ jobs:
     steps:
       - id: deploiement
         uses: actions/deploy-pages@v4
+
+  surveiller:
+    # Alerte par e-mail (le lancement échoue) si Yahoo bloque depuis plusieurs nuits
+    needs: publier
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+      - name: Contrôle de santé sur plusieurs nuits
+        run: python3 sante.py plusieurs-nuits

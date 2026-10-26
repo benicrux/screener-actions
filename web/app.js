@@ -196,6 +196,26 @@ async function charger() {
   }
 }
 
+/* Bandeau si les données n'ont pas été relues depuis plus de 3 jours : la tâche programmée
+   de GitHub s'est peut-être arrêtée */
+function alerteDonneesAnciennes(jour) {
+  const el = document.getElementById("alerte-maj");
+  const t = Date.parse(`${String(jour).slice(0, 10)}T12:00:00Z`);
+  const jours = isFinite(t) ? Math.floor((Date.now() - t) / 864e5) : 0;
+  el.hidden = jours <= 3;
+  if (el.hidden) return;
+  el.textContent = `Attention : données non mises à jour depuis ${jours} jours. ` +
+    "La tâche automatique de GitHub semble arrêtée.";
+  if (statut.depot) {
+    const lien = document.createElement("a");
+    lien.href = `https://github.com/${statut.depot}#si-quelque-chose-ne-va-pas`;
+    lien.target = "_blank";
+    lien.rel = "noopener";
+    lien.textContent = "Que faire ?";
+    el.append(" ", lien);
+  }
+}
+
 function afficherCouverture(maj) {
   const el = document.getElementById("couverture");
   const notees = actions.filter((a) => a.inv != null).length;
@@ -203,7 +223,11 @@ function afficherCouverture(maj) {
     el.textContent = "Le robot n'a encore récupéré aucune donnée. Les premières sociétés apparaissent après son premier passage.";
     return;
   }
-  let texte = `${nombre(notees, 0)} actions notées dans le monde, mise à jour du ${date(maj)}.`;
+  // Date des données : dernier passage complet de nuit (une simple republication du site
+  // ne relit pas les données)
+  const donneesDu = statut.passage_complet || maj;
+  let texte = `${nombre(notees, 0)} actions notées dans le monde, mise à jour du ${date(donneesDu)}.`;
+  alerteDonneesAnciennes(donneesDu);
   if (statut.jamais_lues > 0) {
     texte += statut.jamais_lues > 1
       ? ` ${nombre(statut.jamais_lues, 0)} sociétés restent à lire`

@@ -106,12 +106,19 @@ def main() -> None:
         "depot": os.environ.get("GITHUB_REPOSITORY"),
     }
     # Date du dernier passage complet (collecte de nuit), gardée par les lancements courts :
-    # sert au créneau de rattrapage du matin, qui ne tourne que si la nuit n'a rien donné
+    # sert au créneau de rattrapage du matin, qui ne tourne que si la nuit n'a rien donné.
+    # Et nombre de nuits de suite où Yahoo a bloqué ou n'a rien renvoyé (lu par sante.py).
     ancien = Path("data/statut.json")
-    precedent = json.loads(ancien.read_text()).get("passage_complet") if ancien.exists() else None
+    precedent = json.loads(ancien.read_text()) if ancien.exists() else {}
     complet = not sans_collecte and config.BUDGET_MINUTES >= 60
     statut["passage_complet"] = (dt.datetime.now(dt.timezone.utc).date().isoformat()
-                                 if complet else precedent)
+                                 if complet else precedent.get("passage_complet"))
+    difficiles = precedent.get("nuits_difficiles") or 0
+    if complet:
+        mauvaise = (bilan.get("lues", 0) == 0 or "bloqu" in str(bilan.get("arret") or "")
+                    or len(cours) < config.SANTE_COURS_MIN)
+        difficiles = difficiles + 1 if mauvaise else 0
+    statut["nuits_difficiles"] = difficiles
     Path("data").mkdir(exist_ok=True)
     Path("data/statut.json").write_text(json.dumps(statut, ensure_ascii=False, indent=1))
 

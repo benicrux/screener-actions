@@ -35,6 +35,43 @@ Ensuite tout est automatique : le calcul tourne **chaque nuit**. GitHub retarde 
 
 Les tests trimestriels relisent toutes les données et ajoutent les dates qui ont désormais 12 mois de recul. Chaque résultat est ajouté à `data/retro_historique.csv`, affiché sur la page : si l'écart entre les mieux et les moins bien notées s'effondre d'un trimestre à l'autre, c'est le signe qu'il faut revoir la note. Les pondérations, elles, ne changent jamais toutes seules.
 
+## Fonctionnement autonome
+
+Le screener n'a besoin de personne pour tourner : tout se fait sur GitHub, gratuitement.
+
+| Quand | Ce qui se passe |
+|---|---|
+| Chaque nuit à 4 h 13 (heure d'hiver ; 5 h 13 en été) | Cours du jour, lecture d'un lot de comptes et de prévisions, contrôles, notes, contrôle de santé, publication du site |
+| Chaque matin à 10 h 13 (11 h 13 en été) | Rattrapage, seulement si GitHub n'a pas lancé la tâche de nuit (cela arrive) |
+| Tous les 30 jours | Mise à jour de la liste mondiale des sociétés (entrées et sorties de la cote) |
+| Chaque trimestre | Les deux tests sur le passé, puis la vérification que la note tient encore |
+
+La bibliothèque qui lit Yahoo (yfinance) se met à jour toute seule à chaque lancement, dans sa version 1.x : quand Yahoo change son fonctionnement, le correctif publié par ses auteurs est en général repris sans rien faire.
+
+### Les alertes
+
+GitHub envoie un **e-mail** au propriétaire du dépôt chaque fois qu'un lancement échoue. Vérifiez une fois que c'est bien réglé : sur GitHub, photo de profil → **Settings** → **Notifications** → rubrique **Actions** : cocher **Email** et « Only notify for failed workflows ».
+
+Un lancement échoue, et vous recevez donc un e-mail, dans ces cas :
+
+- **Les tests du programme échouent** : rien n'est calculé ni publié, le site garde sa version précédente.
+- **Le contrôle de santé trouve des données anormales** (trop peu de cours reçus, trop peu de sociétés notées, trop de sociétés retirées par les contrôles) : le site garde sa version précédente.
+- **Yahoo bloque ou ne renvoie rien depuis 3 nuits de suite.**
+- **Un test trimestriel se dégrade** : les mieux notées ne font plus mieux que les moins bien notées, ou leur avantage a été divisé par deux.
+
+Les seuils sont réglables dans `config.py` (rubrique « Contrôle de santé »). Enfin, le site affiche un **bandeau rouge** si les données n'ont pas été mises à jour depuis plus de 3 jours, par exemple si GitHub a cessé de lancer les tâches.
+
+### Si quelque chose ne va pas
+
+1. **Lire le message** : onglet **Actions** du dépôt → cliquer sur le lancement marqué d'une croix rouge. Le résumé en haut de la page explique le problème en français.
+2. **Selon le cas** :
+   - *Yahoo bloque ou renvoie peu de cours* : c'est souvent passager. Attendre deux ou trois nuits. Si cela dure plus d'une semaine, Yahoo a sans doute changé son fonctionnement et le programme est à adapter (voir point 3).
+   - *Les tâches programmées sont désactivées* (GitHub le fait après 60 jours sans activité, et prévient par e-mail) : onglet **Actions** → choisir le workflow à gauche → bouton **Enable workflow**.
+   - *Un test trimestriel s'est dégradé* : rien n'est cassé, c'est une information. La page « Test sur le passé » montre l'historique ; c'est le moment de se demander s'il faut revoir les pondérations dans `config.py`.
+   - *Relancer un calcul sans attendre la nuit* : onglet **Actions** → **Screener** → **Run workflow** → bouton vert.
+   - *Changer l'adresse de contact exigée par la SEC* (test américain) : **Settings** → **Secrets and variables** → **Actions** → `SEC_CONTACT` → modifier. Format : `Prénom Nom adresse@exemple.fr`.
+3. **Pour une vraie panne**, confiez le dépôt à quelqu'un qui code, ou à un assistant IA : ce fichier, le tableau « Organisation du code » ci-dessous et les commentaires du code suffisent pour s'y retrouver. L'historique des choix (pourquoi chaque règle existe) est dans le journal du projet ; gardez-en une copie téléchargée (PDF ou Word).
+
 ## Régler le screener
 
 Tout est dans `config.py` : pondérations de la note investisseur, durée de collecte, taille des lots. Pour modifier : ouvrez le fichier sur GitHub, cliquez le crayon ✏️, changez la valeur, puis **Commit changes**. Le changement s'applique au calcul suivant.
@@ -57,6 +94,7 @@ Tout est dans `config.py` : pondérations de la note investisseur, durée de col
 | `collecte.py` | Lecture des données Yahoo Finance et archive des prévisions |
 | `notes.py` | Calcul des indicateurs et des notes sur 100 |
 | `controles.py` | Contrôles de cohérence des chiffres avant le calcul des notes |
+| `sante.py` | Contrôle de santé après chaque calcul et chaque test trimestriel : déclenche les e-mails d'alerte |
 | `retro.py`, `retro_us.py` | Tests sur le passé (monde ; États-Unis avec les comptes de la SEC) |
 | `tests/` | Tests automatiques du programme |
 | `rendu.py`, `web/` | Le site (tableau, filtres, fiches, favoris) |

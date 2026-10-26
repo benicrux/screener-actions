@@ -7,7 +7,7 @@ on:
   workflow_dispatch: # bouton « Run workflow » pour lancer à la main
   push:
     branches: [main]
-    paths: ["retro.py", ".github/workflows/retro.yml"]
+    paths: ["retro.py"]
 
 permissions:
   contents: write
@@ -73,3 +73,6 @@ jobs:
               git push -q
             fi
           fi
+
+      - name: La note tient-elle encore ? (sinon, le lancement échoue et GitHub envoie un e-mail)
+        run: python3 sante.py tests-trimestriels "Monde"

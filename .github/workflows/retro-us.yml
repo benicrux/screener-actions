@@ -7,7 +7,7 @@ on:
   workflow_dispatch: # bouton « Run workflow » pour lancer à la main (secret SEC_CONTACT requis)
   push:
     branches: [main]
-    paths: ["retro_us.py", ".github/workflows/retro-us.yml"]
+    paths: ["retro_us.py"]
 
 permissions:
   contents: write
@@ -75,3 +75,6 @@ jobs:
             git pull -q --rebase --autostash
             git push -q
           fi
+
+      - name: La note tient-elle encore ? (sinon, le lancement échoue et GitHub envoie un e-mail)
+        run: python3 sante.py tests-trimestriels "États-Unis"
