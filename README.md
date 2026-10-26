@@ -24,7 +24,7 @@ Ensuite tout est automatique : le calcul tourne **chaque nuit**. GitHub retarde 
 
 Le radar garde les sociétés notées au moins 75, parmi les 35 % les moins chères de leur secteur, avec une situation financière d'au moins 30 (sans risque de faillite apparent) et plus de 100 M€ de capitalisation. Ces seuils se règlent dans `config.py` (rubrique « Radar »). « Ignorer 90 jours » et les favoris sont gardés dans le navigateur.
 
-Le filtre **Indice** du radar sépare les sociétés des grands indices (S&P 500, Nasdaq-100, Dow Jones, S&P/TSX 60, Euro Stoxx 50, CAC 40, DAX, FTSE 100, SMI, Nikkei 225, Hang Seng, NIFTY 50, S&P/ASX 50) de toutes les autres ; il ne montre que les indices des continents choisis, avec le nombre de sociétés du radar dans chacun. La composition des indices est relue une fois par mois sur Wikipédia par `indices.py` : si une page ne répond pas ou a changé, la composition précédente est gardée.
+Le screener a un filtre **Indice** : les sociétés des grands indices (S&P 500, Nasdaq-100, Dow Jones, S&P/TSX 60, Euro Stoxx 50, CAC 40, DAX, FTSE 100, SMI, Nikkei 225, Hang Seng, NIFTY 50, S&P/ASX 50), toutes celles qui n'y sont pas, ou un indice précis. La fiche et les cartes du radar indiquent les indices de la société. La composition des indices est relue une fois par mois sur Wikipédia par `indices.py` : si une page ne répond pas ou a changé, la composition précédente est gardée.
 
 Le contexte économique (taux, inflation, matières premières, devises, chômage) vient de la Réserve fédérale de Saint-Louis, de la BCE, d'Eurostat, de la Banque d'Angleterre, de l'OCDE, de la BRI (Banque des règlements internationaux), de DBnomics et de Yahoo Finance, relus chaque nuit par `macro.py`. La plupart des indicateurs ont une source de secours. Si aucune ne répond, les chiffres de la veille sont gardés ; un indicateur jamais lu est simplement masqué. Le contrôle de santé prévient par e-mail si plus de la moitié manquent ou si les chiffres ont plus de 7 jours.
 
@@ -108,7 +108,7 @@ Tout est dans `config.py` : pondérations de la note investisseur, durée de col
 | `notes.py` | Calcul des indicateurs et des notes sur 100 |
 | `controles.py` | Contrôles de cohérence des chiffres avant le calcul des notes |
 | `macro.py` | Indicateurs économiques de la page d'accueil |
-| `indices.py` | Composition des grands indices (filtre « Indice » du radar), relue chaque mois sur Wikipédia |
+| `indices.py` | Composition des grands indices (filtre « Indice » du screener), relue chaque mois sur Wikipédia |
 | `sante.py` | Contrôle de santé après chaque calcul et chaque test trimestriel : déclenche les e-mails d'alerte |
 | `retro.py`, `retro_us.py` | Tests sur le passé (monde ; États-Unis avec les comptes de la SEC) |
 | `tests/` | Tests automatiques du programme |

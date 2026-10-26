@@ -47,7 +47,7 @@ const CRITERES_INV = [["valorisation", "val", "valorisation"], ["croissance", "c
   ["revisions_lt", "rlt", "révisions des analystes sur 1 an"], ["publication", "pub", "publications"],
   ["visibilite", "vis", "visibilité"]];
 const ETAT_DEFAUT = {
-  continents: [], paysExclus: [], secteur: "", industrie: "",
+  continents: [], paysExclus: [], secteur: "", industrie: "", indice: "",
   favoris: false, q: "", tri: "inv", sens: -1, etoiles: {}, capi: [0, DERNIER_PALIER], info: 0,
 };
 const SAUVE = lire("pepites.filtres", {}) || {};
@@ -73,6 +73,9 @@ function texteEtoiles(n) {
 let affichees = PAR_PAGE;
 let actions = [];
 let parSymbole = new Map();
+// Grands indices (composition relue chaque mois sur Wikipédia) ; symbole -> identifiants
+let indices = [], indicesDe = new Map();
+const ORDRE_CONTINENTS = ["Europe", "Amérique du Nord", "Asie", "Amérique latine", "Moyen-Orient", "Océanie", "Afrique"];
 let statut = {};
 let favoris = lire("pepites.favoris", {});
 
@@ -165,14 +168,23 @@ function consensusTexte(r) {
 /* ------------------------------------------------------------------ */
 async function charger() {
   try {
-    const [t, s] = await Promise.all([
+    const [t, s, acc] = await Promise.all([
       fetch(`data/screener.json?v=${VERSION}`).then((r) => {
         if (!r.ok) throw new Error("donnees-absentes");
         return r.json();
       }),
       fetch(`data/statut.json?v=${VERSION}`).then((r) => r.json()).catch(() => ({})),
+      fetch(`data/accueil.json?v=${VERSION}`).then((r) => r.json()).catch(() => ({})),
     ]);
     statut = s;
+    const rang = (c) => { const k = ORDRE_CONTINENTS.indexOf(c); return k < 0 ? 99 : k; };
+    indices = ((acc && acc.indices) || []).map((i, k) => ({ ...i, k }))
+      .sort((x, y) => rang(x.continent) - rang(y.continent) || x.k - y.k);
+    indices.forEach((i) => i.membres.forEach((sym) => {
+      if (!indicesDe.has(sym)) indicesDe.set(sym, []);
+      indicesDe.get(sym).push(i.id);
+    }));
+    if (etat.indice && !["grands", "hors"].includes(etat.indice) && !indices.some((i) => i.id === etat.indice)) etat.indice = "";
     if (t.usd_par_eur) USD_PAR_EUR = t.usd_par_eur;
     const champs = t.champs;
     actions = t.lignes.map((l) => {
@@ -254,6 +266,34 @@ function options(select, valeurs, tous, choisie) {
   select.innerHTML = `<option value="">${tous}</option>` +
     valeurs.map((v) => `<option value="${echapper(v)}"${v === choisie ? " selected" : ""}>${echapper(v)}</option>`).join("");
 }
+// Liste « Indice » : choix généraux, puis les indices rangés par continent
+function optionsIndices(select) {
+  const choix = (v, nom) => `<option value="${echapper(v)}"${v === etat.indice ? " selected" : ""}>${echapper(nom)}</option>`;
+  if (!indices.length) {
+    select.innerHTML = choix("", "Tous (composition bientôt disponible)");
+    select.disabled = true;
+    return;
+  }
+  select.disabled = false;
+  const groupes = [];
+  indices.forEach((i) => {
+    const g = groupes.find((x) => x[0] === i.continent);
+    if (g) g[1].push(i); else groupes.push([i.continent, [i]]);
+  });
+  select.innerHTML = choix("", "Tous") + choix("grands", "Dans un grand indice") + choix("hors", "Hors grands indices")
+    + groupes.map(([c, liste]) => `<optgroup label="${echapper(c)}">${liste.map((i) => choix(i.id, i.nom)).join("")}</optgroup>`).join("");
+}
+function dansIndice(a) {
+  if (!etat.indice) return true;
+  const ids = indicesDe.get(a.s);
+  if (etat.indice === "grands") return !!ids;
+  if (etat.indice === "hors") return !ids;
+  return !!ids && ids.includes(etat.indice);
+}
+function nomsIndices(s) {
+  const ids = indicesDe.get(s) || [];
+  return indices.filter((i) => ids.includes(i.id)).map((i) => i.nom);
+}
 function uniques(liste, cle) {
   return [...new Set(liste.map((a) => a[cle]).filter(Boolean))].sort((a, b) => a.localeCompare(b, "fr"));
 }
@@ -295,6 +335,7 @@ function construireFiltres() {
   };
   document.getElementById("f-secteur").onchange = (e) => { etat.secteur = e.target.value; etat.industrie = ""; majFiltres(); };
   document.getElementById("f-industrie").onchange = (e) => { etat.industrie = e.target.value; majFiltres(); };
+  document.getElementById("f-indice").onchange = (e) => { etat.indice = e.target.value; majFiltres(); };
   const echelles = document.getElementById("echelles");
   echelles.innerHTML = ECHELLES.map(({ k, nom }) => `
     <div class="echelle-filtre" role="group" aria-label="${nom} minimale">
@@ -409,6 +450,7 @@ function majFiltres(remettre = true) {
   options(document.getElementById("f-secteur"), uniques(actions, "se"), "Tous", etat.secteur);
   const dansSecteur = etat.secteur ? actions.filter((a) => a.se === etat.secteur) : actions;
   options(document.getElementById("f-industrie"), uniques(dansSecteur, "i"), "Toutes", etat.industrie);
+  optionsIndices(document.getElementById("f-indice"));
   const [cmin, cmax] = etat.capi;
   document.getElementById("capi-min").value = String(cmin);
   document.getElementById("capi-max").value = String(cmax);
@@ -434,7 +476,7 @@ function majFiltres(remettre = true) {
 }
 
 function libelleFiltres() {
-  const actifs = ["secteur", "industrie", "favoris"].filter((k) => etat[k]).length;
+  const actifs = ["secteur", "industrie", "indice", "favoris"].filter((k) => etat[k]).length;
   const ouvert = document.getElementById("selecteurs").classList.contains("ouvert");
   document.getElementById("btn-filtres").textContent =
     (ouvert ? "Masquer les filtres" : "Plus de filtres") + (actifs ? ` (${actifs} actif${actifs > 1 ? "s" : ""})` : "");
@@ -452,6 +494,7 @@ function filtrer() {
     !exclus.has(a.p) &&
     (!etat.secteur || a.se === etat.secteur) &&
     (!etat.industrie || a.i === etat.industrie) &&
+    dansIndice(a) &&
     (a.cap != null && a.cap / USD_PAR_EUR >= PALIERS_CAPI[etat.capi[0]] &&
       a.cap / USD_PAR_EUR < PALIERS_CAPI[etat.capi[1]]) &&
     ECHELLES.every(({ k }) => !etat.etoiles[k] || (a[k] != null && a[k] >= seuilEtoiles(etat.etoiles[k]))) &&
@@ -728,7 +771,7 @@ function rendreFiche(a, f) {
 
   return `
   <h2 id="fiche-nom">${echapper(a.n)}</h2>
-  <p class="ident">${echapper(a.s)}, ${echapper(a.p || "")}, ${echapper(a.i || a.se || "")}. Taille : ${echapper((a.t || "").toLowerCase())}.</p>
+  <p class="ident">${echapper(a.s)}, ${echapper(a.p || "")}, ${echapper(a.i || a.se || "")}. Taille : ${echapper((a.t || "").toLowerCase())}.${nomsIndices(a.s).length ? ` Indice${nomsIndices(a.s).length > 1 ? "s" : ""} : ${echapper(nomsIndices(a.s).join(", "))}.` : ""}</p>
   ${f.isin ? `<p class="isin">ISIN <span class="isin-code">${echapper(f.isin)}</span> <button type="button" class="bouton petit" data-copier="${echapper(f.isin)}">Copier</button></p>` : ""}
   <p class="cours"><strong>${prix(a.px, dcours)}</strong> &nbsp;capitalisation ${capi(a.cap)}, sur un an ${signe(a.p52, 0)}</p>
   ${suivi}
