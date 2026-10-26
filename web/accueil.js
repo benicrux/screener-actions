@@ -70,7 +70,12 @@ function classeNote(v, synthese) {
 function couleurBarre(v) { return v >= 70 ? "var(--haut)" : v >= 40 ? "var(--moy)" : "var(--bas)"; }
 function etoiles(v) { return v >= 80 ? 5 : v >= 60 ? 4 : v >= 40 ? 3 : v >= 20 ? 2 : 1; }
 function lienFiche(s) { return `tableau.html#${encodeURIComponent(s)}`; }
-function sansAnalystes(a) { return a.rlt == null && a.pub == null && a.vis == null; }
+function sansAnalystes(a) { return !a.na && a.rlt == null && a.pub == null && a.vis == null; }
+function texteAnalystes(a) {
+  if (sansAnalystes(a)) return "Aucun analyste";
+  if (!a.na) return "Suivie par les analystes";
+  return a.na === 1 ? "1 seul analyste" : `${a.na} analystes`;
+}
 const el = (id) => document.getElementById(id);
 
 /* ------------------------------------------------------------------ */
@@ -315,7 +320,7 @@ function carteRadar({ a, depuis }) {
     </div>
     <div class="badges">
       ${nouveau ? `<span class="badge badge-nouveau">Nouveau cette semaine</span>` : ""}
-      <span class="badge">${sansAnalystes(a) ? "Aucun analyste" : "Suivie par les analystes"}</span>
+      <span class="badge${a.na === 1 ? " badge-fragile" : ""}">${texteAnalystes(a)}</span>
     </div>
     <div class="mini-notes">${mini}</div>
     <div class="raisons">
@@ -422,7 +427,7 @@ function rendreContexte() {
             <line x1="0" y1="35.5" x2="120" y2="35.5" vector-effect="non-scaling-stroke"/>
             <polyline points="${courbe(i.serie)}" vector-effect="non-scaling-stroke"/>
           </svg>
-          <div class="axe"><span>${mois(i.serie[0][0])}</span><span>${mois(i.serie[i.serie.length - 1][0])}</span></div>
+          <div class="axe-dates"><span>${mois(i.serie[0][0])}</span><span>${mois(i.serie[i.serie.length - 1][0])}</span></div>
         </div>
         ${i.hausse || i.baisse ? `<div class="effets">
           ${i.hausse ? `<span>${FLECHE_HAUT}${echapper(i.hausse)}</span>` : ""}

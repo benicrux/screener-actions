@@ -15,8 +15,9 @@
   .page h1 { margin: 0; font-size: 30px; line-height: 1.05; font-weight: 800; font-variation-settings: "wdth" 118; }
   .page h2 { margin: 30px 0 8px; font-size: 18px; font-weight: 700; padding-bottom: 4px; border-bottom: 1px solid var(--filet); }
   .page p { margin: 10px 0; max-width: 66ch; }
-  .retour { display: inline-block; margin-bottom: 14px; color: var(--accent); text-underline-offset: 3px; }
-  .retour + .retour { margin-left: 16px; }
+  .nav-haut { margin-bottom: 26px; }
+  .page { max-width: 1180px; margin: 0 auto; }
+  .page > :not(.nav-haut) { max-width: 760px; }
   .verdict { font-size: 17px; }
   .graphe { display: grid; gap: 8px; margin: 14px 0 6px; }
   .rangee { display: grid; grid-template-columns: 118px minmax(0, 1fr) 62px; align-items: center; gap: 10px; font-size: 14px; }
@@ -35,7 +36,15 @@
 </head>
 <body>
 <main class="page">
-  <a class="retour" href="./">← Accueil</a> <a class="retour" href="tableau.html">Tableau des actions</a>
+  <header class="acc-entete nav-haut">
+    <a class="marque-nom" href="./">Pépites</a>
+    <nav class="nav-pages" aria-label="Pages du site">
+      <a href="./">Accueil</a>
+      <a href="tableau.html">Tableau complet</a>
+      <a href="retro.html" aria-current="page">Test sur le passé</a>
+      <a href="tableau.html#aide">Comment lire les notes</a>
+    </nav>
+  </header>
   <h1>Test sur le passé</h1>
   <p id="intro">Chargement des résultats…</p>
 

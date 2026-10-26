@@ -34,6 +34,7 @@ COLONNES = [
     ("fin", "financiere", None), ("g", "groupe", None), ("cou", "n_couverture", 0),
     ("px", "cours", "sig"), ("dv", "devise_cours", None),
     ("pp", "prochaine_publication", None), ("ppe", "publication_estimee", None),
+    ("na", "analystes", 0),
 ]
 RADAR_ENTREES = Path("data/radar_entrees.json")
 
@@ -117,6 +118,9 @@ def generer(table: pd.DataFrame, statut: dict) -> None:
 
     t = table.copy()
     t["taille_fr"] = t["taille"].map(TAILLES_FR)
+    # Nombre d'analystes qui publient une prévision (à défaut, qui donnent un avis)
+    nb = lambda c: pd.to_numeric(t[c], errors="coerce") if c in t else pd.Series(np.nan, index=t.index)
+    t["analystes"] = nb("bpa_a1_nb").fillna(nb("nb_analystes")).fillna(nb("bpa_a0_nb"))
     visibles = t[t["statut"].eq("ok") & t["capi_usd"].notna()]
 
     lignes = [[_propre(r.get(src), arr) for _, src, arr in COLONNES]

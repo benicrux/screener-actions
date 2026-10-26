@@ -58,7 +58,7 @@ button, input, select { font: inherit; color: inherit; }
 
 /* En-tête */
 .entete {
-  display: flex; align-items: flex-end; justify-content: space-between; gap: 12px;
+  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px;
   padding: 20px 16px 8px;
 }
 .marque h1 {
@@ -315,10 +315,13 @@ details summary { cursor: pointer; color: var(--accent); }
 .acc-page { max-width: 1180px; margin: 0 auto; padding: 20px 16px 48px; display: flex; flex-direction: column; gap: 30px; }
 .acc-entete { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 14px; }
 .nav-pages { display: flex; flex-wrap: wrap; gap: 6px; }
-.nav-pages a {
+.marque-nom { font-size: 34px; line-height: 1; font-weight: 800; font-variation-settings: "wdth" 125; letter-spacing: -0.01em; color: var(--encre); text-decoration: none; }
+.nav-pages a, .nav-pages button {
   display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 999px;
-  border: 1px solid var(--filet); background: var(--surface); color: var(--encre); font-size: 14px; text-decoration: none;
+  border: 1px solid var(--filet); background: var(--surface); color: var(--encre); font-size: 14px;
+  text-decoration: none; cursor: pointer; white-space: nowrap;
 }
+.nav-pages a:hover, .nav-pages button:hover { border-color: var(--encre-2); }
 .nav-pages a[aria-current="page"] { background: var(--encre); color: var(--fond); border-color: var(--encre); font-weight: 600; }
 .acc-grille { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 34px 28px; }
 .acc-principal { flex: 999 1 620px; min-width: 0; display: flex; flex-direction: column; gap: 34px; }
@@ -376,6 +379,7 @@ details summary { cursor: pointer; color: var(--accent); }
 .badges { display: flex; flex-wrap: wrap; gap: 6px; }
 .badge { font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--filet); color: var(--encre-2); }
 .badge-nouveau { background: var(--moy-fond); border-color: var(--moy-fond); color: var(--accent); }
+.badge-fragile { border-color: var(--bas); color: var(--bas); }
 .mini-notes { display: flex; flex-direction: column; gap: 6px; }
 .mini-note { display: grid; grid-template-columns: 132px minmax(0, 1fr) 34px; gap: 10px; align-items: center; font-size: 13px; }
 .mini-note > span:first-child { color: var(--encre-2); }
@@ -411,7 +415,7 @@ details summary { cursor: pointer; color: var(--accent); }
 .courbe { width: 100%; height: 36px; display: block; }
 .courbe polyline { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
 .courbe line { stroke: var(--filet); stroke-width: 1; }
-.axe { display: flex; justify-content: space-between; font-size: 11px; color: var(--encre-2); }
+.axe-dates { display: flex; justify-content: space-between; font-size: 11px; color: var(--encre-2); }
 .effets { display: flex; flex-direction: column; gap: 3px; padding-top: 6px; border-top: 1px solid var(--filet); font-size: 12px; line-height: 1.35; }
 .effets span { display: flex; gap: 6px; align-items: flex-start; }
 .effets svg { flex: none; margin-top: 2px; }
