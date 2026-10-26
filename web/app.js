@@ -555,8 +555,25 @@ async function ouvrir(s, pousser = true) {
   try { f = await chargerFiche(s); } catch (e) { f = null; }
   corps.innerHTML = rendreFiche(a, f || {});
   corps.querySelector("[data-favori]").onclick = (e) => basculerFavori(a, f || {}, e.currentTarget);
+  const copier = corps.querySelector("[data-copier]");
+  if (copier) copier.onclick = () => copierTexte(copier.dataset.copier, copier);
   corps.querySelectorAll("[data-pair]").forEach((tr) => { tr.onclick = () => ouvrir(tr.dataset.pair); });
   document.getElementById("fiche").scrollTop = 0;
+}
+
+/* Copie l'ISIN, à coller dans la recherche de son courtier (Trade Republic…) */
+async function copierTexte(texte, bouton) {
+  let ok = false;
+  try { await navigator.clipboard.writeText(texte); ok = true; } catch (e) {
+    const zone = document.createElement("textarea");
+    zone.value = texte;
+    document.body.append(zone);
+    zone.select();
+    try { ok = document.execCommand("copy"); } catch (e2) { ok = false; }
+    zone.remove();
+  }
+  bouton.textContent = ok ? "Copié" : "Sélectionnez le code";
+  setTimeout(() => { bouton.textContent = "Copier"; }, 2000);
 }
 
 function montrer(id) {
@@ -712,6 +729,7 @@ function rendreFiche(a, f) {
   return `
   <h2 id="fiche-nom">${echapper(a.n)}</h2>
   <p class="ident">${echapper(a.s)}, ${echapper(a.p || "")}, ${echapper(a.i || a.se || "")}. Taille : ${echapper((a.t || "").toLowerCase())}.</p>
+  ${f.isin ? `<p class="isin">ISIN <span class="isin-code">${echapper(f.isin)}</span> <button type="button" class="bouton petit" data-copier="${echapper(f.isin)}">Copier</button></p>` : ""}
   <p class="cours"><strong>${prix(a.px, dcours)}</strong> &nbsp;capitalisation ${capi(a.cap)}, sur un an ${signe(a.p52, 0)}</p>
   ${suivi}
   <div class="actions-fiche">
@@ -805,7 +823,7 @@ function rendreFiche(a, f) {
 
   ${f.resume ? `<h3>Activité</h3><details><summary>Lire la description (en anglais)</summary><p class="resume-anglais">${echapper(f.resume)}</p></details>` : ""}
 
-  <p class="note-bas" style="margin-top:28px">Données détaillées lues le ${date(f.maj || a.m)}, cours du jour quand il est disponible. Source : Yahoo Finance. ${f.isin ? `ISIN ${echapper(f.isin)}.` : ""}</p>`;
+  <p class="note-bas" style="margin-top:28px">Données détaillées lues le ${date(f.maj || a.m)}, cours du jour quand il est disponible. Source : Yahoo Finance.</p>`;
 }
 
 /* ------------------------------------------------------------------ */

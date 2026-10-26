@@ -252,6 +252,9 @@ main { padding: 6px 0 40px; }
   padding-bottom: 4px; border-bottom: 1px solid var(--filet);
 }
 .fiche .ident { margin: 6px 0 0; color: var(--encre-2); font-size: 14px; }
+.fiche .isin { margin: 6px 0 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; color: var(--encre-2); font-size: 14px; }
+.fiche .isin-code { color: var(--encre); font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: .02em; user-select: all; }
+.bouton.petit { padding: 4px 10px; min-height: 32px; font-size: 13px; }
 .fiche .cours { margin: 10px 0 0; font-size: 15px; }
 .fiche .cours strong { font-size: 22px; font-weight: 700; }
 .actions-fiche { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
