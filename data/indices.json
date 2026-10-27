@@ -1,5 +1,5 @@
 {
- "maj": "2026-10-26",
+ "maj": "2026-10-27",
  "indices": {
   "sp500": {
    "nom": "S&P 500",
@@ -1040,8 +1040,7 @@
    "lu": "2026-10-26",
    "lues": 20,
    "manquantes": [],
-   "echec_depuis": null,
-   "erreur": null
+   "echec_depuis": null
   },
   "nikkei225": {
    "nom": "Nikkei 225",
