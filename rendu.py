@@ -166,7 +166,8 @@ def generer(table: pd.DataFrame, statut: dict) -> None:
         f = SITE / nom
         f.write_text(f.read_text().replace("__VERSION__", version))
     (SITE / "data" / "fiches").mkdir(parents=True, exist_ok=True)
-    for nom in ("retro_resultats.json", "retro_us_resultats.json", "retro_historique.csv", "macro.json"):
+    for nom in ("retro_resultats.json", "retro_us_resultats.json", "retro_historique.csv", "macro.json",
+                "temoin.json"):
         if (Path("data") / nom).exists():
             shutil.copy(Path("data") / nom, SITE / "data" / nom)
 

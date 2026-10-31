@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Test sur le passé — Pépites</title>
+<title>Tests — Pépites</title>
 <meta name="theme-color" content="#12263a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,13 +11,17 @@
 <link rel="stylesheet" href="style.css?v=__VERSION__">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M9 4h14l7 9-14 16L2 13z' fill='%23c9962b'/%3E%3C/svg%3E">
 <style>
-  .page { padding: 20px 16px 48px; max-width: 760px; }
+  .page { padding: 20px 16px 48px; max-width: 1180px; margin: 0 auto; }
+  .page > :not(.nav-haut) { max-width: 760px; }
   .page h1 { margin: 0; font-size: 30px; line-height: 1.05; font-weight: 800; font-variation-settings: "wdth" 118; }
-  .page h2 { margin: 30px 0 8px; font-size: 18px; font-weight: 700; padding-bottom: 4px; border-bottom: 1px solid var(--filet); }
+  .page h2 { margin: 34px 0 8px; font-size: 20px; font-weight: 800; padding-bottom: 4px; border-bottom: 2px solid var(--encre); scroll-margin-top: 12px; }
+  .page h3 { margin: 22px 0 6px; font-size: 16px; font-weight: 700; }
   .page p { margin: 10px 0; max-width: 66ch; }
   .nav-haut { margin-bottom: 26px; }
-  .page { max-width: 1180px; margin: 0 auto; }
-  .page > :not(.nav-haut) { max-width: 760px; }
+  .sommaire { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 4px; }
+  .sommaire a { display: inline-flex; align-items: center; min-height: 34px; padding: 0 12px; border-radius: 999px;
+    border: 1px solid var(--filet); background: var(--surface); color: var(--encre); text-decoration: none; font-size: 14px; }
+  .sommaire a:hover { border-color: var(--encre-2); }
   .verdict { font-size: 17px; }
   .graphe { display: grid; gap: 8px; margin: 14px 0 6px; }
   .rangee { display: grid; grid-template-columns: 118px minmax(0, 1fr) 62px; align-items: center; gap: 10px; font-size: 14px; }
@@ -25,13 +29,46 @@
   .axe .zero { position: absolute; top: -3px; bottom: -3px; width: 1px; background: var(--encre-2); }
   .axe .barre-perf { position: absolute; top: 3px; bottom: 3px; border-radius: 3px; }
   .rangee .chiffre { text-align: right; font-weight: 600; }
+  /* Fortes hausses à 5 ans : deux barres par groupe (a triplé / a perdu plus de la moitié) */
+  .rangee5 { display: grid; grid-template-columns: 150px minmax(0, 1fr) 58px; align-items: center; gap: 4px 10px; font-size: 14px; }
+  .rangee5 .nom { grid-row: span 2; }
+  .rangee5 .nom.fort { font-weight: 700; }
+  .rangee5 .axe { height: 16px; }
+  .rangee5 .axe .barre-perf { top: 2px; bottom: 2px; left: 0; }
+  .rangee5 .axe.fine { height: 10px; }
+  .rangee5 .axe.fine .barre-perf { top: 1px; bottom: 1px; }
+  .rangee5 .chiffre { text-align: right; font-weight: 700; }
+  .rangee5 .chiffre.fin { font-weight: 400; font-size: 13px; color: var(--encre-2); }
+  .cles { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; color: var(--encre-2); margin: 6px 0; }
+  .cles i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
   .legende { font-size: 13px; color: var(--encre-2); }
   table.tab { width: 100%; border-collapse: collapse; font-size: 14px; }
   table.tab th, table.tab td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--filet); white-space: nowrap; }
   table.tab th:first-child, table.tab td:first-child { text-align: left; white-space: normal; }
   table.tab th { font-weight: 600; color: var(--encre-2); font-size: 13px; white-space: normal; }
+  table.tab tr.fort td { font-weight: 700; }
+  #tab-cinq td:first-child, #tab-cinq-periodes td:first-child { min-width: 9.5em; }
   ul.limites li { margin: 6px 0; }
-  .sous-titre { margin: 18px 0 6px; font-size: 16px; }
+  /* Portefeuille témoin */
+  .temoin { border: 1px solid var(--filet); border-radius: var(--rayon); background: var(--surface); padding: 14px 16px; margin: 12px 0; }
+  .temoin-tete { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 12px; font-size: 14px; color: var(--encre-2); }
+  .temoin-tete strong { color: var(--encre); font-size: 16px; }
+  .temoin-chiffres { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 12px 0 4px; }
+  .temoin-chiffres div { border-left: 4px solid var(--c); padding: 2px 0 2px 10px; }
+  .temoin-chiffres span { display: block; font-size: 13px; color: var(--encre-2); }
+  .temoin-chiffres b { font-size: 20px; font-variant-numeric: tabular-nums; }
+  .temoin-chiffres small { display: block; font-size: 12px; color: var(--encre-2); }
+  .temoin svg { display: block; width: 100%; height: 150px; margin: 8px 0 2px; }
+  .temoin details { margin-top: 8px; font-size: 14px; }
+  .temoin summary { cursor: pointer; color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  .temoin table.tab { margin-top: 6px; }
+  .temoin td a { color: var(--encre); }
+  .gain-haut { color: var(--haut); } .gain-bas { color: var(--bas); }
+  @media (max-width: 560px) {
+    .rangee5 { grid-template-columns: minmax(0, 1fr) 54px; }
+    .rangee5 .nom { grid-row: auto; grid-column: 1 / -1; margin-top: 4px; }
+    .temoin-chiffres b { font-size: 17px; }
+  }
 </style>
 </head>
 <body>
@@ -41,67 +78,107 @@
     <nav class="nav-pages" aria-label="Pages du site">
       <a href="./">Accueil</a>
       <a href="tableau.html">Screener</a>
-      <a href="retro.html" aria-current="page">Test sur le passé</a>
+      <a href="retro.html" aria-current="page">Tests</a>
       <a href="tableau.html#aide">Comment lire les notes</a>
     </nav>
   </header>
-  <h1>Test sur le passé</h1>
-  <p id="intro">Chargement des résultats…</p>
+  <h1>Tests</h1>
+  <p>Le screener doit repérer des sociétés capables de fortes hausses sur 5 ans. Trois mesures le vérifient : un portefeuille témoin suivi en direct, le test des fortes hausses à 5 ans sur le passé américain, et le test de la note à 12 mois, dans le monde et aux États-Unis. Les tests sur le passé sont refaits automatiquement chaque trimestre.</p>
+  <nav class="sommaire" aria-label="Sur cette page">
+    <a href="#temoin">Portefeuille témoin</a>
+    <a href="#cinq-ans">Fortes hausses à 5 ans</a>
+    <a href="#monde">Monde, 12 mois</a>
+    <a href="#bloc-us">États-Unis, 12 mois</a>
+    <a href="#limites">Limites</a>
+  </nav>
 
-  <h2>Les mieux notées ont-elles fait mieux ?</h2>
-  <p class="verdict" id="verdict"></p>
-  <div class="graphe" id="graphe-notes"></div>
-  <p class="legende">Performance médiane sur les 12 mois suivants, en euros, dividendes compris, selon le niveau de note au départ. Chaque groupe contient un cinquième des sociétés.</p>
+  <section id="temoin" aria-labelledby="t-temoin">
+    <h2 id="t-temoin">Portefeuille témoin</h2>
+    <p>Chaque 1er mai et 1er novembre, les 20 premières sociétés de chaque liste de l'accueil (5 au plus par pays) sont figées à parts égales, puis suivies 5 ans sans rien changer. C'est la seule mesure sans aucun biais : le choix est fait d'avance et le résultat se lit en direct.</p>
+    <div id="temoin-contenu"><p>Chargement…</p></div>
+  </section>
 
-  <h2>Quel critère annonce le mieux la suite ?</h2>
-  <div class="tableau-cadre"><table class="tab" id="tab-criteres"></table></div>
-  <p class="legende">Performance médiane du cinquième le moins bien noté et du cinquième le mieux noté sur chaque critère.</p>
+  <section id="cinq-ans" aria-labelledby="t-cinq" hidden>
+    <h2 id="t-cinq">Les fortes hausses à 5 ans</h2>
+    <p id="cinq-intro"></p>
+    <p class="verdict" id="cinq-verdict"></p>
+    <div class="cles"><span><i style="background:var(--or-bord)"></i>Ont au moins triplé en 5 ans</span><span><i style="background:var(--bas)"></i>Ont perdu plus de la moitié</span></div>
+    <div class="graphe" id="graphe-cinq"></div>
+    <h3>Le détail</h3>
+    <div class="tableau-cadre"><table class="tab" id="tab-cinq"></table></div>
+    <p class="legende">Part des sociétés achetées à chaque date qui ont doublé (×2), triplé (×3), quintuplé (×5) ou perdu plus de la moitié en 5 ans, dividendes compris, en dollars. « Panier » : gain annuel moyen d'un achat à parts égales de toute la liste à chaque date. Tripler en 5 ans, c'est environ +25&nbsp;% par an.</p>
+    <h3>Selon la période d'achat (ont triplé)</h3>
+    <div class="tableau-cadre"><table class="tab" id="tab-cinq-periodes"></table></div>
+  </section>
 
-  <h2>Selon les régions</h2>
-  <div class="tableau-cadre"><table class="tab" id="tab-regions"></table></div>
+  <section id="monde" aria-labelledby="t-monde">
+    <h2 id="t-monde">Monde, à 12 mois</h2>
+    <p id="intro">Chargement des résultats…</p>
+    <h3>Les mieux notées ont-elles fait mieux ?</h3>
+    <p class="verdict" id="verdict"></p>
+    <div class="graphe" id="graphe-notes"></div>
+    <p class="legende">Performance médiane sur les 12 mois suivants, en euros, dividendes compris, selon le niveau de note au départ. Chaque groupe contient un cinquième des sociétés.</p>
 
-  <h2>Date par date</h2>
-  <div class="tableau-cadre"><table class="tab" id="tab-dates"></table></div>
-  <p class="legende">Les 100 sociétés les mieux notées à chaque date, comparées à l'ensemble.</p>
+    <h3>Quel critère annonce le mieux la suite ?</h3>
+    <div class="tableau-cadre"><table class="tab" id="tab-criteres"></table></div>
+    <p class="legende">Performance médiane du cinquième le moins bien noté et du cinquième le mieux noté sur chaque critère.</p>
 
-  <section id="bloc-us" hidden>
-    <h2>États-Unis, depuis 2012</h2>
+    <h3>Selon les régions</h3>
+    <div class="tableau-cadre"><table class="tab" id="tab-regions"></table></div>
+
+    <h3>Date par date</h3>
+    <div class="tableau-cadre"><table class="tab" id="tab-dates"></table></div>
+    <p class="legende">Les 100 sociétés les mieux notées à chaque date, comparées à l'ensemble.</p>
+  </section>
+
+  <section id="bloc-us" aria-labelledby="t-us" hidden>
+    <h2 id="t-us">États-Unis, à 12 mois, depuis 2012</h2>
     <p id="us-intro"></p>
     <p class="verdict" id="us-verdict"></p>
     <div class="graphe" id="graphe-us"></div>
     <div class="tableau-cadre"><table class="tab" id="tab-us-periodes"></table></div>
     <p class="legende">Écart de performance médiane à 12 mois entre les 20&nbsp;% les mieux notées et les 20&nbsp;% les moins bien notées, et nombre de dates où les mieux notées ont fait mieux.</p>
-    <h3 class="sous-titre">Les pondérations tiennent-elles ?</h3>
+    <h3>Les pondérations tiennent-elles ?</h3>
     <div class="tableau-cadre"><table class="tab" id="tab-us-variantes"></table></div>
     <p class="legende">Les pondérations actuelles ont été choisies sur 2023-2025 hors États-Unis : la période 2012-2018 n'a servi à rien régler, c'est un vrai test. Sur ces années, aux États-Unis, les actions bon marché ont été délaissées au profit des valeurs de croissance : une note qui privilégie la valorisation n'y a presque rien apporté. À garder en tête : la méthode peut rester sans effet plusieurs années de suite.</p>
   </section>
 
-  <section id="bloc-historique" hidden>
-    <h2>Historique des tests</h2>
-    <p>Les deux tests sont refaits automatiquement chaque trimestre, pour vérifier que la note continue de fonctionner.</p>
+  <section id="bloc-historique" aria-labelledby="t-hist" hidden>
+    <h2 id="t-hist">Historique des tests</h2>
+    <p>Les tests sont refaits automatiquement chaque trimestre ; un e-mail d'alerte part si la note ou les listes perdent leur avantage.</p>
     <div class="tableau-cadre"><table class="tab" id="tab-historique"></table></div>
   </section>
 
-  <h2>Lion Finance et Afentra</h2>
-  <div id="cas"></div>
+  <section aria-labelledby="t-cas">
+    <h2 id="t-cas">Lion Finance et Afentra</h2>
+    <div id="cas"></div>
+  </section>
 
-  <h2>Les limites du test</h2>
-  <ul class="limites">
-    <li>Yahoo ne fournit gratuitement que quatre exercices de comptes et pas les anciennes prévisions des analystes. Le test porte donc sur la partie « comptes » de la note : valorisation, croissance, rentabilité et situation financière, soit 70 % des pondérations. Les révisions, les publications et la visibilité ne sont pas testées.</li>
-    <li>Les sociétés disparues depuis (faillites, rachats) ne figurent plus dans la liste : les performances des moins bien notées sont sans doute un peu flattées, ce qui joue plutôt contre le screener.</li>
-    <li>Le test mondial ne porte que sur deux ans ; le test américain, plus long, sert à vérifier que la note tient sur d'autres périodes. Aucun des deux ne garantit l'avenir.</li>
-    <li>Un avantage de quelques points par an en moyenne n'empêche pas qu'une action bien notée chute fortement. La note sert à trier, pas à se passer d'analyser.</li>
-  </ul>
+  <section id="limites" aria-labelledby="t-limites">
+    <h2 id="t-limites">Les limites des tests</h2>
+    <ul class="limites">
+      <li>Yahoo ne fournit gratuitement que quatre exercices de comptes et pas les anciennes prévisions des analystes. Les tests portent donc sur la partie « comptes » de la note : valorisation, croissance, rentabilité et situation financière, soit 70&nbsp;% des pondérations. Les révisions, les publications et la visibilité ne sont pas testées. Une photo mensuelle de la liste est gardée depuis novembre 2026 pour pouvoir, un jour, tester la note complète.</li>
+      <li>Le test à 5 ans ne porte que sur les États-Unis, seul pays où des comptes assez anciens sont disponibles gratuitement (autorité boursière américaine, SEC).</li>
+      <li>Les sociétés disparues depuis (faillites, rachats) ne figurent plus dans la liste : les performances sont un peu flattées, d'autant plus sur 5 ans. Cela vaut pour tous les groupes ; c'est l'écart entre eux qui compte.</li>
+      <li>Le test mondial ne porte que sur deux ans. Aucun test ne garantit l'avenir ; le portefeuille témoin dira, avec les années, si l'avantage mesuré sur le passé se retrouve en direct.</li>
+      <li>Un avantage moyen n'empêche pas qu'une action bien placée chute fortement : environ une sur dix perd plus de la moitié en 5 ans. Les listes servent à trier, pas à se passer d'analyser.</li>
+    </ul>
+  </section>
 </main>
 <script>
 "use strict";
 const VERSION = "__VERSION__";
 const F0 = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 0 });
 const F1 = new Intl.NumberFormat("fr-FR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
-const pct = (v, signe = true) => v == null ? "—" : (signe && v > 0 ? "+" : "") + F1.format(v * 100) + "\u00a0%";
+const F2 = new Intl.NumberFormat("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const pct = (v, signe = true) => v == null ? "—" : (signe && v > 0 ? "+" : "") + F1.format(v * 100) + " %";
+const part = (v) => v == null ? "—" : F1.format(v * 100) + " %";
 const date = (iso) => new Date(iso + "T12:00:00").toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
-const NOMS_TRANCHES = ["Les 20\u00a0% les moins bien notées", "Suivantes", "Milieu", "Suivantes", "Les 20\u00a0% les mieux notées"];
+const jour = (iso) => new Date(iso + "T12:00:00").toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }).replace(/^1 /, "1er ");
+const echapper = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const NOMS_TRANCHES = ["Les 20 % les moins bien notées", "Suivantes", "Milieu", "Suivantes", "Les 20 % les mieux notées"];
 const CRITERES = { valorisation: "Valorisation", croissance: "Croissance", rentabilite: "Rentabilité", situation_fi: "Situation financière" };
+const GROUPES = { toutes: "Toutes les sociétés", mieux_notees: "Les 20 % les mieux notées", radar: "Radar des pépites", rallye: "Rallye 5 ans" };
 
 function barres(el, tranches) {
   const vals = tranches.map((t) => t.perf_mediane);
@@ -120,6 +197,74 @@ function barres(el, tranches) {
   }).join("");
 }
 
+/* ------------------------------------------------------------------ */
+/* Portefeuille témoin                                                 */
+/* ------------------------------------------------------------------ */
+const COULEURS = { radar: "var(--accent)", rallye: "var(--or-bord)", indice: "var(--encre-2)" };
+
+function courbes(series) {
+  // series : [{cle, points: [[date, valeur]]}] ; axe horizontal = dates
+  const toutes = series.flatMap((s) => s.points);
+  if (toutes.length < 3) return "";
+  const t = (d) => Date.parse(d + "T12:00:00Z");
+  const t0 = Math.min(...toutes.map((p) => t(p[0]))), t1 = Math.max(...toutes.map((p) => t(p[0])));
+  const vals = toutes.map((p) => p[1]);
+  const bas = Math.min(1, ...vals), haut = Math.max(1, ...vals);
+  const marge = (haut - bas) * 0.08 || 0.02;
+  const L = 600, H = 150, x = (d) => (t1 > t0 ? (t(d) - t0) / (t1 - t0) : 0) * L;
+  const y = (v) => H - ((v - (bas - marge)) / ((haut + marge) - (bas - marge))) * H;
+  const lignes = series.map((s) => `<polyline fill="none" stroke="${COULEURS[s.cle]}" stroke-width="2.2" vector-effect="non-scaling-stroke"
+      ${s.cle === "indice" ? 'stroke-dasharray="5 4"' : ""} points="${s.points.map((p) => `${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).join(" ")}"/>`).join("");
+  return `<svg viewBox="0 0 ${L} ${H}" preserveAspectRatio="none" role="img" aria-label="Évolution depuis la constitution">
+    <line x1="0" x2="${L}" y1="${y(1)}" y2="${y(1)}" stroke="var(--filet)" stroke-width="1" vector-effect="non-scaling-stroke"/>${lignes}</svg>`;
+}
+
+function gainLigne(l) { return l.r && l.eur && l.eur0 ? l.r * l.eur / l.eur0 - 1 : null; }
+
+function carteSemestre(sem, ports) {
+  const debut = ports[0].cree_le, fin = ports[0].fin;
+  const dernier = (p) => p.suivi[p.suivi.length - 1];
+  const ref = dernier(ports[0]);
+  const chiffres = ports.map((p) => {
+    const g = dernier(p)[1] - 1;
+    const gains = p.lignes.map(gainLigne).filter((x) => x != null);
+    const x2 = gains.filter((x) => x >= 1).length, x3 = gains.filter((x) => x >= 2).length;
+    return `<div style="--c:${COULEURS[p.liste]}"><span>${echapper(p.nom_liste)}</span><b class="${g >= 0 ? "gain-haut" : "gain-bas"}">${pct(g)}</b>
+      <small>${x3 ? `${x3} sur ${p.lignes.length} ont triplé` : x2 ? `${x2} sur ${p.lignes.length} ont doublé` : `${p.lignes.length} sociétés`}</small></div>`;
+  }).join("") + `<div style="--c:${COULEURS.indice}"><span>Indice mondial</span><b>${pct(ref[2] - 1)}</b><small>MSCI World, en euros</small></div>`;
+  const series = ports.map((p) => ({ cle: p.liste, points: p.suivi.map((s) => [s[0], s[1]]) }))
+    .concat([{ cle: "indice", points: ports[0].suivi.map((s) => [s[0], s[2]]) }]);
+  const details = ports.map((p) => {
+    const lignes = p.lignes.map((l) => ({ l, g: gainLigne(l) })).sort((a, b) => (b.g ?? -9) - (a.g ?? -9));
+    return `<details><summary>${echapper(p.nom_liste)} : les ${p.lignes.length} sociétés</summary>
+      <div class="tableau-cadre"><table class="tab"><tr><th>Société</th><th>Pays</th><th>Gain en euros</th></tr>
+      ${lignes.map(({ l, g }) => `<tr><td><a href="tableau.html#${encodeURIComponent(l.s)}">${echapper(l.nom)}</a></td><td>${echapper(l.pays || "")}</td>
+        <td class="${g >= 0 ? "gain-haut" : "gain-bas"}">${pct(g)}</td></tr>`).join("")}</table></div></details>`;
+  }).join("");
+  return `<article class="temoin">
+    <div class="temoin-tete"><strong>Constitué le ${jour(debut)}</strong><span>suivi jusqu'en ${date(fin)} · dernier cours le ${jour(ref[0])}</span></div>
+    <div class="temoin-chiffres">${chiffres}</div>
+    ${courbes(series)}
+    <p class="legende">Gain depuis la constitution, dividendes réinvestis, en euros. Le pointillé est l'indice mondial.</p>
+    ${details}
+  </article>`;
+}
+
+fetch(`data/temoin.json?v=${VERSION}`).then((r) => { if (!r.ok) throw 0; return r.json(); }).then((t) => {
+  const ports = (t.portefeuilles || []).filter((p) => p.suivi && p.suivi.length);
+  if (!ports.length) throw 0;
+  const parSemestre = {};
+  ports.forEach((p) => (parSemestre[p.semestre] = parSemestre[p.semestre] || []).push(p));
+  document.getElementById("temoin-contenu").innerHTML = Object.keys(parSemestre).sort().reverse()
+    .map((s) => carteSemestre(s, parSemestre[s].sort((a, b) => (a.liste === "radar" ? -1 : 1)))).join("");
+}).catch(() => {
+  document.getElementById("temoin-contenu").innerHTML =
+    "<p><strong>Le premier portefeuille est constitué le 1er novembre 2026.</strong> Ses premiers chiffres s'afficheront ici quelques jours après.</p>";
+});
+
+/* ------------------------------------------------------------------ */
+/* Test mondial à 12 mois                                              */
+/* ------------------------------------------------------------------ */
 fetch(`data/retro_resultats.json?v=${VERSION}`).then((r) => r.json()).then((r) => {
   const dates = r.dates.map(date);
   document.getElementById("intro").textContent =
@@ -128,7 +273,7 @@ fetch(`data/retro_resultats.json?v=${VERSION}`).then((r) => r.json()).then((r) =
   const ecart = t[4].perf_mediane - t[0].perf_mediane;
   const debut = ecart >= 0.02 ? "Oui, nettement mais modestement." : ecart > 0 ? "Un peu seulement." : "Non, pas sur cette période.";
   document.getElementById("verdict").textContent =
-    `${debut} Les 20\u00a0% les mieux notées ont gagné ${pct(t[4].perf_mediane)} en médiane, contre ${pct(t[0].perf_mediane)} pour les 20\u00a0% les moins bien notées, soit ${F1.format(ecart * 100)} points d'écart par an. ${F0.format(t[4].part_bat_mediane * 100)}\u00a0% des mieux notées ont fait mieux que l'action médiane du marché, contre ${F0.format(t[0].part_bat_mediane * 100)}\u00a0% des moins bien notées.`;
+    `${debut} Les 20 % les mieux notées ont gagné ${pct(t[4].perf_mediane)} en médiane, contre ${pct(t[0].perf_mediane)} pour les 20 % les moins bien notées, soit ${F1.format(ecart * 100)} points d'écart par an. ${F0.format(t[4].part_bat_mediane * 100)} % des mieux notées ont fait mieux que l'action médiane du marché, contre ${F0.format(t[0].part_bat_mediane * 100)} % des moins bien notées.`;
   barres(document.getElementById("graphe-notes"), t);
 
   document.getElementById("tab-criteres").innerHTML =
@@ -140,7 +285,7 @@ fetch(`data/retro_resultats.json?v=${VERSION}`).then((r) => r.json()).then((r) =
   document.getElementById("tab-regions").innerHTML =
     `<tr><th>Région</th><th>Moins bien notées</th><th>Mieux notées</th><th>Mieux notées battant la médiane</th></tr>` +
     Object.entries(r.par_continent).map(([k, v]) =>
-      `<tr><td>${k}</td><td>${pct(v[0].perf_mediane)}</td><td>${pct(v[4].perf_mediane)}</td><td>${F0.format(v[4].part_bat_mediane * 100)}\u00a0%</td></tr>`).join("");
+      `<tr><td>${k}</td><td>${pct(v[0].perf_mediane)}</td><td>${pct(v[4].perf_mediane)}</td><td>${F0.format(v[4].part_bat_mediane * 100)} %</td></tr>`).join("");
 
   document.getElementById("tab-dates").innerHTML =
     `<tr><th>Départ</th><th>Toutes</th><th>100 mieux notées</th></tr>` +
@@ -156,12 +301,55 @@ fetch(`data/retro_resultats.json?v=${VERSION}`).then((r) => r.json()).then((r) =
   document.getElementById("intro").textContent = "Les résultats du test ne sont pas encore disponibles.";
 });
 
+/* ------------------------------------------------------------------ */
+/* Test américain : 12 mois et fortes hausses à 5 ans                 */
+/* ------------------------------------------------------------------ */
+function cinqAns(c) {
+  const ens = (c.periodes || {}).Ensemble;
+  if (!ens || !ens.toutes || !ens.rallye) return;
+  const d = c.dates || [];
+  document.getElementById("cinq-intro").textContent =
+    `Aux États-Unis, on s'est replacé à ${d.length} dates d'achat, de ${date(d[0])} à ${date(d[d.length - 1])}, avec les seuls comptes publiés à chaque date, et on a regardé ce que chaque action valait 5 ans plus tard. Environ ${F0.format(ens.toutes.societes_par_date)} sociétés de plus de 100 M€ à chaque date.`;
+  const y = ens.rallye, t = ens.toutes, r = ens.radar || {};
+  let texte;
+  if (y.part_x3 > t.part_x3) {
+    texte = `${part(y.part_x3)} des sociétés de la liste « Rallye 5 ans » ont au moins triplé en 5 ans, contre ${part(t.part_x3)} de l'ensemble : ${F1.format(y.part_x3 / t.part_x3)} fois plus souvent. Le radar : ${part(r.part_x3)}. `;
+    texte += y.part_moitie <= t.part_moitie
+      ? `Sans plus de pertes : ${part(y.part_moitie)} ont perdu plus de la moitié, contre ${part(t.part_moitie)}.`
+      : `Mais un peu plus de pertes : ${part(y.part_moitie)} ont perdu plus de la moitié, contre ${part(t.part_moitie)}.`;
+  } else {
+    texte = `La liste « Rallye 5 ans » ne triple plus plus souvent que l'ensemble (${part(y.part_x3)} contre ${part(t.part_x3)}) : ses règles sont à revoir.`;
+  }
+  document.getElementById("cinq-verdict").textContent = texte;
+  const max = Math.max(...Object.values(ens).flatMap((g) => [g.part_x3 || 0, g.part_moitie || 0]), 0.01);
+  document.getElementById("graphe-cinq").innerHTML = Object.entries(GROUPES).filter(([k]) => ens[k]).map(([k, nom]) => {
+    const g = ens[k];
+    return `<div class="rangee5"><span class="nom${k === "rallye" ? " fort" : ""}">${nom}</span>
+      <span class="axe"><span class="barre-perf" style="width:${g.part_x3 / max * 100}%;background:var(--or-bord)"></span></span><span class="chiffre">${part(g.part_x3)}</span>
+      <span class="axe fine"><span class="barre-perf" style="width:${g.part_moitie / max * 100}%;background:var(--bas)"></span></span><span class="chiffre fin">${part(g.part_moitie)}</span></div>`;
+  }).join("");
+  document.getElementById("tab-cinq").innerHTML =
+    `<tr><th>Groupe</th><th>Sociétés par date</th><th>×2</th><th>×3</th><th>×5</th><th>Moitié perdue</th><th>Multiple médian</th><th>Panier, par an</th></tr>` +
+    Object.entries(GROUPES).filter(([k]) => ens[k]).map(([k, nom]) => {
+      const g = ens[k];
+      return `<tr${k === "rallye" ? ' class="fort"' : ""}><td>${nom}</td><td>${F0.format(g.societes_par_date)}</td><td>${part(g.part_x2)}</td><td>${part(g.part_x3)}</td><td>${part(g.part_x5)}</td>
+        <td>${part(g.part_moitie)}</td><td>×${F2.format(g.multiple_median)}</td><td>${pct(g.gain_panier_an)}</td></tr>`;
+    }).join("");
+  const periodes = Object.keys(c.periodes).filter((p) => p !== "Ensemble");
+  document.getElementById("tab-cinq-periodes").innerHTML =
+    `<tr><th>Groupe</th>${periodes.map((p) => `<th>${p}</th>`).join("")}</tr>` +
+    Object.entries(GROUPES).filter(([k]) => ens[k]).map(([k, nom]) =>
+      `<tr${k === "rallye" ? ' class="fort"' : ""}><td>${nom}</td>${periodes.map((p) => `<td>${part(((c.periodes[p] || {})[k] || {}).part_x3)}</td>`).join("")}</tr>`).join("");
+  document.getElementById("cinq-ans").hidden = false;
+}
+
 fetch(`data/retro_us_resultats.json?v=${VERSION}`).then((r) => r.json()).then((r) => {
+  if (r.cinq_ans) cinqAns(r.cinq_ans);
   const e = r.ensemble, t = e.tranches;
   document.getElementById("us-intro").textContent =
     `Même méthode sur ${F0.format(r.societes)} sociétés américaines, à ${r.dates.length} dates de ${date(r.dates[0])} à ${date(r.dates[r.dates.length - 1])}, avec les comptes déposés auprès de l'autorité boursière américaine (SEC) et leur vraie date de publication. La période couvre plusieurs marchés difficiles (2015-2016, fin 2018, 2020, 2022).`;
   document.getElementById("us-verdict").textContent =
-    `Les 20\u00a0% les mieux notées ont gagné ${pct(t[4].perf_mediane)} en médiane sur 12 mois, contre ${pct(t[0].perf_mediane)} pour les 20\u00a0% les moins bien notées. Elles ont fait mieux à ${e.dates_gagnantes} dates sur ${e.dates}.`;
+    `Les 20 % les mieux notées ont gagné ${pct(t[4].perf_mediane)} en médiane sur 12 mois, contre ${pct(t[0].perf_mediane)} pour les 20 % les moins bien notées. Elles ont fait mieux à ${e.dates_gagnantes} dates sur ${e.dates}.`;
   barres(document.getElementById("graphe-us"), t);
   document.getElementById("tab-us-periodes").innerHTML =
     `<tr><th>Période</th><th>Écart moyen</th><th>Dates gagnantes</th></tr>` +
@@ -182,7 +370,7 @@ fetch(`data/retro_historique.csv?v=${VERSION}`).then((r) => { if (!r.ok) throw 0
     `<tr><th>Test du</th><th>Zone</th><th>Écart</th><th>Mieux notées battant la médiane</th></tr>` +
     lignes.reverse().map((l) => `<tr><td>${new Date(l[col("date_test")] + "T12:00:00").toLocaleDateString("fr-FR")}</td>
       <td>${l[col("zone")]}</td><td>${pct(+l[col("ecart_mieux_moins_bien")])}</td>
-      <td>${F0.format(+l[col("part_mieux_notees_battant_mediane")] * 100)}\u00a0%</td></tr>`).join("");
+      <td>${F0.format(+l[col("part_mieux_notees_battant_mediane")] * 100)} %</td></tr>`).join("");
   document.getElementById("bloc-historique").hidden = false;
 }).catch(() => {});
 </script>

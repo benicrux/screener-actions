@@ -76,6 +76,19 @@ def test_cinq_ans():
     assert degradation_5ans({}) == []
 
 
+def test_temoin():
+    import datetime as dt
+    from sante import temoin_en_panne
+    avant = dt.date(2026, 11, 3)
+    assert temoin_en_panne(None, avant) == []                       # pas encore constitué : normal
+    jour = dt.date(2026, 12, 1)
+    assert len(temoin_en_panne(None, jour)) == 1                     # jamais constitué
+    ok = {"maj": "2026-11-28", "portefeuilles": [{}]}
+    assert temoin_en_panne(ok, jour) == []
+    vieux = {"maj": "2026-11-20", "portefeuilles": [{}]}
+    assert len(temoin_en_panne(vieux, jour)) == 1                    # plus suivi depuis 11 jours
+
+
 if __name__ == "__main__":
     test_normal()
     test_cours_manquants_bloquent_la_publication()
@@ -85,4 +98,5 @@ if __name__ == "__main__":
     test_indicateurs_economiques()
     test_grands_indices()
     test_cinq_ans()
+    test_temoin()
     print("OK")

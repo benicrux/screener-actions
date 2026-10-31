@@ -108,10 +108,45 @@ jobs:
           SANS_COLLECTE: ${{ github.event_name == 'push' && '1' || '' }}
         run: python main.py
 
+      - name: Portefeuille témoin (constitué les 1er mai et 1er novembre, suivi chaque nuit ; un échec n'interrompt pas le calcul)
+        if: github.event_name != 'push'
+        continue-on-error: true
+        run: python temoin.py
+
       - name: Contrôle de santé (données anormales = site non republié et e-mail d'alerte)
         env:
           SANS_COLLECTE: ${{ github.event_name == 'push' && '1' || '' }}
         run: python sante.py avant-publication
+
+      - name: Photo mensuelle de la liste mondiale (branche « photos », pour de futurs tests ; un échec n'interrompt pas le calcul)
+        if: github.event_name == 'schedule'
+        continue-on-error: true
+        env:
+          JETON: ${{ github.token }}
+        run: |
+          # Une photo par mois de ce que le site montrait (notes, chiffres, listes de l'accueil) :
+          # Yahoo ne garde pas l'historique des prévisions, ces photos permettront un jour de
+          # tester la note complète. Gardées sur une branche à part, hors du site.
+          mois=$(date -u +%Y-%m)
+          depot="https://x-access-token:${JETON}@github.com/${GITHUB_REPOSITORY}.git"
+          tmp=$(mktemp -d)
+          if git ls-remote --exit-code --heads "$depot" photos >/dev/null 2>&1; then
+            git clone -q --depth 1 --branch photos "$depot" "$tmp"
+          else
+            git -C "$tmp" init -q -b photos
+          fi
+          if [ -f "$tmp/$mois-liste.json.gz" ]; then
+            echo "Photo de $mois déjà prise."
+          elif [ -s site/data/screener.json ]; then
+            gzip -9 -c site/data/screener.json > "$tmp/$mois-liste.json.gz"
+            gzip -9 -c site/data/accueil.json > "$tmp/$mois-accueil.json.gz"
+            git -C "$tmp" add .
+            git -C "$tmp" -c user.name="screener-bot" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -q -m "Photo de la liste mondiale du $(date -u +%F)"
+            git -C "$tmp" push -q "$depot" photos
+            echo "Photo de $mois enregistrée."
+          fi
 
       - name: Sauvegarder les données
         if: always()

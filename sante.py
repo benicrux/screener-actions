@@ -5,7 +5,8 @@ quelque chose ne va pas. Deux moments :
 
     python sante.py avant-publication   # données du jour anormales : le site n'est pas republié
     python sante.py plusieurs-nuits     # Yahoo bloque depuis plusieurs nuits, sources de l'accueil
-                                        # (indicateurs, grands indices) en panne : alerte seulement
+                                        # (indicateurs, grands indices) ou portefeuille témoin
+                                        # en panne : alerte seulement
     python sante.py tests-trimestriels Monde   # (ou États-Unis) la note s'est-elle dégradée ?
 
 N'utilise que la bibliothèque standard de Python.
@@ -23,6 +24,8 @@ HISTORIQUE = Path("data/retro_historique.csv")
 RESULTATS_US = Path("data/retro_us_resultats.json")
 MACRO = Path("data/macro.json")
 INDICES = Path("data/indices.json")
+TEMOIN = Path("data/temoin.json")
+PREMIER_TEMOIN = "2026-11-08"  # le premier portefeuille témoin date du 1er novembre 2026
 
 
 def degradation(lignes: list[dict], zone: str) -> list[str]:
@@ -64,8 +67,24 @@ def degradation_5ans(resultats: dict) -> list[str]:
     return p
 
 
+def temoin_en_panne(temoin: dict | None, aujourd_hui=None) -> list[str]:
+    """Le portefeuille témoin est-il constitué et suivi ?"""
+    import datetime as dt
+    aujourd_hui = aujourd_hui or dt.date.today()
+    if aujourd_hui.isoformat() < PREMIER_TEMOIN:
+        return []
+    if not temoin or not temoin.get("portefeuilles"):
+        return ["Le portefeuille témoin n'a pas pu être constitué (cours de départ ou listes de "
+                "l'accueil introuvables) : détail dans le journal de l'étape « Portefeuille témoin »."]
+    age = (aujourd_hui - dt.date.fromisoformat(temoin.get("maj") or "2000-01-01")).days
+    if age > 7:
+        return [f"Le portefeuille témoin n'est plus mis à jour depuis {age} jours "
+                "(Yahoo ne renvoie plus les cours) : détail dans l'étape « Portefeuille témoin »."]
+    return []
+
+
 def problemes(statut: dict, moment: str, collecte_faite: bool, macro: dict | None = None,
-              indices: dict | None = None) -> list[str]:
+              indices: dict | None = None, temoin: dict | None = None) -> list[str]:
     p = []
     if moment == "avant-publication":
         cours = statut.get("cours_du_jour") or 0
@@ -109,6 +128,7 @@ def problemes(statut: dict, moment: str, collecte_faite: bool, macro: dict | Non
                          "Le radar garde la dernière composition connue (un indice jamais lu est "
                          "masqué). La page a sans doute changé de présentation : détail dans "
                          "data/indices.json, « erreur ».")
+        p += temoin_en_panne(temoin)
     return p
 
 
@@ -128,8 +148,9 @@ def main() -> None:
     statut = json.loads(STATUT.read_text())
     macro = json.loads(MACRO.read_text()) if MACRO.exists() else None
     indices = json.loads(INDICES.read_text()) if INDICES.exists() else None
+    temoin = json.loads(TEMOIN.read_text()) if TEMOIN.exists() else None
     signaler(problemes(statut, moment, collecte_faite=not os.environ.get("SANS_COLLECTE"),
-                       macro=macro, indices=indices))
+                       macro=macro, indices=indices, temoin=temoin))
 
 
 def signaler(liste: list[str]) -> None:
