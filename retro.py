@@ -40,10 +40,10 @@ from referentiels import INDUSTRIES_FINANCIERES, SOUS_UNITES
 
 DOSSIER = Path("data/retro")
 # v2 : colonnes dans un ordre fixe (la v1 mélangeait l'ordre d'un paquet à l'autre)
-COMPTES = DOSSIER / "comptes_v2.csv"
+COMPTES = DOSSIER / "comptes_v3.csv"  # v3 : avec la trésorerie disponible
 COURS = DOSSIER / "cours.csv"
 CHANGES = DOSSIER / "changes.csv"
-TRAITES = DOSSIER / "traites_v2.txt"
+TRAITES = DOSSIER / "traites_v3.txt"
 COURS_LUS = DOSSIER / "traites.txt"  # sociétés dont les cours sont déjà dans cours.csv
 RESULTATS = Path("data/retro_resultats.json")
 
@@ -55,6 +55,7 @@ POSTES = {
     "OperatingIncome": "resultat_op", "EBITDA": "ebitda",
     "CashCashEquivalentsAndShortTermInvestments": "tresorerie", "TotalDebt": "dette",
     "OrdinarySharesNumber": "actions", "StockholdersEquity": "fonds_propres",
+    "FreeCashFlow": "fcf",
 }
 # Dates du test (début de mois) : on dispose ensuite de 12 mois de cours
 COLONNES_COMPTES = ["symbole", "fin", "devise", *POSTES.values()]
@@ -74,7 +75,13 @@ def dates_test(premiere: str, aujourd_hui: dt.date | None = None) -> list[str]:
 
 
 def noter_historique(zone: str, ecart: float, part_bat: float, gagnantes: int, dates: int) -> None:
-    """Garde une trace de chaque test, pour vérifier dans le temps que la note tient."""
+    """Garde une trace de chaque test, pour vérifier dans le temps que la note tient.
+
+    Seuls les tests programmés (chaque trimestre) y entrent : un essai lancé à la main ou
+    après une modification du code ne doit pas fausser la comparaison d'un trimestre à l'autre."""
+    if os.environ.get("GITHUB_EVENT_NAME", "schedule") != "schedule":
+        print("   Essai hors calendrier : l'historique des tests n'est pas modifié.")
+        return
     ligne = pd.DataFrame([{"date_test": dt.date.today().isoformat(), "zone": zone,
                            "ecart_mieux_moins_bien": round(ecart, 4),
                            "part_mieux_notees_battant_mediane": round(part_bat, 4),
@@ -184,7 +191,9 @@ def collecter(budget_minutes: float) -> None:
     DOSSIER.mkdir(parents=True, exist_ok=True)
     if os.environ.get("RAFRAICHIR"):
         rafraichir(DOSSIER)
-    (DOSSIER / "comptes.csv").unlink(missing_ok=True)  # ancienne version aux colonnes mélangées
+    # Versions précédentes des comptes (colonnes mélangées ; sans la trésorerie disponible)
+    for ancien in ("comptes.csv", "comptes_v2.csv", "traites_v2.txt"):
+        (DOSSIER / ancien).unlink(missing_ok=True)
     univ = module_univers.charger()
     deja = set(TRAITES.read_text().split()) if TRAITES.exists() else set()
     cours_lus = set(COURS_LUS.read_text().split()) if COURS_LUS.exists() else set()

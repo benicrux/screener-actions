@@ -46,6 +46,12 @@ FAITS = {"facts": {"us-gaap": {
     "LongTermDebtNoncurrent": {"units": {"USD": [fait(None, "2018-12-31", 30.0, "2019-02-25")]}},
     "LongTermDebtCurrent": {"units": {"USD": [fait(None, "2018-12-31", 5.0, "2019-02-25")]}},
     "StockholdersEquity": {"units": {"USD": [fait(None, "2018-12-29", 80.0, "2019-02-25")]}},
+    # Flux de trésorerie : la trésorerie disponible n'est calculée que si les deux sont publiés
+    "NetCashProvidedByUsedInOperatingActivities": {"units": {"USD": [
+        fait("2017-01-01", "2017-12-31", 14.0, "2018-02-20"),
+        fait("2018-01-01", "2018-12-31", 22.0, "2019-02-25")]}},
+    "PaymentsToAcquirePropertyPlantAndEquipment": {"units": {"USD": [
+        fait("2018-01-01", "2018-12-31", 9.0, "2019-02-25")]}},
 }}}
 
 
@@ -58,6 +64,8 @@ def test_comptes():
     assert a["ca"] == 150.0 and a["resultat_net"] == 15.0 and a["ebitda"] == 25.0
     assert a["tresorerie"] == 50.0 and a["dette"] == 35.0 and a["fonds_propres"] == 80.0
     assert a["actions"] == 1000.0 and a["publie"] == "2019-02-25"
+    assert a["fcf"] == 13.0                          # 22 - 9
+    assert l["2017-12-31"]["fcf"] is None            # investissements inconnus : pas d'estimation
 
 
 def test_divisions():

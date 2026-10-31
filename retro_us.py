@@ -32,12 +32,13 @@ import pandas as pd
 
 import collecte
 import config
+import listes
 import retro
 import univers as module_univers
 
 DOSSIER = Path("data/retro_us")
 # À changer quand la lecture des comptes change : tout est alors relu (une quinzaine de minutes)
-VERSION = 2
+VERSION = 3  # 3 : flux de trésorerie (trésorerie disponible = flux d'exploitation - investissements)
 COMPTES = DOSSIER / f"comptes_v{VERSION}.csv"
 COURS = DOSSIER / f"cours_v{VERSION}.csv"
 DIVISIONS = DOSSIER / f"divisions_v{VERSION}.csv"
@@ -87,6 +88,10 @@ FLUX = {
                        "DepreciationAmortizationAndAccretionNet", "Depreciation"],
     "actions": ["WeightedAverageNumberOfDilutedSharesOutstanding",
                 "WeightedAverageNumberOfSharesOutstandingBasic"],
+    "flux_exploitation": ["NetCashProvidedByUsedInOperatingActivities",
+                          "NetCashProvidedByUsedInOperatingActivitiesContinuingOperations"],
+    "investissements": ["PaymentsToAcquirePropertyPlantAndEquipment",
+                        "PaymentsToAcquireProductiveAssets"],
 }
 STOCKS = {
     "tresorerie": ["CashAndCashEquivalentsAtCarryingValue",
@@ -185,11 +190,16 @@ def comptes_annuels(symbole: str, js: dict) -> list[dict]:
         ebitda = None
         if n["resultat_op"] is not None and n["amortissements"] is not None:
             ebitda = n["resultat_op"] + n["amortissements"]
+        # Trésorerie disponible : flux d'exploitation moins investissements (seulement si les
+        # deux sont publiés : sans les investissements, elle serait surestimée)
+        fcf = None
+        if n["flux_exploitation"] is not None and n["investissements"] is not None:
+            fcf = n["flux_exploitation"] - n["investissements"]
         lignes.append({
             "symbole": symbole, "fin": fin, "publie": publie, "devise": "USD",
             "ca": n["ca"], "resultat_net": n["resultat_net"], "resultat_op": n["resultat_op"],
             "ebitda": ebitda, "tresorerie": treso, "dette": dette, "actions": n["actions"],
-            "fonds_propres": n["fonds_propres"],
+            "fonds_propres": n["fonds_propres"], "fcf": fcf,
         })
     return lignes
 
@@ -237,7 +247,7 @@ def collecter(budget_minutes: float) -> None:
     def vider():
         retro._ajouter(COMPTES, tampon["comptes"], ["symbole", "fin", "publie", "devise", "ca",
                        "resultat_net", "resultat_op", "ebitda", "tresorerie", "dette",
-                       "actions", "fonds_propres"])
+                       "actions", "fonds_propres", "fcf"])
         retro._ajouter(COURS, tampon["cours"], retro.COLONNES_COURS)
         retro._ajouter(DIVISIONS, tampon["divisions"], ["symbole", "date", "ratio"])
         with open(TRAITES, "a") as f:
@@ -333,6 +343,80 @@ def _resume(df: pd.DataFrame, cle: str) -> dict:
     }
 
 
+# --------------------------------------------------------------------------- #
+# Les fortes hausses à 5 ans : radar, liste « Rallye 5 ans » et ensemble
+# --------------------------------------------------------------------------- #
+CINQ_ANS_MOIS = 60
+PERIODES_5ANS = {"Achats 2012 à 2016": ("2012", "2017"), "Achats depuis 2017": ("2017", "2100")}
+
+
+def _comptes_connus(comptes: pd.DataFrame, t0: pd.Timestamp) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Derniers comptes publiés à la date, et ceux publiés trois exercices plus tôt."""
+    c = comptes[pd.to_datetime(comptes["publie"], errors="coerce") <= t0].sort_values("fin_date")
+    return (c.groupby("symbole").tail(1).set_index("symbole"),
+            c.groupby("symbole").nth(-4).set_index("symbole"))
+
+
+def mesures_5ans(date: str, n: pd.DataFrame, comptes: pd.DataFrame, cours: pd.DataFrame,
+                 par_euro) -> pd.DataFrame:
+    """Les sociétés notées à la date, leur gain sur 5 ans et ce qu'il faut pour les deux listes."""
+    t0 = pd.Timestamp(date)
+    mois0 = t0.strftime("%Y-%m")
+    mois5 = (t0 + pd.DateOffset(months=CINQ_ANS_MOIS)).strftime("%Y-%m")
+    prix = cours[cours["mois"].isin([mois0, mois5])].drop_duplicates(["symbole", "mois"])
+    prix = prix.pivot(index="symbole", columns="mois", values="ajuste")
+    if mois5 not in prix:
+        return pd.DataFrame()
+    dernier, avant = _comptes_connus(comptes, t0)
+    x = n.copy()
+    x["m60"] = (prix[mois5] / prix[mois0]).reindex(x.index)
+    eur = 1 / par_euro("USD", mois0)  # euros pour un dollar
+    capi_usd = x["capi_eur"] / eur
+    d = dernier.reindex(x.index)
+    ve = capi_usd + d["dette"].fillna(0) - d["tresorerie"].fillna(0)
+    x["ebitda_ve"] = (d["ebitda"] / ve).where(ve > 0)
+    x["actif_prix"] = (d["fonds_propres"] / capi_usd).where(d["fonds_propres"] > 0)
+    x["beneficiaire"] = d["resultat_net"] > 0
+    x["tresorerie_positive"] = (d["fcf"] > 0).where(d["fcf"].notna()) if "fcf" in d else np.nan
+    x["dilution_3a"] = (d["actions"] / avant["actions"].reindex(x.index) - 1).clip(-0.9, 5)
+    x["financiere"] = x["secteur"].eq("Finance")
+    x["date"] = date
+    return x[x["m60"].notna()]
+
+
+def _bilan_5ans(g: pd.DataFrame) -> dict:
+    if g.empty:
+        return {}
+    par_date = g.groupby("date")["m60"]
+    panier = par_date.apply(lambda s: s.clip(0, 20).mean()).mean()
+    return {"societes_par_date": round(float(par_date.size().mean())),
+            "part_x2": round(float(g["m60"].ge(2).mean()), 4),
+            "part_x3": round(float(g["m60"].ge(3).mean()), 4),
+            "part_x5": round(float(g["m60"].ge(5).mean()), 4),
+            "part_moitie": round(float(g["m60"].lt(0.5).mean()), 4),
+            "multiple_median": round(float(g["m60"].median()), 3),
+            "gain_panier_an": round(float(panier ** (1 / 5) - 1), 4)}
+
+
+def cinq_ans(t: pd.DataFrame) -> dict:
+    """Chances de ×2, ×3, ×5 et de perdre plus de la moitié en 5 ans, par groupe."""
+    t = t[t["capi_eur"] >= config.RADAR_CAPI_MIN_EUR].copy()
+    t["radar"] = listes.radar(t["note"], t["valorisation"], t["situation_fi"], t["capi_eur"])
+    t["rallye"] = listes.rallye(t["capi_eur"], t["ebitda_ve"], t["actif_prix"], t["beneficiaire"],
+                                t["financiere"], t["dilution_3a"], t["tresorerie_positive"],
+                                groupe=t["date"])
+    t["mieux_notees"] = t.groupby("date")["note"].rank(pct=True) > 0.8
+    groupes = {"toutes": None, "mieux_notees": "mieux_notees", "radar": "radar", "rallye": "rallye"}
+    res = {"dates": sorted(t["date"].unique()), "periodes": {}}
+    for nom, (a, b) in {"Ensemble": ("0", "9"), **PERIODES_5ANS}.items():
+        p = t[(t["date"] >= a) & (t["date"] < b)]
+        if p.empty:
+            continue
+        res["periodes"][nom] = {k: _bilan_5ans(p if col is None else p[p[col]])
+                                for k, col in groupes.items()}
+    return res
+
+
 def analyser() -> dict:
     univ = module_univers.charger()
     comptes = pd.read_csv(COMPTES, dtype={"symbole": str})
@@ -367,6 +451,12 @@ def analyser() -> dict:
             "perf_mediane_toutes": round(float(g["perf"].median()), 4),
             "perf_mediane_top_100": round(float(top["perf"].median()), 4),
         }
+    # Les fortes hausses à 5 ans (dates qui ont 5 ans de recul)
+    morceaux = [mesures_5ans(d, g.drop(columns="date").set_index("symbole").assign(date=d),
+                             comptes, cours, par_euro) for d, g in tout.groupby("date")]
+    morceaux = [m for m in morceaux if len(m)]
+    if morceaux:
+        res["cinq_ans"] = cinq_ans(pd.concat(morceaux))
     RESULTATS.write_text(json.dumps(res, ensure_ascii=False, indent=1))
     e = res["ensemble"]
     retro.noter_historique("États-Unis (depuis 2012)",

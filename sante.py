@@ -20,6 +20,7 @@ import config
 
 STATUT = Path("data/statut.json")
 HISTORIQUE = Path("data/retro_historique.csv")
+RESULTATS_US = Path("data/retro_us_resultats.json")
 MACRO = Path("data/macro.json")
 INDICES = Path("data/indices.json")
 
@@ -45,6 +46,21 @@ def degradation(lignes: list[dict], zone: str) -> list[str]:
     if dates and gagnantes / dates < 0.5:
         p.append(f"{dernier['zone']} : les mieux notées n'ont fait mieux qu'à {gagnantes} dates "
                  f"sur {dates}.")
+    return p
+
+
+def degradation_5ans(resultats: dict) -> list[str]:
+    """Test américain à 5 ans : le radar et la liste « Rallye 5 ans » triplent-ils encore
+    plus souvent que l'ensemble des sociétés ?"""
+    ens = ((resultats.get("cinq_ans") or {}).get("periodes") or {}).get("Ensemble") or {}
+    toutes = (ens.get("toutes") or {}).get("part_x3")
+    p = []
+    for cle, nom in (("radar", "Le radar"), ("rallye", "La liste « Rallye 5 ans »")):
+        x3 = (ens.get(cle) or {}).get("part_x3")
+        if toutes is not None and x3 is not None and x3 <= toutes:
+            p.append(f"{nom} ne triple plus plus souvent que l'ensemble des sociétés sur 5 ans "
+                     f"({x3 * 100:.1f} % contre {toutes * 100:.1f} %, test américain). "
+                     "Ses règles sont à revoir (config.py).")
     return p
 
 
@@ -101,7 +117,10 @@ def main() -> None:
     if moment == "tests-trimestriels":
         zone = sys.argv[2] if len(sys.argv) > 2 else "Monde"
         lignes = list(csv.DictReader(HISTORIQUE.open())) if HISTORIQUE.exists() else []
-        signaler(degradation(lignes, zone))
+        liste = degradation(lignes, zone)
+        if zone.startswith("États-Unis") and RESULTATS_US.exists():
+            liste += degradation_5ans(json.loads(RESULTATS_US.read_text()))
+        signaler(liste)
         return
     if not STATUT.exists():
         print("::error::Fichier data/statut.json absent : le calcul n'a pas abouti.")

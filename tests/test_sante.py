@@ -66,6 +66,16 @@ def test_tests_trimestriels():
     assert len(degradation([], "États-Unis")) == 1                     # pas de résultat
 
 
+def test_cinq_ans():
+    from sante import degradation_5ans
+    res = lambda r, y: {"cinq_ans": {"periodes": {"Ensemble": {"toutes": {"part_x3": 0.12},
+                                                                 "radar": {"part_x3": r}, "rallye": {"part_x3": y}}}}}
+    assert degradation_5ans(res(0.15, 0.16)) == []
+    p = degradation_5ans(res(0.11, 0.16))
+    assert len(p) == 1 and p[0].startswith("Le radar")
+    assert degradation_5ans({}) == []
+
+
 if __name__ == "__main__":
     test_normal()
     test_cours_manquants_bloquent_la_publication()
@@ -74,4 +84,5 @@ if __name__ == "__main__":
     test_tests_trimestriels()
     test_indicateurs_economiques()
     test_grands_indices()
+    test_cinq_ans()
     print("OK")

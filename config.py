@@ -67,3 +67,18 @@ RADAR_NOTE_MIN = 75            # note investisseur
 RADAR_VALORISATION_MIN = 65    # parmi les 35 % les moins chères de leur secteur
 RADAR_SITUATION_MIN = 30       # situation financière (non notée pour les banques : acceptée)
 RADAR_CAPI_MIN_EUR = 100e6     # capitalisation minimale, en euros
+
+# --- Liste « Rallye 5 ans » de l'accueil -----------------------------------------
+# Petites sociétés bon marché à la fois sur leur excédent brut d'exploitation et sur leur
+# actif net, bénéficiaires, qui ne diluent pas leurs actionnaires : la recette des actions
+# multipliées par 10 (étude Yartseva, 2025). Testée à 5 ans sur les comptes de la SEC (voir
+# le rapport d'analyse du 31 octobre 2026 et la page « Tests »).
+RALLYE_CAPI_MIN_EUR = 100e6     # capitalisation minimale, en euros
+RALLYE_TAILLE_PART = 0.5        # dans la moitié la plus petite des sociétés
+RALLYE_BON_MARCHE_PART = 0.30   # parmi les 30 % les moins chères (EBITDA / VE et actif net / capitalisation)
+RALLYE_DILUTION_MAX = 0.10      # au plus 10 % d'actions en plus sur 3 ans
+RALLYE_TRESORERIE_POSITIVE = True  # trésorerie disponible positive (quand elle est connue)
+
+# Radar et Rallye : au plus 25 % des sociétés d'un même pays (les mieux notées sont gardées),
+# pour ne pas dépendre d'un seul marché. Sans effet mesurable sur le test sur le passé.
+PAYS_PART_MAX = 0.25
