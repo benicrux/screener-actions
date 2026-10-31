@@ -103,6 +103,37 @@ def _revisions_archive(d: pd.DataFrame, jours: int, tolerance: int) -> tuple[pd.
 
 
 # --------------------------------------------------------------------------- #
+# Dilution : nombre d'actions sur les derniers exercices
+# --------------------------------------------------------------------------- #
+COMPTES_ANNUELS = Path("data/comptes_annuels.csv")
+# Un saut du nombre d'actions égal à l'un de ces rapports est une division (ou un
+# regroupement) d'actions, pas une émission : il est neutralisé.
+RAPPORTS_DIVISION = (1.5, 2, 3, 4, 5, 6, 8, 10, 15, 20, 25, 30, 40, 50, 100)
+
+
+def _sans_division(r: float) -> float:
+    for k in RAPPORTS_DIVISION:
+        if abs(r / k - 1) < 0.03 or abs(r * k - 1) < 0.03:
+            return 1.0
+    return r
+
+
+def dilution_3a(chemin: Path = COMPTES_ANNUELS) -> pd.Series:
+    """Variation du nombre d'actions sur les 3 derniers exercices (comptes annuels de Yahoo,
+    relus chaque trimestre par le test sur le passé) : +0,25 = 25 % d'actions en plus."""
+    if not chemin.exists():
+        return pd.Series(dtype=float)
+    c = pd.read_csv(chemin, usecols=["symbole", "fin", "actions"], dtype={"symbole": str})
+    c = c[pd.to_numeric(c["actions"], errors="coerce") > 0].sort_values(["symbole", "fin"])
+    res = {}
+    for symbole, g in c.groupby("symbole", sort=False):
+        a = g["actions"].to_numpy(dtype=float)[-4:]
+        if len(a) >= 2:
+            res[symbole] = float(np.prod([_sans_division(x) for x in a[1:] / a[:-1]]) - 1)
+    return pd.Series(res, dtype=float).clip(-0.9, 5)
+
+
+# --------------------------------------------------------------------------- #
 # Indicateurs bruts
 # --------------------------------------------------------------------------- #
 def indicateurs(base: pd.DataFrame, fx: dict[str, float]) -> pd.DataFrame:
@@ -186,6 +217,12 @@ def indicateurs(base: pd.DataFrame, fx: dict[str, float]) -> pd.DataFrame:
     d["per_12m"] = _ratio(d["prix_usd"], bpa_12m.where(bpa_12m > 0))
     d["per_a1"] = _ratio(d["prix_usd"], bpa_a1.where(bpa_a1 > 0))
     d["pb"] = _ratio(d["prix_usd"], (_num(d, "actif_net_action") * t_comptes).where(lambda s: s > 0))
+    # Pour la liste « Rallye 5 ans » : EBITDA / valeur d'entreprise, actif net / capitalisation,
+    # trésorerie disponible / capitalisation, dilution sur 3 ans
+    d["ebitda_ve"] = _ratio(ebitda, pd.Series(d["ve_usd"], index=d.index).where(lambda s: s > 0))
+    d["actif_prix"] = _ratio(1, d["pb"].where(d["pb"] > 0))
+    d["rendement_tresorerie"] = _ratio(_num(d, "fcf") * t_comptes, d["capi_usd"]).clip(-1, 1)
+    d["dilution_3a"] = d["symbole"].map(dilution_3a()) if "symbole" in d else np.nan
 
     # Croissance du chiffre d'affaires : dernier trimestre sur un an + prévisions.
     # Les prévisions pèsent plus que le passé (leçon du test sur Afentra).

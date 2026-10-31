@@ -43,7 +43,7 @@
           <div id="favoris"></div>
         </div>
         <div class="carte">
-          <div class="carte-tete"><h3>Cette semaine : publications</h3><span>favoris et radar</span></div>
+          <div class="carte-tete"><h3>Cette semaine : publications</h3><span>favoris et listes</span></div>
           <div id="semaine"></div>
         </div>
       </div>
@@ -52,11 +52,12 @@
     <section class="acc-section" aria-labelledby="t-radar">
       <div class="acc-titre acc-titre-ligne">
         <div>
-          <h2 id="t-radar">Radar des pépites</h2>
-          <p id="radar-critere"></p>
+          <h2 id="t-radar">Pépites à étudier</h2>
         </div>
         <span class="acc-compte" id="radar-compte"></span>
       </div>
+      <div class="onglets" id="radar-onglets" role="tablist" aria-label="Listes de pépites"></div>
+      <div class="critere-liste" id="radar-critere"></div>
       <div class="filtres-radar">
         <div class="filtre-ligne"><span class="filtre-nom">Continents</span>
           <div class="puces" id="radar-continents" role="group" aria-label="Continents (plusieurs choix possibles)"></div></div>
@@ -92,6 +93,7 @@
 </footer>
 
 </div>
+<script src="commun.js?v=__VERSION__"></script>
 <script src="accueil.js?v=__VERSION__"></script>
 </body>
 </html>

@@ -13,7 +13,8 @@ import rendu  # noqa: E402
 
 def societe(s, **k):
     base = dict(symbole=s, n_investisseur=85, n_valorisation=80, n_situation_fi=60,
-                capi_usd=5e8, ca_usd=2e8)
+                capi_usd=5e8, ca_usd=2e8, pays=f"Pays {s}", financiere=False,
+                fin_exercice="2025-12-31")
     base.update(k)
     return base
 
@@ -28,9 +29,28 @@ def test_radar():
         societe("PETITE", capi_usd=5e7),
         societe("SANS_CA", ca_usd=None),                   # véhicule sans chiffre d'affaires
         societe("MOYENNE", n_investisseur=70),
+        societe("MUETTE", fin_exercice="2023-12-31"),     # plus de comptes depuis 2023
     ])
     r = rendu.radar(v, usd_par_eur=1.1)
     assert list(r["symbole"]) == ["MIEUX", "BON", "BANQUE"], list(r["symbole"])
+
+
+def test_rallye():
+    # 20 sociétés ; 0 à 4 et 15 très bon marché ; 1 en perte, 2 trop diluée, 3 sans trésorerie
+    lignes = []
+    for i in range(20):
+        pas_cher = i in (0, 1, 2, 3, 4, 15)
+        lignes.append(societe(f"S{i}", capi_usd=(i + 1.5) * 1e8, n_investisseur=60 + i,
+                              ebitda_ve=0.30 if pas_cher else 0.05,
+                              actif_prix=1.5 if pas_cher else 0.5,
+                              marge_nette_ajustee=-0.05 if i == 1 else (None if i == 4 else 0.08),
+                              per_12m=9.0, dilution_3a=0.25 if i == 2 else 0.0,
+                              rendement_tresorerie=-0.02 if i == 3 else 0.06))
+    lignes.append(societe("BANQUE", capi_usd=2e8, financiere=True, ebitda_ve=0.5, actif_prix=3,
+                          marge_nette_ajustee=0.2, rendement_tresorerie=0.1))
+    r = rendu.rallye(pd.DataFrame(lignes), usd_par_eur=1.0)
+    # 4 : marge inconnue mais PER positif, donc bénéficiaire ; la mieux notée d'abord
+    assert list(r["symbole"]) == ["S4", "S0"], list(r["symbole"])
 
 
 def test_dates_entree():
@@ -60,6 +80,7 @@ def test_grands_indices():
 
 if __name__ == "__main__":
     test_radar()
+    test_rallye()
     test_dates_entree()
     test_grands_indices()
     print("OK")

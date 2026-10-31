@@ -28,33 +28,35 @@ const GROUPES = ["Taux des banques centrales", "Taux à 10 ans", "Inflation sur 
   "Matières premières", "Devises, marché et emploi"];
 const COULEURS_PAYS = ["var(--accent)", "#5d8aa2", "#a9c3d1", "var(--filet)"];
 
-let actions = [], parSymbole = new Map(), radar = [], filtre = {}, statut = {}, macro = null;
+let actions = [], parSymbole = new Map(), radar = [], rallye = [], filtre = {}, statut = {}, macro = null;
+// Règles de la liste « Rallye 5 ans » et résultats du test américain à 5 ans (pour l'expliquer)
+let reglesRallye = {}, paysPartMax = null, cinqAns = null;
 // Grands indices (composition relue chaque mois sur Wikipédia) ; symbole -> identifiants
 let indices = [], indicesDe = new Map();
 let favoris = lire("pepites.favoris", {});
 let ignores = lire("pepites.ignores", {});
-let etat = Object.assign({ continents: [], sansAnalystes: false }, lire("pepites.accueil", {}));
+let etat = Object.assign({ continents: [], sansAnalystes: false, liste: "radar" }, lire("pepites.accueil", {}));
+if (!["radar", "rallye"].includes(etat.liste)) etat.liste = "radar";
 // Anciennes préférences : un seul continent ; filtres par taille puis par indice (passé au screener)
 if (!Array.isArray(etat.continents)) etat.continents = etat.continent ? [etat.continent] : [];
 delete etat.continent;
 delete etat.taille;
 delete etat.indice;
 let affichees = PAR_PAGE;
+const SEMAINE_VISIBLES = 6;
+let semaineOuverte = false;
 let USD_PAR_EUR = 1.1;
 
 /* ------------------------------------------------------------------ */
 /* Outils                                                              */
 /* ------------------------------------------------------------------ */
-function lire(cle, defaut) {
-  try { const v = localStorage.getItem(cle); return v ? JSON.parse(v) : defaut; } catch (e) { return defaut; }
-}
-function ecrire(cle, valeur) {
-  try { localStorage.setItem(cle, JSON.stringify(valeur)); } catch (e) { /* stockage indisponible */ }
-}
+// Enregistrement dans le navigateur (et synchronisation entre appareils : commun.js)
+function lire(cle, defaut) { return Pepites.lire(cle, defaut); }
+function ecrire(cle, valeur) { Pepites.ecrire(cle, valeur); }
 const nf = (d) => new Intl.NumberFormat("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d });
 const F = [nf(0), nf(1), nf(2)];
 function nombre(v, d = 1) { return v == null || !isFinite(v) ? "—" : F[d].format(v); }
-function signe(v, d = 0) { return v == null || !isFinite(v) ? "—" : (v > 0 ? "+" : "") + F[d].format(v * 100) + " %"; }
+function signe(v, d = 0) { return v == null || !isFinite(v) ? "—" : (v > 0 ? "+" : "") + F[d].format(v * 100) + " %"; }
 function echapper(s) {
   return String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
@@ -67,7 +69,7 @@ function joursDepuis(iso) {
 function euros(usd) {
   if (usd == null || !isFinite(usd)) return "—";
   const e = usd / USD_PAR_EUR;
-  return e >= 1e9 ? `${nombre(e / 1e9, e >= 1e11 ? 0 : 1)} Md€` : `${nombre(e / 1e6, 0)} M€`;
+  return e >= 1e9 ? `${nombre(e / 1e9, e >= 1e11 ? 0 : 1)} Md€` : `${nombre(e / 1e6, 0)} M€`;
 }
 function classeNote(v, synthese) {
   if (v == null) return "n-vide";
@@ -90,10 +92,12 @@ const el = (id) => document.getElementById(id);
 /* ------------------------------------------------------------------ */
 async function charger() {
   const json = (url, defaut) => fetch(`${url}?v=${VERSION}`).then((r) => (r.ok ? r.json() : defaut)).catch(() => defaut);
-  const [t, acc, m, s] = await Promise.all([
+  const [t, acc, m, s, us] = await Promise.all([
     json("data/screener.json", null), json("data/accueil.json", { radar: [] }),
     json("data/macro.json", null), json("data/statut.json", {}),
+    json("data/retro_us_resultats.json", null),
   ]);
+  cinqAns = (((us || {}).cinq_ans || {}).periodes || {}).Ensemble || null;
   statut = s || {};
   macro = m;
   if (!t) {
@@ -108,8 +112,12 @@ async function charger() {
     return o;
   });
   parSymbole = new Map(actions.map((a) => [a.s, a]));
-  radar = (acc.radar || []).map(([sym, depuis]) => ({ a: parSymbole.get(sym), depuis })).filter((x) => x.a);
+  const lireListe = (l) => (l || []).map(([sym, depuis]) => ({ a: parSymbole.get(sym), depuis })).filter((x) => x.a);
+  radar = lireListe(acc.radar);
+  rallye = lireListe(acc.rallye);
   filtre = acc.filtre || {};
+  reglesRallye = acc.regles_rallye || {};
+  paysPartMax = acc.pays_part_max ?? null;
   // Indices rangés dans l'ordre des continents (Europe d'abord), puis dans l'ordre du fichier
   const rang = (c) => { const k = CONTINENTS.indexOf(c); return k < 0 ? 99 : k; };
   indices = (acc.indices || []).map((i, k) => ({ ...i, k }))
@@ -120,6 +128,7 @@ async function charger() {
     indicesDe.get(s).push(i.id);
   }));
   nettoyerIgnores();
+  if (Pepites.completerFavoris(favoris, parSymbole)) ecrire("pepites.favoris", favoris);
   afficherEntete(t.maj);
   rendreFavoris();
   rendreSemaine();
@@ -151,21 +160,6 @@ function afficherEntete(maj) {
 /* ------------------------------------------------------------------ */
 /* Favoris                                                             */
 /* ------------------------------------------------------------------ */
-/* Raisons de réexaminer un favori. Après un réexamen, seules les nouveautés comptent. */
-function raisonsFavori(a, f) {
-  const vu = f.vu || {};
-  const r = [];
-  const reference = vu.inv ?? f.inv;
-  if (reference != null && a.inv != null && a.inv <= reference - 15) {
-    r.push(`la note a perdu ${reference - a.inv} points ${f.vu ? "depuis le dernier réexamen" : "depuis l'ajout"}`);
-  }
-  if (a.val != null && a.val < 40 && !(vu.val != null && vu.val < 40)) r.push(`n'est plus bon marché (valorisation ${a.val})`);
-  if (a.sit != null && a.sit < 30 && !(vu.sit != null && vu.sit < 30)) r.push(`situation financière fragile (${a.sit})`);
-  const depuis = joursDepuis(vu.d || f.d);
-  if (depuis != null && depuis >= 180) r.push(`pas réexaminée depuis ${Math.floor(depuis / 30)} mois`);
-  return r;
-}
-
 function rendreFavoris() {
   const liste = Object.entries(favoris).map(([s, f]) => ({ s, f, a: parSymbole.get(s) }))
     .sort((x, y) => (x.a ? 0 : 1) - (y.a ? 0 : 1) || String(x.a?.n ?? x.s).localeCompare(String(y.a?.n ?? y.s), "fr"));
@@ -180,8 +174,9 @@ function rendreFavoris() {
       return `<div class="fav-ligne"><div class="fav-haut"><div><span class="fav-nom">${echapper(s)}</span>
         <span class="acc-ident">N'est plus suivie par le screener (retirée de la cote ou données indisponibles).</span></div></div></div>`;
     }
-    const raisons = raisonsFavori(a, f);
+    const raisons = Pepites.raisonsFavori(a, f);
     if (raisons.length) aRevoir += 1;
+    const hausse = f.px && a.px && f.dv === a.dv ? a.px / f.px - 1 : null;
     const delta = f.inv != null && a.inv != null ? a.inv - f.inv : null;
     const coursDepuis = f.px && a.px && f.dv === a.dv ? `cours ${signe(a.px / f.px - 1)}` : "";
     const points = delta == null ? "" : `${delta > 0 ? "+" : delta < 0 ? "−" : "±"}${Math.abs(delta)} pt${Math.abs(delta) > 1 ? "s" : ""}`;
@@ -198,8 +193,11 @@ function rendreFavoris() {
         ${raisons.length
           ? `<span class="signal revoir">À revoir : ${echapper(raisons.join(" ; "))}</span>
              <button type="button" class="bouton-contour" data-revu="${echapper(s)}">Marquer comme réexaminée</button>`
-          : `<span class="signal ok">Rien à signaler</span>`}
+          : hausse != null && hausse >= 0.5
+            ? `<span class="signal ok">Thèse intacte et ${signe(hausse)} depuis l'ajout : à laisser courir</span>`
+            : `<span class="signal ok">Rien à signaler</span>`}
       </div>
+      ${Pepites.blocThese(s, f)}
     </div>`;
   }).join("");
   el("favoris-resume").textContent = `${liste.length} suivi${liste.length > 1 ? "s" : ""}` +
@@ -207,17 +205,18 @@ function rendreFavoris() {
   el("favoris").querySelectorAll("[data-revu]").forEach((b) => {
     b.onclick = () => {
       const s = b.dataset.revu, a = parSymbole.get(s);
-      favoris[s].vu = { d: aujourdhui(), inv: a.inv, val: a.val, sit: a.sit };
+      favoris[s].vu = Object.assign({ d: aujourdhui(), inv: a.inv }, Pepites.photo(a));
       ecrire("pepites.favoris", favoris);
       rendreFavoris();
     };
   });
+  Pepites.brancherTheses(el("favoris"), favoris, () => ecrire("pepites.favoris", favoris));
 }
 
 function basculerFavori(s) {
   const a = parSymbole.get(s);
   if (favoris[s]) delete favoris[s];
-  else favoris[s] = { d: aujourdhui(), px: a.px, dv: a.dv, inv: a.inv };
+  else favoris[s] = Pepites.nouveauFavori(a);
   ecrire("pepites.favoris", favoris);
   rendreFavoris();
   rendreSemaine();
@@ -230,16 +229,20 @@ function rendreSemaine() {
   const debut = aujourdhui();
   const fin = new Date(Date.now() + 7 * 864e5).toISOString().slice(0, 10);
   const dansRadar = new Set(radar.map((r) => r.a.s));
-  const symboles = new Set([...Object.keys(favoris), ...dansRadar]);
+  const dansRallye = new Set(rallye.map((r) => r.a.s));
+  const symboles = new Set([...Object.keys(favoris), ...dansRadar, ...dansRallye]);
   const liste = [...symboles].map((s) => parSymbole.get(s))
     .filter((a) => a && a.pp && a.pp >= debut && a.pp <= fin)
     .sort((x, y) => x.pp.localeCompare(y.pp) || (favoris[y.s] ? 1 : 0) - (favoris[x.s] ? 1 : 0))
-    .slice(0, 10);
+    .slice(0, 30);
   if (!liste.length) {
-    el("semaine").innerHTML = `<p class="vide-texte">Aucune publication de résultats prévue d'ici 7 jours parmi tes favoris et le radar.</p>`;
+    el("semaine").innerHTML = `<p class="vide-texte">Aucune publication de résultats prévue d'ici 7 jours parmi tes favoris, le radar et la liste Rallye 5 ans.</p>`;
     return;
   }
-  el("semaine").innerHTML = liste.map((a) => {
+  // Les 6 premières ; les autres se déplient sur demande (la carte garde une hauteur raisonnable)
+  const visibles = semaineOuverte ? liste : liste.slice(0, SEMAINE_VISIBLES);
+  const reste = liste.length - visibles.length;
+  el("semaine").innerHTML = visibles.map((a) => {
     const j = new Date(`${a.pp}T12:00:00Z`);
     const jour = j.toLocaleDateString("fr-FR", { weekday: "short", timeZone: "UTC" }).replace(".", "");
     const fav = !!favoris[a.s];
@@ -247,9 +250,12 @@ function rendreSemaine() {
       <div class="sem-jour"><span>${echapper(jour)}</span><strong>${j.getUTCDate()}</strong></div>
       <div class="sem-texte"><a class="sem-nom" href="${lienFiche(a.s)}">${echapper(a.n)}</a>
         <span class="acc-ident">Résultats${a.ppe ? " (date estimée)" : ""}</span></div>
-      <span class="tag ${fav ? "tag-favori" : "tag-radar"}">${fav ? "Favori" : "Radar"}</span>
+      <span class="tag ${fav ? "tag-favori" : "tag-radar"}">${fav ? "Favori" : dansRadar.has(a.s) ? "Radar" : "Rallye 5 ans"}</span>
     </div>`;
-  }).join("");
+  }).join("") + (reste > 0 || semaineOuverte && liste.length > SEMAINE_VISIBLES
+    ? `<button type="button" class="lien sem-plus" id="semaine-plus">${semaineOuverte ? "Réduire la liste" : `Voir les ${reste} autres`}</button>` : "");
+  const plus = el("semaine-plus");
+  if (plus) plus.onclick = () => { semaineOuverte = !semaineOuverte; rendreSemaine(); };
 }
 
 /* ------------------------------------------------------------------ */
@@ -263,8 +269,25 @@ function nettoyerIgnores() {
   if (change) ecrire("pepites.ignores", ignores);
 }
 
+// La liste affichée : le radar ou la liste « Rallye 5 ans »
+function courante() { return etat.liste === "rallye" ? rallye : radar; }
+
+function rendreOnglets() {
+  const onglet = (cle, nom, liste) => `<button type="button" role="tab" data-liste="${cle}" aria-controls="radar"
+    aria-selected="${etat.liste === cle}">${nom}<span>${nombre(liste.length, 0)}</span></button>`;
+  el("radar-onglets").innerHTML = onglet("radar", "Radar des pépites", radar) + onglet("rallye", "Rallye 5 ans", rallye);
+}
+
 function construireFiltres() {
-  const presents = new Set(radar.map((r) => r.a.c));
+  rendreOnglets();
+  el("radar-onglets").onclick = (e) => {
+    const b = e.target.closest("button[data-liste]");
+    if (!b || b.dataset.liste === etat.liste) return;
+    etat.liste = b.dataset.liste;
+    rendreOnglets();
+    majFiltresRadar();
+  };
+  const presents = new Set([...radar, ...rallye].map((r) => r.a.c));
   const liste = [["", "Monde"], ...CONTINENTS.filter((c) => presents.has(c)).map((c) => [c, c])];
   etat.continents = etat.continents.filter((c) => presents.has(c));
   el("radar-continents").innerHTML = liste.map(([c, nom]) =>
@@ -324,11 +347,12 @@ function rendreConcentration(liste) {
   boite.hidden = false;
   const zoneTexte = etat.continents.length ? ` de ${etat.continents.length > 1 ? "ces continents" : "ce continent"}` : "";
   const comparaison = parts[0].part >= poids + 5
-    ? `alors que ce pays ne pèse que ${poids} % des sociétés notées${zoneTexte}`
-    : `pour ${poids} % des sociétés notées${zoneTexte}`;
-  boite.innerHTML = `<p><strong>${echapper(paysTete)} : ${parts[0].part} % du radar</strong>, ${comparaison}.</p>
+    ? `alors que ce pays ne pèse que ${poids} % des sociétés notées${zoneTexte}`
+    : `pour ${poids} % des sociétés notées${zoneTexte}`;
+  const nomListe = etat.liste === "rallye" ? "de la liste" : "du radar";
+  boite.innerHTML = `<p><strong>${echapper(paysTete)} : ${parts[0].part} % ${nomListe}</strong>, ${comparaison}.</p>
     <div class="barre-pays" aria-hidden="true">${parts.map((x) => `<span style="width:${x.part}%;background:${x.couleur}"></span>`).join("")}</div>
-    <div class="legende-pays">${parts.map((x) => `<span><i style="background:${x.couleur}"></i>${echapper(x.p)} ${x.part} %</span>`).join("")}</div>`;
+    <div class="legende-pays">${parts.map((x) => `<span><i style="background:${x.couleur}"></i>${echapper(x.p)} ${x.part} %</span>`).join("")}</div>`;
 }
 
 function ressortEtFaiblesse(a) {
@@ -343,8 +367,19 @@ function ressortEtFaiblesse(a) {
   return [ressort, point];
 }
 
+// Les chiffres qui font entrer une société dans la liste « Rallye 5 ans »
+function pourquoiRallye(a) {
+  const morceaux = [`petite (${euros(a.cap)})`];
+  if (a.vee != null) morceaux.push(`vaut ${nombre(a.vee, 1)} fois son EBITDA`);
+  if (a.pb != null) morceaux.push(`${nombre(a.pb, 2)} fois son actif net`);
+  if (a.tdr != null) morceaux.push(`trésorerie disponible ${nombre(a.tdr * 100, 1)} % de sa valeur`);
+  if (a.dil != null) morceaux.push(a.dil <= 0.005 ? "pas de dilution en 3 ans" : `${nombre(a.dil * 100, 0)} % d'actions en plus en 3 ans`);
+  return morceaux.join(", ");
+}
+
 function carteRadar({ a, depuis }) {
   const [ressort, faible] = ressortEtFaiblesse(a);
+  const enRallye = etat.liste === "rallye";
   const nouveau = joursDepuis(depuis) != null && joursDepuis(depuis) < NOUVEAU_JOURS;
   const fav = !!favoris[a.s];
   const mini = [["val", "Valorisation"], ["ren", "Rentabilité"], ["sit", "Situation financière"]].map(([k, nom]) => {
@@ -371,7 +406,7 @@ function carteRadar({ a, depuis }) {
     <div class="mini-notes">${mini}</div>
     <div class="raisons">
       <p><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="trait-haut"><path d="M3 8.5l3 3 7-7"/></svg>
-        <span><strong>Ressort pour :</strong> ${echapper(ressort)}</span></p>
+        <span><strong>${enRallye ? "Pourquoi elle est là" : "Ressort pour"} :</strong> ${echapper(enRallye ? pourquoiRallye(a) : ressort)}</span></p>
       <p><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="trait-bas"><path d="M8 2.5l6 11H2z"/><path d="M8 7v3"/><path d="M8 12h.01"/></svg>
         <span><strong>Point faible :</strong> ${echapper(faible)}</span></p>
     </div>
@@ -383,12 +418,28 @@ function carteRadar({ a, depuis }) {
   </article>`;
 }
 
+// En tête de la liste : ce qu'elle cherche et ce qu'elle a donné sur le passé ; les règles
+// détaillées se déplient sur demande, pour garder la page lisible
+function texteCritere() {
+  const f = filtre, r = reglesRallye;
+  const plafond = paysPartMax ? ` Au plus ${nombre(paysPartMax * 100, 0)} % d'un même pays, pour ne pas dépendre d'un seul marché.` : "";
+  const passe = (cle) => cinqAns && cinqAns[cle] && cinqAns.toutes
+    ? ` Sur le passé (États-Unis, 5 ans), ${nombre(cinqAns[cle].part_x3 * 100, 0)} % ont triplé, contre ${nombre(cinqAns.toutes.part_x3 * 100, 0)} % de l'ensemble.` : "";
+  if (etat.liste === "rallye") {
+    if (r.capi_min_eur == null) return ["La liste « Rallye 5 ans » arrive avec le prochain calcul de nuit.", ""];
+    return [`Petites sociétés très bon marché, pour viser les fortes hausses à 5 ans.${passe("rallye")}`,
+      `La moitié la plus petite des sociétés de plus de ${nombre(r.capi_min_eur / 1e6, 0)} M€, parmi les ${nombre(r.bon_marche_part * 100, 0)} % les moins chères à la fois sur leur EBITDA (valeur d'entreprise / excédent brut d'exploitation) et sur leur actif net, bénéficiaires${r.tresorerie_positive ? ", avec une trésorerie disponible positive" : ""}, et au plus ${nombre(r.dilution_max * 100, 0)} % d'actions en plus en 3 ans.${plafond}`];
+  }
+  if (f.note_min == null) return ["", ""];
+  return [`Sociétés de qualité, bon marché et solides.${passe("radar")}`,
+    `Note d'au moins ${f.note_min}, parmi les ${100 - f.valorisation_min} % les moins chères de leur secteur, sans risque de faillite apparent (situation financière d'au moins ${f.situation_min}), plus de ${nombre(f.capi_min_eur / 1e6, 0)} M€ de capitalisation.${plafond}`];
+}
+
 function rendreRadar() {
-  const f = filtre;
-  el("radar-critere").textContent = f.note_min != null
-    ? `Note d'au moins ${f.note_min}, parmi les ${100 - f.valorisation_min} % les moins chères de leur secteur, sans risque de faillite apparent (situation financière d'au moins ${f.situation_min}), plus de ${nombre(f.capi_min_eur / 1e6, 0)} M€ de capitalisation.`
-    : "";
-  const tous = radar.filter(({ a }) => dansZone(a) && (!etat.sansAnalystes || sansAnalystes(a)));
+  const [tete, regles] = texteCritere();
+  el("radar-critere").innerHTML = echapper(tete) + (regles
+    ? ` <details class="regles"><summary>Les règles</summary><span>${echapper(regles)}</span></details>` : "");
+  const tous = courante().filter(({ a }) => dansZone(a) && (!etat.sansAnalystes || sansAnalystes(a)));
   const liste = tous.filter(({ a }) => !ignores[a.s]);
   const nbIgnores = tous.length - liste.length;
   el("radar-compte").textContent = `${nombre(liste.length, 0)} société${liste.length > 1 ? "s" : ""}`;
@@ -432,7 +483,7 @@ function valeurMacro(i) {
     case "eurusd": return `${nombre(v, 2)} $`;
     case "eurjpy": return `${nombre(v, 0)} ¥`;
     case "vix": return nombre(v, 0);
-    default: return `${nombre(v, i.id.startsWith("inf_") || i.id.startsWith("cho_") ? 1 : 2)} %`;
+    default: return `${nombre(v, i.id.startsWith("inf_") || i.id.startsWith("cho_") ? 1 : 2)} %`;
   }
 }
 function variationMacro(i) {
@@ -441,7 +492,7 @@ function variationMacro(i) {
   const fleche = d > 0 ? "↑" : d < 0 ? "↓" : "→";
   return i.mode === "points"
     ? `${fleche} ${d > 0 ? "+" : ""}${nombre(d, Math.abs(d) < 1 ? 2 : 1)} pt sur 1 an`
-    : `${fleche} ${d > 0 ? "+" : ""}${nombre(d, 0)} % sur 1 an`;
+    : `${fleche} ${d > 0 ? "+" : ""}${nombre(d, 0)} % sur 1 an`;
 }
 function mois(m) {
   return new Date(`${m.slice(0, 7)}-15T12:00:00Z`).toLocaleDateString("fr-FR", { month: "short", year: "numeric", timeZone: "UTC" });
@@ -484,3 +535,13 @@ function rendreContexte() {
 }
 
 charger();
+
+// Favoris ou sociétés ignorées modifiés ailleurs (autre appareil, autre onglet)
+Pepites.surChangement(() => {
+  favoris = lire("pepites.favoris", {});
+  ignores = lire("pepites.ignores", {});
+  if (!actions.length) return;
+  rendreFavoris();
+  rendreSemaine();
+  rendreRadar();
+});

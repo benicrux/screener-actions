@@ -7,3 +7,5 @@ data/donnees.csv
 # Historiques des tests sur le passé : gardés sur les branches « retro » et « retro-us »
 data/retro/
 data/retro_us/
+# Comptes annuels (copie de la branche « retro », pour la dilution)
+data/comptes_annuels.csv

@@ -204,6 +204,9 @@ def _extraire(symbole: str, js: dict) -> tuple[dict, list[dict]]:
         "haut_52s": _v(sd.get("fiftyTwoWeekHigh")),
         "bas_52s": _v(sd.get("fiftyTwoWeekLow")),
         "fin_exercice": _date(ks.get("lastFiscalYearEnd")),
+        # Part du capital détenue par les dirigeants et par les institutions (fonds, banques)
+        "dirigeants": _v(ks.get("heldPercentInsiders")),
+        "institutions": _v(ks.get("heldPercentInstitutions")),
     }
 
     archive = []

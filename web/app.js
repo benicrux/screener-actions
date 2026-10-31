@@ -79,13 +79,9 @@ const ORDRE_CONTINENTS = ["Europe", "Amérique du Nord", "Asie", "Amérique lati
 let statut = {};
 let favoris = lire("pepites.favoris", {});
 
-function lire(cle, defaut) {
-  try { const v = localStorage.getItem(cle); return v ? JSON.parse(v) : defaut; }
-  catch (e) { return defaut; }
-}
-function ecrire(cle, valeur) {
-  try { localStorage.setItem(cle, JSON.stringify(valeur)); } catch (e) { /* stockage indisponible */ }
-}
+// Enregistrement dans le navigateur (et synchronisation entre appareils : commun.js)
+function lire(cle, defaut) { return Pepites.lire(cle, defaut); }
+function ecrire(cle, valeur) { Pepites.ecrire(cle, valeur); }
 
 /* ------------------------------------------------------------------ */
 /* Formats                                                             */
@@ -95,7 +91,7 @@ const F = [nf(0), nf(1), nf(2)];
 function nombre(v, dec = 1) { return v == null || !isFinite(v) ? "—" : F[dec].format(v); }
 function pct(v, dec = 1, signe = false) {
   if (v == null || !isFinite(v)) return "—";
-  const s = F[dec].format(v * 100) + " %";
+  const s = F[dec].format(v * 100) + " %";
   return signe && v > 0 ? "+" + s : s;
 }
 function per(v) {
@@ -355,7 +351,7 @@ function construireFiltres() {
     <div class="echelle-filtre info-filtre" role="group" aria-label="Informations disponibles">
       <span class="echelle-nom">Informations</span>
       <span class="paliers">${PALIERS_INFO.map((p) =>
-        `<button type="button" data-info="${p}" aria-label="${p ? `Au moins ${p} % des informations` : "Toutes les sociétés"}">${p ? `${p} %${p < 100 ? " +" : ""}` : "Toutes"}</button>`).join("")}</span>
+        `<button type="button" data-info="${p}" aria-label="${p ? `Au moins ${p} % des informations` : "Toutes les sociétés"}">${p ? `${p} %${p < 100 ? " +" : ""}` : "Toutes"}</button>`).join("")}</span>
     </div>`;
   const curseurMin = document.getElementById("capi-min");
   const curseurMax = document.getElementById("capi-max");
@@ -598,6 +594,7 @@ async function ouvrir(s, pousser = true) {
   try { f = await chargerFiche(s); } catch (e) { f = null; }
   corps.innerHTML = rendreFiche(a, f || {});
   corps.querySelector("[data-favori]").onclick = (e) => basculerFavori(a, f || {}, e.currentTarget);
+  rendreTheseFiche(a);
   const copier = corps.querySelector("[data-copier]");
   if (copier) copier.onclick = () => copierTexte(copier.dataset.copier, copier);
   corps.querySelectorAll("[data-pair]").forEach((tr) => { tr.onclick = () => ouvrir(tr.dataset.pair); });
@@ -636,12 +633,62 @@ function fermer() {
 
 function basculerFavori(a, f, bouton) {
   if (favoris[a.s]) delete favoris[a.s];
-  else favoris[a.s] = { d: new Date().toISOString().slice(0, 10), px: a.px, dv: a.dv, inv: a.inv };
+  else favoris[a.s] = Pepites.nouveauFavori(a);
   ecrire("pepites.favoris", favoris);
   const actif = !!favoris[a.s];
   bouton.setAttribute("aria-pressed", String(actif));
   bouton.textContent = actif ? "★ Dans mes favoris" : "☆ Ajouter aux favoris";
+  rendreTheseFiche(a);
   afficher(false);
+}
+
+// La thèse du favori, modifiable depuis la fiche
+function rendreTheseFiche(a) {
+  const zone = document.getElementById("fiche-these");
+  if (!zone) return;
+  zone.innerHTML = favoris[a.s] ? Pepites.blocThese(a.s, favoris[a.s], !(favoris[a.s].these || {}).pourquoi) : "";
+  Pepites.brancherTheses(zone, favoris, () => ecrire("pepites.favoris", favoris));
+}
+
+/* Contrôle express : ce qu'il faut vérifier avant d'aller plus loin, surtout pour une
+   société peu suivie par les analystes (ses chiffres ne sont recoupés par personne) */
+function controleExpress(a, f) {
+  const ok = (t) => ({ k: "ok", t }), att = (t) => ({ k: "att", t }), info = (t) => ({ k: "info", t });
+  const l = [];
+  const age = joursDepuis(f.fin_exercice);
+  if (age == null) l.push(info("Date des derniers comptes annuels inconnue."));
+  else if (age > 548) l.push(att(`Derniers comptes annuels clos le ${date(f.fin_exercice)}, il y a plus de 18 mois : la société publie-t-elle encore ?`));
+  else l.push(ok(`Derniers comptes annuels clos le ${date(f.fin_exercice)}.`));
+  const dev = f.devise_comptes || "";
+  const benefice = f.marge_nette != null && f.ca != null ? f.marge_nette * f.ca : null;
+  if (benefice != null && benefice <= 0) l.push(att("En perte sur les 12 derniers mois."));
+  else if (benefice != null && f.fcf != null) {
+    const r = f.fcf / benefice;
+    l.push(r >= 0.5
+      ? ok(`Le bénéfice se retrouve en trésorerie : ${montant(f.fcf, dev)} de trésorerie disponible pour ${montant(benefice, dev)} de bénéfice.`)
+      : att(`Bénéfice peu transformé en trésorerie : ${montant(f.fcf, dev)} de trésorerie disponible pour ${montant(benefice, dev)} de bénéfice. Pourquoi ?`));
+  } else l.push(info("Trésorerie disponible inconnue : à lire dans le tableau des flux de trésorerie."));
+  if (a.dil != null) {
+    l.push(a.dil > 0.10 ? att(`${pct(a.dil, 0)} d'actions en plus en 3 ans : les actionnaires sont dilués.`)
+      : a.dil <= 0.02 ? ok(a.dil < -0.02 ? `Nombre d'actions en baisse de ${pct(-a.dil, 0)} en 3 ans : la société rachète ses actions.` : "Nombre d'actions stable sur 3 ans.")
+      : info(`${pct(a.dil, 0)} d'actions en plus en 3 ans.`));
+  }
+  if (f.dirigeants != null) {
+    l.push(f.dirigeants >= 0.1 ? ok(`Les dirigeants détiennent ${pct(f.dirigeants, 0)} du capital : leurs intérêts rejoignent ceux des actionnaires.`)
+      : info(`Les dirigeants détiennent ${pct(f.dirigeants, 0)} du capital.`));
+  }
+  if (f.institutions != null) {
+    l.push(info(f.institutions < 0.1 ? `Les fonds et banques détiennent ${pct(f.institutions, 0)} du capital : société peu découverte.`
+      : `Les fonds et banques détiennent ${pct(f.institutions, 0)} du capital.`));
+  }
+  const na = a.na || 0;
+  l.push(na <= 1 ? att(`${na ? "Un seul analyste" : "Aucun analyste"} : ses chiffres ne sont recoupés par personne, à vérifier dans les comptes publiés.`)
+    : ok(`${na} analystes suivent la société.`));
+  const icones = { ok: "✓", att: "!", info: "•" };
+  const recherche = encodeURIComponent(`${a.n} rapport annuel investor relations`);
+  return `<ul class="controle">${l.map((x) => `<li class="c-${x.k}"><span aria-hidden="true">${icones[x.k]}</span>${echapper(x.t)}</li>`).join("")}</ul>
+    <p class="note-bas"><a href="https://www.google.com/search?q=${recherche}" target="_blank" rel="noopener">Chercher le rapport annuel</a> ·
+    <a href="https://finance.yahoo.com/quote/${encodeURIComponent(a.s)}/financials" target="_blank" rel="noopener">Comptes détaillés sur Yahoo</a></p>`;
 }
 
 function ligne(libelle, valeur, aide) {
@@ -728,7 +775,7 @@ function rendrePairs(a) {
 function texteInformations(a) {
   if (a.cou == null) return "";
   const manque = CRITERES_INV.filter(([, k]) => a[k] == null).map(([, , lib]) => lib);
-  return `<p class="note-bas">Informations disponibles : ${nombre(a.cou, 0)} % de la note investisseur` +
+  return `<p class="note-bas">Informations disponibles : ${nombre(a.cou, 0)} % de la note investisseur` +
     (manque.length ? `. Manque : ${manque.join(", ")}.` : ", rien ne manque.") + "</p>";
 }
 
@@ -778,12 +825,16 @@ function rendreFiche(a, f) {
   <div class="actions-fiche">
     <button type="button" class="bouton" data-favori aria-pressed="${fav}">${fav ? "★ Dans mes favoris" : "☆ Ajouter aux favoris"}</button>
   </div>
+  <div id="fiche-these"></div>
 
   <div class="synthese">
     <div class="bloc${synthInv}"><span>Note investisseur</span>${pastille(a.inv, true, true)}</div>
     <div class="bloc"><span>Note trading</span>${pastille(a.tra, true, true)}</div>
   </div>
   <ul class="ressort">${pointsSaillants(a, f).map((x) => `<li>${x}</li>`).join("")}</ul>
+
+  <h3>Contrôle express</h3>
+  ${controleExpress(a, f)}
 
   <h3>Les notes</h3>
   <div class="barres">${barres}</div>
@@ -885,3 +936,9 @@ document.addEventListener("keydown", (e) => { if (e.key === "Escape") fermer(); 
 window.addEventListener("hashchange", ouvrirDepuisAdresse);
 
 charger();
+
+// Favoris modifiés ailleurs (autre appareil, autre onglet)
+Pepites.surChangement(() => {
+  favoris = lire("pepites.favoris", {});
+  if (actions.length) afficher(false);
+});

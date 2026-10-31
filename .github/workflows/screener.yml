@@ -79,6 +79,16 @@ jobs:
             echo "Pas encore de données détaillées."
           fi
 
+      - name: Récupérer les comptes annuels (branche « retro », relus chaque trimestre) pour la dilution
+        run: |
+          if git fetch -q --depth 1 origin retro; then
+            git show FETCH_HEAD:comptes_v3.csv > data/comptes_annuels.csv 2>/dev/null \
+              || git show FETCH_HEAD:comptes_v2.csv > data/comptes_annuels.csv 2>/dev/null \
+              || rm -f data/comptes_annuels.csv
+            [ -f data/comptes_annuels.csv ] && echo "$(wc -l < data/comptes_annuels.csv) comptes annuels récupérés."
+          fi
+          true
+
       - name: Indicateurs économiques de la page d'accueil (un échec n'interrompt pas le calcul)
         if: github.event_name != 'push'
         continue-on-error: true

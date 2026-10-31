@@ -5,8 +5,6 @@ que la page « Tests » mesure exactement ce que le site affiche. Réglages dans
 """
 from __future__ import annotations
 
-import math
-
 import pandas as pd
 
 import config
@@ -52,7 +50,11 @@ def plafond_pays(pays: pd.Series, masque: pd.Series, rang: pd.Series,
     retenues = masque[masque].index
     if not len(retenues):
         return masque
-    plafond = max(1, math.ceil(part_max * len(retenues)))
+    # Le plus grand plafond tel qu'aucun pays ne dépasse part_max de la liste finale
+    nombres = pays.loc[retenues].fillna("?").value_counts()
+    plafond = int(nombres.max())
+    while plafond > 1 and plafond > part_max * int(nombres.clip(upper=plafond).sum()):
+        plafond -= 1
     ordre = rang.loc[retenues].sort_values(ascending=False, kind="stable").index
     gardes = (pd.DataFrame({"pays": pays.loc[ordre].fillna("?").values}, index=ordre)
               .groupby("pays", sort=False).cumcount() < plafond)

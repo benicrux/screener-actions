@@ -12,6 +12,7 @@ import numpy as np
 import pandas as pd
 
 import config
+import listes
 from referentiels import TAILLES_FR
 
 SITE = Path("site")
@@ -35,22 +36,54 @@ COLONNES = [
     ("px", "cours", "sig"), ("dv", "devise_cours", None),
     ("pp", "prochaine_publication", None), ("ppe", "publication_estimee", None),
     ("na", "analystes", 0),
+    # Liste « Rallye 5 ans », contrôle express et signaux des favoris
+    ("vee", "ve_ebitda", 1), ("pb", "pb", 2), ("tdr", "rendement_tresorerie", 3),
+    ("dil", "dilution_3a", 3), ("dir", "dirigeants", 3),
 ]
 RADAR_ENTREES = Path("data/radar_entrees.json")
+RALLYE_ENTREES = Path("data/rallye_entrees.json")
 INDICES = Path("data/indices.json")
 
 
+def _capi_eur(visibles: pd.DataFrame, usd_par_eur: float | None) -> pd.Series:
+    return pd.to_numeric(visibles.get("capi_usd"), errors="coerce") / (usd_par_eur or 1.0)
+
+
+def _comptes_recents(visibles: pd.DataFrame) -> pd.Series:
+    """Derniers comptes annuels de moins de 18 mois (ou date inconnue) : une société qui ne
+    publie plus n'a rien à faire dans les listes de l'accueil."""
+    if "fin_exercice" not in visibles:
+        return pd.Series(True, index=visibles.index)
+    fin = pd.to_datetime(visibles["fin_exercice"], errors="coerce")
+    return fin.isna() | (fin >= pd.Timestamp(dt.date.today()) - pd.Timedelta(days=548))
+
+
 def radar(visibles: pd.DataFrame, usd_par_eur: float | None) -> pd.DataFrame:
-    """Les sociétés du radar de la page d'accueil, les mieux notées d'abord."""
+    """Les sociétés du radar de la page d'accueil, les mieux notées d'abord (25 % au plus
+    d'un même pays)."""
     n = lambda c: pd.to_numeric(visibles.get(c), errors="coerce")
-    capi_eur = n("capi_usd") / (usd_par_eur or 1.0)
-    garde = (n("n_investisseur").ge(config.RADAR_NOTE_MIN)
-             & n("n_valorisation").ge(config.RADAR_VALORISATION_MIN)
-             & (n("n_situation_fi").isna() | n("n_situation_fi").ge(config.RADAR_SITUATION_MIN))
-             & capi_eur.ge(config.RADAR_CAPI_MIN_EUR)
-             & n("ca_usd").gt(0))  # un chiffre d'affaires publié : écarte les véhicules sans activité
+    garde = (listes.radar(n("n_investisseur"), n("n_valorisation"), n("n_situation_fi"),
+                          _capi_eur(visibles, usd_par_eur))
+             & n("ca_usd").gt(0)  # un chiffre d'affaires publié : écarte les véhicules sans activité
+             & _comptes_recents(visibles))
+    garde = listes.plafond_pays(visibles["pays"], garde, n("n_investisseur") + n("n_valorisation") / 1000)
     r = visibles[garde].assign(_note=n("n_investisseur"), _val=n("n_valorisation"))
     return r.sort_values(["_note", "_val"], ascending=False)
+
+
+def rallye(visibles: pd.DataFrame, usd_par_eur: float | None) -> pd.DataFrame:
+    """La liste « Rallye 5 ans » : petites, bon marché sur l'EBITDA et sur l'actif net,
+    bénéficiaires, sans forte dilution (25 % au plus d'un même pays), les mieux notées d'abord."""
+    n = lambda c: pd.to_numeric(visibles.get(c), errors="coerce")
+    benefice = n("marge_nette_ajustee").gt(0) | (n("marge_nette_ajustee").isna() & n("per_12m").gt(0))
+    garde = listes.rallye(_capi_eur(visibles, usd_par_eur), n("ebitda_ve"), n("actif_prix"),
+                          benefice, visibles["financiere"].fillna(False).astype(bool),
+                          n("dilution_3a"),
+                          n("rendement_tresorerie").gt(0).where(n("rendement_tresorerie").notna()))
+    garde &= n("ca_usd").gt(0) & _comptes_recents(visibles)
+    garde = listes.plafond_pays(visibles["pays"], garde, n("n_investisseur").fillna(0))
+    r = visibles[garde].assign(_note=n("n_investisseur"), _val=n("n_valorisation"))
+    return r.sort_values(["_note", "_val"], ascending=False, na_position="last")
 
 
 def grands_indices(symboles_visibles: set[str]) -> list[dict]:
@@ -72,15 +105,16 @@ def grands_indices(symboles_visibles: set[str]) -> list[dict]:
     return sortie
 
 
-def dates_entree(symboles: list[str], aujourd_hui: str) -> dict[str, str]:
-    """Date d'entrée dans le radar de chaque société ; une société qui en sort l'oublie."""
-    if RADAR_ENTREES.exists():
-        anciennes = json.loads(RADAR_ENTREES.read_text())
+def dates_entree(symboles: list[str], aujourd_hui: str, fichier: Path | None = None) -> dict[str, str]:
+    """Date d'entrée dans la liste de chaque société ; une société qui en sort l'oublie."""
+    fichier = fichier or RADAR_ENTREES
+    if fichier.exists():
+        anciennes = json.loads(fichier.read_text())
         entrees = {s: anciennes.get(s, aujourd_hui) for s in symboles}
     else:  # tout premier calcul : date inconnue, personne n'est marqué « nouveau »
         entrees = {s: "" for s in symboles}
-    RADAR_ENTREES.parent.mkdir(exist_ok=True)
-    RADAR_ENTREES.write_text(json.dumps(entrees, ensure_ascii=False, indent=0, sort_keys=True))
+    fichier.parent.mkdir(exist_ok=True)
+    fichier.write_text(json.dumps(entrees, ensure_ascii=False, indent=0, sort_keys=True))
     return entrees
 
 
@@ -128,7 +162,7 @@ def generer(table: pd.DataFrame, statut: dict) -> None:
     # Numéro de version dans les adresses des fichiers : le navigateur ne mélange pas
     # une ancienne page gardée en mémoire avec les nouvelles données
     version = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%d%H%M")
-    for nom in ("index.html", "tableau.html", "app.js", "accueil.js", "retro.html"):
+    for nom in ("index.html", "tableau.html", "app.js", "accueil.js", "commun.js", "retro.html"):
         f = SITE / nom
         f.write_text(f.read_text().replace("__VERSION__", version))
     (SITE / "data" / "fiches").mkdir(parents=True, exist_ok=True)
@@ -162,12 +196,21 @@ def generer(table: pd.DataFrame, statut: dict) -> None:
     # Page d'accueil : le radar (avec la date d'entrée de chaque société)
     r = radar(visibles, statut.get("usd_par_eur"))
     entrees = dates_entree(r["symbole"].tolist(), dt.date.today().isoformat())
+    ry = rallye(visibles, statut.get("usd_par_eur"))
+    entrees_ry = dates_entree(ry["symbole"].tolist(), dt.date.today().isoformat(), RALLYE_ENTREES)
     accueil = {"maj": dt.date.today().isoformat(),
                "filtre": {"note_min": config.RADAR_NOTE_MIN,
                           "valorisation_min": config.RADAR_VALORISATION_MIN,
                           "situation_min": config.RADAR_SITUATION_MIN,
                           "capi_min_eur": config.RADAR_CAPI_MIN_EUR},
                "radar": [[s, entrees[s]] for s in r["symbole"]],
+               "rallye": [[s, entrees_ry[s]] for s in ry["symbole"]],
+               "regles_rallye": {"capi_min_eur": config.RALLYE_CAPI_MIN_EUR,
+                                 "taille_part": config.RALLYE_TAILLE_PART,
+                                 "bon_marche_part": config.RALLYE_BON_MARCHE_PART,
+                                 "dilution_max": config.RALLYE_DILUTION_MAX,
+                                 "tresorerie_positive": config.RALLYE_TRESORERIE_POSITIVE},
+               "pays_part_max": config.PAYS_PART_MAX,
                "indices": grands_indices(set(visibles["symbole"]))}
     (SITE / "data" / "accueil.json").write_text(
         json.dumps(accueil, ensure_ascii=False, separators=(",", ":")))
