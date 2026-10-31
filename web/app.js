@@ -638,15 +638,15 @@ function basculerFavori(a, f, bouton) {
   const actif = !!favoris[a.s];
   bouton.setAttribute("aria-pressed", String(actif));
   bouton.textContent = actif ? "★ Dans mes favoris" : "☆ Ajouter aux favoris";
-  rendreTheseFiche(a);
+  rendreTheseFiche(a, actif);   // juste après l'ajout : la thèse s'ouvre, c'est le bon moment
   afficher(false);
 }
 
-// La thèse du favori, modifiable depuis la fiche
-function rendreTheseFiche(a) {
+// La thèse du favori, modifiable depuis la fiche ; fermée (une ligne) sauf juste après l'ajout
+function rendreTheseFiche(a, ouvrir = false) {
   const zone = document.getElementById("fiche-these");
   if (!zone) return;
-  zone.innerHTML = favoris[a.s] ? Pepites.blocThese(a.s, favoris[a.s], !(favoris[a.s].these || {}).pourquoi) : "";
+  zone.innerHTML = favoris[a.s] ? Pepites.blocThese(a.s, favoris[a.s], ouvrir && !(favoris[a.s].these || {}).pourquoi) : "";
   Pepites.brancherTheses(zone, favoris, () => ecrire("pepites.favoris", favoris));
 }
 
