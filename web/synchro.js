@@ -113,7 +113,9 @@ async function demarrer() {
       Pepites.synchro = {
         planifier() {
           clearTimeout(minuteur);
-          minuteur = setTimeout(() => envoyer(ref).catch((e) => { console.error(e); etat.erreur = "envoi"; montrer(); }), 1200);
+          minuteur = setTimeout(() => envoyer(ref)
+            .then(() => { if (etat.erreur) { etat.erreur = ""; montrer(); } })
+            .catch((e) => { console.error(e); etat.erreur = "envoi"; montrer(); }), 1200);
         },
       };
       // Un changement fait sur un autre appareil arrive tout seul
@@ -121,7 +123,7 @@ async function demarrer() {
         if (s.metadata.hasPendingWrites || !s.exists()) return;
         const d = s.data();
         if (d.maj && d.maj !== envoyee && d.maj > lireBrut(MODIFIE, 0)) appliquer(d);
-      });
+      }, (e) => { console.error(e); etat.erreur = "lecture"; montrer(); });
     } catch (e) {
       console.error(e);
       etat.erreur = "lecture";
