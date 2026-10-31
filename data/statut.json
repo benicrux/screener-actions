@@ -1,27 +1,19 @@
 {
- "date": "2026-10-31 10:01 UTC",
+ "date": "2026-10-31 17:01 UTC",
  "univers": 26465,
  "avec_donnees": 26057,
- "notees": 24127,
+ "notees": 24056,
  "jamais_lues": 0,
  "introuvables": 224,
  "illisibles": 1,
  "vehicules_ecartes": 183,
  "anomalies": {
-  "graves": 366,
-  "legeres": 55
+  "graves": 340,
+  "legeres": 54
  },
  "jours_restants": 0,
- "cours_du_jour": 26282,
- "collecte": {
-  "lues": 11985,
-  "introuvables": 0,
-  "erreurs": 0,
-  "blocages": 15,
-  "arret": null,
-  "detail_erreurs": {},
-  "minutes": 26.1
- },
+ "cours_du_jour": 0,
+ "collecte": {},
  "poids": {
   "valorisation": 30,
   "croissance": 15,
