@@ -11,8 +11,13 @@ const Pepites = (() => {
   function lire(cle, defaut) {
     try { const v = localStorage.getItem(cle); return v ? JSON.parse(v) : defaut; } catch (e) { return defaut; }
   }
+  // Favoris et sociétés ignorées : partagés entre appareils quand la synchronisation est
+  // activée (synchro.js) ; les filtres et réglages d'affichage restent propres à l'appareil
+  const PARTAGES = ["pepites.favoris", "pepites.ignores"];
   function ecrire(cle, valeur) {
     try { localStorage.setItem(cle, JSON.stringify(valeur)); } catch (e) { /* stockage indisponible */ }
+    if (!PARTAGES.includes(cle)) return;
+    try { localStorage.setItem("pepites.modifie", JSON.stringify(Date.now())); } catch (e) { /* idem */ }
     if (Pepites.synchro) Pepites.synchro.planifier();
   }
   // Une page qui affiche des favoris se fait prévenir quand ils changent ailleurs

@@ -338,6 +338,9 @@ details summary { cursor: pointer; color: var(--accent); }
 .carte-tete span { font-size: 13px; color: var(--encre-2); }
 .acc-ident { font-size: 13px; color: var(--encre-2); }
 .vide-texte { margin: 12px 0 4px; font-size: 14px; color: var(--encre-2); }
+.synchro { margin: 12px 0 0; font-size: 13px; color: var(--encre-2); line-height: 1.5; }
+.synchro .lien { font-size: 13px; }
+.synchro-erreur { color: var(--bas); }
 .fav-ligne { padding: 12px 0; border-bottom: 1px solid var(--filet); display: flex; flex-direction: column; gap: 7px; }
 .fav-ligne:last-child { border-bottom: 0; padding-bottom: 2px; }
 .fav-haut, .radar-haut { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }

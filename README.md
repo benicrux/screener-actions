@@ -30,6 +30,8 @@ Ensuite tout est automatique : le calcul tourne **chaque nuit**. GitHub retarde 
 
 **Les favoris** : un signal « à revoir » apparaît quand la thèse se dégrade depuis l'ajout ou le dernier réexamen (fondamentaux en baisse de 15 points, rentabilité en net recul, situation financière fragile, plus de 10 % d'actions en plus en 3 ans, analystes qui baissent leurs prévisions) ou après 6 mois sans réexamen. Une hausse du cours n'en est jamais un : quand la thèse tient et que le cours a pris 50 %, le site conseille de laisser courir. Chaque favori a sa **thèse** : pourquoi je l'ai choisie, ce qui me ferait vendre (enregistrée au fil de la frappe). « Ignorer 90 jours », les favoris et les thèses sont gardés dans le navigateur.
 
+**Retrouver ses favoris sur tous ses appareils** : sous « Mes favoris », le lien « Les retrouver sur tous mes appareils » connecte un compte Google. Les favoris (avec leurs thèses) et les sociétés ignorées sont alors gardés dans une petite base gratuite (Firebase, projet `pepites-d0854`, console.firebase.google.com) et suivent d'un appareil à l'autre. Seuls ces éléments y sont envoyés ; chaque compte ne lit et n'écrit que son propre document (règles Firestore). Sans connexion, rien ne change : les favoris restent dans le navigateur. Pour couper la synchronisation, remplacer les réglages de `web/firebase-config.js` par `null`.
+
 **La fiche** d'une société commence par un **contrôle express** : date des derniers comptes, bénéfice transformé ou non en trésorerie, dilution, part détenue par les dirigeants et par les institutions, nombre d'analystes, liens vers le rapport annuel.
 
 Le screener a un filtre **Indice** : les sociétés des grands indices (S&P 500, Nasdaq-100, Dow Jones, S&P/TSX 60, Euro Stoxx 50, CAC 40, DAX, FTSE 100, SMI, Nikkei 225, Hang Seng, NIFTY 50, S&P/ASX 50), toutes celles qui n'y sont pas, ou un indice précis. La fiche et les cartes du radar indiquent les indices de la société. La composition des indices est relue une fois par mois sur Wikipédia par `indices.py` : si une page ne répond pas ou a changé, la composition précédente est gardée.
@@ -42,7 +44,7 @@ Le contexte économique (taux, inflation, matières premières, devises, chômag
 - **Les notes** sont des classements : 80 veut dire que la société fait mieux que 80 % des sociétés de son secteur. Les banques et assureurs sont comparés entre eux, sur le PER, le cours / actif net et la rentabilité des fonds propres.
 - **La note investisseur** pondère : valorisation 30 %, croissance 15 %, rentabilité 15 %, situation financière 10 %, révisions 15 %, publications 10 %, visibilité 5 %. Les prévisions des analystes comptent plus que le passé pour la croissance et la rentabilité.
 - **Les révisions sur 4 mois et 1 an** se remplissent avec le temps : le screener archive les prévisions des analystes à chaque lecture (`data/estimations/`).
-- **Les favoris** sont gardés dans le navigateur (téléphone ou ordinateur). La fiche montre l'évolution du cours et de la note depuis l'ajout.
+- **Les favoris** sont gardés dans le navigateur (téléphone ou ordinateur), et sur tous tes appareils si tu te connectes avec ton compte Google. La fiche montre l'évolution du cours et de la note depuis l'ajout.
 
 ## Tests de fiabilité, refaits automatiquement
 
@@ -128,7 +130,7 @@ Tout est dans `config.py` : pondérations de la note investisseur, règles du ra
 | `sante.py` | Contrôle de santé après chaque calcul et chaque test trimestriel : déclenche les e-mails d'alerte |
 | `retro.py`, `retro_us.py` | Tests sur le passé (monde ; États-Unis avec les comptes de la SEC) |
 | `tests/` | Tests automatiques du programme |
-| `rendu.py`, `web/` | Le site : accueil (`index.html`, `accueil.js`), tableau et fiches (`tableau.html`, `app.js`), favoris et thèses (`commun.js`), tests (`retro.html`) |
+| `rendu.py`, `web/` | Le site : accueil (`index.html`, `accueil.js`), tableau et fiches (`tableau.html`, `app.js`), favoris et thèses (`commun.js`), synchronisation entre appareils (`synchro.js`, `firebase-config.js`), tests (`retro.html`) |
 | `data/` | Liste des sociétés, composition des grands indices, taux de change, archive des prévisions, statut |
 | branche `donnees` | Les données détaillées de chaque société, remplacées à chaque passage |
 | branches `retro`, `retro-us` | L'historique de comptes et de cours des tests sur le passé (les comptes annuels de `retro` servent aussi à mesurer la dilution) |
