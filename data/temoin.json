@@ -1,0 +1,492 @@
+{
+"reference": "Indice mondial (MSCI World, dividendes réinvestis)",
+"portefeuilles": [
+{
+"id": "2026-11-radar",
+"semestre": "2026-11",
+"liste": "radar",
+"nom_liste": "Radar des pépites",
+"cree_le": "2026-11-01",
+"fin": "2031-11-01",
+"reference": {
+"s": "IWDA.AS",
+"depart": "2026-10-30",
+"r": 1.0,
+"maj": "2026-10-30"
+},
+"lignes": [
+{
+"s": "6633.HK",
+"nom": "Qingci Games Inc.",
+"pays": "Chine",
+"devise": "HKD",
+"depart": "2026-10-30",
+"eur0": 0.11417352948675454,
+"eur": 0.11417352948675454,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "226320.KS",
+"nom": "It'S Hanbul Co., Ltd.",
+"pays": "Corée du Sud",
+"devise": "KRW",
+"depart": "2026-10-30",
+"eur0": 0.0006708111751928694,
+"eur": 0.0006708111751928694,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "KIRIINDUS.NS",
+"nom": "Kiri Industries Limited",
+"pays": "Inde",
+"devise": "INR",
+"depart": "2026-10-30",
+"eur0": 0.00943233280674039,
+"eur": 0.00943233280674039,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "1981.HK",
+"nom": "Cathay Media and Education Group Inc.",
+"pays": "Chine",
+"devise": "HKD",
+"depart": "2026-10-30",
+"eur0": 0.11417352948675454,
+"eur": 0.11417352948675454,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "IMPP",
+"nom": "Imperial Petroleum Inc.",
+"pays": "Grèce",
+"devise": "USD",
+"depart": "2026-10-30",
+"eur0": 0.8956,
+"eur": 0.8956,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "TELB3.SA",
+"nom": "Telecomunicacoes Brasileiras S.A. - TELEBRAS",
+"pays": "Brésil",
+"devise": "BRL",
+"depart": "2026-10-30",
+"eur0": 0.16464143243193555,
+"eur": 0.16464143243193555,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "SEC.TO",
+"nom": "Senvest Capital Inc.",
+"pays": "Canada",
+"devise": "CAD",
+"depart": "2026-10-30",
+"eur0": 0.6409504043512487,
+"eur": 0.6409504043512487,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "0050.HK",
+"nom": "Hong Kong Ferry (Holdings) Company Limited",
+"pays": "Hong Kong",
+"devise": "HKD",
+"depart": "2026-10-30",
+"eur0": 0.11417352948675454,
+"eur": 0.11417352948675454,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "092230.KS",
+"nom": "KPX Holdings Co.,Ltd.",
+"pays": "Corée du Sud",
+"devise": "KRW",
+"depart": "2026-10-30",
+"eur0": 0.0006708111751928694,
+"eur": 0.0006708111751928694,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "ELF.TO",
+"nom": "E-L Financial Corporation Limited",
+"pays": "Canada",
+"devise": "CAD",
+"depart": "2026-10-30",
+"eur0": 0.6409504043512487,
+"eur": 0.6409504043512487,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "KTLEV.IS",
+"nom": "Katilimevim Tasarruf Finansman A.s.",
+"pays": "Turquie",
+"devise": "TRY",
+"depart": "2026-10-30",
+"eur0": 0.017936824565198232,
+"eur": 0.017936824565198232,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "3379.KL",
+"nom": "Insas Berhad",
+"pays": "Malaisie",
+"devise": "MYR",
+"depart": "2026-10-30",
+"eur0": 0.2207542519102785,
+"eur": 0.2207542519102785,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "ALBRK.IS",
+"nom": "Albaraka Turk Katilim Bankasi A.S.",
+"pays": "Turquie",
+"devise": "TRY",
+"depart": "2026-10-30",
+"eur0": 0.017936824565198232,
+"eur": 0.017936824565198232,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "3006.TW",
+"nom": "Elite Semiconductor Microelectronics Tech Inc",
+"pays": "Taïwan",
+"devise": "TWD",
+"depart": "2026-10-30",
+"eur0": 0.02746817972703573,
+"eur": 0.02746817972703573,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "3636.HK",
+"nom": "Jinxun Resource",
+"pays": "Chine",
+"devise": "HKD",
+"depart": "2026-10-30",
+"eur0": 0.11417352948675454,
+"eur": 0.11417352948675454,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "PFC.NS",
+"nom": "Power Finance Corporation Limited",
+"pays": "Inde",
+"devise": "INR",
+"depart": "2026-10-30",
+"eur0": 0.00943233280674039,
+"eur": 0.00943233280674039,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "HFPC-U.TO",
+"nom": "Helios Fairfax Partners Corporation",
+"pays": "Canada",
+"devise": "USD",
+"depart": "2026-10-30",
+"eur0": 0.8956,
+"eur": 0.8956,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "TSKB.IS",
+"nom": "Turkiye Sinai Kalkinma Bankasi A.S.",
+"pays": "Turquie",
+"devise": "TRY",
+"depart": "2026-10-30",
+"eur0": 0.017936824565198232,
+"eur": 0.017936824565198232,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "143240.KQ",
+"nom": "SaraminHR Co.,Ltd.",
+"pays": "Corée du Sud",
+"devise": "KRW",
+"depart": "2026-10-30",
+"eur0": 0.0006708111751928694,
+"eur": 0.0006708111751928694,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "2660.HK",
+"nom": "Zengame Technology Holding Limited",
+"pays": "Chine",
+"devise": "HKD",
+"depart": "2026-10-30",
+"eur0": 0.11417352948675454,
+"eur": 0.11417352948675454,
+"r": 1.0,
+"maj": "2026-10-30"
+}
+],
+"suivi": [
+[
+"2026-10-30",
+1.0,
+1.0
+]
+]
+},
+{
+"id": "2026-11-rallye",
+"semestre": "2026-11",
+"liste": "rallye",
+"nom_liste": "Rallye 5 ans",
+"cree_le": "2026-11-01",
+"fin": "2031-11-01",
+"reference": {
+"s": "IWDA.AS",
+"depart": "2026-10-30",
+"r": 1.0,
+"maj": "2026-10-30"
+},
+"lignes": [
+{
+"s": "MRF.JO",
+"nom": "Merafe Resources Limited",
+"pays": "Afrique du Sud",
+"devise": "ZAc",
+"depart": "2026-10-30",
+"eur0": 0.05360466856202304,
+"eur": 0.05360466856202304,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "5288.T",
+"nom": "Asia Pile Holdings Corporation",
+"pays": "Japon",
+"devise": "JPY",
+"depart": "2026-10-30",
+"eur0": 0.005685663316806226,
+"eur": 0.005685663316806226,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "BCG.NS",
+"nom": "Brightcom Group Limited",
+"pays": "Inde",
+"devise": "INR",
+"depart": "2026-10-30",
+"eur0": 0.00943233280674039,
+"eur": 0.00943233280674039,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "6463.T",
+"nom": "TPR Co., Ltd.",
+"pays": "Japon",
+"devise": "JPY",
+"depart": "2026-10-30",
+"eur0": 0.005685663316806226,
+"eur": 0.005685663316806226,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "6143.T",
+"nom": "Sodick Co., Ltd.",
+"pays": "Japon",
+"devise": "JPY",
+"depart": "2026-10-30",
+"eur0": 0.005685663316806226,
+"eur": 0.005685663316806226,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "2458.HK",
+"nom": "Gala Technology Holding Limited",
+"pays": "Chine",
+"devise": "HKD",
+"depart": "2026-10-30",
+"eur0": 0.11417352948675454,
+"eur": 0.11417352948675454,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "3932.T",
+"nom": "Akatsuki Inc.",
+"pays": "Japon",
+"devise": "JPY",
+"depart": "2026-10-30",
+"eur0": 0.005685663316806226,
+"eur": 0.005685663316806226,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "L19.SI",
+"nom": "Lum Chang Holdings Limited",
+"pays": "Singapour",
+"devise": "SGD",
+"depart": "2026-10-30",
+"eur0": 0.7010018785222291,
+"eur": 0.7010018785222291,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "5970.T",
+"nom": "G-Tekt Corp",
+"pays": "Japon",
+"devise": "JPY",
+"depart": "2026-10-30",
+"eur0": 0.005685663316806226,
+"eur": 0.005685663316806226,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "TRAN.BA",
+"nom": "Compania de Transporte de Energia Electrica en Alta Tension Transener S.A.",
+"pays": "Argentine",
+"devise": "ARS",
+"depart": "2026-10-30",
+"eur0": 0.0005838331160365058,
+"eur": 0.0005838331160365058,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "DGCU2.BA",
+"nom": "Distribuidora de Gas Cuyana S.A.",
+"pays": "Argentine",
+"devise": "ARS",
+"depart": "2026-10-30",
+"eur0": 0.0005838331160365058,
+"eur": 0.0005838331160365058,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "SRVGY.IS",
+"nom": "Servet Gayrimenkul Yatirim Ortakligi A.S.",
+"pays": "Turquie",
+"devise": "TRY",
+"depart": "2026-10-30",
+"eur0": 0.017936824565198232,
+"eur": 0.017936824565198232,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "RAMCOIND.NS",
+"nom": "Ramco Industries Limited",
+"pays": "Inde",
+"devise": "INR",
+"depart": "2026-10-30",
+"eur0": 0.00943233280674039,
+"eur": 0.00943233280674039,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "GENC",
+"nom": "Gencor Industries, Inc.",
+"pays": "États-Unis",
+"devise": "USD",
+"depart": "2026-10-30",
+"eur0": 0.8956,
+"eur": 0.8956,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "OBL.WA",
+"nom": "Orzel Bialy S.A.",
+"pays": "Pologne",
+"devise": "PLN",
+"depart": "2026-10-30",
+"eur0": 0.22711941774655744,
+"eur": 0.22711941774655744,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "AKSGY.IS",
+"nom": "Akis Gayrimenkul Yatirim Ortakligi A.S.",
+"pays": "Turquie",
+"devise": "TRY",
+"depart": "2026-10-30",
+"eur0": 0.017936824565198232,
+"eur": 0.017936824565198232,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "CECO2.BA",
+"nom": "Enel Generacion Costanera S.A.",
+"pays": "Argentine",
+"devise": "ARS",
+"depart": "2026-10-30",
+"eur0": 0.0005838331160365058,
+"eur": 0.0005838331160365058,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "605158.SS",
+"nom": "Zhejiang Huada New Materials Co., Ltd.",
+"pays": "Chine",
+"devise": "CNY",
+"depart": "2026-10-30",
+"eur0": 0.1345957318905921,
+"eur": 0.1345957318905921,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "2722.HK",
+"nom": "Chongqing Machinery & Electric Co., Ltd.",
+"pays": "Chine",
+"devise": "HKD",
+"depart": "2026-10-30",
+"eur0": 0.11417352948675454,
+"eur": 0.11417352948675454,
+"r": 1.0,
+"maj": "2026-10-30"
+},
+{
+"s": "LSIP.JK",
+"nom": "PT Perusahaan Perkebunan London Sumatra Indonesia Tbk",
+"pays": "Indonésie",
+"devise": "IDR",
+"depart": "2026-10-30",
+"eur0": 4.942604856512141e-05,
+"eur": 4.942604856512141e-05,
+"r": 1.0,
+"maj": "2026-10-30"
+}
+],
+"suivi": [
+[
+"2026-10-30",
+1.0,
+1.0
+]
+]
+}
+],
+"maj": "2026-11-01"
+}
