@@ -1,27 +1,19 @@
 {
- "date": "2026-11-04 11:18 UTC",
+ "date": "2026-11-04 13:45 UTC",
  "univers": 26465,
  "avec_donnees": 26021,
- "notees": 24151,
+ "notees": 24077,
  "jamais_lues": 0,
  "introuvables": 224,
  "illisibles": 1,
  "vehicules_ecartes": 219,
  "anomalies": {
-  "graves": 357,
+  "graves": 340,
   "legeres": 53
  },
  "jours_restants": 0,
- "cours_du_jour": 26276,
- "collecte": {
-  "lues": 11982,
-  "introuvables": 0,
-  "erreurs": 0,
-  "blocages": 18,
-  "arret": null,
-  "detail_erreurs": {},
-  "minutes": 27.3
- },
+ "cours_du_jour": 0,
+ "collecte": {},
  "poids": {
   "valorisation": 30,
   "croissance": 15,
