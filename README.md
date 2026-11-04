@@ -95,6 +95,7 @@ Les seuils sont réglables dans `config.py` (rubrique « Contrôle de santé »)
 1. **Lire le message** : onglet **Actions** du dépôt → cliquer sur le lancement marqué d'une croix rouge. Le résumé en haut de la page explique le problème en français.
 2. **Selon le cas** :
    - *Yahoo bloque ou renvoie peu de cours* : c'est souvent passager. Attendre deux ou trois nuits. Si cela dure plus d'une semaine, Yahoo a sans doute changé son fonctionnement et le programme est à adapter (voir point 3).
+   - *La publication du site a échoué* (étape « publier », message « Failed to create deployment », erreur 502) : c'est une panne passagère de GitHub Pages, pas du screener. Les calculs et les données du jour sont bien enregistrés ; le site garde la version de la veille. Le lancement réessaie déjà trois fois tout seul ; si l'e-mail arrive quand même, ouvrir le lancement et cliquer **Re-run failed jobs** (ou attendre la nuit suivante).
    - *Les tâches programmées sont désactivées* (GitHub le fait après 60 jours sans activité, et prévient par e-mail) : onglet **Actions** → choisir le workflow à gauche → bouton **Enable workflow**.
    - *Un test trimestriel s'est dégradé* : rien n'est cassé, c'est une information. La page « Tests » montre l'historique ; c'est le moment de se demander s'il faut revoir les pondérations ou les règles des listes dans `config.py`.
    - *Relancer un calcul sans attendre la nuit* : onglet **Actions** → **Screener** → **Run workflow** → bouton vert.

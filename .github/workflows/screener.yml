@@ -177,21 +177,40 @@ jobs:
             git push -q
           fi
 
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
 
-      - uses: actions/upload-pages-artifact@v4
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: site
 
   publier:
+    # GitHub Pages répond parfois par une erreur passagère (502) : jusqu'à trois essais,
+    # à 2 puis 5 minutes d'intervalle, avant de signaler un échec
     needs: calculer
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deploiement.outputs.page_url }}
+      url: ${{ steps.essai3.outputs.page_url || steps.essai2.outputs.page_url || steps.essai1.outputs.page_url }}
     steps:
-      - id: deploiement
-        uses: actions/deploy-pages@v4
+      - id: essai1
+        name: Publier le site
+        continue-on-error: true
+        uses: actions/deploy-pages@v5
+      - name: Patienter 2 minutes (erreur passagère de GitHub Pages)
+        if: steps.essai1.outcome == 'failure'
+        run: sleep 120
+      - id: essai2
+        name: Publier le site (deuxième essai)
+        if: steps.essai1.outcome == 'failure'
+        continue-on-error: true
+        uses: actions/deploy-pages@v5
+      - name: Patienter 5 minutes
+        if: steps.essai1.outcome == 'failure' && steps.essai2.outcome == 'failure'
+        run: sleep 300
+      - id: essai3
+        name: Publier le site (dernier essai)
+        if: steps.essai1.outcome == 'failure' && steps.essai2.outcome == 'failure'
+        uses: actions/deploy-pages@v5
 
   surveiller:
     # Alerte par e-mail (le lancement échoue) si Yahoo bloque depuis plusieurs nuits
