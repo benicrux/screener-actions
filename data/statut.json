@@ -1,8 +1,8 @@
 {
- "date": "2026-11-03 11:13 UTC",
+ "date": "2026-11-04 11:18 UTC",
  "univers": 26465,
  "avec_donnees": 26021,
- "notees": 24041,
+ "notees": 24151,
  "jamais_lues": 0,
  "introuvables": 224,
  "illisibles": 1,
@@ -12,7 +12,7 @@
   "legeres": 53
  },
  "jours_restants": 0,
- "cours_du_jour": 26275,
+ "cours_du_jour": 26276,
  "collecte": {
   "lues": 11982,
   "introuvables": 0,
@@ -20,7 +20,7 @@
   "blocages": 18,
   "arret": null,
   "detail_erreurs": {},
-  "minutes": 25.6
+  "minutes": 27.3
  },
  "poids": {
   "valorisation": 30,
@@ -31,8 +31,8 @@
   "publication": 10,
   "visibilite": 5
  },
- "usd_par_eur": 1.1183180496533214,
+ "usd_par_eur": 1.1246063877642825,
  "depot": "benicrux/screener-actions",
- "passage_complet": "2026-11-03",
+ "passage_complet": "2026-11-04",
  "nuits_difficiles": 0
 }
