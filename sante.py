@@ -25,6 +25,8 @@ RESULTATS_US = Path("data/retro_us_resultats.json")
 MACRO = Path("data/macro.json")
 INDICES = Path("data/indices.json")
 TEMOIN = Path("data/temoin.json")
+TEMOIN_LARGE = Path("data/temoin_large.json")
+PREMIER_TEMOIN_LARGE = "2026-11-15"  # premier groupe constitué à la nuit du 8 novembre 2026
 PREMIER_TEMOIN = "2026-11-08"  # le premier portefeuille témoin date du 1er novembre 2026
 
 
@@ -83,8 +85,24 @@ def temoin_en_panne(temoin: dict | None, aujourd_hui=None) -> list[str]:
     return []
 
 
+def temoin_large_en_panne(res: dict | None, aujourd_hui=None) -> list[str]:
+    """Le témoin large (toutes les sociétés des listes, chaque mois) est-il suivi ?"""
+    import datetime as dt
+    aujourd_hui = aujourd_hui or dt.date.today()
+    if aujourd_hui.isoformat() < PREMIER_TEMOIN_LARGE:
+        return []
+    maj = (res or {}).get("maj")
+    age = (aujourd_hui - dt.date.fromisoformat(maj)).days if maj else None
+    if age is None or age > 7:
+        return ["Le témoin large (toutes les sociétés des listes) n'est plus mis à jour"
+                + (f" depuis {age} jours" if age else "")
+                + " : détail dans l'étape « Témoin large » du calcul de nuit."]
+    return []
+
+
 def problemes(statut: dict, moment: str, collecte_faite: bool, macro: dict | None = None,
-              indices: dict | None = None, temoin: dict | None = None) -> list[str]:
+              indices: dict | None = None, temoin: dict | None = None,
+              temoin_large: dict | None = None) -> list[str]:
     p = []
     if moment == "avant-publication":
         cours = statut.get("cours_du_jour") or 0
@@ -129,6 +147,7 @@ def problemes(statut: dict, moment: str, collecte_faite: bool, macro: dict | Non
                          "masqué). La page a sans doute changé de présentation : détail dans "
                          "data/indices.json, « erreur ».")
         p += temoin_en_panne(temoin)
+        p += temoin_large_en_panne(temoin_large)
     return p
 
 
@@ -149,8 +168,9 @@ def main() -> None:
     macro = json.loads(MACRO.read_text()) if MACRO.exists() else None
     indices = json.loads(INDICES.read_text()) if INDICES.exists() else None
     temoin = json.loads(TEMOIN.read_text()) if TEMOIN.exists() else None
+    large = json.loads(TEMOIN_LARGE.read_text()) if TEMOIN_LARGE.exists() else None
     signaler(problemes(statut, moment, collecte_faite=not os.environ.get("SANS_COLLECTE"),
-                       macro=macro, indices=indices, temoin=temoin))
+                       macro=macro, indices=indices, temoin=temoin, temoin_large=large))
 
 
 def signaler(liste: list[str]) -> None:

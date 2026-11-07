@@ -86,6 +86,7 @@
   <p>Le screener doit repérer des sociétés capables de fortes hausses sur 5 ans. Trois mesures le vérifient : un portefeuille témoin suivi en direct, le test des fortes hausses à 5 ans sur le passé américain, et le test de la note à 12 mois, dans le monde et aux États-Unis. Les tests sur le passé sont refaits automatiquement chaque trimestre.</p>
   <nav class="sommaire" aria-label="Sur cette page">
     <a href="#temoin">Portefeuille témoin</a>
+    <a href="#temoin-large">Témoin large</a>
     <a href="#cinq-ans">Fortes hausses à 5 ans</a>
     <a href="#monde">Monde, 12 mois</a>
     <a href="#bloc-us">États-Unis, 12 mois</a>
@@ -94,8 +95,16 @@
 
   <section id="temoin" aria-labelledby="t-temoin">
     <h2 id="t-temoin">Portefeuille témoin</h2>
-    <p>Chaque 1er mai et 1er novembre, les 20 premières sociétés de chaque liste de l'accueil (5 au plus par pays) sont figées à parts égales, puis suivies 5 ans sans rien changer. C'est la seule mesure sans aucun biais : le choix est fait d'avance et le résultat se lit en direct.</p>
+    <p>Chaque 1er mai et 1er novembre, les 20 premières sociétés de chaque liste de l'accueil (5 au plus par pays) sont figées à parts égales, puis suivies 5 ans sans rien changer, à partir du cours du premier jour de bourse qui suit (celui où l'on aurait pu acheter). C'est la mesure la plus honnête : le choix est fait d'avance et le résultat se lit en direct.</p>
     <div id="temoin-contenu"><p>Chargement…</p></div>
+  </section>
+
+  <section id="temoin-large" aria-labelledby="t-large">
+    <h2 id="t-large">Témoin large</h2>
+    <p>Avec 20 sociétés, le hasard pèse lourd et il faut des années pour conclure. Ici, chaque mois, on fige <strong>toutes</strong> les sociétés des deux listes et l'ensemble des sociétés dont elles sont tirées (notées, plus de 100&nbsp;M€), puis on compare leurs gains. Avec des centaines de sociétés, un vrai avantage se voit en quelques mois.</p>
+    <p class="verdict" id="large-verdict"></p>
+    <div class="tableau-cadre"><table class="tab" id="tab-large"></table></div>
+    <p class="legende">Gain moyen depuis le départ, à parts égales, en monnaie locale et hors dividendes, pareil pour tous les groupes : c'est l'écart qui compte. Départ : le cours qui suit la constitution du groupe.</p>
   </section>
 
   <section id="cinq-ans" aria-labelledby="t-cinq" hidden>
@@ -106,7 +115,7 @@
     <div class="graphe" id="graphe-cinq"></div>
     <h3>Le détail</h3>
     <div class="tableau-cadre"><table class="tab" id="tab-cinq"></table></div>
-    <p class="legende">Part des sociétés achetées à chaque date qui ont doublé (×2), triplé (×3), quintuplé (×5) ou perdu plus de la moitié en 5 ans, dividendes compris, en dollars. « Panier » : gain annuel moyen d'un achat à parts égales de toute la liste à chaque date. Tripler en 5 ans, c'est environ +25&nbsp;% par an.</p>
+    <p class="legende">Part des sociétés achetées à chaque date qui ont doublé (×2), triplé (×3), quintuplé (×5) ou perdu plus de la moitié en 5 ans, dividendes compris, en dollars. « Panier » : gain annuel d'un achat à parts égales de toute la liste, médiane des dates d'achat. Tripler en 5 ans, c'est environ +25&nbsp;% par an.</p>
     <h3>Selon la période d'achat (ont triplé)</h3>
     <div class="tableau-cadre"><table class="tab" id="tab-cinq-periodes"></table></div>
   </section>
@@ -118,6 +127,13 @@
     <p class="verdict" id="verdict"></p>
     <div class="graphe" id="graphe-notes"></div>
     <p class="legende">Performance médiane sur les 12 mois suivants, en euros, dividendes compris, selon le niveau de note au départ. Chaque groupe contient un cinquième des sociétés.</p>
+
+    <div id="bloc-listes-monde" hidden>
+      <h3>Et les deux listes de l'accueil ?</h3>
+      <p class="verdict" id="verdict-listes"></p>
+      <div class="tableau-cadre"><table class="tab" id="tab-listes-monde"></table></div>
+      <p class="legende">Listes recalculées à chaque date avec les mêmes règles que le site (hors plafond par pays et liquidité, que les données passées ne permettent pas), comparées à toutes les sociétés de plus de 100&nbsp;M€. Gain médian sur 12 mois, en euros, dividendes compris.</p>
+    </div>
 
     <h3>Quel critère annonce le mieux la suite ?</h3>
     <div class="tableau-cadre"><table class="tab" id="tab-criteres"></table></div>
@@ -159,7 +175,8 @@
     <ul class="limites">
       <li>Yahoo ne fournit gratuitement que quatre exercices de comptes et pas les anciennes prévisions des analystes. Les tests portent donc sur la partie « comptes » de la note : valorisation, croissance, rentabilité et situation financière, soit 70&nbsp;% des pondérations. Les révisions, les publications et la visibilité ne sont pas testées. Une photo mensuelle de la liste est gardée depuis novembre 2026 pour pouvoir, un jour, tester la note complète.</li>
       <li>Le test à 5 ans ne porte que sur les États-Unis, seul pays où des comptes assez anciens sont disponibles gratuitement (autorité boursière américaine, SEC).</li>
-      <li>Les sociétés disparues depuis (faillites, rachats) ne figurent plus dans la liste : les performances sont un peu flattées, d'autant plus sur 5 ans. Cela vaut pour tous les groupes ; c'est l'écart entre eux qui compte.</li>
+      <li>Les sociétés disparues depuis (faillites, rachats) ne figurent plus dans la liste : les performances sont flattées, d'autant plus sur 5 ans. Et pas forcément autant pour tous les groupes : les petites sociétés bon marché, celles de la liste « Rallye 5 ans », disparaissent plus souvent que la moyenne, par faillite comme par rachat. L'avantage mesuré sur le passé est donc à prendre avec prudence ; les deux témoins, qui n'ont pas ce défaut, trancheront.</li>
+      <li>Les dates d'achat du test à 5 ans se chevauchent (une tous les 6 mois, pour 5 ans de suivi) : elles ne valent que 2 à 4 périodes vraiment indépendantes.</li>
       <li>Le test mondial ne porte que sur deux ans. Aucun test ne garantit l'avenir ; le portefeuille témoin dira, avec les années, si l'avantage mesuré sur le passé se retrouve en direct.</li>
       <li>Un avantage moyen n'empêche pas qu'une action bien placée chute fortement : environ une sur dix perd plus de la moitié en 5 ans. Les listes servent à trier, pas à se passer d'analyser.</li>
     </ul>
@@ -252,6 +269,11 @@ function carteSemestre(sem, ports) {
 
 fetch(`data/temoin.json?v=${VERSION}`).then((r) => { if (!r.ok) throw 0; return r.json(); }).then((t) => {
   const ports = (t.portefeuilles || []).filter((p) => p.suivi && p.suivi.length);
+  if (!ports.length && (t.portefeuilles || []).length) {
+    document.getElementById("temoin-contenu").innerHTML =
+      `<p><strong>Portefeuilles constitués le ${jour(t.portefeuilles[0].cree_le)}.</strong> Leurs premiers chiffres s'afficheront après le prochain calcul de nuit.</p>`;
+    return;
+  }
   if (!ports.length) throw 0;
   const parSemestre = {};
   ports.forEach((p) => (parSemestre[p.semestre] = parSemestre[p.semestre] || []).push(p));
@@ -260,6 +282,32 @@ fetch(`data/temoin.json?v=${VERSION}`).then((r) => { if (!r.ok) throw 0; return 
 }).catch(() => {
   document.getElementById("temoin-contenu").innerHTML =
     "<p><strong>Le premier portefeuille est constitué le 1er novembre 2026.</strong> Ses premiers chiffres s'afficheront ici quelques jours après.</p>";
+});
+
+/* ------------------------------------------------------------------ */
+/* Témoin large                                                        */
+/* ------------------------------------------------------------------ */
+fetch(`data/temoin_large.json?v=${VERSION}`).then((r) => { if (!r.ok) throw 0; return r.json(); }).then((t) => {
+  const groupes = (t.cohortes || []).filter((c) => c.suivi && c.suivi.length);
+  if (!groupes.length) throw 0;
+  const lignes = groupes.slice().reverse().map((c) => {
+    const [d, radar, rallye, tous] = c.suivi[c.suivi.length - 1];
+    const jours = Math.round((Date.parse(d) - Date.parse(c.depart)) / 864e5);
+    const cls = (v) => (v == null ? "" : v >= tous ? "gain-haut" : "gain-bas");
+    return { c, d, radar, rallye, tous, jours, html: `<tr><td>${date(c.id + "-01")}</td><td>${F0.format(jours)} j</td>
+      <td class="${cls(radar)}">${pct(radar - 1)}</td><td class="${cls(rallye)}">${pct(rallye - 1)}</td><td>${pct(tous - 1)}</td></tr>` };
+  });
+  document.getElementById("tab-large").innerHTML =
+    `<tr><th>Groupe constitué en</th><th>Depuis</th><th>Radar</th><th>Rallye 5 ans</th><th>Toutes</th></tr>` + lignes.map((l) => l.html).join("");
+  const recul = lignes.filter((l) => l.jours >= 90);
+  const gagne = (k) => recul.filter((l) => l[k] > l.tous).length;
+  document.getElementById("large-verdict").textContent = recul.length
+    ? `Sur ${recul.length} groupe${recul.length > 1 ? "s" : ""} suivi${recul.length > 1 ? "s" : ""} depuis au moins 3 mois, le radar fait mieux que l'ensemble dans ${gagne("radar")} cas, la liste Rallye dans ${gagne("rallye")}.`
+    : "Trop tôt pour conclure : il faut quelques mois de recul.";
+}).catch(() => {
+  document.getElementById("tab-large").innerHTML = "";
+  document.getElementById("large-verdict").textContent =
+    "Le premier groupe est constitué en novembre 2026 ; ses premiers chiffres s'afficheront après le calcul de nuit suivant.";
 });
 
 /* ------------------------------------------------------------------ */
@@ -275,6 +323,23 @@ fetch(`data/retro_resultats.json?v=${VERSION}`).then((r) => r.json()).then((r) =
   document.getElementById("verdict").textContent =
     `${debut} Les 20 % les mieux notées ont gagné ${pct(t[4].perf_mediane)} en médiane, contre ${pct(t[0].perf_mediane)} pour les 20 % les moins bien notées, soit ${F1.format(ecart * 100)} points d'écart par an. ${F0.format(t[4].part_bat_mediane * 100)} % des mieux notées ont fait mieux que l'action médiane du marché, contre ${F0.format(t[0].part_bat_mediane * 100)} % des moins bien notées.`;
   barres(document.getElementById("graphe-notes"), t);
+
+  const L = r.listes || {};
+  if (L.radar || L.rallye) {
+    const NOMS = { radar: "Radar des pépites", rallye: "Rallye 5 ans" };
+    document.getElementById("tab-listes-monde").innerHTML =
+      `<tr><th>Liste</th><th>Sociétés par date</th><th>Gain médian</th><th>Toutes</th><th>Dates gagnantes</th><th>Perte de plus de 30&nbsp;%</th></tr>` +
+      Object.entries(NOMS).filter(([k]) => L[k]).map(([k, nom]) => {
+        const v = L[k];
+        return `<tr><td>${nom}</td><td>${F0.format(v.societes_par_date)}</td><td>${pct(v.perf_mediane)}</td><td>${pct(v.perf_mediane_toutes)}</td>
+          <td>${v.dates_gagnantes} sur ${v.dates}</td><td>${part(v.pertes_30)} (toutes : ${part(v.pertes_30_toutes)})</td></tr>`;
+      }).join("");
+    const phrase = (k, nom) => L[k] ? `${nom} : ${F1.format(L[k].ecart_moyen * 100)} points de gain de plus que l'ensemble sur 12 mois, ${L[k].dates_gagnantes} dates sur ${L[k].dates}` : "";
+    document.getElementById("verdict-listes").textContent =
+      [phrase("radar", "Radar"), phrase("rallye", "Rallye 5 ans")].filter(Boolean).join(" ; ") +
+      (Object.values(L).every((v) => v.pertes_30 < v.pertes_30_toutes) ? ", avec moins de fortes pertes." : ".");
+    document.getElementById("bloc-listes-monde").hidden = false;
+  }
 
   document.getElementById("tab-criteres").innerHTML =
     `<tr><th>Critère</th><th>Moins bien notées</th><th>Mieux notées</th></tr>` +

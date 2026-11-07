@@ -38,7 +38,7 @@ COLONNES = [
     ("na", "analystes", 0),
     # Liste « Rallye 5 ans », contrôle express et signaux des favoris
     ("vee", "ve_ebitda", 1), ("pb", "pb", 2), ("tdr", "rendement_tresorerie", 3),
-    ("dil", "dilution_3a", 3), ("dir", "dirigeants", 3),
+    ("dil", "dilution_3a", 3), ("dir", "dirigeants", 3), ("liq", "volume_usd", "sig"),
 ]
 RADAR_ENTREES = Path("data/radar_entrees.json")
 RALLYE_ENTREES = Path("data/rallye_entrees.json")
@@ -47,6 +47,19 @@ INDICES = Path("data/indices.json")
 
 def _capi_eur(visibles: pd.DataFrame, usd_par_eur: float | None) -> pd.Series:
     return pd.to_numeric(visibles.get("capi_usd"), errors="coerce") / (usd_par_eur or 1.0)
+
+
+def _liquide(visibles: pd.DataFrame, usd_par_eur: float | None) -> pd.Series:
+    """Au moins 50 000 € échangés par jour en moyenne. Tant que le volume n'est connu que
+    pour une minorité de sociétés (premières nuits après son ajout), un volume inconnu ne
+    bloque pas ; ensuite, il écarte la société."""
+    if "volume_usd" not in visibles:
+        return pd.Series(True, index=visibles.index)
+    eur = pd.to_numeric(visibles["volume_usd"], errors="coerce") / (usd_par_eur or 1.08)
+    notees = pd.to_numeric(visibles.get("n_investisseur"), errors="coerce").notna()
+    if eur[notees].notna().mean() >= 0.8:
+        return eur >= config.LIQUIDITE_MIN_EUR
+    return ~(eur < config.LIQUIDITE_MIN_EUR)
 
 
 def _comptes_recents(visibles: pd.DataFrame) -> pd.Series:
@@ -65,7 +78,7 @@ def radar(visibles: pd.DataFrame, usd_par_eur: float | None) -> pd.DataFrame:
     garde = (listes.radar(n("n_investisseur"), n("n_valorisation"), n("n_situation_fi"),
                           _capi_eur(visibles, usd_par_eur))
              & n("ca_usd").gt(0)  # un chiffre d'affaires publié : écarte les véhicules sans activité
-             & _comptes_recents(visibles))
+             & _comptes_recents(visibles) & _liquide(visibles, usd_par_eur))
     garde = listes.plafond_pays(visibles["pays"], garde, n("n_investisseur") + n("n_valorisation") / 1000)
     r = visibles[garde].assign(_note=n("n_investisseur"), _val=n("n_valorisation"))
     return r.sort_values(["_note", "_val"], ascending=False)
@@ -80,7 +93,7 @@ def rallye(visibles: pd.DataFrame, usd_par_eur: float | None) -> pd.DataFrame:
                           benefice, visibles["financiere"].fillna(False).astype(bool),
                           n("dilution_3a"),
                           n("rendement_tresorerie").gt(0).where(n("rendement_tresorerie").notna()))
-    garde &= n("ca_usd").gt(0) & _comptes_recents(visibles)
+    garde &= n("ca_usd").gt(0) & _comptes_recents(visibles) & _liquide(visibles, usd_par_eur)
     garde = listes.plafond_pays(visibles["pays"], garde, n("n_investisseur").fillna(0))
     r = visibles[garde].assign(_note=n("n_investisseur"), _val=n("n_valorisation"))
     return r.sort_values(["_note", "_val"], ascending=False, na_position="last")
@@ -167,7 +180,7 @@ def generer(table: pd.DataFrame, statut: dict) -> None:
         f.write_text(f.read_text().replace("__VERSION__", version))
     (SITE / "data" / "fiches").mkdir(parents=True, exist_ok=True)
     for nom in ("retro_resultats.json", "retro_us_resultats.json", "retro_historique.csv", "macro.json",
-                "temoin.json"):
+                "temoin.json", "temoin_large.json"):
         if (Path("data") / nom).exists():
             shutil.copy(Path("data") / nom, SITE / "data" / nom)
 
@@ -211,6 +224,7 @@ def generer(table: pd.DataFrame, statut: dict) -> None:
                                  "bon_marche_part": config.RALLYE_BON_MARCHE_PART,
                                  "dilution_max": config.RALLYE_DILUTION_MAX,
                                  "tresorerie_positive": config.RALLYE_TRESORERIE_POSITIVE},
+               "liquidite_min_eur": config.LIQUIDITE_MIN_EUR,
                "pays_part_max": config.PAYS_PART_MAX,
                "indices": grands_indices(set(visibles["symbole"]))}
     (SITE / "data" / "accueil.json").write_text(

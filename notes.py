@@ -106,21 +106,14 @@ def _revisions_archive(d: pd.DataFrame, jours: int, tolerance: int) -> tuple[pd.
 # Dilution : nombre d'actions sur les derniers exercices
 # --------------------------------------------------------------------------- #
 COMPTES_ANNUELS = Path("data/comptes_annuels.csv")
-# Un saut du nombre d'actions égal à l'un de ces rapports est une division (ou un
-# regroupement) d'actions, pas une émission : il est neutralisé.
-RAPPORTS_DIVISION = (1.5, 2, 3, 4, 5, 6, 8, 10, 15, 20, 25, 30, 40, 50, 100)
-
-
-def _sans_division(r: float) -> float:
-    for k in RAPPORTS_DIVISION:
-        if abs(r / k - 1) < 0.03 or abs(r * k - 1) < 0.03:
-            return 1.0
-    return r
 
 
 def dilution_3a(chemin: Path = COMPTES_ANNUELS) -> pd.Series:
     """Variation du nombre d'actions sur les 3 derniers exercices (comptes annuels de Yahoo,
-    relus chaque trimestre par le test sur le passé) : +0,25 = 25 % d'actions en plus."""
+    relus chaque trimestre par le test sur le passé) : +0,25 = 25 % d'actions en plus.
+    Yahoo ramène déjà les anciens exercices au nombre d'actions d'après les divisions
+    (vérifié le 7 novembre 2026 sur Nvidia, Walmart et Chipotle) : un saut ×1,5 ou ×2 est
+    donc une vraie émission (augmentation de capital), comptée comme telle."""
     if not chemin.exists():
         return pd.Series(dtype=float)
     c = pd.read_csv(chemin, usecols=["symbole", "fin", "actions"], dtype={"symbole": str})
@@ -129,7 +122,7 @@ def dilution_3a(chemin: Path = COMPTES_ANNUELS) -> pd.Series:
     for symbole, g in c.groupby("symbole", sort=False):
         a = g["actions"].to_numpy(dtype=float)[-4:]
         if len(a) >= 2:
-            res[symbole] = float(np.prod([_sans_division(x) for x in a[1:] / a[:-1]]) - 1)
+            res[symbole] = float(a[-1] / a[0] - 1)
     return pd.Series(res, dtype=float).clip(-0.9, 5)
 
 
@@ -163,6 +156,8 @@ def indicateurs(base: pd.DataFrame, fx: dict[str, float]) -> pd.DataFrame:
                     np.where(r.between(0.004, 0.03), capi * t_principale,
                     np.where(calc.notna(), calc * t_cours, capi * t_principale)))
     d["prix_usd"] = cours * t_cours
+    # Montant moyen échangé chaque jour (liquidité), en dollars
+    d["volume_usd"] = _num(d, "volume_moyen") * d["prix_usd"]
     # Nombre d'actions de toutes catégories, déduit de la capitalisation
     actions = (d["capi_usd"] / d["prix_usd"].where(d["prix_usd"] > 0)).fillna(actions)
 
@@ -187,7 +182,10 @@ def indicateurs(base: pd.DataFrame, fx: dict[str, float]) -> pd.DataFrame:
     # comptes. On retient la lecture la plus cohérente avec le BPA prévu.
     bpa_brut = _num(d, "bpa_12m")
     bpa_cours, bpa_comptes = bpa_brut * t_principale, bpa_brut * t_comptes
-    reference = _moyenne(bpa_a0, bpa_a1)
+    # Sans analystes, la référence est le bénéfice par action tiré des comptes
+    # (chiffre d'affaires × marge nette / actions), toujours dans la bonne devise
+    bpa_implicite = _ratio(ca * _num(d, "marge_nette"), actions)
+    reference = _moyenne(bpa_a0, bpa_a1).fillna(bpa_implicite)
     ecart_cours = np.abs(np.log(_ratio(bpa_cours, reference).where(lambda x: x > 0)))
     ecart_comptes = np.abs(np.log(_ratio(bpa_comptes, reference).where(lambda x: x > 0)))
     bpa_12m = bpa_cours.where(~(ecart_comptes < ecart_cours), bpa_comptes)
@@ -244,6 +242,19 @@ def indicateurs(base: pd.DataFrame, fx: dict[str, float]) -> pd.DataFrame:
     levier = levier.mask(ebitda.le(0) & (dette - treso).gt(0), 99.0)  # dettes sans EBITDA
     d["dette_nette_ebitda"] = levier.where(~d["financiere"])
     d["treso_nette_ca"] = d["treso_nette_ca"].where(~d["financiere"])
+    # Société qui brûle sa trésorerie (EBITDA négatif, trésorerie disponible négative ou
+    # inconnue) : son argent en caisse n'est pas un matelas mais un compte à rebours. Sa
+    # note ne retient que le temps qu'il lui reste : moins de 3 ans de réserves, comme une
+    # société endettée sans EBITDA ; plus, comme une société moyennement endettée.
+    # (Testé le 7 novembre 2026 : neutre à légèrement favorable sur les deux tests.)
+    fcf = _num(d, "fcf") * t_comptes
+    brule = ~d["financiere"] & ebitda.le(0) & (fcf.le(0) | fcf.isna())
+    besoin = (-fcf).where(fcf < 0, (-ebitda).where(ebitda < 0))
+    d["autonomie_ans"] = _ratio(treso - dette, besoin).where(brule)
+    d["brule_tresorerie"] = brule
+    d["levier_note"] = d["dette_nette_ebitda"].mask(
+        brule, pd.Series(np.where(d["autonomie_ans"].fillna(0) >= 3, 5.0, 99.0), index=d.index))
+    d["treso_note"] = d["treso_nette_ca"].mask(brule)
 
     # Révisions des prévisions de BPA par les analystes
     rev = {}
@@ -331,8 +342,10 @@ def noter(d: pd.DataFrame) -> pd.DataFrame:
     rent = _classement(d["marge_nette_ref"], groupe, +1)
     rent_fin = _moyenne(rent, _classement(d["roe"], groupe, +1))
     n["rentabilite"] = rent.where(~fin, rent_fin.round())
-    n["situation_fi"] = _moyenne(_classement(d["treso_nette_ca"], groupe, +1),
-                                 _classement(d["dette_nette_ebitda"], groupe, -1)).round()
+    treso_note = d["treso_note"] if "treso_note" in d else d["treso_nette_ca"]
+    levier_note = d["levier_note"] if "levier_note" in d else d["dette_nette_ebitda"]
+    n["situation_fi"] = _moyenne(_classement(treso_note, groupe, +1),
+                                 _classement(levier_note, groupe, -1)).round()
     n["revisions_lt"] = _classement(d["revisions_lt_brut"], groupe, +1)
     n["revisions_ct"] = _classement(d["rev_bpa_7j"], groupe, +1)
     n["publication"] = _classement(d["surprise_moy"], groupe, +1)

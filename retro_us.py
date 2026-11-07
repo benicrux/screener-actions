@@ -388,14 +388,17 @@ def _bilan_5ans(g: pd.DataFrame) -> dict:
     if g.empty:
         return {}
     par_date = g.groupby("date")["m60"]
-    panier = par_date.apply(lambda s: s.clip(0, 20).mean()).mean()
+    # Gain annuel d'un panier à parts égales acheté à chaque date, puis la médiane des dates
+    # (et non le gain annuel du panier moyen, qui le surestime). Plafond ×50 : seules les
+    # erreurs de données le dépassent.
+    panier = par_date.apply(lambda s: s.clip(0, 50).mean() ** (1 / 5) - 1).median()
     return {"societes_par_date": round(float(par_date.size().mean())),
             "part_x2": round(float(g["m60"].ge(2).mean()), 4),
             "part_x3": round(float(g["m60"].ge(3).mean()), 4),
             "part_x5": round(float(g["m60"].ge(5).mean()), 4),
             "part_moitie": round(float(g["m60"].lt(0.5).mean()), 4),
             "multiple_median": round(float(g["m60"].median()), 3),
-            "gain_panier_an": round(float(panier ** (1 / 5) - 1), 4)}
+            "gain_panier_an": round(float(panier), 4)}
 
 
 def cinq_ans(t: pd.DataFrame) -> dict:

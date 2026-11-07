@@ -6,6 +6,10 @@ par pays, à parts égales. On n'y touche plus pendant 5 ans. Chaque nuit, on me
 gain en euros, dividendes réinvestis, et on le compare à l'indice mondial (ETF iShares Core
 MSCI World, capitalisant, coté en euros).
 
+Le point de départ est le cours de clôture du premier jour de bourse qui suit la
+constitution : la liste est calculée sur les cours de la veille, un investisseur ne peut
+acheter qu'ensuite (audit du 7 novembre 2026).
+
 Lancé par la tâche de nuit après main.py (jamais par les lancements courts). Une panne de
 Yahoo n'efface rien : les derniers chiffres connus sont gardés.
 """
@@ -121,13 +125,17 @@ def _barres(symbole: str, params: dict) -> tuple[list[tuple[str, float]], str | 
     return barres, meta.get("currency")
 
 
-def _depart(symbole: str, avant: str) -> tuple[str, float, str | None] | None:
-    """Dernier cours ajusté strictement avant la date (la liste a été choisie sur ces cours)."""
-    d = dt.date.fromisoformat(avant)
-    p1 = int(dt.datetime(d.year, d.month, d.day, tzinfo=dt.timezone.utc).timestamp())
-    barres, devise = _barres(symbole, {"period1": p1 - 12 * 86400, "period2": p1 + 86400})
-    barres = [b for b in barres if b[0] < avant]
-    return (barres[-1][0], barres[-1][1], devise) if barres else None
+def _premier_apres(symbole: str, jour: str) -> tuple[str, float, str | None] | None:
+    """Premier cours de clôture après la date (le jour où l'on aurait pu acheter)."""
+    barres, devise = _barres(symbole, {"period1": _ts(jour), "period2": int(time.time())})
+    barres = [b for b in barres if b[0] > jour]
+    return (barres[0][0], barres[0][1], devise) if barres else None
+
+
+def _cote(symbole: str, jour: str) -> tuple[str, str | None] | None:
+    """La société est-elle cotée (un cours dans les 10 jours avant la date) ? Date et devise."""
+    barres, devise = _barres(symbole, {"period1": _ts(jour) - 10 * 86400, "period2": _ts(jour) + 86400})
+    return (barres[-1][0], devise) if barres else None
 
 
 def _dernier(symbole: str) -> tuple[str, float] | None:
@@ -161,9 +169,21 @@ def _ts(jour: str) -> int:
 # Constitution et suivi
 # --------------------------------------------------------------------------- #
 def charger() -> dict:
-    if TEMOIN.exists():
-        return json.loads(TEMOIN.read_text())
-    return {"reference": NOM_REFERENCE, "portefeuilles": []}
+    if not TEMOIN.exists():
+        return {"reference": NOM_REFERENCE, "portefeuilles": []}
+    etat = json.loads(TEMOIN.read_text())
+    # Portefeuilles constitués avant le 7 novembre 2026 : départ ramené au premier jour de
+    # bourse après la constitution (il partait du cours de la veille)
+    for p in etat["portefeuilles"]:
+        if not p.get("depart_apres_constitution"):
+            for l in p["lignes"] + [p["reference"]]:
+                l.update({"depart": None, "r": None, "maj": None})
+                if "eur0" in l:
+                    l.update({"eur0": None, "eur": None})
+            p["suivi"] = []
+            p["depart_apres_constitution"] = True
+            print(f"   Témoin : départ de « {p['nom_liste']} » ramené au premier jour de bourse après le {p['cree_le']}.")
+    return etat
 
 
 def _taux() -> dict[str, float]:
@@ -202,29 +222,28 @@ def constituer(etat: dict, aujourd_hui: dt.date, fx: dict[str, float]) -> list[s
     ref = None
     for symbole in REFERENCES:
         try:
-            ref = _depart(symbole, jour)
+            ref = symbole if _cote(symbole, jour) else None
         except Exception as e:
             print(f"   Témoin : indice {symbole} indisponible ({e})")
         if ref:
-            ref = (symbole, *ref)
             break
     if not ref:
         print("   Témoin : indice mondial indisponible, constitution remise à demain.")
         return []
     crees = []
     for cle in a_faire:
-        departs = {}
+        devises = {}
 
         def valide(s):
             try:
-                d = _depart(s, jour)
+                c = _cote(s, jour)
             except collecte.Bloque:
                 raise
             except Exception:
-                d = None
-            eur = euros_par_unite((d[2] if d else None) or infos.get(s, {}).get("devise"), fx)
-            if d and eur:
-                departs[s] = (d, eur)
+                c = None
+            devise = (c[1] if c else None) or infos.get(s, {}).get("devise")
+            if c and euros_par_unite(devise, fx):
+                devises[s] = devise
                 time.sleep(0.2)
                 return True
             return False
@@ -238,18 +257,15 @@ def constituer(etat: dict, aujourd_hui: dt.date, fx: dict[str, float]) -> list[s
         if len(choix) < TAILLE // 2:
             print(f"   Témoin : seulement {len(choix)} cours de départ pour « {LISTES[cle]} », remis à demain.")
             continue
-        lignes = []
-        for s in choix:
-            (jour_depart, _, devise), eur = departs[s]
-            lignes.append({"s": s, "nom": infos.get(s, {}).get("nom") or s,
-                           "pays": infos.get(s, {}).get("pays"),
-                           "devise": devise or infos.get(s, {}).get("devise"),
-                           "depart": jour_depart, "eur0": eur, "eur": eur, "r": 1.0, "maj": jour_depart})
+        lignes = [{"s": s, "nom": infos.get(s, {}).get("nom") or s, "pays": infos.get(s, {}).get("pays"),
+                   "devise": devises[s], "depart": None, "eur0": None, "eur": None, "r": None, "maj": None}
+                  for s in choix]
         etat["portefeuilles"].append({
             "id": f"{sem}-{cle}", "semestre": sem, "liste": cle, "nom_liste": LISTES[cle],
             "cree_le": jour, "fin": _plus_ans(aujourd_hui, DUREE_ANS).isoformat(),
-            "reference": {"s": ref[0], "depart": ref[1], "r": 1.0, "maj": ref[1]},
-            "lignes": lignes, "suivi": [[ref[1], 1.0, 1.0]]})
+            "depart_apres_constitution": True,
+            "reference": {"s": ref, "depart": None, "r": None, "maj": None},
+            "lignes": lignes, "suivi": []})
         crees.append(f"{sem}-{cle}")
         print(f"   Témoin : portefeuille « {LISTES[cle]} » du {jour} constitué ({len(lignes)} sociétés).")
     return crees
@@ -260,12 +276,30 @@ def suivre(etat: dict, aujourd_hui: dt.date, fx: dict[str, float]) -> int:
     actifs = [p for p in etat["portefeuilles"] if p["fin"] > aujourd_hui.isoformat()]
     if not actifs:
         return 0
+    bloque = {"oui": False}
+    # Départs en attente : premier cours de clôture après la constitution
+    for p in actifs:
+        for l in p["lignes"] + [p["reference"]]:
+            if l.get("depart") or bloque["oui"]:
+                continue
+            try:
+                d = _premier_apres(l["s"], p["cree_le"])
+                time.sleep(0.2)
+            except collecte.Bloque:
+                bloque["oui"] = True
+                continue
+            except Exception as e:
+                print(f"   Témoin : départ de {l['s']} non lu ({e})")
+                continue
+            if d:
+                l["depart"] = d[0]
+                if "eur0" in l:
+                    l["eur0"] = l["eur"] = euros_par_unite(l.get("devise") or d[2], fx)
     taches = {}
     for p in actifs:
-        for l in p["lignes"]:
-            taches[(l["s"], l["depart"])] = None
-        taches[(p["reference"]["s"], p["reference"]["depart"])] = None
-    bloque = {"oui": False}
+        for l in p["lignes"] + [p["reference"]]:
+            if l.get("depart"):
+                taches[(l["s"], l["depart"])] = None
 
     def lire(cle):
         if bloque["oui"]:
@@ -299,9 +333,11 @@ def suivre(etat: dict, aujourd_hui: dt.date, fx: dict[str, float]) -> int:
         r = taches.get((ref["s"], ref["depart"]))
         if r:
             ref["maj"], ref["r"] = r[0], round(r[1], 6)
+        prets = sum(1 for l in p["lignes"] if l.get("r") and l.get("eur0"))
         v = valeur(p)
-        if v is not None:
-            jour = max([l["maj"] for l in p["lignes"]] + [ref["maj"]])
+        # Un point dès que l'indice et au moins les trois quarts des sociétés ont leur départ
+        if v is not None and ref.get("r") and prets >= 0.75 * len(p["lignes"]):
+            jour = max([l["maj"] for l in p["lignes"] if l.get("maj")] + [ref["maj"]])
             p["suivi"] = noter_point(p.get("suivi") or [], jour, v, ref["r"])
     return relus
 
@@ -330,7 +366,7 @@ def verifier() -> None:
     ok = 0
     for s in REFERENCES + ["AAPL", "7203.T", "BARC.L"]:
         try:
-            d, r = _depart(s, hier), _ratio(s, hier)
+            d, r = _premier_apres(s, hier), _ratio(s, hier)
             print(f"   {s} : départ {d}, dernier cours et gain {r}")
             ok += bool(d and r)
         except Exception as e:

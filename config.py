@@ -77,7 +77,11 @@ RALLYE_CAPI_MIN_EUR = 100e6     # capitalisation minimale, en euros
 RALLYE_TAILLE_PART = 0.5        # dans la moitié la plus petite des sociétés
 RALLYE_BON_MARCHE_PART = 0.30   # parmi les 30 % les moins chères (EBITDA / VE et actif net / capitalisation)
 RALLYE_DILUTION_MAX = 0.10      # au plus 10 % d'actions en plus sur 3 ans
-RALLYE_TRESORERIE_POSITIVE = True  # trésorerie disponible positive (quand elle est connue)
+RALLYE_TRESORERIE_POSITIVE = True  # trésorerie disponible connue et positive
+
+# Radar et Rallye : au moins 50 000 € échangés en moyenne chaque jour, pour pouvoir
+# acheter et vendre sans faire bouger le cours (audit du 7 novembre 2026)
+LIQUIDITE_MIN_EUR = 50_000
 
 # Radar et Rallye : au plus 25 % des sociétés d'un même pays (les mieux notées sont gardées),
 # pour ne pas dépendre d'un seul marché. Sans effet mesurable sur le test sur le passé.

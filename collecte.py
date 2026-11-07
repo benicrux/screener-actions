@@ -113,10 +113,12 @@ def cours_du_jour(symboles: list[str]) -> pd.DataFrame:
                 "capi": _v(q.get("marketCap")),
                 "actions": _v(q.get("sharesOutstanding")),
                 "date_cours": _date(q.get("regularMarketTime")),
+                # Nombre moyen d'actions échangées par jour (3 mois, sinon 10 jours)
+                "volume_moyen": _v(q.get("averageDailyVolume3Month")) or _v(q.get("averageDailyVolume10Day")),
             })
         time.sleep(0.4)
     return pd.DataFrame(lignes, columns=["symbole", "cours", "devise_cours", "capi",
-                                         "actions", "date_cours"])
+                                         "actions", "date_cours", "volume_moyen"])
 
 
 def taux_de_change(devises: set[str]) -> dict[str, float]:
@@ -166,6 +168,8 @@ def _extraire(symbole: str, js: dict) -> tuple[dict, list[dict]]:
         "devise_comptes": fd.get("financialCurrency"),
         "cours": _v(pr.get("regularMarketPrice")) or _v(fd.get("currentPrice")),
         "date_cours": _date(pr.get("regularMarketTime")),
+        "volume_moyen": (_v(pr.get("averageDailyVolume3Month")) or _v(pr.get("averageDailyVolume10Day"))
+                         or _v(sd.get("averageVolume"))),
         # Ratios calculés par Yahoo, pour contrôler les nôtres
         "per_yahoo": _v(sd.get("trailingPE")),
         "per_prevu_yahoo": _v(sd.get("forwardPE")) or _v(ks.get("forwardPE")),

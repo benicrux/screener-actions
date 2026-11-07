@@ -113,6 +113,11 @@ jobs:
         continue-on-error: true
         run: python temoin.py
 
+      - name: Témoin large (toutes les sociétés des listes, chaque mois ; un échec n'interrompt pas le calcul)
+        if: github.event_name != 'push'
+        continue-on-error: true
+        run: python temoin_large.py
+
       - name: Contrôle de santé (données anormales = site non republié et e-mail d'alerte)
         env:
           SANS_COLLECTE: ${{ github.event_name == 'push' && '1' || '' }}

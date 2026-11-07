@@ -51,6 +51,16 @@ def test_rallye():
     r = rendu.rallye(pd.DataFrame(lignes), usd_par_eur=1.0)
     # 4 : marge inconnue mais PER positif, donc bénéficiaire ; la mieux notée d'abord
     assert list(r["symbole"]) == ["S4", "S0"], list(r["symbole"])
+    # Liquidité : S4 n'échange que 20 000 € par jour ; une fois le volume connu de presque
+    # toutes les sociétés, elle est écartée (avant, un volume inconnu ne bloquait pas)
+    v = pd.DataFrame(lignes).assign(n_investisseur=80, volume_usd=1e6)
+    v.loc[v["symbole"] == "S4", "volume_usd"] = 2e4
+    assert list(rendu.rallye(v, usd_par_eur=1.0)["symbole"]) == ["S0"]
+    v["volume_usd"] = None
+    v.loc[v["symbole"] == "S4", "volume_usd"] = 2e4
+    assert sorted(rendu.rallye(v, usd_par_eur=1.0)["symbole"]) == ["S0"]   # trop bas : écartée
+    v.loc[v["symbole"] == "S4", "volume_usd"] = None
+    assert sorted(rendu.rallye(v, usd_par_eur=1.0)["symbole"]) == ["S0", "S4"]  # inconnu : gardée
 
 
 def test_dates_entree():

@@ -87,6 +87,11 @@ def test_temoin():
     assert temoin_en_panne(ok, jour) == []
     vieux = {"maj": "2026-11-20", "portefeuilles": [{}]}
     assert len(temoin_en_panne(vieux, jour)) == 1                    # plus suivi depuis 11 jours
+    from sante import temoin_large_en_panne
+    assert temoin_large_en_panne(None, dt.date(2026, 11, 10)) == []  # pas encore constitué
+    assert len(temoin_large_en_panne(None, jour)) == 1
+    assert temoin_large_en_panne({"maj": "2026-11-29"}, jour) == []
+    assert len(temoin_large_en_panne({"maj": "2026-11-10"}, jour)) == 1
 
 
 if __name__ == "__main__":

@@ -36,8 +36,12 @@ def test_rallye():
     dil = S([0.25 if i == 2 else 0.0 for i in range(n)])           # 2 : trop diluée
     tres = pd.Series([False if i == 3 else (None if i == 4 else True) for i in range(n)])  # 3 : FCF < 0
     m = listes.rallye(capi, ebitda_ve, actif_prix, benef, fin, dil, tres)
-    # 15 est trop grande ; 4 (trésorerie inconnue) est gardée
+    # 15 est trop grande ; 4 (trésorerie inconnue) est écartée
+    assert list(m[m].index) == [0], list(m[m].index)
+    tres_connue = tres.fillna(True)
+    m = listes.rallye(capi, ebitda_ve, actif_prix, benef, fin, dil, tres_connue)
     assert list(m[m].index) == [0, 4], list(m[m].index)
+    tres = tres_connue
 
     # Les sociétés financières ne comptent pas, ni dans la liste ni dans les parts
     fin2 = pd.Series([i == 0 for i in range(n)])
@@ -74,7 +78,7 @@ def test_dilution():
             lignes.append({"symbole": s, "fin": f"{2021 + k}-12-31", "actions": a})
     ajoute("STABLE", [100, 100, 100, 100])
     ajoute("DILUEE", [100, 110, 121, 133.1])
-    ajoute("DIVISION", [100, 200, 200, 210])      # division 2 pour 1, puis +5 %
+    ajoute("EMISSION", [100, 200, 200, 210])      # Yahoo corrige déjà les divisions : vraie émission
     ajoute("RACHAT", [100, 95, 90])
     ajoute("SEULE", [100])
     ajoute("VIEILLE", [50, 100, 100, 100, 100])   # seuls les 4 derniers exercices comptent
@@ -84,7 +88,7 @@ def test_dilution():
         r = notes.dilution_3a(chemin)
     assert abs(r["STABLE"]) < 1e-9
     assert abs(r["DILUEE"] - 0.331) < 1e-6
-    assert abs(r["DIVISION"] - 0.05) < 1e-6
+    assert abs(r["EMISSION"] - 1.10) < 1e-6
     assert abs(r["RACHAT"] + 0.10) < 1e-6
     assert "SEULE" not in r
     assert abs(r["VIEILLE"]) < 1e-9

@@ -30,7 +30,7 @@ const COULEURS_PAYS = ["var(--accent)", "#5d8aa2", "#a9c3d1", "var(--filet)"];
 
 let actions = [], parSymbole = new Map(), radar = [], rallye = [], filtre = {}, statut = {}, macro = null;
 // Règles de la liste « Rallye 5 ans » et résultats du test américain à 5 ans (pour l'expliquer)
-let reglesRallye = {}, paysPartMax = null, cinqAns = null;
+let reglesRallye = {}, paysPartMax = null, cinqAns = null, liquiditeMin = null;
 // Grands indices (composition relue chaque mois sur Wikipédia) ; symbole -> identifiants
 let indices = [], indicesDe = new Map();
 let favoris = lire("pepites.favoris", {});
@@ -118,6 +118,7 @@ async function charger() {
   filtre = acc.filtre || {};
   reglesRallye = acc.regles_rallye || {};
   paysPartMax = acc.pays_part_max ?? null;
+  liquiditeMin = acc.liquidite_min_eur ?? null;
   // Indices rangés dans l'ordre des continents (Europe d'abord), puis dans l'ordre du fichier
   const rang = (c) => { const k = CONTINENTS.indexOf(c); return k < 0 ? 99 : k; };
   indices = (acc.indices || []).map((i, k) => ({ ...i, k }))
@@ -423,16 +424,17 @@ function carteRadar({ a, depuis }) {
 function texteCritere() {
   const f = filtre, r = reglesRallye;
   const plafond = paysPartMax ? ` Au plus ${nombre(paysPartMax * 100, 0)} % d'un même pays, pour ne pas dépendre d'un seul marché.` : "";
+  const liquide = liquiditeMin ? ` Au moins ${nombre(liquiditeMin, 0)} € échangés par jour en moyenne, pour pouvoir acheter et vendre facilement.` : "";
   const passe = (cle) => cinqAns && cinqAns[cle] && cinqAns.toutes
     ? ` Sur le passé (États-Unis, 5 ans), ${nombre(cinqAns[cle].part_x3 * 100, 0)} % ont triplé, contre ${nombre(cinqAns.toutes.part_x3 * 100, 0)} % de l'ensemble.` : "";
   if (etat.liste === "rallye") {
     if (r.capi_min_eur == null) return ["La liste « Rallye 5 ans » arrive avec le prochain calcul de nuit.", ""];
     return [`Petites sociétés très bon marché, pour viser les fortes hausses à 5 ans.${passe("rallye")}`,
-      `La moitié la plus petite des sociétés de plus de ${nombre(r.capi_min_eur / 1e6, 0)} M€, parmi les ${nombre(r.bon_marche_part * 100, 0)} % les moins chères à la fois sur leur EBITDA (valeur d'entreprise / excédent brut d'exploitation) et sur leur actif net, bénéficiaires${r.tresorerie_positive ? ", avec une trésorerie disponible positive" : ""}, et au plus ${nombre(r.dilution_max * 100, 0)} % d'actions en plus en 3 ans.${plafond}`];
+      `La moitié la plus petite des sociétés de plus de ${nombre(r.capi_min_eur / 1e6, 0)} M€, parmi les ${nombre(r.bon_marche_part * 100, 0)} % les moins chères à la fois sur leur EBITDA (valeur d'entreprise / excédent brut d'exploitation) et sur leur actif net, bénéficiaires${r.tresorerie_positive ? ", avec une trésorerie disponible connue et positive" : ""}, et au plus ${nombre(r.dilution_max * 100, 0)} % d'actions en plus en 3 ans.${liquide}${plafond}`];
   }
   if (f.note_min == null) return ["", ""];
   return [`Sociétés de qualité, bon marché et solides.${passe("radar")}`,
-    `Note d'au moins ${f.note_min}, parmi les ${100 - f.valorisation_min} % les moins chères de leur secteur, sans risque de faillite apparent (situation financière d'au moins ${f.situation_min}), plus de ${nombre(f.capi_min_eur / 1e6, 0)} M€ de capitalisation.${plafond}`];
+    `Note d'au moins ${f.note_min}, parmi les ${100 - f.valorisation_min} % les moins chères de leur secteur, sans risque de faillite apparent (situation financière d'au moins ${f.situation_min}), plus de ${nombre(f.capi_min_eur / 1e6, 0)} M€ de capitalisation.${liquide}${plafond}`];
 }
 
 function rendreRadar() {

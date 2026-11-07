@@ -291,6 +291,7 @@ def _notes_a_la_date(date: str, univ: pd.DataFrame, comptes: pd.DataFrame,
     # Comptes trop anciens (société qui ne publie plus) : ignorés
     dernier = dernier[dernier["fin_date"] >= t0 - pd.DateOffset(months=18)]
     precedent = c.groupby("symbole").nth(-2).set_index("symbole")
+    avant3 = c.groupby("symbole").nth(-4).set_index("symbole")  # trois exercices plus tôt
 
     p0 = cours[cours["mois"] == mois0].drop_duplicates("symbole").set_index("symbole")
     p1 = cours[cours["mois"] == mois1].drop_duplicates("symbole").set_index("symbole")
@@ -298,6 +299,7 @@ def _notes_a_la_date(date: str, univ: pd.DataFrame, comptes: pd.DataFrame,
     d = univ[["symbole", "nom", "secteur", "industrie_en", "continent"]].set_index("symbole")
     d = d.join(dernier.drop(columns=["fin_date", "publie"], errors="ignore"), how="inner")
     d = d.join(precedent[["ca"]].rename(columns={"ca": "ca_prec"}), how="left")
+    d = d.join(avant3[["actions"]].rename(columns={"actions": "actions_3a"}), how="left")
     d = d.join(p0[["cours", "ajuste", "devise"]].rename(columns={"devise": "devise_cours"}),
                how="inner")
     d = d.join(p1[["ajuste"]].rename(columns={"ajuste": "ajuste_fin"}), how="left")
@@ -310,8 +312,10 @@ def _notes_a_la_date(date: str, univ: pd.DataFrame, comptes: pd.DataFrame,
     d["eur_comptes"] = [1 / par_euro(dv, mois0) if isinstance(dv, str) else np.nan
                         for dv in d["devise"]]
     capi = d["cours"] * d["actions"] * d["eur_cours"]
+    if "fcf" not in d:
+        d["fcf"] = np.nan
     for poste in ("ca", "resultat_net", "resultat_op", "ebitda", "tresorerie", "dette",
-                  "fonds_propres", "ca_prec"):
+                  "fonds_propres", "ca_prec", "fcf"):
         d[poste + "_eur"] = d[poste] * d["eur_comptes"]
     d["capi_eur"] = capi
     d = d[d["capi_eur"] >= CAPI_MIN_EUR]
@@ -337,6 +341,13 @@ def _notes_a_la_date(date: str, univ: pd.DataFrame, comptes: pd.DataFrame,
     ebitda = d["ebitda_eur"]
     levier = (d["dette_eur"] - d["tresorerie_eur"]) / ebitda.where(ebitda > 0)
     levier = levier.mask(levier < 0, -1.0).mask(ebitda.le(0) & (d["dette_eur"] - d["tresorerie_eur"]).gt(0), 99.0)
+    # Société qui brûle sa trésorerie : jugée sur ses années de réserves (même règle que notes.py)
+    fcf = d["fcf_eur"]
+    brule = ~fin & ebitda.le(0) & (fcf.le(0) | fcf.isna())
+    besoin = (-fcf).where(fcf < 0, (-ebitda).where(ebitda < 0))
+    autonomie = ((d["tresorerie_eur"] - d["dette_eur"]) / besoin).where(brule)
+    levier = levier.mask(brule, pd.Series(np.where(autonomie.fillna(0) >= 3, 5.0, 99.0), index=d.index))
+    m["treso_ca"] = m["treso_ca"].mask(brule)
     m["levier"] = levier.where(~fin)
 
     groupe = d["secteur"].where(~fin, "Finance : " + d["industrie_en"].fillna(""))
@@ -362,6 +373,14 @@ def _notes_a_la_date(date: str, univ: pd.DataFrame, comptes: pd.DataFrame,
     change1 = np.array([par_euro(dv, mois1) for dv in d["devise_cours"]])
     perf = d["ajuste_fin"] / d["ajuste"] * change0 / change1 - 1
     n["perf"] = perf.clip(-0.99, 10)
+    # Ce qu'il faut pour les deux listes de l'accueil (radar, « Rallye 5 ans »)
+    ve_pos = ve.where(ve > 0)
+    n["ebitda_ve"] = (ebitda / ve_pos).where(~fin)
+    n["actif_prix"] = (d["fonds_propres_eur"] / d["capi_eur"]).where(d["fonds_propres_eur"] > 0)
+    n["beneficiaire"] = d["resultat_net_eur"] > 0
+    n["tresorerie_positive"] = (fcf > 0).where(fcf.notna())
+    n["dilution_3a"] = (d["actions"] / d["actions_3a"] - 1).clip(-0.9, 5)
+    n["financiere"] = fin
     n["secteur"] = d["secteur"]
     n["continent"] = d["continent"]
     n["nom"] = d["nom"]
@@ -386,6 +405,40 @@ def _tranches(df: pd.DataFrame, cle: str) -> list[dict]:
             "part_bat_mediane": round(float(g["bat"].mean()), 4),
         })
     return resultats
+
+
+def _listes(tout: pd.DataFrame) -> dict:
+    """Les deux listes de l'accueil, recalculées à chaque date avec les mêmes règles que le
+    site, comparées à toutes les sociétés de plus de 100 M€ : gain médian sur 12 mois."""
+    import listes
+    t = tout[tout["capi_eur"] >= config.RADAR_CAPI_MIN_EUR].reset_index(drop=True)
+    choix = {
+        "radar": listes.radar(t["note"], t["valorisation"], t["situation_fi"], t["capi_eur"]),
+        "rallye": listes.rallye(t["capi_eur"], t["ebitda_ve"], t["actif_prix"], t["beneficiaire"],
+                                t["financiere"], t["dilution_3a"], t["tresorerie_positive"], groupe=t["date"]),
+    }
+    sortie = {}
+    for nom, garde in choix.items():
+        lignes = []
+        for date, g in t.groupby("date"):
+            s = g[garde.loc[g.index].fillna(False).to_numpy()]
+            if len(s):
+                lignes.append({"date": date, "nombre": int(len(s)),
+                               "perf_mediane": float(s["perf"].median()),
+                               "perf_mediane_toutes": float(g["perf"].median()),
+                               "pertes_30": float((s["perf"] < -0.3).mean()),
+                               "pertes_30_toutes": float((g["perf"] < -0.3).mean())})
+        if lignes:
+            l = pd.DataFrame(lignes)
+            ecart = l["perf_mediane"] - l["perf_mediane_toutes"]
+            sortie[nom] = {"dates": len(l), "dates_gagnantes": int((ecart > 0).sum()),
+                           "ecart_moyen": round(float(ecart.mean()), 4),
+                           "perf_mediane": round(float(l["perf_mediane"].mean()), 4),
+                           "perf_mediane_toutes": round(float(l["perf_mediane_toutes"].mean()), 4),
+                           "pertes_30": round(float(l["pertes_30"].mean()), 4),
+                           "pertes_30_toutes": round(float(l["pertes_30_toutes"].mean()), 4),
+                           "societes_par_date": round(float(l["nombre"].mean()))}
+    return sortie
 
 
 def analyser() -> dict:
@@ -413,6 +466,7 @@ def analyser() -> dict:
             "perf_mediane_note_80": round(float(g[g["note"] >= 80]["perf"].median()), 4),
             "nombre_note_80": int((g["note"] >= 80).sum()),
         }
+    res["listes"] = _listes(tout)
     res["par_note"] = _tranches(tout, "note")
     for critere in POIDS:
         res["par_critere"][critere] = _tranches(tout, critere)

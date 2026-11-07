@@ -38,7 +38,9 @@ def rallye(capi_eur: pd.Series, ebitda_ve: pd.Series, actif_prix: pd.Series,
          & beneficiaire.fillna(False).astype(bool)
          & (dilution_3a.fillna(0) <= config.RALLYE_DILUTION_MAX))
     if config.RALLYE_TRESORERIE_POSITIVE and tresorerie_positive is not None:
-        m &= tresorerie_positive.fillna(True).astype(bool)  # inconnue : non bloquante
+        # Inconnue : écartée (dans le test américain, ces sociétés ont triplé deux fois moins
+        # souvent que celles qui dégagent de la trésorerie ; audit du 7 novembre 2026)
+        m &= tresorerie_positive.fillna(False).astype(bool)
     return m.fillna(False)
 
 

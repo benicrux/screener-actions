@@ -106,6 +106,11 @@ function euros(e) {
   }
   return nombre(e / 1e6, 0) + " M€";
 }
+function eurosCourts(e) {  // petits montants : 52 000 €, 1,2 M€
+  if (e >= 1e6) return nombre(e / 1e6, e >= 1e7 ? 0 : 1) + "\u00a0M€";
+  const arrondi = e >= 1e4 ? Math.round(e / 1000) * 1000 : Math.round(e / 100) * 100;
+  return nombre(arrondi, 0) + "\u00a0€";
+}
 function capi(v) {  // v en dollars, affiché en euros
   if (v == null || !isFinite(v)) return "—";
   return euros(v / USD_PAR_EUR);
@@ -668,6 +673,18 @@ function controleExpress(a, f) {
       ? ok(`Le bénéfice se retrouve en trésorerie : ${montant(f.fcf, dev)} de trésorerie disponible pour ${montant(benefice, dev)} de bénéfice.`)
       : att(`Bénéfice peu transformé en trésorerie : ${montant(f.fcf, dev)} de trésorerie disponible pour ${montant(benefice, dev)} de bénéfice. Pourquoi ?`));
   } else l.push(info("Trésorerie disponible inconnue : à lire dans le tableau des flux de trésorerie."));
+  if (f.brule_tresorerie) {
+    const ans = f.autonomie_ans;
+    l.push(att(ans == null || ans <= 0
+      ? "La société brûle sa trésorerie et n'a pas de réserve nette : nouvelle levée de fonds ou dette probable."
+      : `La société brûle sa trésorerie : environ ${nombre(ans, ans < 3 ? 1 : 0)} an${ans >= 2 ? "s" : ""} de réserves au rythme actuel.`));
+  }
+  if (a.liq != null) {
+    const parJour = a.liq / USD_PAR_EUR;
+    l.push(parJour >= 50000
+      ? ok(`Environ ${eurosCourts(parJour)} échangés par jour : facile à acheter et à vendre.`)
+      : att(`Seulement ${eurosCourts(parJour)} échangés par jour : peu liquide, l'acheter ou la vendre peut faire bouger le cours.`));
+  }
   if (a.dil != null) {
     l.push(a.dil > 0.10 ? att(`${pct(a.dil, 0)} d'actions en plus en 3 ans : les actionnaires sont dilués.`)
       : a.dil <= 0.02 ? ok(a.dil < -0.02 ? `Nombre d'actions en baisse de ${pct(-a.dil, 0)} en 3 ans : la société rachète ses actions.` : "Nombre d'actions stable sur 3 ans.")

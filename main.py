@@ -28,13 +28,13 @@ COLONNES_TEXTE = ["maj", "statut", "devise_cours", "devise_comptes", "devise_bpa
 
 def assembler(univ: pd.DataFrame, donnees: pd.DataFrame, cours: pd.DataFrame) -> pd.DataFrame:
     table = univ.merge(donnees.drop(columns=["nom"], errors="ignore"), on="symbole", how="left")
-    for col in COLONNES_TEXTE + ["cours", "capi", "actions", "date_cours"]:
+    for col in COLONNES_TEXTE + ["cours", "capi", "actions", "date_cours", "volume_moyen"]:
         if col not in table:
             table[col] = pd.Series(index=table.index, dtype=object)
     if not cours.empty:
         c = cours.dropna(subset=["cours"]).drop_duplicates("symbole").set_index("symbole")
         idx = table["symbole"]
-        for col in ("cours", "devise_cours", "capi", "actions", "date_cours"):
+        for col in ("cours", "devise_cours", "capi", "actions", "date_cours", "volume_moyen"):
             frais = idx.map(c[col]) if col in c else pd.Series(index=table.index, dtype=object)
             if col in table:
                 table[col] = frais.where(frais.notna(), table[col])

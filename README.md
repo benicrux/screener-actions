@@ -25,14 +25,14 @@ Ensuite tout est automatique : le calcul tourne **chaque nuit**. GitHub retarde 
 **Les deux listes de l'accueil** (onglets), règles communes au site et aux tests dans `listes.py`, seuils dans `config.py` :
 
 - **Radar des pépites** : note d'au moins 75, parmi les 35 % les moins chères de leur secteur, situation financière d'au moins 30 (sans risque de faillite apparent), plus de 100 M€ de capitalisation.
-- **Rallye 5 ans** : la moitié la plus petite des sociétés de plus de 100 M€, parmi les 30 % les moins chères à la fois sur leur EBITDA (valeur d'entreprise / excédent brut d'exploitation) et sur leur actif net, bénéficiaires, avec une trésorerie disponible positive et au plus 10 % d'actions en plus en 3 ans. Au test d'octobre 2026, sur le passé américain, ces sociétés ont triplé en 5 ans 1,4 fois plus souvent que l'ensemble, sans perdre plus souvent (chiffres à jour sur la page « Tests »).
-- Dans les deux : au plus 25 % d'un même pays (les mieux notées sont gardées), et pas de société sans comptes publiés depuis 18 mois.
+- **Rallye 5 ans** : la moitié la plus petite des sociétés de plus de 100 M€, parmi les 30 % les moins chères à la fois sur leur EBITDA (valeur d'entreprise / excédent brut d'exploitation) et sur leur actif net, bénéficiaires, avec une trésorerie disponible connue et positive et au plus 10 % d'actions en plus en 3 ans. Au test d'octobre 2026, sur le passé américain, ces sociétés ont triplé en 5 ans 1,4 fois plus souvent que l'ensemble, sans perdre plus souvent (chiffres à jour sur la page « Tests »).
+- Dans les deux : au moins 50 000 € échangés par jour en moyenne (pour pouvoir acheter et vendre sans faire bouger le cours), au plus 25 % d'un même pays (les mieux notées sont gardées), et pas de société sans comptes publiés depuis 18 mois.
 
 **Les favoris** : un signal « à revoir » apparaît quand la thèse se dégrade depuis l'ajout ou le dernier réexamen (fondamentaux en baisse de 15 points, rentabilité en net recul, situation financière fragile, plus de 10 % d'actions en plus en 3 ans, analystes qui baissent leurs prévisions) ou après 6 mois sans réexamen. Une hausse du cours n'en est jamais un : quand la thèse tient et que le cours a pris 50 %, le site conseille de laisser courir. Chaque favori a sa **thèse** : pourquoi je l'ai choisie, ce qui me ferait vendre (enregistrée au fil de la frappe). « Ignorer 90 jours », les favoris et les thèses sont gardés dans le navigateur.
 
 **Retrouver ses favoris sur tous ses appareils** : sous « Mes favoris », le lien « Les retrouver sur tous mes appareils » connecte un compte Google. Les favoris (avec leurs thèses) et les sociétés ignorées sont alors gardés dans une petite base gratuite (Firebase, projet `pepites-d0854`, console.firebase.google.com) et suivent d'un appareil à l'autre. Seuls ces éléments y sont envoyés ; chaque compte ne lit et n'écrit que son propre document (règles Firestore). Sans connexion, rien ne change : les favoris restent dans le navigateur. Pour couper la synchronisation, remplacer les réglages de `web/firebase-config.js` par `null`.
 
-**La fiche** d'une société commence par un **contrôle express** : date des derniers comptes, bénéfice transformé ou non en trésorerie, dilution, part détenue par les dirigeants et par les institutions, nombre d'analystes, liens vers le rapport annuel.
+**La fiche** d'une société commence par un **contrôle express** : date des derniers comptes, bénéfice transformé ou non en trésorerie, années de réserves si elle brûle sa trésorerie, montant échangé chaque jour, dilution, part détenue par les dirigeants et par les institutions, nombre d'analystes, liens vers le rapport annuel.
 
 Le screener a un filtre **Indice** : les sociétés des grands indices (S&P 500, Nasdaq-100, Dow Jones, S&P/TSX 60, Euro Stoxx 50, CAC 40, DAX, FTSE 100, SMI, Nikkei 225, Hang Seng, NIFTY 50, S&P/ASX 50), toutes celles qui n'y sont pas, ou un indice précis. La fiche et les cartes du radar indiquent les indices de la société. La composition des indices est relue une fois par mois sur Wikipédia par `indices.py` : si une page ne répond pas ou a changé, la composition précédente est gardée.
 
@@ -55,10 +55,15 @@ Le contexte économique (taux, inflation, matières premières, devises, chômag
 | Test sur le passé, monde (depuis fin 2023) | Chaque trimestre, le 2 janvier, avril, juillet et octobre | Page « Tests » |
 | Test sur le passé, États-Unis (depuis 2012, comptes de la SEC), à 12 mois et à 5 ans | Chaque trimestre, le 9 janvier, avril, juillet et octobre | Page « Tests » |
 | Portefeuille témoin | Constitué les 1er mai et 1er novembre, suivi chaque nuit | Page « Tests » |
+| Témoin large | Un groupe par mois, suivi chaque nuit | Page « Tests » |
 
 Les tests trimestriels relisent toutes les données et ajoutent les dates qui ont désormais assez de recul. Chaque résultat est ajouté à `data/retro_historique.csv`, affiché sur la page : si l'écart entre les mieux et les moins bien notées s'effondre d'un trimestre à l'autre, c'est le signe qu'il faut revoir la note. Le test américain mesure aussi l'objectif lui-même : la part des sociétés du radar et de la liste « Rallye 5 ans » qui ont triplé en 5 ans, comparée à l'ensemble. Les pondérations et les règles des listes, elles, ne changent jamais toutes seules.
 
-**Le portefeuille témoin** (`temoin.py`, `data/temoin.json`) : chaque 1er mai et 1er novembre, les 20 premières sociétés de chaque liste de l'accueil, 5 au plus par pays, sont figées à parts égales et suivies 5 ans, en euros, dividendes réinvestis, face à l'indice mondial (ETF iShares Core MSCI World). Si Yahoo ne répond pas, la constitution est retentée la nuit suivante et les derniers chiffres connus sont gardés.
+**Le portefeuille témoin** (`temoin.py`, `data/temoin.json`) : chaque 1er mai et 1er novembre, les 20 premières sociétés de chaque liste de l'accueil, 5 au plus par pays, sont figées à parts égales et suivies 5 ans, en euros, dividendes réinvestis, face à l'indice mondial (ETF iShares Core MSCI World), à partir du cours du premier jour de bourse qui suit (celui où l'on aurait pu acheter). Si Yahoo ne répond pas, la constitution est retentée la nuit suivante et les derniers chiffres connus sont gardés.
+
+**Le témoin large** (`temoin_large.py`, `data/temoin_large/`, `data/temoin_large.json`) : chaque mois, toutes les sociétés des deux listes et l'ensemble des sociétés dont elles sont tirées (notées, plus de 100 M€) sont figées, puis leurs gains moyens sont comparés chaque nuit (monnaie locale, hors dividendes, divisions d'actions reconnues). Avec des centaines de sociétés, un vrai avantage se voit en quelques mois au lieu de quelques années.
+
+**Le test mondial** mesure aussi les deux listes de l'accueil, recalculées à chaque date avec les règles du site, à 12 mois.
 
 **Une photo mensuelle** de la liste mondiale (notes et chiffres tels que le site les montrait, listes de l'accueil) est gardée sur la branche `photos`. Yahoo ne conserve pas l'historique des prévisions des analystes : ces photos permettront un jour de tester la note complète.
 
@@ -85,7 +90,7 @@ Un lancement échoue, et vous recevez donc un e-mail, dans ces cas :
 - **Le contrôle de santé trouve des données anormales** (trop peu de cours reçus, trop peu de sociétés notées, trop de sociétés retirées par les contrôles) : le site garde sa version précédente.
 - **Yahoo bloque ou ne renvoie rien depuis 3 nuits de suite.**
 - **Une source de la page d'accueil est en panne** : indicateurs économiques trop anciens ou trop peu nombreux, ou composition d'un grand indice impossible à relire sur Wikipédia depuis 3 jours (le site reste publié, avec les derniers chiffres connus).
-- **Le portefeuille témoin** n'a pas pu être constitué, ou n'est plus mis à jour depuis 7 jours.
+- **Le portefeuille témoin ou le témoin large** n'a pas pu être constitué, ou n'est plus mis à jour depuis 7 jours.
 - **Un test trimestriel se dégrade** : les mieux notées ne font plus mieux que les moins bien notées, ou leur avantage a été divisé par deux, ou le radar ou la liste « Rallye 5 ans » ne triplent plus plus souvent que l'ensemble sur 5 ans.
 
 Les seuils sont réglables dans `config.py` (rubrique « Contrôle de santé »). Enfin, le site affiche un **bandeau rouge** si les données n'ont pas été mises à jour depuis plus de 3 jours, par exemple si GitHub a cessé de lancer les tâches.
@@ -125,6 +130,7 @@ Tout est dans `config.py` : pondérations de la note investisseur, règles du ra
 | `notes.py` | Calcul des indicateurs et des notes sur 100, dilution sur 3 ans |
 | `listes.py` | Règles du radar, de la liste « Rallye 5 ans » et du plafond par pays (les mêmes pour le site et les tests) |
 | `temoin.py` | Portefeuille témoin : constitution chaque semestre, suivi chaque nuit |
+| `temoin_large.py` | Témoin large : toutes les sociétés des listes, un groupe par mois |
 | `controles.py` | Contrôles de cohérence des chiffres avant le calcul des notes |
 | `macro.py` | Indicateurs économiques de la page d'accueil |
 | `indices.py` | Composition des grands indices (filtre « Indice » du screener), relue chaque mois sur Wikipédia |
