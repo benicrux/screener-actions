@@ -53,6 +53,8 @@ jobs:
     if: needs.garde.outputs.passer != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 340
+    outputs:
+      tests: ${{ steps.tests.outcome }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -66,9 +68,15 @@ jobs:
       - name: Installer les dépendances
         run: pip install -r requirements.txt
 
-      - name: Vérifier les calculs (tests automatiques)
+      - name: Vérifier les calculs (tests automatiques ; un échec n'empêche pas la mise à jour du site, il envoie l'e-mail à la fin)
+        id: tests
+        continue-on-error: true
         run: |
-          for t in tests/test_*.py; do python "$t"; done
+          echec=0
+          for t in tests/test_*.py; do
+            python "$t" || { echo "::error::Test en échec : $t"; echec=1; }
+          done
+          exit $echec
 
       - name: Récupérer les données détaillées (branche « donnees »)
         run: |
@@ -219,7 +227,7 @@ jobs:
 
   surveiller:
     # Alerte par e-mail (le lancement échoue) si Yahoo bloque depuis plusieurs nuits
-    needs: publier
+    needs: [calculer, publier]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -227,3 +235,8 @@ jobs:
           ref: main
       - name: Contrôle de santé sur plusieurs nuits
         run: python3 sante.py plusieurs-nuits
+      - name: Un test automatique a échoué (le site a quand même été mis à jour)
+        if: needs.calculer.outputs.tests == 'failure'
+        run: |
+          echo "::error::Un test automatique a échoué : le site a été mis à jour, mais une partie du code est à vérifier (étape « Vérifier les calculs » du calcul)."
+          exit 1

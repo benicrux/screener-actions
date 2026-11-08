@@ -4,7 +4,13 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+import sante  # noqa: E402
 from sante import problemes  # noqa: E402
+
+# Les contrôles des témoins dépendent de la date du jour : testés à part (test_temoin), avec
+# des dates fixées. Ailleurs, on les neutralise pour que ces tests ne vieillissent pas.
+VRAI_TEMOIN, VRAI_LARGE = sante.temoin_en_panne, sante.temoin_large_en_panne
+sante.temoin_en_panne = sante.temoin_large_en_panne = lambda *a, **k: []
 
 NORMAL = {"cours_du_jour": 26_300, "notees": 24_000, "anomalies": {"graves": 400},
           "nuits_difficiles": 0}
@@ -78,7 +84,7 @@ def test_cinq_ans():
 
 def test_temoin():
     import datetime as dt
-    from sante import temoin_en_panne
+    temoin_en_panne = VRAI_TEMOIN
     avant = dt.date(2026, 11, 3)
     assert temoin_en_panne(None, avant) == []                       # pas encore constitué : normal
     jour = dt.date(2026, 12, 1)
@@ -87,7 +93,7 @@ def test_temoin():
     assert temoin_en_panne(ok, jour) == []
     vieux = {"maj": "2026-11-20", "portefeuilles": [{}]}
     assert len(temoin_en_panne(vieux, jour)) == 1                    # plus suivi depuis 11 jours
-    from sante import temoin_large_en_panne
+    temoin_large_en_panne = VRAI_LARGE
     assert temoin_large_en_panne(None, dt.date(2026, 11, 10)) == []  # pas encore constitué
     assert len(temoin_large_en_panne(None, jour)) == 1
     assert temoin_large_en_panne({"maj": "2026-11-29"}, jour) == []
