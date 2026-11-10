@@ -35,6 +35,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           ref: main
+
       - id: verif
         name: Le passage du jour a-t-il déjà eu lieu ?
         run: |
@@ -137,9 +138,6 @@ jobs:
         env:
           JETON: ${{ github.token }}
         run: |
-          # Une photo par mois de ce que le site montrait (notes, chiffres, listes de l'accueil) :
-          # Yahoo ne garde pas l'historique des prévisions, ces photos permettront un jour de
-          # tester la note complète. Gardées sur une branche à part, hors du site.
           mois=$(date -u +%Y-%m)
           depot="https://x-access-token:${JETON}@github.com/${GITHUB_REPOSITORY}.git"
           tmp=$(mktemp -d)
@@ -168,8 +166,6 @@ jobs:
         run: |
           git config user.name "screener-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Données détaillées : la branche « donnees » est remplacée à chaque fois,
-          # pour ne pas alourdir le dépôt d'un historique inutile
           if [ -s data/donnees.csv ]; then
             tmp=$(mktemp -d)
             cp data/donnees.csv "$tmp/"
@@ -190,17 +186,16 @@ jobs:
             git push -q
           fi
 
-      - uses: actions/configure-pages@v6
+      - uses: actions/configure-pages@v5
 
-      - uses: actions/upload-pages-artifact@v5
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: site
 
   publier:
-    # GitHub Pages répond parfois par une erreur passagère (502) : jusqu'à trois essais,
-    # à 2 puis 5 minutes d'intervalle, avant de signaler un échec
     needs: calculer
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     environment:
       name: github-pages
       url: ${{ steps.essai3.outputs.page_url || steps.essai2.outputs.page_url || steps.essai1.outputs.page_url }}
@@ -208,33 +203,44 @@ jobs:
       - id: essai1
         name: Publier le site
         continue-on-error: true
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@v4
+        with:
+          timeout: 180000
+
       - name: Patienter 2 minutes (erreur passagère de GitHub Pages)
         if: steps.essai1.outcome == 'failure'
         run: sleep 120
+
       - id: essai2
         name: Publier le site (deuxième essai)
         if: steps.essai1.outcome == 'failure'
         continue-on-error: true
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@v4
+        with:
+          timeout: 180000
+
       - name: Patienter 5 minutes
         if: steps.essai1.outcome == 'failure' && steps.essai2.outcome == 'failure'
         run: sleep 300
+
       - id: essai3
         name: Publier le site (dernier essai)
         if: steps.essai1.outcome == 'failure' && steps.essai2.outcome == 'failure'
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@v4
+        with:
+          timeout: 180000
 
   surveiller:
-    # Alerte par e-mail (le lancement échoue) si Yahoo bloque depuis plusieurs nuits
     needs: [calculer, publier]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
         with:
           ref: main
+
       - name: Contrôle de santé sur plusieurs nuits
         run: python3 sante.py plusieurs-nuits
+
       - name: Un test automatique a échoué (le site a quand même été mis à jour)
         if: needs.calculer.outputs.tests == 'failure'
         run: |
