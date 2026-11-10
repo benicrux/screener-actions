@@ -8,7 +8,7 @@ symbole,nom,pays,anomalie_grave,anomalies
 023440.KQ,"Jeil Steel Mfg Co., Ltd.",Corée du Sud,True,pas de cotation depuis le 23/03/2026
 025870.KQ,"Silla Sg Co., Ltd.",Corée du Sud,True,pas de cotation depuis le 14/09/2026
 0274.HK,Renaissance Asia Silk Road Group Limited,Hong Kong,True,pas de cotation depuis le 30/06/2025
-027830.KQ,"Daesung Private Equity, Inc.",Corée du Sud,True,pas de cotation depuis le 16/10/2026
+027830.KQ,"Daesung Private Equity, Inc.",Corée du Sud,True,cours en dehors de sa fourchette sur un an
 028080.KQ,"Humax Holdings Co., Ltd.",Corée du Sud,True,pas de cotation depuis le 28/09/2026
 035620.KQ,Barunson Entertainment & Arts Corporation,Corée du Sud,True,pas de cotation depuis le 22/10/2026
 036690.KQ,"COMMAX Co.,Ltd",Corée du Sud,True,cours manquant ; pas de cotation depuis le 29/10/2025
@@ -17,7 +17,6 @@ symbole,nom,pays,anomalie_grave,anomalies
 0612.HK,Carmen Century Investment Limited,Hong Kong,True,pas de cotation depuis le 27/06/2025
 065570.KQ,"SAMYUNG ENC Co., Ltd.",Corée du Sud,True,pas de cotation depuis le 11/02/2025
 066790.KQ,"Korea Cable T.V Chung-Buk System Co., Ltd.",Corée du Sud,True,pas de cotation depuis le 20/06/2025
-0676.HK,Pegasus International Holdings Limited,Hong Kong,True,pas de cotation depuis le 22/10/2026
 068240.KQ,"Dawonsys Co.,Ltd.",Corée du Sud,True,pas de cotation depuis le 16/03/2026
 0769.HK,China Rare Earth Holdings Limited,Chine,True,pas de cotation depuis le 18/06/2025
 079970.KQ,"TOBESOFT Co., Ltd.",Corée du Sud,True,pas de cotation depuis le 21/03/2025
@@ -39,11 +38,10 @@ symbole,nom,pays,anomalie_grave,anomalies
 1188.HK,Hybrid Kinetic Group Limited,Hong Kong,True,pas de cotation depuis le 31/03/2025
 1231.HK,Newton Resources Ltd,Hong Kong,True,pas de cotation depuis le 08/10/2026
 1252.HK,China Tianrui Group Cement Company Limited,Chine,True,pas de cotation depuis le 20/03/2026
-1377.HK,"Guangdong Dtech Technology Co., Ltd.",Chine,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,3 contre 13,3 chez Yahoo (erreur de devise probable)"
+1377.HK,"Guangdong Dtech Technology Co., Ltd.",Chine,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,4 contre 13,3 chez Yahoo (erreur de devise probable)"
 1448.HK,Fu Shou Yuan International Group Limited,Chine,True,pas de cotation depuis le 19/03/2026
 1583.HK,Qinqin Foodstuffs Group (Cayman) Company Limited,Chine,True,pas de cotation depuis le 16/10/2026
 1668.HK,China South City Holdings Limited,Hong Kong,True,pas de cotation depuis le 11/08/2025
-1693.HK,BGMC International Ltd.,Malaisie,True,pas de cotation depuis le 13/10/2026
 1748.HK,Xin Yuan Enterprises Group Limited,Chine,True,pas de cotation depuis le 20/02/2025
 1755.HK,"S-Enjoy Service Group Co., Limited",Chine,True,pas de cotation depuis le 31/03/2025
 1831.HK,ShiFang Holding Limited,Chine,True,pas de cotation depuis le 24/08/2026
@@ -55,8 +53,8 @@ symbole,nom,pays,anomalie_grave,anomalies
 2252.HK,"Shanghai MicroPort MedBot (Group) Co., Ltd.",Chine,True,pas de cotation depuis le 31/08/2026
 225430.KQ,"KMPHARMACEUTICAL Co.,Ltd.",Corée du Sud,True,pas de cotation depuis le 14/09/2026
 2262.HK,Steve Leung Design Group Limited,Hong Kong,True,pas de cotation depuis le 20/10/2026
-2289.HK,"Charmacy Pharmaceutical Co., Ltd.",Chine,True,pas de cotation depuis le 23/10/2026
 234920.KQ,"Zaigle Co., Ltd.",Corée du Sud,True,pas de cotation depuis le 29/10/2025
+2361.HK,Sinohealth Technology Holdings Limited,Chine,True,cours en dehors de sa fourchette sur un an
 246720.KQ,ASTA Corporation,Corée du Sud,True,pas de cotation depuis le 24/03/2026
 2479.HK,"Tianju Dihe (Suzhou) Data Co., Ltd.",Chine,True,pas de cotation depuis le 31/03/2025
 2496.HK,Wuhan YZY Biopharma Co Ltd,Chine,True,pas de cotation depuis le 20/10/2026
@@ -67,6 +65,7 @@ symbole,nom,pays,anomalie_grave,anomalies
 2627.HK,Ab&B Bio-Tech Co. Ltd. JS,Chine,True,cours manquant
 2629.HK,Mirxes Holding Company Limited,Singapour,True,pas de cotation depuis le 31/03/2026
 263050.KQ,"Eutilex.Co.,Ltd.",Corée du Sud,True,pas de cotation depuis le 06/02/2026
+267850.KS,"Asiana IDT, Inc.",Corée du Sud,True,cours en dehors de sa fourchette sur un an
 2898.HK,"Sunho Biologics, Inc.",Chine,True,pas de cotation depuis le 06/03/2026
 2JI.F,"Bank of Jinzhou Co., Ltd.",Chine,True,cours manquant
 308100.KQ,"Hyungji Global Co., Ltd.",Corée du Sud,True,pas de cotation depuis le 22/10/2026
@@ -119,7 +118,7 @@ BBFI11B.SA,BB Fundo De Investimento Imobiliario Progressivo,Brésil,True,cours m
 BBHK.F,Deutsche Balaton Aktiengesellschaft,Allemagne,True,cours manquant
 BBNI.JK,PT Bank Negara Indonesia (Persero) Tbk,Indonésie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 2,4 chez Yahoo (erreur de devise probable)"
 BCFF11.SA,Fundo De Investimento Imobiliario - FII BTG Pactual Fundo De Fundos,Brésil,True,cours manquant
-BCIC.JK,PT Bank JTrust Indonesia Tbk,Indonésie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 2,1 chez Yahoo (erreur de devise probable)"
+BCIC.JK,PT Bank JTrust Indonesia Tbk,Indonésie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 2,2 chez Yahoo (erreur de devise probable)"
 BDMN.JK,PT Bank Danamon Indonesia Tbk,Indonésie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 2,3 chez Yahoo (erreur de devise probable)"
 BEKS.JK,"PT. Bank Pembangunan Daerah Banten, Tbk",Indonésie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,1 contre 3,3 chez Yahoo (erreur de devise probable)"
 BEVIDESB.MX,"Farmacias Benavides, S.A.B. de C.V.",Mexique,True,pas de cotation depuis le 22/07/2026
@@ -130,7 +129,7 @@ BKSL.JK,PT Sentul City Tbk,Indonésie,True,"capitalisation incohérente avec le 
 BMG173841013.SW,BW LPG Limited,Bermudes,True,cours manquant
 BNBR.JK,PT Bakrie & Brothers Tbk,Indonésie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 2,0 chez Yahoo (erreur de devise probable)"
 BNGA.JK,PT Bank CIMB Niaga Tbk Class A,Indonésie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 2,2 chez Yahoo (erreur de devise probable)"
-BNII.JK,PT Bank Maybank Indonesia Tbk,Indonésie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 1,5 chez Yahoo (erreur de devise probable)"
+BNII.JK,PT Bank Maybank Indonesia Tbk,Indonésie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 1,4 chez Yahoo (erreur de devise probable)"
 BNLI.JK,PT Bank Permata Tbk,Indonésie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 4,7 chez Yahoo (erreur de devise probable)"
 BOLSASTGO.SN,"Bolsa de Comercio de Santiago, Bolsa de Valores",Chili,True,pas de cotation depuis le 23/07/2024
 BRC.V,Blackrock Silver Corp.,Canada,True,pas de cotation depuis le 14/10/2026
@@ -168,15 +167,16 @@ DHT-UN.TO,DRI Healthcare Trust,Canada,True,capitalisation incohérente avec le c
 DINEA.MX,"DINE, S.A.B. de C.V.",Mexique,True,pas de cotation depuis le 20/10/2026
 DOHL3.SA,Dohler S.A.,Brésil,True,pas de cotation depuis le 23/10/2026
 DPEL.NS,Divine Power Energy Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
+DTT0.F,Datatec,Afrique du Sud,True,cours en dehors de sa fourchette sur un an
 DUNCANFOX.SN,Duncan Fox S.A.,Chili,True,pas de cotation depuis le 24/09/2026
 ECR.MC,"Ercros, S.A.",Espagne,True,pas de cotation depuis le 10/09/2026
 EDNR.MI,Edison S.p.A.,Italie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 0,5 chez Yahoo (erreur de devise probable)"
 EFFWA.NS,Effwa Infra & Research Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
 ELME,Elme Communities,États-Unis,True,pas de cotation depuis le 22/10/2026
-ELTY.JK,PT Bakrieland Development Tbk,Indonésie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 0,5 chez Yahoo (erreur de devise probable)"
+ELTY.JK,PT Bakrieland Development Tbk,Indonésie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 0,6 chez Yahoo (erreur de devise probable)"
 ELUX-A.ST,AB Electrolux (publ),Suède,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 0,2 chez Yahoo (erreur de devise probable)"
 EMAE4.SA,Empresa Metropolitana de Aguas e Energia S.A.,Brésil,True,cours manquant ; pas de cotation depuis le 23/10/2026
-EMH.JO,eMedia Holdings Limited,Afrique du Sud,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 0,5 chez Yahoo (erreur de devise probable)"
+EMH.JO,eMedia Holdings Limited,Afrique du Sud,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 0,4 chez Yahoo (erreur de devise probable)"
 ENELDXCH.SN,Enel Distribucion Chile S.A.,Chili,True,pas de cotation depuis le 31/08/2026
 ENG.WA,Energa S.A.,Pologne,True,pas de cotation depuis le 29/09/2026
 ENRGA.PR,"ENERGOAQUA, a.s.",Tchéquie,True,pas de cotation depuis le 16/10/2026
@@ -207,9 +207,7 @@ GHH.L,Gooch & Housego PLC,Royaume-Uni,True,pas de cotation depuis le 15/10/2026
 GIB.F,GSW Immobilien AG,Allemagne,True,cours manquant
 GIGANTE.MX,"Grupo Gigante, S. A. B. de C. V.",Mexique,True,pas de cotation depuis le 20/10/2026
 GMD.MX,"Grupo Mexicano de Desarrollo, S.A.B.",Mexique,True,pas de cotation depuis le 22/10/2026
-GNP.MX,"Grupo Nacional Provincial, S.A.B.",Mexique,True,pas de cotation depuis le 22/09/2026
 GOLF.SN,Sociedad Anonima de Deportes Club de Golf Santiago,Chili,True,pas de cotation depuis le 15/09/2026
-GPAR3.SA,Companhia CELG de Participacoes S/A,Brésil,True,pas de cotation depuis le 09/10/2026
 GPH1.MX,"Grupo Palacio de Hierro, S.A.B. de C.V.",Mexique,True,pas de cotation depuis le 07/08/2025
 GPROFUT.MX,"Grupo Profuturo, S.A.B. de C.V.",Mexique,True,pas de cotation depuis le 21/10/2026
 GR0A.F,Enlightify Inc.,Chine,True,pas de cotation depuis le 13/10/2025
@@ -290,7 +288,6 @@ PAC.L,Pacific Assets Trust,Mexique,True,pas de cotation depuis le 16/09/2026
 PAR.AX,Paradigm Biopharmaceuticals Limited,Australie,True,pas de cotation depuis le 18/09/2026
 PCCL.NS,Petro Carbon & Chemicals Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
 PCOK,"Pacific Oak Strategic Opportunity REIT, Inc.",États-Unis,True,pas de cotation depuis le 04/05/2026
-PENN.MX,"Penn National Gaming, Inc.",États-Unis,True,pas de cotation depuis le 01/07/2026
 PERF,Perfect Corp.,Grèce,True,pas de cotation depuis le 22/10/2026
 PF.BK,Property Perfect Public Company Limited,Thaïlande,True,pas de cotation depuis le 14/08/2026
 PFSE.DE,PFISTERER Holding SE,Allemagne,True,pas de cotation depuis le 07/10/2026
@@ -311,7 +308,6 @@ RBRF11.SA,Fundo Investimento Imobiliario Rbr Alpha Fundos De Fundos,Brésil,True
 REMUS.NS,Remus Pharmaceuticals Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
 RH.MX,RH,États-Unis,True,pas de cotation depuis le 01/10/2026
 ROH-R.BK,Royal Orchid Hotel (Thailand) Public Company Limited,Thaïlande,True,pas de cotation depuis le 04/06/2025
-RPAD3.SA,Alfa Holdings S.A.,Brésil,True,pas de cotation depuis le 09/10/2026
 SAAKSHI.NS,Saakshi Medtech & Panels Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
 SAB1L.VS,AB Siauliu Bankas,Lituanie,True,cours manquant
 SACI.PA,Fiducial Office Solutions,France,True,pas de cotation depuis le 21/10/2026
@@ -323,7 +319,6 @@ SDR.L,Schroders plc,Royaume-Uni,True,pas de cotation depuis le 01/10/2026
 SEB-C.ST,Skandinaviska Enskilda Banken AB Class C,Suède,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,1 contre 5,9 chez Yahoo (erreur de devise probable)"
 SEQUA.BR,Sequana Medical NV,Belgique,True,pas de cotation depuis le 28/04/2026
 SGR-U.TO,Slate Grocery REIT,Canada,True,capitalisation incohérente avec le cours et le nombre d'actions
-SIFG.AS,Sif Holding N.V.,Pays-Bas,True,cours en dehors de sa fourchette sur un an
 SIPD.JK,PT Sreeya Sewu Indonesia Tbk,Indonésie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 0,2 chez Yahoo (erreur de devise probable)"
 SLE.L,San Leon Energy plc,Irlande,True,cours manquant
 SLMNP,LyondellBasell Advanced Polymers Inc.,États-Unis,True,pas de cotation depuis le 05/02/2026
@@ -331,6 +326,7 @@ SMCB.JK,PT Solusi Bangun Indonesia Tbk,Indonésie,True,pas de cotation depuis le
 SMMA.JK,PT Sinar Mas Multiartha Tbk,Indonésie,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,1 contre 3,9 chez Yahoo (erreur de devise probable)"
 SNR.L,Senior Plc,Royaume-Uni,True,pas de cotation depuis le 07/10/2026
 SO7.F,Nan Hai Corporation Limited,Chine,True,cours manquant
+SOC,Sable Offshore Corp.,Royaume-Uni,True,"cours en dehors de sa fourchette sur un an ; capitalisation / chiffre d'affaires de 1,2 contre 2,7 chez Yahoo (erreur de devise probable)"
 SUPR.JK,PT Solusi Tunas Pratama Tbk,Indonésie,True,pas de cotation depuis le 14/04/2025
 SWIOU,"Southwest Iowa Renewable Energy, LLC",États-Unis,True,pas de cotation depuis le 03/01/2025
 TAC.NS,TAC Infosec Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
@@ -338,7 +334,6 @@ TAPAC-R.BK,Tapaco Public Company Limited,Thaïlande,True,pas de cotation depuis 
 TECK-A.TO,Teck Resources Ltd,Canada,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 2,8 chez Yahoo (erreur de devise probable)"
 TEL2-A.ST,Tele2 AB (publ),Suède,True,"capitalisation incohérente avec le cours et le nombre d'actions ; capitalisation / chiffre d'affaires de 0,0 contre 3,7 chez Yahoo (erreur de devise probable)"
 TENERGY.AT,Terna Energy Societe Anonyme Commercial Technical Company,Grèce,True,cours manquant
-TFCO.JK,PT Tifico Fiber Indonesia Tbk,Indonésie,True,pas de cotation depuis le 15/10/2026
 TMI.L,Taylor Maritime Investments Limited,Guernesey,True,capitalisation incohérente avec le cours et le nombre d'actions
 TPRP,Tower Properties Company,États-Unis,True,pas de cotation depuis le 07/10/2026
 TPX-A.TO,Molson Coors Canada Inc.,Canada,True,"capitalisation incohérente avec le cours et le nombre d'actions ; pas de cotation depuis le 29/09/2026 ; capitalisation / chiffre d'affaires de 0,1 contre 5,4 chez Yahoo (erreur de devise probable)"
@@ -354,6 +349,7 @@ VILAS.NS,Vilas Transcore Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
 VINSYS.NS,Vinsys IT Services India Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
 VINYAS.NS,Vinyas Innovative Technologies Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
 VIS.AT,VIS Containers Manufacturing Co. Ltd,Grèce,True,cours manquant
+VISN,Vistance Networks Inc.,États-Unis,True,cours en dehors de sa fourchette sur un an
 VLTFF,Volta Finance Limited,États-Unis,True,pas de cotation depuis le 06/04/2026
 VMARCIND.NS,V-Marc India Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
 VOLCAN.SN,Compania Industrial El Volcan S.A.,Chili,True,pas de cotation depuis le 13/03/2026
@@ -372,19 +368,20 @@ YSIL.MC,"Silicius Real Estate SOCIMI, S.A.",Espagne,True,pas de cotation depuis 
 YVRS.MC,"Elix Vintage Residencial SOCIMI, S.A.",Espagne,True,cours manquant
 YZBL.MC,"Zambal Spain Socimi, S.A.",Espagne,True,pas de cotation depuis le 14/10/2026
 ZTECH.NS,Z-Tech (India) Ltd.,Inde,True,pas de cotation depuis le 23/07/2024
+ZURA,Zura Bio Limited,États-Unis,True,cours en dehors de sa fourchette sur un an
 ZVLO,"zvelo, Inc.",États-Unis,True,pas de cotation depuis le 13/10/2026
 0138.KL,Zetrix AI Berhad,Malaisie,False,rendement de 48 % jugé exceptionnel
 035810.KQ,"EASY HOLDINGS Co., Ltd.",Corée du Sud,False,rendement de 33 % jugé exceptionnel
 036000.KQ,"YeaRimDang Publishing Co., Ltd.",Corée du Sud,False,rendement de 25 % jugé exceptionnel
 0382.HK,Edvantage Group Holdings Limited,Chine,False,rendement de 38 % jugé exceptionnel
 1114.HK,Brilliance China Automotive Holdings Limited,Hong Kong,False,rendement de 28 % jugé exceptionnel
-2020.OL,2020 Bulkers Ltd.,Bermudes,False,rendement de 140 % jugé exceptionnel
+2020.OL,2020 Bulkers Ltd.,Bermudes,False,rendement de 138 % jugé exceptionnel
 2139.HK,"Bank of Gansu Co., Ltd.",Chine,False,rendement de 56 % jugé exceptionnel
 2559.HK,Dida Inc.,Chine,False,rendement de 115 % jugé exceptionnel
 285490.KQ,"NOVATECH Co., Ltd.",Corée du Sud,False,rendement de 28 % jugé exceptionnel
 338100.KS,"NH Prime REIT Co., Ltd.",Corée du Sud,False,rendement de 47 % jugé exceptionnel
 3389.HK,Hengdeli Holdings Limited,Hong Kong,False,rendement de 328 % jugé exceptionnel
-6123.TWO,GrandTech C.G. Systems Inc.,Taïwan,False,rendement de 26 % jugé exceptionnel
+6123.TWO,GrandTech C.G. Systems Inc.,Taïwan,False,rendement de 25 % jugé exceptionnel
 ARI,"Apollo Commercial Real Estate Finance, Inc.",États-Unis,False,rendement de 43 % jugé exceptionnel
 ARYT.TA,Aryt Industries,Israël,False,rendement de 32 % jugé exceptionnel
 ASLI.L,abrdn European Logistics Income PLC,Royaume-Uni,False,rendement de 50 % jugé exceptionnel
@@ -400,7 +397,7 @@ EVEN3.SA,Even Construtora e Incorporadora S.A.,Brésil,False,rendement de 26 % j
 FIBRAUP18.MX,"Upsite Mexico, S.A.P.I. de C.V.",Mexique,False,rendement de 60 % jugé exceptionnel
 GBAN.BA,"Naturgy BAN, S.A.",Argentine,False,rendement de 40 % jugé exceptionnel
 GRND3.SA,Grendene S.A.,Brésil,False,rendement de 34 % jugé exceptionnel
-GSF.OL,Grieg Seafood ASA,Norvège,False,rendement de 159 % jugé exceptionnel
+GSF.OL,Grieg Seafood ASA,Norvège,False,rendement de 158 % jugé exceptionnel
 HBRE3.SA,HBR Realty Empreendimentos Imobiliarios S.A.,Brésil,False,rendement de 107 % jugé exceptionnel
 IEP,Icahn Enterprises L.P.,États-Unis,False,rendement de 42 % jugé exceptionnel
 IVR,Invesco Mortgage Capital Inc.,États-Unis,False,rendement de 27 % jugé exceptionnel
@@ -412,7 +409,7 @@ MDNE3.SA,Moura Dubeux Engenharia S.A.,Brésil,False,rendement de 26 % jugé exce
 MPCES.OL,MPC Energy Solutions NV,Pays-Bas,False,rendement de 802 % jugé exceptionnel
 OXSQ,Oxford Square Capital Corp.,États-Unis,False,rendement de 48 % jugé exceptionnel
 PNNT,PennantPark Investment Corporat,États-Unis,False,rendement de 29 % jugé exceptionnel
-PNOR.OL,PetroNor E&P Limited,Royaume-Uni,False,rendement de 29 % jugé exceptionnel
+PNOR.OL,PetroNor E&P Limited,Royaume-Uni,False,rendement de 30 % jugé exceptionnel
 POMO3.SA,Marcopolo S.A.,Brésil,False,rendement de 27 % jugé exceptionnel
 PSEC,Prospect Capital Corporation,États-Unis,False,rendement de 30 % jugé exceptionnel
 PTBL.TA,Property & Building Corp. Ltd.,Israël,False,rendement de 26 % jugé exceptionnel
@@ -421,11 +418,10 @@ SCAR3.SA,Sao Carlos Empreendimentos e Participacoes S.A.,Brésil,False,rendement
 STX.WA,Stalexport Autostrady S.A.,Pologne,False,rendement de 37 % jugé exceptionnel
 T14.SI,Tianjin Zhong Xin Pharmaceutical Group Corporation Limited,Chine,False,rendement de 27 % jugé exceptionnel
 TOEN.TA,Tomer Energy Royalties (2012) Ltd.,Israël,False,rendement de 39 % jugé exceptionnel
-TOUR,Tuniu Corporation,Chine,False,rendement de 26 % jugé exceptionnel
-TPVG,TriplePoint Venture Growth BDC Corp.,États-Unis,False,rendement de 30 % jugé exceptionnel
+TPVG,TriplePoint Venture Growth BDC Corp.,États-Unis,False,rendement de 31 % jugé exceptionnel
 TRAN.BA,Compania de Transporte de Energia Electrica en Alta Tension Transener S.A.,Argentine,False,rendement de 29 % jugé exceptionnel
-TSQ,"Townsquare Media, Inc.",États-Unis,False,rendement de 43 % jugé exceptionnel
-VITROA.MX,"Vitro, S.A.B. de C.V.",Mexique,False,rendement de 693 % jugé exceptionnel
+TSQ,"Townsquare Media, Inc.",États-Unis,False,rendement de 46 % jugé exceptionnel
+VITROA.MX,"Vitro, S.A.B. de C.V.",Mexique,False,rendement de 672 % jugé exceptionnel
 VULC3.SA,Vulcabras Azaleia S.A.,Brésil,False,rendement de 64 % jugé exceptionnel
 WFCNP,Wells Fargo & Company PFD DIV EQUALIZ,États-Unis,False,rendement de 56 % jugé exceptionnel
 YHTI.MC,Hotei Properties Group Socimi S.A.,Espagne,False,rendement de 42 % jugé exceptionnel
