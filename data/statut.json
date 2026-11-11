@@ -1,26 +1,26 @@
 {
- "date": "2026-11-10 14:18 UTC",
+ "date": "2026-11-11 11:13 UTC",
  "univers": 26465,
- "avec_donnees": 26052,
- "notees": 24052,
+ "avec_donnees": 26054,
+ "notees": 24010,
  "jamais_lues": 0,
  "introuvables": 224,
  "illisibles": 1,
- "vehicules_ecartes": 188,
+ "vehicules_ecartes": 186,
  "anomalies": {
-  "graves": 364,
-  "legeres": 55
+  "graves": 367,
+  "legeres": 54
  },
  "jours_restants": 0,
  "cours_du_jour": 26259,
  "collecte": {
-  "lues": 11985,
+  "lues": 11988,
   "introuvables": 0,
   "erreurs": 0,
-  "blocages": 15,
+  "blocages": 12,
   "arret": null,
   "detail_erreurs": {},
-  "minutes": 25.8
+  "minutes": 22.5
  },
  "poids": {
   "valorisation": 30,
@@ -31,8 +31,8 @@
   "publication": 10,
   "visibilite": 5
  },
- "usd_par_eur": 1.1193194537721065,
+ "usd_par_eur": 1.1142061281337048,
  "depot": "benicrux/screener-actions",
- "passage_complet": "2026-11-10",
+ "passage_complet": "2026-11-11",
  "nuits_difficiles": 0
 }
