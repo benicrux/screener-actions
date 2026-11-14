@@ -82,7 +82,6 @@
       <a href="tableau.html">Screener</a>
       <a href="retro.html" aria-current="page">Tests</a>
       <a href="integrite.html">Intégrité</a>
-      <button type="button" id="btn-aide">Aide</button>
     </nav>
   </header>
   <h1>Tests</h1>
@@ -191,14 +190,14 @@ const VERSION = "__VERSION__";
 const F0 = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 0 });
 const F1 = new Intl.NumberFormat("fr-FR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 const F2 = new Intl.NumberFormat("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-const pct = (v, signe = true) => v == null ? "—" : (signe && v > 0 ? "+" : "") + F1.format(v * 100) + " %";
-const part = (v) => v == null ? "—" : F1.format(v * 100) + " %";
+const pct = (v, signe = true) => v == null ? "—" : (signe && v > 0 ? "+" : "") + F1.format(v * 100) + " %";
+const part = (v) => v == null ? "—" : F1.format(v * 100) + " %";
 const date = (iso) => new Date(iso + "T12:00:00").toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
 const jour = (iso) => new Date(iso + "T12:00:00").toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }).replace(/^1 /, "1er ");
 const echapper = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const NOMS_TRANCHES = ["Les 20 % les moins bien notées", "Suivantes", "Milieu", "Suivantes", "Les 20 % les mieux notées"];
+const NOMS_TRANCHES = ["Les 20 % les moins bien notées", "Suivantes", "Milieu", "Suivantes", "Les 20 % les mieux notées"];
 const CRITERES = { valorisation: "Valorisation", croissance: "Croissance", rentabilite: "Rentabilité", situation_fi: "Situation financière" };
-const GROUPES = { toutes: "Toutes les sociétés", mieux_notees: "Les 20 % les mieux notées", radar: "Radar des pépites", rallye: "Rallye 5 ans" };
+const GROUPES = { toutes: "Toutes les sociétés", mieux_notees: "Les 20 % les mieux notées", radar: "Radar des pépites", rallye: "Rallye 5 ans" };
 
 function barres(el, tranches) {
   const vals = tranches.map((t) => t.perf_mediane);
@@ -218,7 +217,7 @@ function barres(el, tranches) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Portefeuille témoin                                                 */
+/* Portefeuille témoin                                                */
 /* ------------------------------------------------------------------ */
 const COULEURS = { radar: "var(--accent)", rallye: "var(--or-bord)", indice: "var(--encre-2)" };
 
@@ -288,7 +287,7 @@ fetch(`data/temoin.json?v=${VERSION}`).then((r) => { if (!r.ok) throw 0; return 
 });
 
 /* ------------------------------------------------------------------ */
-/* Témoin large                                                        */
+/* Témoin large                                                       */
 /* ------------------------------------------------------------------ */
 fetch(`data/temoin_large.json?v=${VERSION}`).then((r) => { if (!r.ok) throw 0; return r.json(); }).then((t) => {
   const groupes = (t.cohortes || []).filter((c) => c.suivi && c.suivi.length);
@@ -314,7 +313,7 @@ fetch(`data/temoin_large.json?v=${VERSION}`).then((r) => { if (!r.ok) throw 0; r
 });
 
 /* ------------------------------------------------------------------ */
-/* Test mondial à 12 mois                                              */
+/* Test mondial à 12 mois                                             */
 /* ------------------------------------------------------------------ */
 fetch(`data/retro_resultats.json?v=${VERSION}`).then((r) => r.json()).then((r) => {
   const dates = r.dates.map(date);
@@ -324,7 +323,7 @@ fetch(`data/retro_resultats.json?v=${VERSION}`).then((r) => r.json()).then((r) =
   const ecart = t[4].perf_mediane - t[0].perf_mediane;
   const debut = ecart >= 0.02 ? "Oui, nettement mais modestement." : ecart > 0 ? "Un peu seulement." : "Non, pas sur cette période.";
   document.getElementById("verdict").textContent =
-    `${debut} Les 20 % les mieux notées ont gagné ${pct(t[4].perf_mediane)} en médiane, contre ${pct(t[0].perf_mediane)} pour les 20 % les moins bien notées, soit ${F1.format(ecart * 100)} points d'écart par an. ${F0.format(t[4].part_bat_mediane * 100)} % des mieux notées ont fait mieux que l'action médiane du marché, contre ${F0.format(t[0].part_bat_mediane * 100)} % des moins bien notées.`;
+    `${debut} Les 20 % les mieux notées ont gagné ${pct(t[4].perf_mediane)} en médiane, contre ${pct(t[0].perf_mediane)} pour les 20 % les moins bien notées, soit ${F1.format(ecart * 100)} points d'écart par an. ${F0.format(t[4].part_bat_mediane * 100)} % des mieux notées ont fait mieux que l'action médiane du marché, contre ${F0.format(t[0].part_bat_mediane * 100)} % des moins bien notées.`;
   barres(document.getElementById("graphe-notes"), t);
 
   const L = r.listes || {};
@@ -353,7 +352,7 @@ fetch(`data/retro_resultats.json?v=${VERSION}`).then((r) => r.json()).then((r) =
   document.getElementById("tab-regions").innerHTML =
     `<tr><th>Région</th><th>Moins bien notées</th><th>Mieux notées</th><th>Mieux notées battant la médiane</th></tr>` +
     Object.entries(r.par_continent).map(([k, v]) =>
-      `<tr><td>${k}</td><td>${pct(v[0].perf_mediane)}</td><td>${pct(v[4].perf_mediane)}</td><td>${F0.format(v[4].part_bat_mediane * 100)} %</td></tr>`).join("");
+      `<tr><td>${k}</td><td>${pct(v[0].perf_mediane)}</td><td>${pct(v[4].perf_mediane)}</td><td>${F0.format(v[4].part_bat_mediane * 100)} %</td></tr>`).join("");
 
   document.getElementById("tab-dates").innerHTML =
     `<tr><th>Départ</th><th>Toutes</th><th>100 mieux notées</th></tr>` +
@@ -377,7 +376,7 @@ function cinqAns(c) {
   if (!ens || !ens.toutes || !ens.rallye) return;
   const d = c.dates || [];
   document.getElementById("cinq-intro").textContent =
-    `Aux États-Unis, on s'est replacé à ${d.length} dates d'achat, de ${date(d[0])} à ${date(d[d.length - 1])}, avec les seuls comptes publiés à chaque date, et on a regardé ce que chaque action valait 5 ans plus tard. Environ ${F0.format(ens.toutes.societes_par_date)} sociétés de plus de 100 M€ à chaque date.`;
+    `Aux États-Unis, on s'est replacé à ${d.length} dates d'achat, de ${date(d[0])} à ${date(d[d.length - 1])}, avec les seuls comptes publiés à chaque date, et on a regardé ce que chaque action valait 5 ans plus tard. Environ ${F0.format(ens.toutes.societes_par_date)} sociétés de plus de 100 M€ à chaque date.`;
   const y = ens.rallye, t = ens.toutes, r = ens.radar || {};
   let texte;
   if (y.part_x3 > t.part_x3) {
@@ -417,7 +416,7 @@ fetch(`data/retro_us_resultats.json?v=${VERSION}`).then((r) => r.json()).then((r
   document.getElementById("us-intro").textContent =
     `Même méthode sur ${F0.format(r.societes)} sociétés américaines, à ${r.dates.length} dates de ${date(r.dates[0])} à ${date(r.dates[r.dates.length - 1])}, avec les comptes déposés auprès de l'autorité boursière américaine (SEC) et leur vraie date de publication. La période couvre plusieurs marchés difficiles (2015-2016, fin 2018, 2020, 2022).`;
   document.getElementById("us-verdict").textContent =
-    `Les 20 % les mieux notées ont gagné ${pct(t[4].perf_mediane)} en médiane sur 12 mois, contre ${pct(t[0].perf_mediane)} pour les 20 % les moins bien notées. Elles ont fait mieux à ${e.dates_gagnantes} dates sur ${e.dates}.`;
+    `Les 20 % les mieux notées ont gagné ${pct(t[4].perf_mediane)} en médiane sur 12 mois, contre ${pct(t[0].perf_mediane)} pour les 20 % les moins bien notées. Elles ont fait mieux à ${e.dates_gagnantes} dates sur ${e.dates}.`;
   barres(document.getElementById("graphe-us"), t);
   document.getElementById("tab-us-periodes").innerHTML =
     `<tr><th>Période</th><th>Écart moyen</th><th>Dates gagnantes</th></tr>` +
@@ -438,7 +437,7 @@ fetch(`data/retro_historique.csv?v=${VERSION}`).then((r) => { if (!r.ok) throw 0
     `<tr><th>Test du</th><th>Zone</th><th>Écart</th><th>Mieux notées battant la médiane</th></tr>` +
     lignes.reverse().map((l) => `<tr><td>${new Date(l[col("date_test")] + "T12:00:00").toLocaleDateString("fr-FR")}</td>
       <td>${l[col("zone")]}</td><td>${pct(+l[col("ecart_mieux_moins_bien")])}</td>
-      <td>${F0.format(+l[col("part_mieux_notees_battant_mediane")] * 100)} %</td></tr>`).join("");
+      <td>${F0.format(+l[col("part_mieux_notees_battant_mediane")] * 100)} %</td></tr>`).join("");
   document.getElementById("bloc-historique").hidden = false;
 }).catch(() => {});
 </script>
