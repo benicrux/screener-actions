@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pépites — Intégrité des données</title>
+<meta name="description" content="État de santé, complétude et fraîcheur des sources de données du screener.">
+<meta name="theme-color" content="#12263a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=__VERSION__">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M9 4h14l7 9-14 16L2 13z' fill='%23c9962b'/%3E%3C/svg%3E">
+</head>
+<body class="accueil">
+<div class="acc-page">
+
+<header class="acc-entete">
+  <div class="marque">
+    <h1>Pépites</h1>
+    <p class="couverture">Intégrité, complétude &amp; fraîcheur</p>
+  </div>
+  <nav class="nav-pages" aria-label="Pages du site">
+    <a href="./">Accueil</a>
+    <a href="tableau.html">Screener</a>
+    <a href="retro.html">Tests</a>
+    <a href="integrite.html" aria-current="page">Intégrité</a>
+  </nav>
+</header>
+
+<div class="acc-grille">
+  <div class="acc-principal">
+    
+    <section class="acc-section">
+      <div class="acc-titre">
+        <h2>Diagnostic de complétude</h2>
+        <p>Vérification de la validité et de l'exhaustivité des données affichées</p>
+      </div>
+      <div class="carte" id="diagnostic-completude">
+        <p>Analyse en cours...</p>
+      </div>
+    </section>
+
+    <section class="acc-section">
+      <div class="acc-titre">
+        <h2>Statut général de la collecte</h2>
+        <p>Informations issues du dernier passage de nuit</p>
+      </div>
+      <div class="carte" id="statut-global">
+        <p>Chargement des statuts...</p>
+      </div>
+    </section>
+
+    <section class="acc-section">
+      <div class="acc-titre">
+        <h2>Anomalies et contrôles</h2>
+        <p>Vérifications automatiques de cohérence</p>
+      </div>
+      <div class="carte" id="statut-anomalies">
+        <p>Chargement des anomalies...</p>
+      </div>
+    </section>
+  </div>
+</div>
+
+</div>
+<script>
+async function charger() {
+  try {
+    const res = await fetch("data/statut.json");
+    if (!res.ok) throw new Error("Fichier statut.json introuvable");
+    const st = await res.json();
+    
+    // Calculs de complétude / fraîcheur
+    const tauxNotes = st.univers > 0 ? ((st.notees / st.univers) * 100).toFixed(1) : 0;
+    const tauxCollecte = st.univers > 0 ? (((st.univers - st.introuvables) / st.univers) * 100).toFixed(1) : 0;
+    const frais = st.nuits_difficiles === 0 && st.collecte && st.collecte.blocages === 0;
+
+    document.getElementById("diagnostic-completude").innerHTML = `
+      <ul style="line-height: 1.8;">
+        <li><strong>État global :</strong> <span style="color: ${frais ? 'green' : 'orange'}; font-weight: bold;">${frais ? '✔ Données fraîches et complètes' : '⚠️ Attention : passages difficiles ou blocages signalés'}</span></li>
+        <li><strong>Taux de couverture des notes :</strong> ${tauxNotes} % des actions de l'univers ont reçu leurs notes.</li>
+        <li><strong>Taux de succès de collecte Yahoo :</strong> ${tauxCollecte} % (${st.introuvables || 0} actions introuvables).</li>
+        <li><strong>Dernier passage complet :</strong> ${st.passage_complet || 'Inconnu'}</li>
+      </ul>
+    `;
+
+    document.getElementById("statut-global").innerHTML = `
+      <ul style="line-height: 1.8;">
+        <li><strong>Dernière mise à jour :</strong> ${st.date || 'Inconnue'}</li>
+        <li><strong>Univers total :</strong> ${st.univers} actions</li>
+        <li><strong>Actions avec données :</strong> ${st.avec_donnees}</li>
+        <li><strong>Actions notées :</strong> ${st.notees}</li>
+        <li><strong>Blocages de collecte :</strong> ${st.collecte ? st.collecte.blocages : 0}</li>
+        <li><strong>Taux de change (USD/EUR) :</strong> ${st.usd_par_eur ? st.usd_par_eur.toFixed(4) : 'N/A'}</li>
+      </ul>
+    `;
+
+    document.getElementById("statut-anomalies").innerHTML = `
+      <ul style="line-height: 1.8;">
+        <li><strong>Anomalies graves :</strong> ${st.anomalies ? st.anomalies.graves : 0}</li>
+        <li><strong>Anomalies légères :</strong> ${st.anomalies ? st.anomalies.legeres : 0}</li>
+        <li><strong>Véhicules écartés :</strong> ${st.vehicules_ecartes || 0}</li>
+      </ul>
+    `;
+  } catch (e) {
+    document.getElementById("diagnostic-completude").innerHTML = `<p style="color: red;">Impossible de vérifier la complétude : ${e.message}</p>`;
+    document.getElementById("statut-global").innerHTML = `<p style="color: red;">Données indisponibles.</p>`;
+    document.getElementById("statut-anomalies").innerHTML = `<p style="color: red;">Données indisponibles.</p>`;
+  }
+}
+charger();
+</script>
+</body>
+</html>
