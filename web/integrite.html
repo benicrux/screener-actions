@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Pépites — Intégrité des données</title>
-<meta name="description" content="État de santé, complétude et fraîcheur des sources de données du screener.">
+<meta name="description" content="État de santé, complétude et prompts d'assistance IA pour le screener.">
 <meta name="theme-color" content="#12263a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +18,7 @@
 <header class="acc-entete">
   <div class="marque">
     <h1>Pépites</h1>
-    <p class="couverture">Intégrité, complétude &amp; fraîcheur</p>
+    <p class="couverture">Intégrité &amp; Assistance IA</p>
   </div>
   <nav class="nav-pages" aria-label="Pages du site">
     <a href="./">Accueil</a>
@@ -43,6 +43,16 @@
 
     <section class="acc-section">
       <div class="acc-titre">
+        <h2>Prompts de correction IA</h2>
+        <p>En cas d'anomalie ou de problème, copie ce prompt pour l'envoyer à l'IA</p>
+      </div>
+      <div class="carte" id="section-prompts">
+        <p>Génération des prompts en cours...</p>
+      </div>
+    </section>
+
+    <section class="acc-section">
+      <div class="acc-titre">
         <h2>Statut général de la collecte</h2>
         <p>Informations issues du dernier passage de nuit</p>
       </div>
@@ -51,15 +61,6 @@
       </div>
     </section>
 
-    <section class="acc-section">
-      <div class="acc-titre">
-        <h2>Anomalies et contrôles</h2>
-        <p>Vérifications automatiques de cohérence</p>
-      </div>
-      <div class="carte" id="statut-anomalies">
-        <p>Chargement des anomalies...</p>
-      </div>
-    </section>
   </div>
 </div>
 
@@ -71,7 +72,6 @@ async function charger() {
     if (!res.ok) throw new Error("Fichier statut.json introuvable");
     const st = await res.json();
     
-    // Calculs de complétude / fraîcheur
     const tauxNotes = st.univers > 0 ? ((st.notees / st.univers) * 100).toFixed(1) : 0;
     const tauxCollecte = st.univers > 0 ? (((st.univers - st.introuvables) / st.univers) * 100).toFixed(1) : 0;
     const frais = st.nuits_difficiles === 0 && st.collecte && st.collecte.blocages === 0;
@@ -92,21 +92,34 @@ async function charger() {
         <li><strong>Actions avec données :</strong> ${st.avec_donnees}</li>
         <li><strong>Actions notées :</strong> ${st.notees}</li>
         <li><strong>Blocages de collecte :</strong> ${st.collecte ? st.collecte.blocages : 0}</li>
-        <li><strong>Taux de change (USD/EUR) :</strong> ${st.usd_par_eur ? st.usd_par_eur.toFixed(4) : 'N/A'}</li>
+        <li><strong>Anomalies graves :</strong> ${st.anomalies ? st.anomalies.graves : 0}</li>
       </ul>
     `;
 
-    document.getElementById("statut-anomalies").innerHTML = `
-      <ul style="line-height: 1.8;">
-        <li><strong>Anomalies graves :</strong> ${st.anomalies ? st.anomalies.graves : 0}</li>
-        <li><strong>Anomalies légères :</strong> ${st.anomalies ? st.anomalies.legeres : 0}</li>
-        <li><strong>Véhicules écartés :</strong> ${st.vehicules_ecartes || 0}</li>
-      </ul>
+    // Génération dynamique d'un prompt adapté à l'état actuel
+    let promptTexte = `Le screener d'actions présente les indicateurs suivants :\n` +
+      `- Univers : ${st.univers} actions\n` +
+      `- Introuvables : ${st.introuvables}\n` +
+      `- Blocages de collecte : ${st.collecte ? st.collecte.blocages : 0}\n` +
+      `- Anomalies graves : ${st.anomalies ? st.anomalies.graves : 0}\n\n` +
+      `Peux-tu analyser les scripts de collecte et de contrôle (collecte.py, controles.py, notes.py) pour identifier et corriger les anomalies ?`;
+
+    if (st.anomalies && st.anomalies.graves > 0) {
+      promptTexte = `Attention, le rapport signale ${st.anomalies.graves} anomalies graves. Peux-tu inspecter data/anomalies.csv et les scripts de contrôle pour diagnostiquer la cause exacte et proposer un correctif ?`;
+    } else if (st.collecte && st.collecte.blocages > 0) {
+      promptTexte = `La collecte Yahoo a rencontré ${st.collecte.blocages} blocages. Peux-tu analyser collecte.py pour renforcer la résilience du scraping ou ajuster les délais ?`;
+    }
+
+    document.getElementById("section-prompts").innerHTML = `
+      <p>Voici un prompt pré-rempli basé sur l'état actuel du système, prêt à être copié-collé à l'IA :</p>
+      <textarea readonly style="width: 100%; height: 120px; font-family: monospace; padding: 8px; margin-top: 8px; border-radius: 4px; border: 1px solid #ccc;">${promptTexte}</textarea>
+      <button onclick="navigator.clipboard.writeText(this.previousElementSibling.value); alert('Prompt copié dans le presse-papier !');" style="margin-top: 8px; padding: 6px 12px; background: #c9962b; color: white; border: none; border-radius: 4px; cursor: pointer;">Copier le prompt</button>
     `;
+
   } catch (e) {
-    document.getElementById("diagnostic-completude").innerHTML = `<p style="color: red;">Impossible de vérifier la complétude : ${e.message}</p>`;
+    document.getElementById("diagnostic-completude").innerHTML = `<p style="color: red;">Erreur : ${e.message}</p>`;
+    document.getElementById("section-prompts").innerHTML = `<p style="color: red;">Impossible de générer le prompt.</p>`;
     document.getElementById("statut-global").innerHTML = `<p style="color: red;">Données indisponibles.</p>`;
-    document.getElementById("statut-anomalies").innerHTML = `<p style="color: red;">Données indisponibles.</p>`;
   }
 }
 charger();
