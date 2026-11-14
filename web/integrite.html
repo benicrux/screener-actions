@@ -25,7 +25,6 @@
     <a href="tableau.html">Screener</a>
     <a href="retro.html">Tests</a>
     <a href="integrite.html" aria-current="page">Intégrité</a>
-    <button type="button" id="btn-aide">Aide</button>
   </nav>
 </header>
 
@@ -67,37 +66,6 @@
 
 </div>
 
-<!-- Dialogue d'aide (copié de tableau.html) -->
-<dialog id="aide" class="boite-aide">
-  <div class="aide-fond">
-    <header class="aide-tete">
-      <h2>Comment lire les notes</h2>
-      <button type="button" class="aide-fermer" id="aide-fermer" aria-label="Fermer">✕</button>
-    </header>
-    <div class="aide-corps">
-      <p>Chaque note est un classement de 1 à 100 au sein de son secteur géographique. Une note de 80 signifie que la société fait mieux que 80 % de ses concurrents sur ce critère.</p>
-      <h3>Notes fondamentales</h3>
-      <ul>
-        <li><b>Valorisation :</b> basée sur le VE/CA (ou PER et Actif Net pour la finance). Plus elle est élevée, plus la société est "bon marché" par rapport à son secteur.</li>
-        <li><b>Croissance :</b> historique et prévisions de chiffre d'affaires.</li>
-        <li><b>Rentabilité :</b> marges nettes et retour sur capitaux propres.</li>
-        <li><b>Situation fi. :</b> solidité du bilan (endettement vs cash).</li>
-      </ul>
-      <h3>Notes de dynamique</h3>
-      <ul>
-        <li><b>Révisions :</b> tendance des prévisions des analystes sur les bénéfices.</li>
-        <li><b>Publication :</b> capacité à battre les attentes lors des derniers résultats.</li>
-        <li><b>Visibilité :</b> accord entre les analystes (une note élevée = prévisions consensuelles).</li>
-      </ul>
-      <h3>Synthèses</h3>
-      <ul>
-        <li><b>Note Investisseur :</b> moyenne pondérée de tous les critères (long terme).</li>
-        <li><b>Note Trading :</b> moyenne simple de la valorisation, des révisions court terme et de la visibilité.</li>
-      </ul>
-    </div>
-  </div>
-</dialog>
-
 <script>
 async function charger() {
   try {
@@ -130,7 +98,6 @@ async function charger() {
       </ul>
     `;
 
-    // Génération dynamique d'un prompt adapté à l'état actuel
     let promptTexte = `Le screener d'actions présente les indicateurs suivants :\n` +
       `- Univers : ${st.univers} actions\n` +
       `- Introuvables : ${st.introuvables}\n` +
@@ -155,16 +122,6 @@ async function charger() {
     document.getElementById("section-prompts").innerHTML = `<p style="color: red;">Impossible de générer le prompt.</p>`;
     document.getElementById("statut-global").innerHTML = `<p style="color: red;">Données indisponibles.</p>`;
   }
-}
-
-// Gestion de la boîte d'aide
-const aide = document.getElementById("aide");
-const btnAide = document.getElementById("btn-aide");
-const btnFermer = document.getElementById("aide-fermer");
-if (aide && btnAide) {
-  btnAide.addEventListener("click", () => aide.showModal());
-  btnFermer.addEventListener("click", () => aide.close());
-  aide.addEventListener("click", (e) => { if (e.target === aide) aide.close(); });
 }
 
 charger();
