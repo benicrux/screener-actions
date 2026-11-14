@@ -313,9 +313,13 @@ details summary { cursor: pointer; color: var(--accent); }
 :root { --cote: #e3e7e1; }
 @media (prefers-color-scheme: dark) { :root { --cote: #0a141c; } }
 .acc-page { max-width: 1180px; margin: 0 auto; padding: 20px 16px 48px; display: flex; flex-direction: column; gap: 30px; }
-.acc-entete { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 14px; }
-.nav-pages { display: flex; flex-wrap: wrap; gap: 6px; }
-.marque-nom { font-size: 34px; line-height: 1; font-weight: 800; font-variation-settings: "wdth" 125; letter-spacing: -0.01em; color: var(--encre); text-decoration: none; }
+.acc-entete {
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 14px;
+  min-height: 80px; padding: 20px 16px 8px;
+}
+.marque { display: flex; flex-direction: column; gap: 4px; }
+.marque-nom { font-size: 34px; line-height: 1; font-weight: 800; font-variation-settings: "wdth" 125; letter-spacing: -0.01em; color: var(--encre); text-decoration: none; display: block; }
+.couverture { margin: 0; color: var(--encre-2); font-size: 13px; max-width: 62ch; min-height: 1.45em; }
 .nav-pages a, .nav-pages button {
   display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 999px;
   border: 1px solid var(--filet); background: var(--surface); color: var(--encre); font-size: 14px;

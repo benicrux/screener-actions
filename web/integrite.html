@@ -12,19 +12,20 @@
 <link rel="stylesheet" href="style.css?v=__VERSION__">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M9 4h14l7 9-14 16L2 13z' fill='%23c9962b'/%3E%3C/svg%3E">
 </head>
-<body class="accueil">
+<body>
 <div class="acc-page">
 
 <header class="acc-entete">
   <div class="marque">
-    <h1>Pépites</h1>
-    <p class="couverture">Intégrité &amp; Assistance IA</p>
+    <a href="./" class="marque-nom">Pépites</a>
+    <p class="couverture" id="couverture">Intégrité &amp; Assistance IA</p>
   </div>
   <nav class="nav-pages" aria-label="Pages du site">
     <a href="./">Accueil</a>
     <a href="tableau.html">Screener</a>
     <a href="retro.html">Tests</a>
     <a href="integrite.html" aria-current="page">Intégrité</a>
+    <button type="button" id="btn-aide">Aide</button>
   </nav>
 </header>
 
@@ -65,6 +66,38 @@
 </div>
 
 </div>
+
+<!-- Dialogue d'aide (copié de tableau.html) -->
+<dialog id="aide" class="boite-aide">
+  <div class="aide-fond">
+    <header class="aide-tete">
+      <h2>Comment lire les notes</h2>
+      <button type="button" class="aide-fermer" id="aide-fermer" aria-label="Fermer">✕</button>
+    </header>
+    <div class="aide-corps">
+      <p>Chaque note est un classement de 1 à 100 au sein de son secteur géographique. Une note de 80 signifie que la société fait mieux que 80 % de ses concurrents sur ce critère.</p>
+      <h3>Notes fondamentales</h3>
+      <ul>
+        <li><b>Valorisation :</b> basée sur le VE/CA (ou PER et Actif Net pour la finance). Plus elle est élevée, plus la société est "bon marché" par rapport à son secteur.</li>
+        <li><b>Croissance :</b> historique et prévisions de chiffre d'affaires.</li>
+        <li><b>Rentabilité :</b> marges nettes et retour sur capitaux propres.</li>
+        <li><b>Situation fi. :</b> solidité du bilan (endettement vs cash).</li>
+      </ul>
+      <h3>Notes de dynamique</h3>
+      <ul>
+        <li><b>Révisions :</b> tendance des prévisions des analystes sur les bénéfices.</li>
+        <li><b>Publication :</b> capacité à battre les attentes lors des derniers résultats.</li>
+        <li><b>Visibilité :</b> accord entre les analystes (une note élevée = prévisions consensuelles).</li>
+      </ul>
+      <h3>Synthèses</h3>
+      <ul>
+        <li><b>Note Investisseur :</b> moyenne pondérée de tous les critères (long terme).</li>
+        <li><b>Note Trading :</b> moyenne simple de la valorisation, des révisions court terme et de la visibilité.</li>
+      </ul>
+    </div>
+  </div>
+</dialog>
+
 <script>
 async function charger() {
   try {
@@ -92,7 +125,7 @@ async function charger() {
         <li><strong>Univers total :</strong> ${st.univers} actions</li>
         <li><strong>Actions avec données :</strong> ${st.avec_donnees}</li>
         <li><strong>Actions notées :</strong> ${st.notees}</li>
-        <li><strong>Blocages de collecte :</strong> ${st.collecte ? st.collecte.blocages : 0}</li>
+        <li><strong>Blocages de collecte :</strong> ${blocages}</li>
         <li><strong>Anomalies graves :</strong> ${st.anomalies ? st.anomalies.graves : 0}</li>
       </ul>
     `;
@@ -101,14 +134,14 @@ async function charger() {
     let promptTexte = `Le screener d'actions présente les indicateurs suivants :\n` +
       `- Univers : ${st.univers} actions\n` +
       `- Introuvables : ${st.introuvables}\n` +
-      `- Blocages de collecte : ${st.collecte ? st.collecte.blocages : 0}\n` +
+      `- Blocages de collecte : ${blocages}\n` +
       `- Anomalies graves : ${st.anomalies ? st.anomalies.graves : 0}\n\n` +
       `Peux-tu analyser les scripts de collecte et de contrôle (collecte.py, controles.py, notes.py) pour identifier et corriger les anomalies ?`;
 
     if (st.anomalies && st.anomalies.graves > 0) {
       promptTexte = `Attention, le rapport signale ${st.anomalies.graves} anomalies graves. Peux-tu inspecter data/anomalies.csv et les scripts de contrôle pour diagnostiquer la cause exacte et proposer un correctif ?`;
-    } else if (st.collecte && st.collecte.blocages > 0) {
-      promptTexte = `La collecte Yahoo a rencontré ${st.collecte.blocages} blocages. Peux-tu analyser collecte.py pour renforcer la résilience du scraping ou ajuster les délais ?`;
+    } else if (blocages > 0) {
+      promptTexte = `La collecte Yahoo a rencontré ${blocages} blocages. Peux-tu analyser collecte.py pour renforcer la résilience du scraping ou ajuster les délais ?`;
     }
 
     document.getElementById("section-prompts").innerHTML = `
@@ -123,6 +156,17 @@ async function charger() {
     document.getElementById("statut-global").innerHTML = `<p style="color: red;">Données indisponibles.</p>`;
   }
 }
+
+// Gestion de la boîte d'aide
+const aide = document.getElementById("aide");
+const btnAide = document.getElementById("btn-aide");
+const btnFermer = document.getElementById("aide-fermer");
+if (aide && btnAide) {
+  btnAide.addEventListener("click", () => aide.showModal());
+  btnFermer.addEventListener("click", () => aide.close());
+  aide.addEventListener("click", (e) => { if (e.target === aide) aide.close(); });
+}
+
 charger();
 </script>
 </body>
