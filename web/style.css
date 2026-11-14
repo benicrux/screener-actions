@@ -465,3 +465,55 @@ ul.controle li span { flex: none; width: 19px; height: 19px; margin-top: 1px; bo
 ul.controle .c-ok span { background: var(--haut-fond); color: var(--haut); }
 ul.controle .c-att span { background: var(--bas-fond); color: var(--bas); }
 ul.controle .c-info span { background: var(--moy-fond); color: var(--moy); }
+
+/* Modale d'aide (commune à toutes les pages) */
+dialog.modale-aide {
+  background: var(--fond);
+  color: var(--encre);
+  border: 1px solid var(--filet);
+  border-radius: 12px;
+  padding: 0;
+  max-width: 620px;
+  width: calc(100% - 24px);
+  max-height: 85vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  box-shadow: 0 20px 44px rgba(8, 18, 28, 0.35);
+}
+dialog.modale-aide::backdrop {
+  background: rgba(8, 18, 28, 0.45);
+}
+.modale-aide-barre {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--fond);
+  border-bottom: 1px solid var(--filet);
+}
+.modale-aide-barre h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  font-variation-settings: "wdth" 112;
+}
+.modale-aide-corps {
+  padding: 16px 16px 28px;
+}
+.modale-aide-corps h3 {
+  margin: 22px 0 8px;
+  font-size: 16px;
+  font-weight: 700;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--filet);
+}
+.modale-aide-corps h3:first-child {
+  margin-top: 0;
+}
+.modale-aide-corps p {
+  margin: 8px 0;
+}
