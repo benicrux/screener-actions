@@ -74,7 +74,8 @@ async function charger() {
     
     const tauxNotes = st.univers > 0 ? ((st.notees / st.univers) * 100).toFixed(1) : 0;
     const tauxCollecte = st.univers > 0 ? (((st.univers - st.introuvables) / st.univers) * 100).toFixed(1) : 0;
-    const frais = st.nuits_difficiles === 0 && st.collecte && st.collecte.blocages === 0;
+    const blocages = (st.collecte && st.collecte.blocages) ? st.collecte.blocages : 0;
+    const frais = (st.nuits_difficiles || 0) === 0 && blocages === 0;
 
     document.getElementById("diagnostic-completude").innerHTML = `
       <ul style="line-height: 1.8;">
