@@ -1,47 +1,26 @@
 {
- "date": "2026-11-20 12:05 UTC",
+ "date": "2026-11-21 11:19 UTC",
  "univers": 26465,
- "avec_donnees": 26048,
- "notees": 24102,
+ "avec_donnees": 26047,
+ "notees": 24026,
  "jamais_lues": 0,
  "introuvables": 227,
  "illisibles": 1,
- "vehicules_ecartes": 189,
+ "vehicules_ecartes": 190,
  "anomalies": {
-  "graves": 389,
-  "legeres": 66
+  "graves": 391,
+  "legeres": 67
  },
  "jours_restants": 0,
  "cours_du_jour": 26252,
  "collecte": {
-  "lues": 11753,
-  "introuvables": 1,
-  "erreurs": 229,
-  "blocages": 17,
+  "lues": 11988,
+  "introuvables": 0,
+  "erreurs": 0,
+  "blocages": 12,
   "arret": null,
-  "detail_erreurs": {
-   "002344.SZ": "RuntimeError: HTTP 401",
-   "002303.SZ": "RuntimeError: HTTP 401",
-   "002302.SZ": "RuntimeError: HTTP 401",
-   "002345.SZ": "RuntimeError: HTTP 401",
-   "002485.SZ": "RuntimeError: HTTP 401",
-   "002547.SZ": "RuntimeError: HTTP 401",
-   "002305.SZ": "RuntimeError: HTTP 401",
-   "002628.SZ": "RuntimeError: HTTP 401",
-   "002631.SZ": "RuntimeError: HTTP 401",
-   "002839.SZ": "RuntimeError: HTTP 401",
-   "002324.SZ": "RuntimeError: HTTP 401",
-   "002323.SZ": "RuntimeError: HTTP 401",
-   "002322.SZ": "RuntimeError: HTTP 401",
-   "002836.SZ": "RuntimeError: HTTP 401",
-   "002835.SZ": "RuntimeError: HTTP 401",
-   "002838.SZ": "RuntimeError: HTTP 401",
-   "002627.SZ": "RuntimeError: HTTP 401",
-   "002878.SZ": "RuntimeError: HTTP 401",
-   "0028.HK": "RuntimeError: HTTP 401",
-   "002801.SZ": "RuntimeError: HTTP 401"
-  },
-  "minutes": 35.4
+  "detail_erreurs": {},
+  "minutes": 21.9
  },
  "poids": {
   "valorisation": 30,
@@ -52,8 +31,8 @@
   "publication": 10,
   "visibilite": 5
  },
- "usd_par_eur": 1.0962508221881166,
+ "usd_par_eur": 1.0974539069359086,
  "depot": "benicrux/screener-actions",
- "passage_complet": "2026-11-20",
+ "passage_complet": "2026-11-21",
  "nuits_difficiles": 0
 }
