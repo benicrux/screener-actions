@@ -1,47 +1,26 @@
 {
- "date": "2026-11-23 12:52 UTC",
- "univers": 26465,
- "avec_donnees": 26046,
- "notees": 24096,
+ "date": "2026-11-24 14:07 UTC",
+ "univers": 26356,
+ "avec_donnees": 25942,
+ "notees": 23973,
  "jamais_lues": 0,
- "introuvables": 226,
- "illisibles": 1,
- "vehicules_ecartes": 192,
+ "introuvables": 223,
+ "illisibles": 0,
+ "vehicules_ecartes": 191,
  "anomalies": {
-  "graves": 398,
-  "legeres": 65
+  "graves": 381,
+  "legeres": 62
  },
  "jours_restants": 0,
- "cours_du_jour": 26254,
+ "cours_du_jour": 26161,
  "collecte": {
-  "lues": 11373,
-  "introuvables": 223,
-  "erreurs": 388,
-  "blocages": 16,
+  "lues": 11976,
+  "introuvables": 10,
+  "erreurs": 0,
+  "blocages": 14,
   "arret": null,
-  "detail_erreurs": {
-   "WEN": "RuntimeError: HTTP 401",
-   "WELSPLSOL.NS": "RuntimeError: HTTP 401",
-   "WELPM": "RuntimeError: HTTP 401",
-   "WERN": "RuntimeError: HTTP 401",
-   "WENN": "RuntimeError: HTTP 401",
-   "WCCB": "RuntimeError: HTTP 401",
-   "VPLAY-A.ST": "RuntimeError: HTTP 401",
-   "VSPT.SN": "RuntimeError: HTTP 401",
-   "VRC.WA": "RuntimeError: HTTP 401",
-   "VREX": "RuntimeError: HTTP 401",
-   "VRG.WA": "RuntimeError: HTTP 401",
-   "VREOF": "RuntimeError: HTTP 401",
-   "VRRM": "RuntimeError: HTTP 401",
-   "VRLLOG.NS": "RuntimeError: HTTP 401",
-   "WEHB.BR": "RuntimeError: HTTP 401",
-   "VRTS": "RuntimeError: HTTP 401",
-   "VSECU": "RuntimeError: HTTP 401",
-   "VSL.NZ": "RuntimeError: HTTP 401",
-   "KRISHANA.NS": "RuntimeError: HTTP 401",
-   "VPG": "RuntimeError: HTTP 401"
-  },
-  "minutes": 26.6
+  "detail_erreurs": {},
+  "minutes": 29.3
  },
  "poids": {
   "valorisation": 30,
@@ -52,8 +31,8 @@
   "publication": 10,
   "visibilite": 5
  },
- "usd_par_eur": 1.094331363536879,
+ "usd_par_eur": 1.097213078779899,
  "depot": "benicrux/screener-actions",
- "passage_complet": "2026-11-23",
+ "passage_complet": "2026-11-24",
  "nuits_difficiles": 0
 }
